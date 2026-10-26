@@ -25,6 +25,8 @@ from django.conf import settings  # noqa: E402
 from django.contrib.staticfiles import finders  # noqa: E402
 from django.test import Client  # noqa: E402
 
+from geneos_ui.templatetags.geneos_ui import THEME_BOOT  # noqa: E402
+
 settings.DEBUG = True
 settings.ALLOWED_HOSTS = ["*"]
 
@@ -41,16 +43,6 @@ def data_uri(path):
     raw = Path(found).read_bytes()
     mime = "image/svg+xml" if path.endswith(".svg") else "image/png"
     return f"data:{mime};base64,{base64.b64encode(raw).decode()}"
-
-
-def dark_block():
-    """Repite los tokens oscuros de tokens.css para el modo del sistema (sin JS)."""
-    tokens = read_static("geneos_ui/css/tokens.css")
-    m = re.search(r':root\[data-gn-theme="dark"\][^{]*\{(.*?)\n  \}', tokens, re.S)
-    body = m.group(1)
-    sel_media = ':root:not([data-theme="light"]):not([data-gn-theme="light"]), :root:not([data-theme="light"]):not([data-gn-theme="light"]) [data-gn-product]'
-    sel_host = ':root[data-theme="dark"]:not([data-gn-theme="light"]), :root[data-theme="dark"]:not([data-gn-theme="light"]) [data-gn-product]'
-    return f"@media (prefers-color-scheme: dark) {{ {sel_media} {{{body}}} }}\n{sel_host} {{{body}}}\n"
 
 
 def build(fragment=False):
@@ -74,7 +66,9 @@ def build(fragment=False):
     # imágenes como data URI
     html = re.sub(r'src="' + re.escape(static_url) + r'([^"]+)"', lambda m: f'src="{data_uri(m.group(1))}"', html)
 
-    extra_css = "<style>\n" + dark_block() + "body { background: var(--gn-bg); color: var(--gn-text); }\n</style>"
+    # Claro por defecto: el modo lo decide solo la elección guardada del usuario
+    # (no el modo del sistema operativo), así que no se agregan media queries.
+    extra_css = "<style>\nbody { background: var(--gn-bg); color: var(--gn-text); }\n</style>"
     html = html.replace("</head>", extra_css + "\n</head>")
 
     if fragment:
@@ -83,7 +77,7 @@ def build(fragment=False):
         head = re.sub(r'<meta name="viewport"[^>]*>\s*', "", head)
         body_match = re.search(r'<body class="([^"]*)">(.*)</body>', html, re.S)
         classes, body = body_match.group(1).strip(), body_match.group(2)
-        boot = "<script>document.documentElement.setAttribute('data-gn-product','gelectric');</script>"
+        boot = "<script>document.documentElement.setAttribute('data-gn-product','gelectric');</script>\n" + THEME_BOOT
         html = head.strip() + "\n" + boot + f'\n<div class="{classes}">\n' + body + "\n</div>\n"
         out = ROOT / "dist" / "ui-kit.fragment.html"
     else:

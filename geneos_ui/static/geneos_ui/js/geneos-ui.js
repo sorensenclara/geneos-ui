@@ -742,8 +742,61 @@
     });
   }
 
+  // --------------------------------------------------------- modo de color
+  // Claro por defecto. La elección se guarda en localStorage ("gn-theme") y
+  // se aplica con data-gn-theme en <html>. {% gn_theme_boot %} la aplica en
+  // el <head>, antes de pintar, para que no haya parpadeo.
+  var THEME_KEY = "gn-theme";
+  function getTheme() {
+    return document.documentElement.getAttribute("data-gn-theme") === "dark" ? "dark" : "light";
+  }
+  function syncThemeSwitches() {
+    var t = getTheme();
+    $$("[data-gn-theme-switch]").forEach(function (group) {
+      $$("[data-gn-theme-value]", group).forEach(function (b) {
+        var on = b.getAttribute("data-gn-theme-value") === t;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+  }
+  function setTheme(theme, persist) {
+    var t = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-gn-theme", t);
+    if (persist !== false) store(THEME_KEY, t);
+    syncThemeSwitches();
+    document.dispatchEvent(new CustomEvent("gn:theme", { detail: { theme: t } }));
+    return t;
+  }
+  function initTheme(root) {
+    if (!initTheme.__done) {
+      initTheme.__done = true;
+      var saved = store(THEME_KEY);
+      setTheme(saved === "dark" ? "dark" : "light", false);
+    }
+    $$("[data-gn-theme-switch]", root).forEach(function (group) {
+      if (group.__gn) return; group.__gn = true;
+      var buttons = $$("[data-gn-theme-value]", group);
+      buttons.forEach(function (b, i) {
+        b.addEventListener("click", function () {
+          var t = setTheme(b.getAttribute("data-gn-theme-value"));
+          announce(t === "dark" ? "Modo oscuro activado" : "Modo claro activado");
+        });
+        b.addEventListener("keydown", function (e) {
+          var d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var n = buttons[(i + d + buttons.length) % buttons.length];
+          n.focus(); n.click();
+        });
+      });
+    });
+    syncThemeSwitches();
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
+    initTheme(root);
     initTooltips(root);
     initDropdowns(root);
     initTabs(root);
@@ -766,6 +819,8 @@
   window.GN.renderCharts = initCharts;
   window.GN.syncSidebars = function () { SIDEBAR_SYNC.forEach(function (f) { f(); }); };
   window.GN.normalize = normalize;
+  window.GN.setTheme = setTheme;
+  window.GN.getTheme = getTheme;
 
   function boot() { initSidebars(); init(document); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

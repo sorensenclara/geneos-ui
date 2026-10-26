@@ -93,6 +93,8 @@ Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa l
 ```django
 {% load geneos_ui %}
 {% gn_css %} {% gn_js %}
+{% gn_theme_boot %}                        {# en el <head>: aplica el modo guardado; sin preferencia, claro #}
+{% gn_theme_switch %}                      {# selector Claro / Oscuro; guarda la elección en localStorage #}
 {% gn_icon "i-users" %}
 {% gn_badge "Vencido" "critical" True %}
 {% gn_breadcrumbs crumbs %}                 {# [("Inicio", "/"), ("Clientes", None)] #}

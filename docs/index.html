@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="es" data-gn-product="gelectric">
+<html lang="es" data-gn-theme="light" data-gn-product="gelectric">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(function(){var t='light';try{if(localStorage.getItem('gn-theme')==='dark')t='dark';}catch(e){}document.documentElement.setAttribute('data-gn-theme',t);})();</script>
 <title>GENEOS UI Kit</title>
 
 
@@ -24,8 +25,8 @@
  * Personalización: cualquier proyecto puede redefinir una variable --gn-*
  * en su propio CSS (después de cargar el tema) sin tocar este archivo.
  *
- * Modo oscuro: opt-in con data-gn-theme="dark" en <html>. Ningún producto
- * lo usa hoy; queda disponible y es el que usa el catálogo.
+ * Modo claro y oscuro: data-gn-theme="light" | "dark" en <html>. El claro es
+ * el predeterminado; GN.setTheme() cambia el modo y lo guarda en localStorage.
  */
 @layer geneos-ui {
   :root,
@@ -72,21 +73,27 @@
     --gn-content-max: 1280px;
     --gn-bp-mobile: 860px; /* referencia; las media queries usan el número */
 
-    /* ---- neutros (GELECTRIC) ---- */
-    --gn-bg: #f7fafe;
-    --gn-surface: #ffffff;
-    --gn-surface-2: #f5f7fc;
-    --gn-border: #e3e7f2;
-    --gn-border-strong: #cad0e3;
-    --gn-text: #141b3c;
-    --gn-text-2: #4c5573;
-    /* #666e8a: el gris tenue de GELECTRIC (#8991a8) oscurecido dentro del mismo tono
-       para llegar a 4,7:1 sobre fondos claros; #8991a8 queda para bordes de controles. */
-    --gn-text-muted: #666e8a;
-    --gn-border-control: #8991a8;
-    --gn-shadow: 0 1px 2px rgba(20, 26, 58, .05), 0 8px 24px rgba(20, 26, 58, .06);
-    --gn-shadow-lg: 0 8px 40px rgba(10, 20, 50, .22);
-    --gn-scrim: rgba(10, 14, 30, .45);
+    /* ---- neutros: modo claro (predeterminado) ----
+       Grises neutros compartidos por los cuatro productos. Contraste verificado
+       (tools/contrast_audit.js): texto ≥ 15:1, secundario ≥ 8:1, tenue ≥ 5:1,
+       bordes de campos ≥ 3:1 sobre cualquier superficie. */
+    --gn-bg: #ffffff;              /* fondo de página */
+    --gn-surface: #f7f7f8;         /* tarjetas, tablas, paneles */
+    --gn-surface-2: #eeeef0;       /* encabezados de tabla, hover, rellenos */
+    --gn-elevated: #ffffff;        /* encabezado, menús, modales, notificaciones */
+    --gn-field: #ffffff;           /* fondo de campos de formulario */
+    --gn-border: #e4e4e7;
+    --gn-border-strong: #d4d4d8;
+    --gn-border-control: #80808a;  /* borde de campos: ≥ 3:1 (WCAG 1.4.11) */
+    --gn-text: #18181b;
+    --gn-text-2: #45454d;
+    --gn-text-muted: #63636b;
+    --gn-disabled-bg: #eeeef0;
+    --gn-disabled-text: #8a8a93;
+    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 6px 20px rgba(0, 0, 0, .05);
+    --gn-shadow-lg: 0 10px 40px rgba(0, 0, 0, .16);
+    --gn-scrim: rgba(9, 9, 9, .5);
+    color-scheme: light;
 
     /* ---- identidad de producto (respaldo = GELECTRIC verde) ---- */
     --gn-c-sidebar: #1b6b4c;
@@ -122,8 +129,8 @@
     --gn-brand-press: var(--gn-c-brand-press);
     --gn-on-brand: var(--gn-c-on-brand);
     --gn-brand-ink: var(--gn-c-ink);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 12%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 20%, var(--gn-surface));
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 7%, #ffffff);
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 11%, #ffffff);
     --gn-accent: var(--gn-c-accent);
     --gn-focus: var(--gn-c-ink);
     --gn-focus-ring: 0 0 0 3px color-mix(in srgb, var(--gn-c-ink) 28%, transparent);
@@ -134,13 +141,15 @@
     --gn-critical: var(--gn-c-critical);
     --gn-info: var(--gn-c-info);
     --gn-neutral: var(--gn-c-neutral);
-    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 13%, var(--gn-surface));
-    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 15%, var(--gn-surface));
-    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 12%, var(--gn-surface));
-    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 11%, var(--gn-surface));
+    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 12%, #ffffff);
+    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 14%, #ffffff);
+    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 11%, #ffffff);
+    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 10%, #ffffff);
     --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 62%, var(--gn-text));
-    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 55%, var(--gn-text));
+    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 45%, var(--gn-text));
     --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 75%, var(--gn-text));
+    /* fondo de botón de peligro sólido: texto blanco ≥ 4,5:1 */
+    --gn-critical-strong: color-mix(in srgb, var(--gn-c-critical) 82%, #000000);
     --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 85%, var(--gn-text));
 
     /* ---- gráficos: paleta categórica ordenada desde la identidad ---- */
@@ -153,24 +162,31 @@
     --gn-chart-axis: var(--gn-text-muted);
   }
 
+  /* ---- modo oscuro: negro y grises neutros ----
+     Se activa con data-gn-theme="dark" en <html> (GN.setTheme("dark")).
+     Los colores de marca, el sidebar y los logotipos no cambian. */
   :root[data-gn-theme="dark"],
   [data-gn-theme="dark"] [data-gn-product],
   [data-gn-product][data-gn-theme="dark"] {
-    --gn-bg: #0c1226;
-    --gn-surface: #131a34;
-    --gn-surface-2: #0f1530;
-    --gn-border: #232c50;
-    --gn-border-strong: #323c66;
-    --gn-text: #eef0fa;
-    --gn-text-2: #b6bcda;
-    --gn-text-muted: #7c84ab;
-    --gn-border-control: #5d658e;
-    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
-    --gn-shadow-lg: 0 8px 40px rgba(0, 0, 0, .5);
-    --gn-scrim: rgba(0, 0, 0, .55);
+    --gn-bg: #090909;
+    --gn-surface: #171717;
+    --gn-surface-2: #242424;
+    --gn-elevated: #1c1c1c;
+    --gn-field: #0f0f0f;
+    --gn-border: #2e2e2e;
+    --gn-border-strong: #3d3d3d;
+    --gn-border-control: #6f6f78;
+    --gn-text: #f4f4f5;
+    --gn-text-2: #c8c8cc;
+    --gn-text-muted: #a1a1aa;
+    --gn-disabled-bg: #242424;
+    --gn-disabled-text: #77777f;
+    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .45);
+    --gn-shadow-lg: 0 10px 40px rgba(0, 0, 0, .65);
+    --gn-scrim: rgba(0, 0, 0, .65);
     --gn-brand-ink: color-mix(in srgb, var(--gn-c-ink) 52%, #ffffff);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 42%, var(--gn-surface));
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 24%, var(--gn-surface));
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
     --gn-focus: color-mix(in srgb, var(--gn-c-ink) 45%, #ffffff);
     --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 22%, var(--gn-surface));
     --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 22%, var(--gn-surface));
@@ -381,7 +397,7 @@
 }
 .gn-skip-link {
   position: absolute; left: 12px; top: -48px; z-index: 2000;
-  background: var(--gn-surface); color: var(--gn-text); border: 2px solid var(--gn-focus);
+  background: var(--gn-elevated); color: var(--gn-text); border: 2px solid var(--gn-focus);
   border-radius: var(--gn-radius-sm); padding: 8px 14px; font-weight: 600;
 }
 .gn-skip-link:focus { top: 12px; }
@@ -571,7 +587,7 @@
 .gn-topbar {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
   display: flex; align-items: center; gap: 12px;
-  padding: 12px 24px; background: var(--gn-surface); border-bottom: 1px solid var(--gn-border);
+  padding: 12px 24px; background: var(--gn-elevated); border-bottom: 1px solid var(--gn-border);
 }
 .gn-topbar__menu {
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -587,7 +603,7 @@
 
 .gn-user-chip {
   display: flex; align-items: center; gap: 9px; padding: 4px 8px 4px 4px; cursor: pointer;
-  border: 1px solid var(--gn-border); border-radius: var(--gn-radius-pill); background: var(--gn-surface);
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius-pill); background: var(--gn-elevated);
 }
 .gn-user-chip:hover { background: var(--gn-surface-2); }
 .gn-user-chip__who { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
@@ -609,6 +625,25 @@
   .gn-user-chip { padding: 3px; }
   .gn-topbar__context { display: none; }
   .gn-content { padding: 18px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); }
+}
+
+/* selector de modo claro / oscuro */
+.gn-theme-switch {
+  display: inline-flex; align-items: center; gap: 2px; padding: 3px;
+  border: 1px solid var(--gn-border-strong); border-radius: var(--gn-radius-pill); background: var(--gn-surface-2);
+}
+.gn-theme-switch__btn {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 11px;
+  border: none; border-radius: var(--gn-radius-pill); background: none; cursor: pointer;
+  font-size: 12.5px; font-weight: 600; color: var(--gn-text-2);
+}
+.gn-theme-switch__btn .gn-icon { width: 15px; height: 15px; }
+.gn-theme-switch__btn:hover { color: var(--gn-text); }
+.gn-theme-switch__btn[aria-checked="true"] { background: var(--gn-elevated); color: var(--gn-text); box-shadow: 0 0 0 1px var(--gn-border-strong), 0 1px 2px rgba(0, 0, 0, .12); }
+.gn-theme-switch__btn:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 1px; }
+@media (max-width: 600px) {
+  .gn-theme-switch__btn { padding: 0 8px; }
+  .gn-theme-switch__btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 
 /* =====================================================================
@@ -634,7 +669,7 @@
 .gn-date-pill {
   display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
   padding: 8px 14px; border: 1px solid var(--gn-border); border-radius: var(--gn-radius-pill);
-  background: var(--gn-surface); box-shadow: var(--gn-shadow); font-size: var(--gn-fs-sm); color: var(--gn-text-2);
+  background: var(--gn-elevated); box-shadow: var(--gn-shadow); font-size: var(--gn-fs-sm); color: var(--gn-text-2);
 }
 .gn-date-pill .gn-icon { color: var(--gn-brand-ink); width: 16px; height: 16px; }
 .gn-date-pill b { color: var(--gn-text); }
@@ -680,8 +715,8 @@
 
 .gn-btn--danger { background: none; border-color: var(--gn-critical); color: var(--gn-critical-ink); }
 .gn-btn--danger:hover { background: var(--gn-critical-soft); }
-.gn-btn--danger.gn-btn--solid { background: var(--gn-critical); border-color: var(--gn-critical); color: #fff; }
-.gn-btn--danger.gn-btn--solid:hover { background: color-mix(in srgb, var(--gn-critical) 85%, black); border-color: color-mix(in srgb, var(--gn-critical) 85%, black); }
+.gn-btn--danger.gn-btn--solid { background: var(--gn-critical-strong); border-color: var(--gn-critical-strong); color: #fff; }
+.gn-btn--danger.gn-btn--solid:hover { background: color-mix(in srgb, var(--gn-critical-strong) 85%, black); border-color: color-mix(in srgb, var(--gn-critical-strong) 85%, black); }
 
 .gn-btn--success { background: var(--gn-good-soft); color: var(--gn-good-ink); }
 .gn-btn--success:hover { background: color-mix(in srgb, var(--gn-good) 24%, var(--gn-surface)); }
@@ -697,8 +732,8 @@
 .gn-btn__dot {
   position: absolute; top: 3px; right: 3px; min-width: 15px; height: 15px; padding: 0 4px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: var(--gn-radius-pill); border: 2px solid var(--gn-surface);
-  background: var(--gn-critical); color: #fff; font-size: 9.5px; font-weight: 700; line-height: 1;
+  border-radius: var(--gn-radius-pill); border: 2px solid var(--gn-elevated);
+  background: var(--gn-critical-strong); color: #fff; font-size: 9.5px; font-weight: 700; line-height: 1;
 }
 .gn-btn-group { display: inline-flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
@@ -709,7 +744,7 @@
 .gn-dropdown__menu {
   position: absolute; top: calc(100% + 6px); right: 0; z-index: 50; min-width: 200px;
   display: flex; flex-direction: column; gap: 2px; padding: 6px;
-  background: var(--gn-surface); border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); box-shadow: var(--gn-shadow-lg);
+  background: var(--gn-elevated); border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); box-shadow: var(--gn-shadow-lg);
 }
 .gn-dropdown__menu--start { right: auto; left: 0; }
 .gn-dropdown__menu--wide { min-width: 320px; }
@@ -761,14 +796,14 @@
 .gn-input, .gn-select, .gn-textarea {
   width: 100%; min-width: 0; height: 36px; padding: 0 12px;
   border: 1px solid var(--gn-border-control); border-radius: var(--gn-radius-sm);
-  background: var(--gn-surface); color: var(--gn-text); font-size: 13.5px;
+  background: var(--gn-field); color: var(--gn-text); font-size: 13.5px;
   transition: border-color .12s ease, box-shadow .12s ease;
 }
 .gn-textarea { height: auto; min-height: 88px; padding: 9px 12px; resize: vertical; line-height: 1.45; }
 .gn-input::placeholder, .gn-textarea::placeholder { color: var(--gn-text-muted); }
 .gn-input:hover, .gn-select:hover, .gn-textarea:hover { border-color: var(--gn-text-muted); }
 .gn-input:focus, .gn-select:focus, .gn-textarea:focus { outline: none; border-color: var(--gn-focus); box-shadow: var(--gn-focus-ring); }
-.gn-input:disabled, .gn-select:disabled, .gn-textarea:disabled { background: var(--gn-surface-2); color: var(--gn-text-muted); cursor: not-allowed; }
+.gn-input:disabled, .gn-select:disabled, .gn-textarea:disabled { background: var(--gn-disabled-bg); color: var(--gn-disabled-text); border-color: var(--gn-border-strong); cursor: not-allowed; }
 .gn-input[readonly] { background: var(--gn-surface-2); }
 .gn-input[aria-invalid="true"], .gn-select[aria-invalid="true"], .gn-textarea[aria-invalid="true"] { border-color: var(--gn-critical); }
 .gn-input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gn-critical) 22%, transparent); }
@@ -789,7 +824,7 @@
 .gn-check input {
   appearance: none; -webkit-appearance: none; flex-shrink: 0; margin: 1px 0 0;
   width: 18px; height: 18px; border: 1.5px solid var(--gn-border-control); border-radius: 5px;
-  background: var(--gn-surface); display: grid; place-content: center; cursor: pointer;
+  background: var(--gn-field); display: grid; place-content: center; cursor: pointer;
   transition: background-color .12s ease, border-color .12s ease;
 }
 .gn-check input[type="radio"] { border-radius: 50%; }
@@ -819,14 +854,14 @@
   padding: 0 12px; height: 36px; border: 1px solid var(--gn-border-control); border-radius: var(--gn-radius-pill);
   background: var(--gn-surface-2); color: var(--gn-text-muted);
 }
-.gn-search:focus-within { border-color: var(--gn-focus); background: var(--gn-surface); box-shadow: var(--gn-focus-ring); }
+.gn-search:focus-within { border-color: var(--gn-focus); background: var(--gn-field); box-shadow: var(--gn-focus-ring); }
 .gn-search input { flex: 1; min-width: 0; border: none; background: none; outline: none; font-size: 13.5px; color: var(--gn-text); }
 .gn-search input::-webkit-search-cancel-button { display: none; }
 .gn-search kbd { font-family: var(--gn-font); font-size: 10.5px; color: var(--gn-text-muted); border: 1px solid var(--gn-border-strong); border-radius: 5px; padding: 1px 6px; }
 @media (max-width: 860px) { .gn-search kbd { display: none; } }
 .gn-search-results {
   position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50; max-height: 320px; overflow-y: auto;
-  padding: 6px; background: var(--gn-surface); border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); box-shadow: var(--gn-shadow-lg);
+  padding: 6px; background: var(--gn-elevated); border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); box-shadow: var(--gn-shadow-lg);
 }
 
 /* =====================================================================
@@ -853,7 +888,7 @@
 .gn-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .gn-chip {
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 6px 4px 10px;
-  border-radius: var(--gn-radius-pill); border: 1px solid var(--gn-border); background: var(--gn-surface);
+  border-radius: var(--gn-radius-pill); border: 1px solid var(--gn-border); background: var(--gn-elevated);
   font-size: 12px; color: var(--gn-text-2);
 }
 .gn-chip b { color: var(--gn-text); font-weight: 600; }
@@ -863,7 +898,7 @@
 .gn-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .gn-pill-toggle {
   padding: 6px 12px; border-radius: var(--gn-radius-pill); border: 1px solid var(--gn-border);
-  background: var(--gn-surface); color: var(--gn-text-2); font-size: 12.5px; font-weight: 600; cursor: pointer;
+  background: var(--gn-elevated); color: var(--gn-text-2); font-size: 12.5px; font-weight: 600; cursor: pointer;
 }
 .gn-pill-toggle:hover { border-color: var(--gn-border-strong); color: var(--gn-text); }
 .gn-pill-toggle[aria-pressed="true"] { background: var(--gn-brand-soft); border-color: var(--gn-brand-ink); color: var(--gn-brand-ink); }
@@ -1105,7 +1140,7 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 .gn-toast {
   box-sizing: border-box; line-height: 1.45;
   pointer-events: auto; display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px;
-  background: var(--gn-surface); color: var(--gn-text); border: 1px solid var(--gn-border); border-left: 4px solid var(--gn-neutral);
+  background: var(--gn-elevated); color: var(--gn-text); border: 1px solid var(--gn-border); border-left: 4px solid var(--gn-neutral);
   border-radius: var(--gn-radius-sm); box-shadow: var(--gn-shadow-lg); font-size: 13px;
   animation: gn-toast-in .18s ease-out;
 }
@@ -1137,7 +1172,7 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
    ===================================================================== */
 .gn-modal {
   width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0;
-  border: 1px solid var(--gn-border); border-radius: var(--gn-radius); background: var(--gn-surface); color: var(--gn-text);
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius); background: var(--gn-elevated); color: var(--gn-text);
   box-shadow: var(--gn-shadow-lg);
 }
 .gn-modal--lg { width: min(760px, calc(100vw - 32px)); }
@@ -1208,7 +1243,7 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
   min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 24px;
   background: linear-gradient(135deg, var(--gn-c-sidebar) 0%, var(--gn-c-sidebar-deep) 100%);
 }
-.gn-auth__card { width: 100%; max-width: 400px; padding: 36px 32px 32px; background: var(--gn-surface); border-radius: var(--gn-radius); box-shadow: var(--gn-shadow-lg); display: flex; flex-direction: column; gap: 18px; }
+.gn-auth__card { width: 100%; max-width: 400px; padding: 36px 32px 32px; background: var(--gn-elevated); border-radius: var(--gn-radius); box-shadow: var(--gn-shadow-lg); display: flex; flex-direction: column; gap: 18px; }
 .gn-auth__logo { display: block; max-width: 190px; max-height: 64px; margin: 0 auto; }
 .gn-auth__title { font-size: 19px; font-weight: 700; text-align: center; }
 .gn-auth__sub { margin: -10px 0 0; text-align: center; font-size: 13px; color: var(--gn-text-2); }
@@ -1333,58 +1368,6 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 
 
 <style>
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]):not([data-gn-theme="light"]), :root:not([data-theme="light"]):not([data-gn-theme="light"]) [data-gn-product] {
-    --gn-bg: #0c1226;
-    --gn-surface: #131a34;
-    --gn-surface-2: #0f1530;
-    --gn-border: #232c50;
-    --gn-border-strong: #323c66;
-    --gn-text: #eef0fa;
-    --gn-text-2: #b6bcda;
-    --gn-text-muted: #7c84ab;
-    --gn-border-control: #5d658e;
-    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
-    --gn-shadow-lg: 0 8px 40px rgba(0, 0, 0, .5);
-    --gn-scrim: rgba(0, 0, 0, .55);
-    --gn-brand-ink: color-mix(in srgb, var(--gn-c-ink) 52%, #ffffff);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 42%, var(--gn-surface));
-    --gn-focus: color-mix(in srgb, var(--gn-c-ink) 45%, #ffffff);
-    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 22%, var(--gn-surface));
-    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 22%, var(--gn-surface));
-    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 22%, var(--gn-surface));
-    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 26%, var(--gn-surface));
-    --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 60%, #ffffff);
-    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 62%, #ffffff);
-    --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 60%, #ffffff);
-    --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 40%, #ffffff);
-    color-scheme: dark;} }
-:root[data-theme="dark"]:not([data-gn-theme="light"]), :root[data-theme="dark"]:not([data-gn-theme="light"]) [data-gn-product] {
-    --gn-bg: #0c1226;
-    --gn-surface: #131a34;
-    --gn-surface-2: #0f1530;
-    --gn-border: #232c50;
-    --gn-border-strong: #323c66;
-    --gn-text: #eef0fa;
-    --gn-text-2: #b6bcda;
-    --gn-text-muted: #7c84ab;
-    --gn-border-control: #5d658e;
-    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
-    --gn-shadow-lg: 0 8px 40px rgba(0, 0, 0, .5);
-    --gn-scrim: rgba(0, 0, 0, .55);
-    --gn-brand-ink: color-mix(in srgb, var(--gn-c-ink) 52%, #ffffff);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 42%, var(--gn-surface));
-    --gn-focus: color-mix(in srgb, var(--gn-c-ink) 45%, #ffffff);
-    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 22%, var(--gn-surface));
-    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 22%, var(--gn-surface));
-    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 22%, var(--gn-surface));
-    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 26%, var(--gn-surface));
-    --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 60%, #ffffff);
-    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 62%, #ffffff);
-    --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 60%, #ffffff);
-    --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 40%, #ffffff);
-    color-scheme: dark;}
 body { background: var(--gn-bg); color: var(--gn-text); }
 </style>
 </head>
@@ -2255,7 +2238,11 @@ body { background: var(--gn-bg); color: var(--gn-text); }
       <div class="gn-topbar__spacer"></div>
       <div class="gn-topbar__actions">
         
-<button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--lg" id="kit-theme-toggle" data-gn-tooltip="Cambiar entre modo claro y oscuro" aria-label="Modo oscuro" aria-pressed="false"><svg class="gn-icon " aria-hidden="true"><use href="#i-moon"/></svg></button>
+<div class="gn-theme-switch" role="radiogroup" aria-label="Modo de color" data-gn-theme-switch>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-theme-value="light"><svg class="gn-icon " aria-hidden="true"><use href="#i-sun"/></svg><span>Claro</span></button>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-theme-value="dark"><svg class="gn-icon " aria-hidden="true"><use href="#i-moon"/></svg><span>Oscuro</span></button>
+</div>
+
 <div class="gn-dropdown">
   <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--lg" data-gn-dropdown="kit-notif" aria-label="Notificaciones, 3 sin leer"><svg class="gn-icon " aria-hidden="true"><use href="#i-bell"/></svg><span class="gn-btn__dot" aria-hidden="true">3</span></button>
   <div class="gn-dropdown__menu gn-dropdown__menu--wide gn-notif" id="kit-notif" hidden>
@@ -4515,8 +4502,61 @@ GENEOS_UI = {
     });
   }
 
+  // --------------------------------------------------------- modo de color
+  // Claro por defecto. La elección se guarda en localStorage ("gn-theme") y
+  // se aplica con data-gn-theme en <html>. {% gn_theme_boot %} la aplica en
+  // el <head>, antes de pintar, para que no haya parpadeo.
+  var THEME_KEY = "gn-theme";
+  function getTheme() {
+    return document.documentElement.getAttribute("data-gn-theme") === "dark" ? "dark" : "light";
+  }
+  function syncThemeSwitches() {
+    var t = getTheme();
+    $$("[data-gn-theme-switch]").forEach(function (group) {
+      $$("[data-gn-theme-value]", group).forEach(function (b) {
+        var on = b.getAttribute("data-gn-theme-value") === t;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+  }
+  function setTheme(theme, persist) {
+    var t = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-gn-theme", t);
+    if (persist !== false) store(THEME_KEY, t);
+    syncThemeSwitches();
+    document.dispatchEvent(new CustomEvent("gn:theme", { detail: { theme: t } }));
+    return t;
+  }
+  function initTheme(root) {
+    if (!initTheme.__done) {
+      initTheme.__done = true;
+      var saved = store(THEME_KEY);
+      setTheme(saved === "dark" ? "dark" : "light", false);
+    }
+    $$("[data-gn-theme-switch]", root).forEach(function (group) {
+      if (group.__gn) return; group.__gn = true;
+      var buttons = $$("[data-gn-theme-value]", group);
+      buttons.forEach(function (b, i) {
+        b.addEventListener("click", function () {
+          var t = setTheme(b.getAttribute("data-gn-theme-value"));
+          announce(t === "dark" ? "Modo oscuro activado" : "Modo claro activado");
+        });
+        b.addEventListener("keydown", function (e) {
+          var d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var n = buttons[(i + d + buttons.length) % buttons.length];
+          n.focus(); n.click();
+        });
+      });
+    });
+    syncThemeSwitches();
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
+    initTheme(root);
     initTooltips(root);
     initDropdowns(root);
     initTabs(root);
@@ -4539,6 +4579,8 @@ GENEOS_UI = {
   window.GN.renderCharts = initCharts;
   window.GN.syncSidebars = function () { SIDEBAR_SYNC.forEach(function (f) { f(); }); };
   window.GN.normalize = normalize;
+  window.GN.setTheme = setTheme;
+  window.GN.getTheme = getTheme;
 
   function boot() { initSidebars(); init(document); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
@@ -4552,7 +4594,7 @@ GENEOS_UI = {
 (function () {
   "use strict";
   var root = document.documentElement;
-  var KEY_P = "gn-kit-product", KEY_T = "gn-kit-theme";
+  var KEY_P = "gn-kit-product";
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
@@ -4580,29 +4622,8 @@ GENEOS_UI = {
   var initial = document.querySelector('[data-kit-switch="' + fromHash + '"]') ? fromHash : get(KEY_P);
   if (initial) applyProduct(initial, false);
 
-  // ---- modo claro / oscuro: sigue al sistema o a la elección del visor
-  var toggle = document.getElementById("kit-theme-toggle");
-  var mq = window.matchMedia("(prefers-color-scheme: dark)");
-  function hostTheme() { return root.getAttribute("data-theme"); }
-  function currentDark() {
-    var saved = get(KEY_T);
-    if (saved) return saved === "dark";
-    if (hostTheme()) return hostTheme() === "dark";
-    return mq.matches;
-  }
-  function applyTheme() {
-    var dark = currentDark();
-    if (dark) root.setAttribute("data-gn-theme", "dark"); else root.removeAttribute("data-gn-theme");
-    if (toggle) {
-      toggle.setAttribute("aria-pressed", dark ? "true" : "false");
-      toggle.setAttribute("aria-label", dark ? "Modo claro" : "Modo oscuro");
-      toggle.innerHTML = '<svg class="gn-icon" aria-hidden="true"><use href="#' + (dark ? "i-sun" : "i-moon") + '"/></svg>';
-    }
-  }
-  if (toggle) toggle.addEventListener("click", function () { set(KEY_T, currentDark() ? "light" : "dark"); applyTheme(); });
-  mq.addEventListener("change", applyTheme);
-  new MutationObserver(applyTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-  applyTheme();
+  // El modo claro/oscuro lo maneja geneos-ui.js (GN.setTheme, data-gn-theme-switch):
+  // arranca en claro y recuerda la elección en localStorage ("gn-theme").
 
   // ---- grilla de íconos a partir del sprite
   var grid = document.getElementById("kit-icons");

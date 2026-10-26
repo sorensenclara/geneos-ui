@@ -2,6 +2,7 @@
 
     {% load geneos_ui %}
     {% gn_css %} {% gn_js %}                      recursos de la librería
+    {% gn_theme_boot %} {% gn_theme_switch %}     modo claro/oscuro (claro por defecto)
     {% gn_icon "i-users" %}                       ícono del sprite
     {% gn_badge "Vencido" "critical" %}           badge de estado
     {% gn_sidebar %}                              sidebar con el menú del producto
@@ -38,6 +39,23 @@ def gn_css(product=None, bridges=None):
         links.append(('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap',))
     links += [(static(f),) for f in files]
     return format_html_join("\n", '<link rel="stylesheet" href="{}">', links)
+
+
+THEME_BOOT = (
+    "<script>(function(){var t='light';try{if(localStorage.getItem('gn-theme')==='dark')t='dark';}catch(e){}"
+    "document.documentElement.setAttribute('data-gn-theme',t);})();</script>"
+)
+
+
+@register.simple_tag
+def gn_theme_boot():
+    """Aplica el modo guardado antes de pintar (va en el <head>). Sin preferencia: claro."""
+    return mark_safe(THEME_BOOT)
+
+
+@register.inclusion_tag("geneos_ui/components/theme_switch.html")
+def gn_theme_switch():
+    return {}
 
 
 @register.simple_tag

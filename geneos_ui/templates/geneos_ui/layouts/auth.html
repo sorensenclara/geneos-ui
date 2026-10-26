@@ -1,8 +1,9 @@
 {% load static geneos_ui %}<!doctype html>
-<html lang="es" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
+<html lang="es" data-gn-theme="light" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+{% gn_theme_boot %}
 <title>{% block title %}Ingresar · {{ gn.product_name }}{% endblock %}</title>
 {% gn_css %}
 </head>

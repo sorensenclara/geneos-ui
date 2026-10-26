@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var root = document.documentElement;
-  var KEY_P = "gn-kit-product", KEY_T = "gn-kit-theme";
+  var KEY_P = "gn-kit-product";
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
@@ -30,29 +30,8 @@
   var initial = document.querySelector('[data-kit-switch="' + fromHash + '"]') ? fromHash : get(KEY_P);
   if (initial) applyProduct(initial, false);
 
-  // ---- modo claro / oscuro: sigue al sistema o a la elección del visor
-  var toggle = document.getElementById("kit-theme-toggle");
-  var mq = window.matchMedia("(prefers-color-scheme: dark)");
-  function hostTheme() { return root.getAttribute("data-theme"); }
-  function currentDark() {
-    var saved = get(KEY_T);
-    if (saved) return saved === "dark";
-    if (hostTheme()) return hostTheme() === "dark";
-    return mq.matches;
-  }
-  function applyTheme() {
-    var dark = currentDark();
-    if (dark) root.setAttribute("data-gn-theme", "dark"); else root.removeAttribute("data-gn-theme");
-    if (toggle) {
-      toggle.setAttribute("aria-pressed", dark ? "true" : "false");
-      toggle.setAttribute("aria-label", dark ? "Modo claro" : "Modo oscuro");
-      toggle.innerHTML = '<svg class="gn-icon" aria-hidden="true"><use href="#' + (dark ? "i-sun" : "i-moon") + '"/></svg>';
-    }
-  }
-  if (toggle) toggle.addEventListener("click", function () { set(KEY_T, currentDark() ? "light" : "dark"); applyTheme(); });
-  mq.addEventListener("change", applyTheme);
-  new MutationObserver(applyTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-  applyTheme();
+  // El modo claro/oscuro lo maneja geneos-ui.js (GN.setTheme, data-gn-theme-switch):
+  // arranca en claro y recuerda la elección en localStorage ("gn-theme").
 
   // ---- grilla de íconos a partir del sprite
   var grid = document.getElementById("kit-icons");

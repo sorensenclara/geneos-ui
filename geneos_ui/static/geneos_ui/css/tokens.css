@@ -14,8 +14,8 @@
  * Personalización: cualquier proyecto puede redefinir una variable --gn-*
  * en su propio CSS (después de cargar el tema) sin tocar este archivo.
  *
- * Modo oscuro: opt-in con data-gn-theme="dark" en <html>. Ningún producto
- * lo usa hoy; queda disponible y es el que usa el catálogo.
+ * Modo claro y oscuro: data-gn-theme="light" | "dark" en <html>. El claro es
+ * el predeterminado; GN.setTheme() cambia el modo y lo guarda en localStorage.
  */
 @layer geneos-ui {
   :root,
@@ -62,21 +62,27 @@
     --gn-content-max: 1280px;
     --gn-bp-mobile: 860px; /* referencia; las media queries usan el número */
 
-    /* ---- neutros (GELECTRIC) ---- */
-    --gn-bg: #f7fafe;
-    --gn-surface: #ffffff;
-    --gn-surface-2: #f5f7fc;
-    --gn-border: #e3e7f2;
-    --gn-border-strong: #cad0e3;
-    --gn-text: #141b3c;
-    --gn-text-2: #4c5573;
-    /* #666e8a: el gris tenue de GELECTRIC (#8991a8) oscurecido dentro del mismo tono
-       para llegar a 4,7:1 sobre fondos claros; #8991a8 queda para bordes de controles. */
-    --gn-text-muted: #666e8a;
-    --gn-border-control: #8991a8;
-    --gn-shadow: 0 1px 2px rgba(20, 26, 58, .05), 0 8px 24px rgba(20, 26, 58, .06);
-    --gn-shadow-lg: 0 8px 40px rgba(10, 20, 50, .22);
-    --gn-scrim: rgba(10, 14, 30, .45);
+    /* ---- neutros: modo claro (predeterminado) ----
+       Grises neutros compartidos por los cuatro productos. Contraste verificado
+       (tools/contrast_audit.js): texto ≥ 15:1, secundario ≥ 8:1, tenue ≥ 5:1,
+       bordes de campos ≥ 3:1 sobre cualquier superficie. */
+    --gn-bg: #ffffff;              /* fondo de página */
+    --gn-surface: #f7f7f8;         /* tarjetas, tablas, paneles */
+    --gn-surface-2: #eeeef0;       /* encabezados de tabla, hover, rellenos */
+    --gn-elevated: #ffffff;        /* encabezado, menús, modales, notificaciones */
+    --gn-field: #ffffff;           /* fondo de campos de formulario */
+    --gn-border: #e4e4e7;
+    --gn-border-strong: #d4d4d8;
+    --gn-border-control: #80808a;  /* borde de campos: ≥ 3:1 (WCAG 1.4.11) */
+    --gn-text: #18181b;
+    --gn-text-2: #45454d;
+    --gn-text-muted: #63636b;
+    --gn-disabled-bg: #eeeef0;
+    --gn-disabled-text: #8a8a93;
+    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .05), 0 6px 20px rgba(0, 0, 0, .05);
+    --gn-shadow-lg: 0 10px 40px rgba(0, 0, 0, .16);
+    --gn-scrim: rgba(9, 9, 9, .5);
+    color-scheme: light;
 
     /* ---- identidad de producto (respaldo = GELECTRIC verde) ---- */
     --gn-c-sidebar: #1b6b4c;
@@ -112,8 +118,8 @@
     --gn-brand-press: var(--gn-c-brand-press);
     --gn-on-brand: var(--gn-c-on-brand);
     --gn-brand-ink: var(--gn-c-ink);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 12%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 20%, var(--gn-surface));
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 7%, #ffffff);
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 11%, #ffffff);
     --gn-accent: var(--gn-c-accent);
     --gn-focus: var(--gn-c-ink);
     --gn-focus-ring: 0 0 0 3px color-mix(in srgb, var(--gn-c-ink) 28%, transparent);
@@ -124,13 +130,15 @@
     --gn-critical: var(--gn-c-critical);
     --gn-info: var(--gn-c-info);
     --gn-neutral: var(--gn-c-neutral);
-    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 13%, var(--gn-surface));
-    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 15%, var(--gn-surface));
-    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 12%, var(--gn-surface));
-    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 11%, var(--gn-surface));
+    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 12%, #ffffff);
+    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 14%, #ffffff);
+    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 11%, #ffffff);
+    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 10%, #ffffff);
     --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 62%, var(--gn-text));
-    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 55%, var(--gn-text));
+    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 45%, var(--gn-text));
     --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 75%, var(--gn-text));
+    /* fondo de botón de peligro sólido: texto blanco ≥ 4,5:1 */
+    --gn-critical-strong: color-mix(in srgb, var(--gn-c-critical) 82%, #000000);
     --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 85%, var(--gn-text));
 
     /* ---- gráficos: paleta categórica ordenada desde la identidad ---- */
@@ -143,24 +151,31 @@
     --gn-chart-axis: var(--gn-text-muted);
   }
 
+  /* ---- modo oscuro: negro y grises neutros ----
+     Se activa con data-gn-theme="dark" en <html> (GN.setTheme("dark")).
+     Los colores de marca, el sidebar y los logotipos no cambian. */
   :root[data-gn-theme="dark"],
   [data-gn-theme="dark"] [data-gn-product],
   [data-gn-product][data-gn-theme="dark"] {
-    --gn-bg: #0c1226;
-    --gn-surface: #131a34;
-    --gn-surface-2: #0f1530;
-    --gn-border: #232c50;
-    --gn-border-strong: #323c66;
-    --gn-text: #eef0fa;
-    --gn-text-2: #b6bcda;
-    --gn-text-muted: #7c84ab;
-    --gn-border-control: #5d658e;
-    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
-    --gn-shadow-lg: 0 8px 40px rgba(0, 0, 0, .5);
-    --gn-scrim: rgba(0, 0, 0, .55);
+    --gn-bg: #090909;
+    --gn-surface: #171717;
+    --gn-surface-2: #242424;
+    --gn-elevated: #1c1c1c;
+    --gn-field: #0f0f0f;
+    --gn-border: #2e2e2e;
+    --gn-border-strong: #3d3d3d;
+    --gn-border-control: #6f6f78;
+    --gn-text: #f4f4f5;
+    --gn-text-2: #c8c8cc;
+    --gn-text-muted: #a1a1aa;
+    --gn-disabled-bg: #242424;
+    --gn-disabled-text: #77777f;
+    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .45);
+    --gn-shadow-lg: 0 10px 40px rgba(0, 0, 0, .65);
+    --gn-scrim: rgba(0, 0, 0, .65);
     --gn-brand-ink: color-mix(in srgb, var(--gn-c-ink) 52%, #ffffff);
-    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
-    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 42%, var(--gn-surface));
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 24%, var(--gn-surface));
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
     --gn-focus: color-mix(in srgb, var(--gn-c-ink) 45%, #ffffff);
     --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 22%, var(--gn-surface));
     --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 22%, var(--gn-surface));
