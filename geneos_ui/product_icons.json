@@ -1,0 +1,3659 @@
+{
+ "generated_by": "tools/import_product_icons.py",
+ "sources": {
+  "gelectric": {
+   "repo": "sorensenclara/geletric-django",
+   "branch": "2026"
+  },
+  "gema": {
+   "repo": "sorensenclara/GEMA",
+   "branch": "2026"
+  },
+  "geagro-cereales": {
+   "repo": "sorensenclara/geneos-geagro",
+   "branch": "2026-cereales"
+  },
+  "geagro-vid": {
+   "repo": "sorensenclara/geneos-geagro",
+   "branch": "2026-vid"
+  }
+ },
+ "icons": [
+  {
+   "id": "geagro-cereales/images/icon/Isologo-geagro-campo-blanco.svg",
+   "product": "geagro-cereales",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "svg",
+   "name": "Isologo-geagro-campo-blanco.svg",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/images/icon/Isologo-geagro-campo-blanco.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2664,
+   "sha256": "76fb6788635f86e5ae4d921a117913310429ef89019aa13eb6867bcc1f5887c6",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/Isologo-geagro-campo-blanco.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/images/icon/Isologo-geagro-campo.svg",
+   "product": "geagro-cereales",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "svg",
+   "name": "Isologo-geagro-campo.svg",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/images/icon/Isologo-geagro-campo.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3434,
+   "sha256": "5a8ab5dd855e030d10fc0f92d26144c17d3832613509b667577c919f2a4790c5",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/Isologo-geagro-campo.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/alert.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "alertas",
+   "module_label": "Alertas y avisos",
+   "variant": "white",
+   "format": "svg",
+   "name": "alert.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/alert.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/templates/partials/sidebar.html:39",
+    "Vid: agro_system/templates/partials/sidebar.html:39"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 852,
+   "sha256": "0e194f3e46ddc3be98bc280c560308b6b6db0330878f27a4a48c41054343805b",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/alert.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/alert.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/calendar.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "calendario",
+   "module_label": "Calendario",
+   "variant": "white",
+   "format": "svg",
+   "name": "calendar.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/calendar.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/templates/partials/sidebar.html:32",
+    "Vid: agro_system/templates/partials/sidebar.html:32"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 878,
+   "sha256": "652310745baf9480130ebd43a0fc98377b99ac630288aa4e6658e001a5150a33",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/calendar.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/calendar.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/images/icon/campo.svg",
+   "product": "geagro-cereales",
+   "set": "portal",
+   "module": "campos",
+   "module_label": "Mis campos",
+   "variant": "white",
+   "format": "svg",
+   "name": "campo.svg",
+   "file": "geneos_ui/icons/geagro-cereales/activos/images/icon/campo.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "agro_system/templates/partials/sidebar.html:54"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1913,
+   "sha256": "03860614b95abf2610ed2c2e3bf86e60c50e2255bed6ece9470cd8d69945c651",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/campo.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/dashboard.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "dashboard",
+   "module_label": "Dashboard",
+   "variant": "white",
+   "format": "svg",
+   "name": "dashboard.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/dashboard.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/templates/partials/sidebar.html:17",
+    "Vid: agro_system/templates/partials/sidebar.html:17"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1822,
+   "sha256": "f5c74b12dd9767e3dd893a5f23f101a3f69a70b915c3d1f7e70c62ffc709287c",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/dashboard.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/dashboard.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/technical_plan.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "plan-tecnico",
+   "module_label": "Plan técnico",
+   "variant": "white",
+   "format": "svg",
+   "name": "technical_plan.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/technical_plan.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/templates/partials/sidebar.html:24",
+    "Vid: agro_system/templates/partials/sidebar.html:24"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1123,
+   "sha256": "b6ead5b2e86f82551bc1148d44c26b1a3720c418205e2bb91daa2945578f62eb",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/technical_plan.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/technical_plan.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/technical_plan_color.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "plan-tecnico",
+   "module_label": "Plan técnico",
+   "variant": "color",
+   "format": "svg",
+   "name": "technical_plan_color.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/technical_plan_color.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/templates/pages/dashboard.html:109",
+    "Cereales: agro_system/templates/pages/plan.html:340",
+    "Vid: agro_system/templates/pages/dashboard.html:171",
+    "Vid: agro_system/templates/pages/plan.html:425"
+   ],
+   "kit_use": [],
+   "bytes": 1126,
+   "sha256": "4822fcd61504d0b38fa8d20c7b35a16edb292cef3e09c9c3797fe8f10f064c2f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/technical_plan_color.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/technical_plan_color.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/vinedos-color.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "vinedos",
+   "module_label": "Mis viñedos",
+   "variant": "color",
+   "format": "svg",
+   "name": "vinedos-color.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/images/icon/vinedos-color.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1181,
+   "sha256": "82177f1e7d2ddaa03c045f8fd11828680e692fcdadf827adc532678749cc2550",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/vinedos-color.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/vinedos-color.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/vinedos.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "vinedos",
+   "module_label": "Mis viñedos",
+   "variant": "white",
+   "format": "svg",
+   "name": "vinedos.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/vinedos.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Vid: agro_system/templates/partials/sidebar.html:70"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1297,
+   "sha256": "2efff6cc55271e16328a3dd4469e56616ec92638f12f5180d14c31f13949a67d",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/vinedos.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/vinedos.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/images/icon/weather.svg",
+   "product": "geagro",
+   "set": "portal",
+   "module": "clima",
+   "module_label": "Clima",
+   "variant": "white",
+   "format": "svg",
+   "name": "weather.svg",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/weather.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/templates/partials/sidebar.html:47",
+    "Vid: agro_system/templates/partials/sidebar.html:47"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1111,
+   "sha256": "0e2d18e17b8ed404619e18945ad4d9bb601d655fc751e9c8b9f9f750c9c74a6f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/images/icon/weather.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/images/icon/weather.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/Acopio-white.svg",
+   "product": "geagro-cereales",
+   "set": "backoffice",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "white",
+   "format": "svg",
+   "name": "Acopio-white.svg",
+   "file": "geneos_ui/icons/geagro-cereales/activos/img/icons/Acopio-white.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "agro_system/static/css/jazzmin_custom.css:322"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 2254,
+   "sha256": "734c654745eca91e02b8982c9d03349f83d7e0ff2a09c9bb1852bf1f78e8df3f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Acopio-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/Acopio.svg",
+   "product": "geagro-cereales",
+   "set": "backoffice",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "color",
+   "format": "svg",
+   "name": "Acopio.svg",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/img/icons/Acopio.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3533,
+   "sha256": "79b0638d3aedbb211b3490717d68915251895e6d17eb4c438392dd4a451cef0f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Acopio.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Alert VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "alertas",
+   "module_label": "Alertas y avisos",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Alert VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Alert VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2160,
+   "sha256": "7336d7502386c1dd3c788d2d23f8764dc54d1ee6bba8b1d7063fa84b2ef9a0db",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Alert VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Alert VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Authentication VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "autenticacion",
+   "module_label": "Autenticación",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Authentication VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Authentication VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 4365,
+   "sha256": "d2aef2533ad7ca1ea2503ee09fecb71e9f9f082c02b308f57ae45223de1c05fe",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Authentication VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Authentication VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Calendar VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "calendario",
+   "module_label": "Calendario",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Calendar VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Calendar VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1875,
+   "sha256": "93c9084d963bf4d6aaa14bbcc019ac0017b24c537713996fbaf90896e5e1ab10",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Calendar VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Calendar VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Technical Plan VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "plan-tecnico",
+   "module_label": "Plan técnico",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Technical Plan VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Technical Plan VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3803,
+   "sha256": "d67cddeee1406bbeb09abd3cfa2125b9d753a411ecba88805202e2fa32b8453e",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Technical Plan VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Technical Plan VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Ventas VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "ventas",
+   "module_label": "Ventas",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Ventas VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Ventas VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2217,
+   "sha256": "1bd613540fc228f85b7ef95e1032436bd8b599264faf72ac04c55a5202a33dbc",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Ventas VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Ventas VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Viñedos VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "vinedos",
+   "module_label": "Mis viñedos",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Viñedos VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Viñedos VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2320,
+   "sha256": "03459319221b0026a8aa5102f428e12d8ce0a5e62f0a323efe96533eb99e0413",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Viñedos VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Viñedos VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/GEAGRO - Weather VID.svg",
+   "product": "geagro",
+   "set": "vid",
+   "module": "clima",
+   "module_label": "Clima",
+   "variant": "tile-vid",
+   "format": "svg",
+   "name": "GEAGRO - Weather VID.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/GEAGRO - Weather VID.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2892,
+   "sha256": "f7b39589d0174cf7aa3912334e033174625a683c96b2047af16692cf8d7c2e74",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/GEAGRO - Weather VID.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/GEAGRO - Weather VID.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio Simple.png",
+   "product": "geagro-cereales",
+   "set": "png",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Acopio Simple.png",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2546,
+   "sha256": "0b2ea6cec8c7e3cf88e3f994f6bb5881cef8279c56b90e7409e8a6779707487e",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio white.png",
+   "product": "geagro-cereales",
+   "set": "png",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "white-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Acopio white.png",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio white.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1910,
+   "sha256": "4cca74ca5995569f9a318525e0f73fea2cb292c37211cb8f1d2247d5bfcc0854",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio white.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio.png",
+   "product": "geagro-cereales",
+   "set": "png",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Acopio.png",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3951,
+   "sha256": "04811f8846a32bbadc0d3cf73e7cb510f63ca5a985079af40ee42749b6f912c1",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Acopio.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "autenticacion",
+   "module_label": "Autenticación",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Autentificacion Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3755,
+   "sha256": "8610b355a791867a98dec7ab5ae91dff3737a7e7e76843aac8d703d7d72f6774",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "autenticacion",
+   "module_label": "Autenticación",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Autentificacion.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 4874,
+   "sha256": "a9f14824a7ece1f3670b87672c0647fcab50bb9e46ba2d1856a38bb6ccd0d14b",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Autentificacion.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "campos",
+   "module_label": "Mis campos",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Campo Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2243,
+   "sha256": "dfac71bf4a557a4e168681061a1e1ce626b4f3a44cbeaf63ab293a16a2143677",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "campos",
+   "module_label": "Mis campos",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Campo.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3423,
+   "sha256": "341656612760f30146edb1681e4e05abbfdd50b4bb5f8629fea573414304c036",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Campo.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "compras",
+   "module_label": "Compras",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Compras Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1353,
+   "sha256": "e27525628ac7989915d4712819e296fe9d7cbdea90113504476a522ac92ba7a9",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "compras",
+   "module_label": "Compras",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Compras.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1825,
+   "sha256": "95b00ff1471fe3cdd21a7eac9714f1115b508ee97cff4e3b10359e0d7a448928",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Compras.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "control",
+   "module_label": "Control",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Control Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2812,
+   "sha256": "9b28a9fe3155d3d62d6a82d64caf9b70257851b7e5f2c8dffa84f40fb77cddc4",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "control",
+   "module_label": "Control",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Control.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3335,
+   "sha256": "c7d63b3a5e69220b2bbd50122104b262e232f4cede4aed33a9bd24dcfe342585",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Control.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "informes",
+   "module_label": "Informes (gráficos)",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Gráficos Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2565,
+   "sha256": "1657a020c846d15c13bc8343a65e69707edd0a16d821c266da021e1dfce3b335",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "informes",
+   "module_label": "Informes (gráficos)",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Gráficos.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3131,
+   "sha256": "d7756fe16162be040eca58391cd2747e7e9bcfb57885dbc82e66ee298f0bd487",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Gráficos.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Insumos.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "insumos",
+   "module_label": "Insumos",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Insumos.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Insumos.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3429,
+   "sha256": "be2794aa479d408fd08526d44a001293747dc3e32cee4579303e5e1cb5e6735a",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Insumos.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Insumos.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "operaciones",
+   "module_label": "Operaciones",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Operaciones Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2381,
+   "sha256": "de47313ce7ab2b6a4f1fbcb5da1bdcdb66ba9b49ae88d1c24ffdc754f74db6ab",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "operaciones",
+   "module_label": "Operaciones",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Operaciones.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3454,
+   "sha256": "6725a146e851d87a3ccc5e9baf54836e990c3d11a26ac505babbf7a365b39a68",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Operaciones.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "parametros",
+   "module_label": "Parámetros",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Parámetros Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2607,
+   "sha256": "5be8677cca433d377afa58779d6cec277cac5e4abeb177d8d2509034a6ed26a5",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "parametros",
+   "module_label": "Parámetros",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Parámetros.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3201,
+   "sha256": "fcb8f9b9b10ab098eb472b6ffb6a2e1627567ca3324f974d882a84d1676986f0",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Parámetros.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Productores.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "productores",
+   "module_label": "Productores",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Productores.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Productores.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 4458,
+   "sha256": "434213b88400824fd6d4ce63486bf6d63d431f0cac9904476eb027a72d5a58d8",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Productores.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Productores.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte Simple.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "transporte",
+   "module_label": "Transporte",
+   "variant": "simple-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Transporte Simple.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte Simple.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2497,
+   "sha256": "a8889d1f9093883d128c8e01c6a9506cac77a5c58f96d5c3578a8834b42679ff",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte Simple.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte Simple.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte.png",
+   "product": "geagro",
+   "set": "png",
+   "module": "transporte",
+   "module_label": "Transporte",
+   "variant": "tile-png",
+   "format": "png",
+   "name": "GEAGRO - Icon Transporte.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3048,
+   "sha256": "0ba72b36a1d9e89708ab48d7bedf3c67134c0572a820ebbf26b38ce98f8b6c71",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO - Icon Transporte.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/GEAGRO Isologo dark.png",
+   "product": "geagro",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "png",
+   "name": "GEAGRO Isologo dark.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/GEAGRO Isologo dark.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 21857,
+   "sha256": "264c6b77c7f301b34a097a1e75fd836012c3deb5ba01c372d95b2a7932e29d26",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO Isologo dark.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/GEAGRO Isologo dark.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/Isologo e Iconos PNG/Mesa de trabajo 6.png",
+   "product": "geagro",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "png",
+   "name": "Mesa de trabajo 6.png",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/Isologo e Iconos PNG/Mesa de trabajo 6.png",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 21431,
+   "sha256": "45d8cc95f8d9ac2a4855a7dd14d5f4873238f25e599b0931c57fc15b6ceb76f6",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/Mesa de trabajo 6.png"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/Isologo e Iconos PNG/Mesa de trabajo 6.png"
+    }
+   ]
+  },
+  {
+   "id": "geagro-cereales/img/icons/acopio-simple.svg",
+   "product": "geagro-cereales",
+   "set": "backoffice",
+   "module": "acopio",
+   "module_label": "Acopio",
+   "variant": "simple",
+   "format": "svg",
+   "name": "acopio-simple.svg",
+   "file": "geneos_ui/icons/geagro-cereales/disponibles/img/icons/acopio-simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2813,
+   "sha256": "5c002ca84b209cdb4a72ecc0e05a294d8bf864817bae950f66b3e1ea9b502206",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/acopio-simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/alert simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "alertas",
+   "module_label": "Alertas y avisos",
+   "variant": "simple",
+   "format": "svg",
+   "name": "alert simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/alert simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1459,
+   "sha256": "9d4d623532fdb0968a2abc55a7240752dc7c06c4772abab6d0c2ef7368f4c3aa",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/alert simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/alert simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/alert.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "alertas",
+   "module_label": "Alertas y avisos",
+   "variant": "white",
+   "format": "svg",
+   "name": "alert.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/alert.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:407",
+    "Vid: agro_system/static/css/jazzmin_custom.css:402"
+   ],
+   "kit_use": [],
+   "bytes": 852,
+   "sha256": "0e194f3e46ddc3be98bc280c560308b6b6db0330878f27a4a48c41054343805b",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/alert.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/alert.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/authentication simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "autenticacion",
+   "module_label": "Autenticación",
+   "variant": "simple",
+   "format": "svg",
+   "name": "authentication simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/authentication simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3678,
+   "sha256": "360bfd855e97292c0b062ff323a60cf766e870007ad798179c4dac521dbedbd4",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/authentication simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/authentication simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/authentication.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "autenticacion",
+   "module_label": "Autenticación",
+   "variant": "white",
+   "format": "svg",
+   "name": "authentication.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/authentication.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:334",
+    "Vid: agro_system/static/css/jazzmin_custom.css:329"
+   ],
+   "kit_use": [],
+   "bytes": 2829,
+   "sha256": "766fe58424f860d5084a601d397b81020f5d60a2ba7db8ddfaed193362670fd8",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/authentication.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/authentication.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/calendar simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "calendario",
+   "module_label": "Calendario",
+   "variant": "simple",
+   "format": "svg",
+   "name": "calendar simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/calendar simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1279,
+   "sha256": "27972ccab25d76a290bf5541951cdb8f9c282b19c49449089a5ad00f90b4617a",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/calendar simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/calendar simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/calendar.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "calendario",
+   "module_label": "Calendario",
+   "variant": "white",
+   "format": "svg",
+   "name": "calendar.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/calendar.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 878,
+   "sha256": "652310745baf9480130ebd43a0fc98377b99ac630288aa4e6658e001a5150a33",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/calendar.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/calendar.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/configuracion simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "configuracion",
+   "module_label": "Configuración",
+   "variant": "simple",
+   "format": "svg",
+   "name": "configuracion simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/configuracion simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3848,
+   "sha256": "fac5b30c0b0318e49ae2b59ff6b7f4af85cba654cf0b1ecc289bb0acabd5c2fc",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/configuracion simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/configuracion simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/configuracion.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "configuracion",
+   "module_label": "Configuración",
+   "variant": "white",
+   "format": "svg",
+   "name": "configuracion.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/configuracion.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:338",
+    "Vid: agro_system/static/css/jazzmin_custom.css:333"
+   ],
+   "kit_use": [],
+   "bytes": 3490,
+   "sha256": "a0b81029801d2f9d21efcdb2e9fb7aeb9730a40335fb9fa18a239145bf65f1fb",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/configuracion.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/configuracion.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/dashboard simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "dashboard",
+   "module_label": "Dashboard",
+   "variant": "simple",
+   "format": "svg",
+   "name": "dashboard simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/dashboard simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2777,
+   "sha256": "2256f9086be162b1aa88e600902289553a2a77e26c23f75a540f8d8048a811b0",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/dashboard simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/dashboard simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/dashboard.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "dashboard",
+   "module_label": "Dashboard",
+   "variant": "white",
+   "format": "svg",
+   "name": "dashboard.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/dashboard.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:342",
+    "Cereales: agro_system/static/css/jazzmin_custom.css:356",
+    "Cereales: agro_system/static/css/jazzmin_custom.css:383",
+    "Vid: agro_system/static/css/jazzmin_custom.css:337",
+    "Vid: agro_system/static/css/jazzmin_custom.css:351",
+    "Vid: agro_system/static/css/jazzmin_custom.css:378"
+   ],
+   "kit_use": [],
+   "bytes": 1694,
+   "sha256": "39426c4f23ca084c739f67ec55dd54bfc33fd7b38921b91273fe748b29c799fd",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/dashboard.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/dashboard.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/insumos simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "insumos",
+   "module_label": "Insumos",
+   "variant": "simple",
+   "format": "svg",
+   "name": "insumos simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/insumos simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3082,
+   "sha256": "d7426e46bd18efe01bb6230acaa390b22a0c84da9e62be2243cac5b7fb4a8698",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/insumos simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/insumos simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/insumos.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "insumos",
+   "module_label": "Insumos",
+   "variant": "white",
+   "format": "svg",
+   "name": "insumos.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/insumos.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:306",
+    "Vid: agro_system/static/css/jazzmin_custom.css:305"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 2083,
+   "sha256": "d8ac96a616d184f716762303675609f1e502de7fe47e32b8ef12da68f39ae9d6",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/insumos.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/insumos.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/operaciones icon.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "operaciones",
+   "module_label": "Operaciones",
+   "variant": "simple-alt",
+   "format": "svg",
+   "name": "operaciones icon.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/operaciones icon.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2042,
+   "sha256": "7804d32829baff378d23851d5dbdefae8ef83625526ac210eebf413c0597e0c3",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/operaciones icon.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/operaciones icon.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/operaciones simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "operaciones",
+   "module_label": "Operaciones",
+   "variant": "simple",
+   "format": "svg",
+   "name": "operaciones simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/operaciones simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2042,
+   "sha256": "7804d32829baff378d23851d5dbdefae8ef83625526ac210eebf413c0597e0c3",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/operaciones simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/operaciones simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/operaciones.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "operaciones",
+   "module_label": "Operaciones",
+   "variant": "white",
+   "format": "svg",
+   "name": "operaciones.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/operaciones.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:310",
+    "Vid: agro_system/static/css/jazzmin_custom.css:309"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1672,
+   "sha256": "87e3d0ea66c1a2395bf402ee12113f331b527533af45b46111af3f06a9aeeadd",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/operaciones.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/operaciones.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/parametros simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "parametros",
+   "module_label": "Parámetros",
+   "variant": "simple",
+   "format": "svg",
+   "name": "parametros simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/parametros simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2601,
+   "sha256": "7ea1ad8d374d7e997343114076661d5b039ecadf3ccb443048bc122713d681c3",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/parametros simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/parametros simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/parametros.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "parametros",
+   "module_label": "Parámetros",
+   "variant": "white",
+   "format": "svg",
+   "name": "parametros.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/parametros.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:314",
+    "Vid: agro_system/static/css/jazzmin_custom.css:313"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 2205,
+   "sha256": "63e7fde4f8ec85a82f14c25e9fb01e15d73618d7c449299e6eaee9e04eb25120",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/parametros.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/parametros.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/producer simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "productores",
+   "module_label": "Productores",
+   "variant": "simple",
+   "format": "svg",
+   "name": "producer simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/producer simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3349,
+   "sha256": "352ed1ae6ff290dfafe5d5d63bb38ae6262adcae290b063ac54f19eb63f5f721",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/producer simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/producer simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/producer.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "productores",
+   "module_label": "Productores",
+   "variant": "white",
+   "format": "svg",
+   "name": "producer.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/producer.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:302",
+    "Vid: agro_system/static/css/jazzmin_custom.css:301"
+   ],
+   "kit_use": [],
+   "bytes": 2313,
+   "sha256": "c32654c0af9956988a7335c61f6f1f3ac2b2c3847dd1eefe0d9e32f87e430e0d",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/producer.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/producer.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/technical_plan simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "plan-tecnico",
+   "module_label": "Plan técnico",
+   "variant": "simple",
+   "format": "svg",
+   "name": "technical_plan simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/technical_plan simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 3132,
+   "sha256": "0fb08772bb7c73445654d07794632851035d1fc69f2f51e65b07f74861716c3f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/technical_plan simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/technical_plan simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/technical_plan.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "plan-tecnico",
+   "module_label": "Plan técnico",
+   "variant": "white",
+   "format": "svg",
+   "name": "technical_plan.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/technical_plan.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1123,
+   "sha256": "b6ead5b2e86f82551bc1148d44c26b1a3720c418205e2bb91daa2945578f62eb",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/technical_plan.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/technical_plan.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/user simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "usuarios",
+   "module_label": "Usuarios",
+   "variant": "simple",
+   "format": "svg",
+   "name": "user simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/user simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2655,
+   "sha256": "344a833a4803a9173b3f67bb8f796e5ffdd82b1c6ad9bf81e9b16277ee640b82",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/user simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/user simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/user.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "usuarios",
+   "module_label": "Usuarios",
+   "variant": "white",
+   "format": "svg",
+   "name": "user.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/user.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:330",
+    "Vid: agro_system/static/css/jazzmin_custom.css:325"
+   ],
+   "kit_use": [],
+   "bytes": 1600,
+   "sha256": "a10844592f6ef51c06fca8d3f71d6aa613b953d698815299133ae5b42ca2fc4a",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/user.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/user.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/ventas simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "ventas",
+   "module_label": "Ventas",
+   "variant": "simple",
+   "format": "svg",
+   "name": "ventas simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/ventas simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1453,
+   "sha256": "ebb5e57c3382fb68eb2f1ccace395c0eaedd9e06ff3187c2b513e9848a015fc0",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/ventas simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/ventas simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/ventas.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "ventas",
+   "module_label": "Ventas",
+   "variant": "white",
+   "format": "svg",
+   "name": "ventas.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/ventas.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:318",
+    "Vid: agro_system/static/css/jazzmin_custom.css:317"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1149,
+   "sha256": "7f264bad90106eafa30ff0a2c4ea8ab8c5c143fa68623a8d41176c6f817f09cf",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/ventas.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/ventas.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/vinedos simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "vinedos",
+   "module_label": "Mis viñedos",
+   "variant": "simple",
+   "format": "svg",
+   "name": "vinedos simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/vinedos simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1686,
+   "sha256": "37fe61e61a209abf55374d9a737e3f9340b34598bcd43334e3ab784cac0bd964",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/vinedos simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/vinedos simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/vinedos.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "vinedos",
+   "module_label": "Mis viñedos",
+   "variant": "white",
+   "format": "svg",
+   "name": "vinedos.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/vinedos.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1297,
+   "sha256": "2efff6cc55271e16328a3dd4469e56616ec92638f12f5180d14c31f13949a67d",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/vinedos.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/vinedos.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/weather simple.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "clima",
+   "module_label": "Clima",
+   "variant": "simple",
+   "format": "svg",
+   "name": "weather simple.svg",
+   "file": "geneos_ui/icons/geagro/disponibles/img/icons/weather simple.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 2195,
+   "sha256": "0b2e3840a551f519889f8172f21af6cdc97acf46ef34ca60fac86ad3e34c3b4b",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/weather simple.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/weather simple.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro/img/icons/weather.svg",
+   "product": "geagro",
+   "set": "backoffice",
+   "module": "clima",
+   "module_label": "Clima",
+   "variant": "white",
+   "format": "svg",
+   "name": "weather.svg",
+   "file": "geneos_ui/icons/geagro/activos/img/icons/weather.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "Cereales: agro_system/static/css/jazzmin_custom.css:403",
+    "Vid: agro_system/static/css/jazzmin_custom.css:398"
+   ],
+   "kit_use": [],
+   "bytes": 1111,
+   "sha256": "0e2d18e17b8ed404619e18945ad4d9bb601d655fc751e9c8b9f9f750c9c74a6f",
+   "source": [
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-cereales",
+     "commit": "25fdfa8",
+     "path": "agro_system/static/img/icons/weather.svg"
+    },
+    {
+     "repo": "sorensenclara/geneos-geagro",
+     "branch": "2026-vid",
+     "commit": "bd5da7d",
+     "path": "agro_system/static/img/icons/weather.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/Iso GELETRIC.svg",
+   "product": "gelectric",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "svg",
+   "name": "Iso GELETRIC.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/Iso GELETRIC.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:24"
+   ],
+   "kit_use": [],
+   "bytes": 1772,
+   "sha256": "128b92d65586e6178cee0af9c4dca752eeee2fb0a0778c05bc7d9d4de7b5b9b5",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/Iso GELETRIC.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/Isologotipo GELETRIC Color.svg",
+   "product": "gelectric",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "svg",
+   "name": "Isologotipo GELETRIC Color.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/Isologotipo GELETRIC Color.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/login.html:9"
+   ],
+   "kit_use": [],
+   "bytes": 20601,
+   "sha256": "3f6bef3111e17b832c3bef2efb3cb0c909a5e4db622c5e68516dc8f7e0ab83e4",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/Isologotipo GELETRIC Color.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/Isologotipo GELETRIC white.svg",
+   "product": "gelectric",
+   "set": "marca",
+   "module": "marca",
+   "module_label": "Marca",
+   "variant": "isologo",
+   "format": "svg",
+   "name": "Isologotipo GELETRIC white.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/Isologotipo GELETRIC white.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:23"
+   ],
+   "kit_use": [],
+   "bytes": 11273,
+   "sha256": "18b3d7a463340cb6ae1b94f404bcf6f55c9a10650906be2bb219f3e7c7d8b01c",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/Isologotipo GELETRIC white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Abastecimiento.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "abastecimiento",
+   "module_label": "Abastecimiento",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Abastecimiento.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Abastecimiento.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:38"
+   ],
+   "kit_use": [],
+   "bytes": 1499,
+   "sha256": "2f173a8a14f53f3491f55480a7864931590518270b7c69c93fc12beed9be69b8",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Abastecimiento.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Asociados y Servicio.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "asociados",
+   "module_label": "Asociados y servicios",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Asociados y Servicio.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Asociados y Servicio.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:21"
+   ],
+   "kit_use": [],
+   "bytes": 2358,
+   "sha256": "762aed43a362dda4ce7e9d8f927f8b295b9e46e158063b7cc7d0897f7639423c",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Asociados y Servicio.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Comercial.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "comercial",
+   "module_label": "Comercial",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Comercial.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Comercial.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:78"
+   ],
+   "kit_use": [],
+   "bytes": 1786,
+   "sha256": "8977e84026c4f5276f5658dccfa28a9ec2e2044b937de174b7f44e2c97deca99",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Comercial.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Consumo.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "consumo",
+   "module_label": "Consumo",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Consumo.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Consumo.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:163"
+   ],
+   "kit_use": [],
+   "bytes": 1977,
+   "sha256": "a8de4a135d588ce2fcc959d513bcc65d22dd6eaae90e86c2deed05849311abea",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Consumo.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Contabilidad.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "contabilidad",
+   "module_label": "Contabilidad y Finanzas",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Contabilidad.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Contabilidad.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:59"
+   ],
+   "kit_use": [],
+   "bytes": 1920,
+   "sha256": "9d99a1606b44218c01359f5575d018634d122d149bef4428915d1465e9593e4f",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Contabilidad.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Impuestos.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "impuestos",
+   "module_label": "Impuestos",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Impuestos.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Impuestos.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:112"
+   ],
+   "kit_use": [],
+   "bytes": 1432,
+   "sha256": "6a0e4c38f3575acd23e85bbdbd4eca7252dcceabbc61a4b7f8c56e2ac7109ecf",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Impuestos.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Integraciones.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "integraciones",
+   "module_label": "Integraciones",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Integraciones.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Integraciones.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:146"
+   ],
+   "kit_use": [],
+   "bytes": 1483,
+   "sha256": "a8d41b54952c2da2632f851b18a0eff687c5c897dcedb0a471cf32484cd2aa9e",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Integraciones.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Reportes.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "reportes",
+   "module_label": "Reportes",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Reportes.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Reportes.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:98"
+   ],
+   "kit_use": [],
+   "bytes": 1643,
+   "sha256": "f417d397ff9489c272148322a0d4cf61164d3e7ebf80a282b166e32023152157",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Reportes.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Sueldos.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "sueldos",
+   "module_label": "Sueldos",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Sueldos.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Sueldos.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:127"
+   ],
+   "kit_use": [],
+   "bytes": 3644,
+   "sha256": "d24e09e90bff498e9fadbac48c4411ca0980353dc281b3bf7a35fc6fc2f62092",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Sueldos.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon - Tecnico.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "tecnico",
+   "module_label": "Técnico",
+   "variant": "tile",
+   "format": "svg",
+   "name": "icon - Tecnico.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Tecnico.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/modules_data.py:180"
+   ],
+   "kit_use": [],
+   "bytes": 4070,
+   "sha256": "6a43c2760f2b2e87ee641c4f2618c4a628f440bd8bea86b032518c9b1ffe5fd0",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon - Tecnico.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white - Contabilidad.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "contabilidad",
+   "module_label": "Contabilidad y Finanzas",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white - Contabilidad.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white - Contabilidad.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:60"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1537,
+   "sha256": "2a56941f8136682bba12ebcf06023a8968e57312e6b55fd25659ab4b7712e5e6",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white - Contabilidad.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Abastecimiento.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "abastecimiento",
+   "module_label": "Abastecimiento",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Abastecimiento.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Abastecimiento.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:39"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 783,
+   "sha256": "dcf2a50bff8c034d51e8c2cf10e3490dbcf431d6a4a913f4d1069b7dad7c4074",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Abastecimiento.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Asociados y Servicio.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "asociados",
+   "module_label": "Asociados y servicios",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Asociados y Servicio.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Asociados y Servicio.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:22"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1654,
+   "sha256": "797d14a8bdae888ce85b0d0bd0cf8d352442bc40d6405af434fb67fff104ffc8",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Asociados y Servicio.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Comercial.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "comercial",
+   "module_label": "Comercial",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Comercial.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Comercial.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:79"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1321,
+   "sha256": "716e44923bcd2995ba9d1c7034514457d96983bf2f7b3db9c246ef6158ae0e64",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Comercial.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Consumo.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "consumo",
+   "module_label": "Consumo",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Consumo.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Consumo.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:164"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1505,
+   "sha256": "dba890ad3f402a28f7af46d82f03d120fbc922d97dd276c72af5e37c45ed5cf0",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Consumo.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Impuestos.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "impuestos",
+   "module_label": "Impuestos",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Impuestos.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Impuestos.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:113"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1256,
+   "sha256": "4fcca57307a7837351f781c5f4a9ff9b6f69c17d37f99dbf7b87f246ce683ea4",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Impuestos.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Integraciones.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "integraciones",
+   "module_label": "Integraciones",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Integraciones.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Integraciones.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:147"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1466,
+   "sha256": "4c179cbe73ce95b455d74d67321ed7c6a298ca1688aab4c6921292dc159a327d",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Integraciones.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Reportes.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "reportes",
+   "module_label": "Reportes",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Reportes.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Reportes.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:99"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1231,
+   "sha256": "0a93f05f92a6ecb9220babe03bdbed73bcec7bf86b3666a1cce35484961435ef",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Reportes.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Sueldos.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "sueldos",
+   "module_label": "Sueldos",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Sueldos.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Sueldos.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:128"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 3163,
+   "sha256": "ea1514131103cc4934a04c9ef3e7372af173654125c4c9d8ce524c09151009d7",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Sueldos.svg"
+    }
+   ]
+  },
+  {
+   "id": "gelectric/SVG/icon white -Tecnico.svg",
+   "product": "gelectric",
+   "set": "modulos",
+   "module": "tecnico",
+   "module_label": "Técnico",
+   "variant": "white",
+   "format": "svg",
+   "name": "icon white -Tecnico.svg",
+   "file": "geneos_ui/icons/gelectric/activos/SVG/icon white -Tecnico.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/modules_data.py:181"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 2943,
+   "sha256": "869f87286a491a8cb53eba019d2c7d1bdf0f878874c4ba47fa18402342754f75",
+   "source": [
+    {
+     "repo": "sorensenclara/geletric-django",
+     "branch": "2026",
+     "commit": "3772f02",
+     "path": "core/static/core/images/SVG/icon white -Tecnico.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/clientes-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "clientes",
+   "module_label": "Clientes",
+   "variant": "active",
+   "format": "svg",
+   "name": "clientes-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/clientes-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:74"
+   ],
+   "kit_use": [],
+   "bytes": 2079,
+   "sha256": "50560bfc43df08688d453d51411ba010c22dfc19aec32dd0d80015fd16577d41",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/clientes-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/clientes-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "clientes",
+   "module_label": "Clientes",
+   "variant": "white",
+   "format": "svg",
+   "name": "clientes-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/clientes-white.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/templates/core/dashboard.html:35"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1592,
+   "sha256": "b50270d1fa0c94cdff17de6035579216a0edf58f1d350017ff47db6f53ecdd13",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/clientes-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/clientes.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "clientes",
+   "module_label": "Clientes",
+   "variant": "base",
+   "format": "svg",
+   "name": "clientes.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/clientes.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:74",
+    "core/templates/core/dashboard.html:257"
+   ],
+   "kit_use": [],
+   "bytes": 2079,
+   "sha256": "320775b374487bc0a5f0cbd3bc7abda1b6c81b4793256c8ba097d4804ddce134",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/clientes.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/compañia-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "compania",
+   "module_label": "Mi compañía",
+   "variant": "active",
+   "format": "svg",
+   "name": "compañia-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/compañia-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:102"
+   ],
+   "kit_use": [],
+   "bytes": 2859,
+   "sha256": "2ef9cf4d7c8ffb7d8b33d13e4716736ed17946e003acf91816a52b2119b2e14e",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/compañia-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/compañia-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "compania",
+   "module_label": "Mi compañía",
+   "variant": "white",
+   "format": "svg",
+   "name": "compañia-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/compañia-white.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 3565,
+   "sha256": "af5a7cb5c52f62f53f2b0fa5a0374c7bd21654c3243770c5b6fc9b340beb0c52",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/compañia-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/compañia.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "compania",
+   "module_label": "Mi compañía",
+   "variant": "base",
+   "format": "svg",
+   "name": "compañia.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/compañia.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:102",
+    "core/templates/core/base.html:43",
+    "core/templates/core/dashboard.html:263"
+   ],
+   "kit_use": [],
+   "bytes": 2859,
+   "sha256": "ac52296ccafc75e45e574150f33aff4eb3df56d1ea835e8d0b14981a57fb47cc",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/compañia.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/inicio-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "inicio",
+   "module_label": "Inicio",
+   "variant": "active",
+   "format": "svg",
+   "name": "inicio-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/inicio-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:67"
+   ],
+   "kit_use": [],
+   "bytes": 2293,
+   "sha256": "38cac0a79dfb86a1d1c594c56ec11893e0a19dbd5fce26dbab54fb500e8269fa",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/inicio-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/inicio-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "inicio",
+   "module_label": "Inicio",
+   "variant": "white",
+   "format": "svg",
+   "name": "inicio-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/inicio-white.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1633,
+   "sha256": "888d1475c86db6f1bf12bc87e5c91aa66cad336be6110618ebe4d0e7f30f4957",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/inicio-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/inicio.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "inicio",
+   "module_label": "Inicio",
+   "variant": "base",
+   "format": "svg",
+   "name": "inicio.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/inicio.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:67"
+   ],
+   "kit_use": [],
+   "bytes": 2293,
+   "sha256": "8498ea43b98c316be8e2feab9e6d7c2768b199875efb7f1169fac2527f4f545d",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/inicio.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/matafuego-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "matafuegos",
+   "module_label": "Matafuegos",
+   "variant": "active",
+   "format": "svg",
+   "name": "matafuego-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/matafuego-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:110",
+    "core/templates/core/base.html:79"
+   ],
+   "kit_use": [],
+   "bytes": 2112,
+   "sha256": "c552f2bc54ca6f0975561a7d25b0faea4c57c0218527b730cb1eed1dcef85239",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/matafuego-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/matafuego-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "matafuegos",
+   "module_label": "Matafuegos",
+   "variant": "white",
+   "format": "svg",
+   "name": "matafuego-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/matafuego-white.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/templates/core/dashboard.html:48"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1843,
+   "sha256": "8234d72a90cc2707b7e1a6eb22bf63418a1c4db5178e1ad3c28cbf34660d945f",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/matafuego-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/matafuego.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "matafuegos",
+   "module_label": "Matafuegos",
+   "variant": "base",
+   "format": "svg",
+   "name": "matafuego.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/matafuego.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:110",
+    "core/templates/core/base.html:79",
+    "core/templates/core/dashboard.html:258"
+   ],
+   "kit_use": [],
+   "bytes": 2112,
+   "sha256": "eeaff64e63670466f53e7158cae9d3be3508a56287f86391a6bba98ac8408f15",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/matafuego.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/ordenes de trabajo-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "ordenes",
+   "module_label": "Órdenes de trabajo",
+   "variant": "active",
+   "format": "svg",
+   "name": "ordenes de trabajo-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/ordenes de trabajo-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:84"
+   ],
+   "kit_use": [],
+   "bytes": 1876,
+   "sha256": "8b9e99f1292964c128d0debbb3d2aab3e484f2d813cf290d52e514b2852b9ba4",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/ordenes de trabajo-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/ordenes de trabajo-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "ordenes",
+   "module_label": "Órdenes de trabajo",
+   "variant": "white",
+   "format": "svg",
+   "name": "ordenes de trabajo-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/ordenes de trabajo-white.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/templates/core/dashboard.html:61"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1211,
+   "sha256": "4967e2cc073f5e3ff9a87f179680c82f83aaf5e443aec0f8331932fdb1629687",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/ordenes de trabajo-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/ordenes de trabajo.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "ordenes",
+   "module_label": "Órdenes de trabajo",
+   "variant": "base",
+   "format": "svg",
+   "name": "ordenes de trabajo.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/ordenes de trabajo.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:84",
+    "core/templates/core/dashboard.html:259"
+   ],
+   "kit_use": [],
+   "bytes": 1876,
+   "sha256": "56c167e83a78dabb4c70dd9ad0eccc5c80e9320b1cd6255d2bb6dbc7a64df4ff",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/ordenes de trabajo.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/tarea-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "tareas",
+   "module_label": "Tareas",
+   "variant": "active",
+   "format": "svg",
+   "name": "tarea-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/tarea-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:89"
+   ],
+   "kit_use": [],
+   "bytes": 1629,
+   "sha256": "cbcd8b80e56b74aa00b33bcde3232cf63c6c71cdd024c155ad1553b620e23964",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/tarea-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/tarea-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "tareas",
+   "module_label": "Tareas",
+   "variant": "white",
+   "format": "svg",
+   "name": "tarea-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/tarea-white.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1592,
+   "sha256": "e1f8eb52ded3b1ee0b71d08f7e91474e04d53871f9ab79757ebc7d745f332076",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/tarea-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/tarea.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "tareas",
+   "module_label": "Tareas",
+   "variant": "base",
+   "format": "svg",
+   "name": "tarea.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/tarea.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:89",
+    "core/templates/core/dashboard.html:260"
+   ],
+   "kit_use": [],
+   "bytes": 1629,
+   "sha256": "3e4f59bfdd5c366f7c62c3ca48d64d34f9774ddbf64da59cfa2cf6ca91d6aa4f",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/tarea.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/usuarios-active.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "usuarios",
+   "module_label": "Usuarios",
+   "variant": "active",
+   "format": "svg",
+   "name": "usuarios-active.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/usuarios-active.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:97"
+   ],
+   "kit_use": [],
+   "bytes": 1068,
+   "sha256": "75b68665dc65a197f8c986a79738f3cdd3fd6896569e12a3b501500ca41a8cf3",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/usuarios-active.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/usuarios-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "usuarios",
+   "module_label": "Usuarios",
+   "variant": "white",
+   "format": "svg",
+   "name": "usuarios-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/usuarios-white.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 912,
+   "sha256": "f181d9efefa197bc7afeb9f307545a79f7690ee15a8c46e112ad90349e80f3c1",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/usuarios-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/usuarios.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "usuarios",
+   "module_label": "Usuarios",
+   "variant": "base",
+   "format": "svg",
+   "name": "usuarios.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/usuarios.svg",
+   "status": "activo",
+   "usage": "producto",
+   "used_in": [
+    "core/templates/core/base.html:97",
+    "core/templates/core/dashboard.html:262"
+   ],
+   "kit_use": [],
+   "bytes": 1068,
+   "sha256": "027c8a27a542b597441d88c0d214421a066c9d62a87592f64408006a9ca2b3b5",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/usuarios.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/vencimientos-white.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "vencimientos",
+   "module_label": "Vencimientos",
+   "variant": "white",
+   "format": "svg",
+   "name": "vencimientos-white.svg",
+   "file": "geneos_ui/icons/gema/activos/iconos/vencimientos-white.svg",
+   "status": "activo",
+   "usage": "producto y GENEOS UI",
+   "used_in": [
+    "core/templates/core/dashboard.html:74"
+   ],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 1037,
+   "sha256": "8d75a45fc6c2ab90e5d7eb9c77a4d66675306c4135f7577effb3cb22f3e75170",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/vencimientos-white.svg"
+    }
+   ]
+  },
+  {
+   "id": "gema/iconos/vencimientos.svg",
+   "product": "gema",
+   "set": "menu",
+   "module": "vencimientos",
+   "module_label": "Vencimientos",
+   "variant": "base",
+   "format": "svg",
+   "name": "vencimientos.svg",
+   "file": "geneos_ui/icons/gema/disponibles/iconos/vencimientos.svg",
+   "status": "disponible",
+   "usage": "sin uso",
+   "used_in": [],
+   "kit_use": [],
+   "bytes": 1143,
+   "sha256": "91fc201ca19fc730b41cd05913d5015dbbadb488d531448abc043410784beddc",
+   "source": [
+    {
+     "repo": "sorensenclara/GEMA",
+     "branch": "2026",
+     "commit": "4ff87ef",
+     "path": "core/static/core/images/iconos/vencimientos.svg"
+    }
+   ]
+  },
+  {
+   "id": "geagro-vid/pendiente/fenologia",
+   "product": "geagro-vid",
+   "set": "portal",
+   "module": "fenologia",
+   "module_label": "Fenología",
+   "variant": "white",
+   "format": "svg",
+   "name": null,
+   "file": null,
+   "status": "pendiente",
+   "usage": "pendiente de diseño",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 0,
+   "sha256": null,
+   "source": [],
+   "note": "El portal usa mdi mdi-sprout-outline. Pendiente de diseño (decisión del 26/10/2026)."
+  },
+  {
+   "id": "geagro-vid/pendiente/monitoreo",
+   "product": "geagro-vid",
+   "set": "portal",
+   "module": "monitoreo",
+   "module_label": "Monitoreo de cultivo",
+   "variant": "white",
+   "format": "svg",
+   "name": null,
+   "file": null,
+   "status": "pendiente",
+   "usage": "pendiente de diseño",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 0,
+   "sha256": null,
+   "source": [],
+   "note": "Sin ícono propio. Pendiente de diseño (decisión del 26/10/2026)."
+  },
+  {
+   "id": "geagro-vid/pendiente/informes",
+   "product": "geagro-vid",
+   "set": "portal",
+   "module": "informes",
+   "module_label": "Informes (gráficos)",
+   "variant": "white",
+   "format": "svg",
+   "name": null,
+   "file": null,
+   "status": "pendiente",
+   "usage": "pendiente de diseño",
+   "used_in": [],
+   "kit_use": [
+    "sidebar"
+   ],
+   "bytes": 0,
+   "sha256": null,
+   "source": [],
+   "note": "Falta la versión SVG blanca o monocromática. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible; no se usa en el sidebar (decisión del 26/10/2026). El portal usa mdi mdi-chart-bar."
+  }
+ ]
+}

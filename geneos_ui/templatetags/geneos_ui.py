@@ -19,6 +19,7 @@ from django.templatetags.static import static
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
+from .. import product_icons
 from ..conf import get_config
 
 register = template.Library()
@@ -68,6 +69,27 @@ def gn_icon(name, css_class="", label=""):
     if label:
         return format_html('<svg class="gn-icon {}" role="img" aria-label="{}"><use href="#{}"/></svg>', css_class, label, name)
     return format_html('<svg class="gn-icon {}" aria-hidden="true"><use href="#{}"/></svg>', css_class, name)
+
+
+@register.simple_tag
+def gn_nav_icon(entry):
+    """Ícono de un ítem del sidebar: original del producto, pendiente o del sprite."""
+    if entry.get("icon_static"):
+        return format_html('<img class="gn-nav__icon-img" src="{}" alt="">', static(entry["icon_static"]))
+    if entry.get("icon_pending"):
+        return mark_safe('<span class="gn-nav__icon-pending" title="Ícono pendiente de diseño" aria-hidden="true"></span>')
+    return gn_icon(entry.get("icon") or "i-file")
+
+
+@register.simple_tag
+def gn_product_icon(ref, variant="white", css_class="", label=""):
+    """{% gn_product_icon "gema:clientes" "base" %} → <img> con el archivo original."""
+    if not product_icons.is_product_ref(ref):
+        return gn_icon(ref, css_class, label)
+    rec = product_icons.resolve(ref, variant)
+    if not rec or not rec["file"]:
+        return format_html('<span class="gn-product-icon gn-product-icon--pending {}" title="Ícono pendiente de diseño"></span>', css_class)
+    return format_html('<img class="gn-product-icon {}" src="{}" alt="{}">', css_class, static(rec["file"]), label)
 
 
 @register.simple_tag

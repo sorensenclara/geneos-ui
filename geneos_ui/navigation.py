@@ -16,11 +16,11 @@ Ejemplo::
 
     def get_nav(request):
         return [
-            NavItem("Inicio", url="core:home", icon="i-home"),
+            NavItem("Inicio", url="core:home", icon="gema:inicio"),
             NavSection("Gestión"),
-            NavItem("Clientes", url="cliente:list", icon="i-users",
+            NavItem("Clientes", url="cliente:list", icon="gema:clientes",
                     visible=lambda r: r.user.is_company_admin or r.user.is_operador),
-            NavItem("Matafuegos", icon="i-extinguisher", children=[
+            NavItem("Matafuegos", icon="gema:matafuegos", children=[
                 NavItem("Listado", url="matafuegos:list"),
                 NavItem("Vencimientos", url="matafuegos:panel-vencimientos",
                         keywords="vencidos por vencer avisos whatsapp"),
@@ -35,6 +35,8 @@ from typing import Any, Callable, Optional
 from django.urls import NoReverseMatch, reverse
 from django.utils.text import slugify
 
+from . import product_icons
+
 
 @dataclass
 class NavItem:
@@ -42,8 +44,8 @@ class NavItem:
     url: Optional[str] = None            # nombre de URL ("app:vista") o ruta ("/x/")
     url_args: tuple = ()
     url_kwargs: dict = field(default_factory=dict)
-    icon: Optional[str] = None           # id del sprite, p. ej. "i-users"
-    icon_static: Optional[str] = None    # SVG propio del producto (ruta de static)
+    icon: Optional[str] = None           # "i-users" (sprite, acciones) o "gema:clientes" (ícono original del producto)
+    icon_static: Optional[str] = None    # ruta de static de un ícono propio que no está en el manifiesto
     children: list = field(default_factory=list)
     perms: tuple = ()                    # permisos de Django requeridos (todos)
     visible: Optional[Callable[[Any], bool]] = None
@@ -59,6 +61,21 @@ class NavSection:
     label: str
     perms: tuple = ()
     visible: Optional[Callable[[Any], bool]] = None
+
+
+def _icon_fields(entry) -> dict:
+    """Resuelve "producto:módulo" contra el manifiesto de íconos originales.
+
+    Si el producto no tiene ícono propio para ese módulo (estado "pendiente")
+    se marca como pendiente: el sidebar muestra un marcador neutro, no un
+    ícono genérico.
+    """
+    if product_icons.is_product_ref(entry.icon):
+        rec = product_icons.resolve(entry.icon)
+        if rec and rec["file"]:
+            return {"icon": None, "icon_static": rec["file"], "icon_pending": False, "icon_ref": entry.icon}
+        return {"icon": None, "icon_static": None, "icon_pending": True, "icon_ref": entry.icon}
+    return {"icon": entry.icon, "icon_static": entry.icon_static, "icon_pending": False, "icon_ref": None}
 
 
 def _allowed(entry, request) -> bool:
@@ -141,8 +158,7 @@ def build_nav(entries, request) -> list[dict]:
             "id": entry.id or uid(entry.label),
             "label": entry.label,
             "href": href,
-            "icon": entry.icon,
-            "icon_static": entry.icon_static,
+            **_icon_fields(entry),
             "keywords": entry.keywords,
             "badge": entry.badge,
             "children": children,

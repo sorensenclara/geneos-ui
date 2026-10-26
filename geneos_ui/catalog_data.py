@@ -14,59 +14,59 @@ def _children(base, labels):
 def nav_gelectric(request=None):
     return [
         NavItem("Inicio", url="#inicio", icon="i-home"),
-        NavItem("Asociados y servicios", icon="i-users", keywords="socios padrón", children=_children("asoc", [
+        NavItem("Asociados y servicios", icon="gelectric:asociados", keywords="socios padrón", children=_children("asoc", [
             "Ficha del asociado", "ABM de asociado", "Cuota capital y excepciones", "Retorno de excedentes",
             "Reintegro al darse de baja", "Reportes societarios", "Reclamos", "Órdenes de trabajo"])),
-        NavItem("Abastecimiento", icon="i-cart", children=_children("abas", [
+        NavItem("Abastecimiento", icon="gelectric:abastecimiento", children=_children("abas", [
             "Órdenes de compra", "Proveedores", "Facturas de proveedor", "Retenciones (Ganancias, IIBB)",
             "Orden de pago a proveedores", "Inventario y almacenes", "Autorización ARCA"])),
-        NavItem("Contabilidad y Finanzas", icon="i-calc", children=_children("cont", [
+        NavItem("Contabilidad y Finanzas", icon="gelectric:contabilidad", children=_children("cont", [
             "Caja", "Bancos y cheques", "Plan de cuentas", "Asientos automáticos", "Bienes de uso",
             "Ajuste por inflación (RECPAM)", "Flujo de fondos"])),
-        NavItem("Comercial", icon="i-receipt", children=[
+        NavItem("Comercial", icon="gelectric:comercial", children=[
             NavItem("Tarifas", url="#com-1"), NavItem("Facturación masiva", url="#com-2"),
             NavItem("Autorización de facturas electrónicas", url="#com-3"), NavItem("Cobranzas", url="#com-4"),
             NavItem("Deuda y totalizador", url="#com-5"), NavItem("Avisos de deuda y corte", url="#com-6"),
         ]),
-        NavItem("Consumo", icon="i-gauge", children=_children("cons", [
+        NavItem("Consumo", icon="gelectric:consumo", children=_children("cons", [
             "Medición y estado", "Estimación de consumo", "Cambios de medidor", "Cambio de titularidad"])),
-        NavItem("Reportes", icon="i-piechart", children=_children("rep", [
+        NavItem("Reportes", icon="gelectric:reportes", children=_children("rep", [
             "Contables clásicos", "Regulatorios AFIP/ARCA", "Impresión masiva de facturas"])),
-        NavItem("Impuestos", icon="i-percent", children=_children("imp", ["IVA", "Ingresos Brutos (IIBB)", "SUSS / cargas sociales"])),
-        NavItem("Sueldos", icon="i-cash", children=_children("sue", ["Liquidación mensual", "Vacaciones", "Libro de Sueldos Digital"])),
-        NavItem("Integraciones", icon="i-plug", children=_children("int", ["Telemedición", "Terminal posnet", "Exportador GIS"])),
-        NavItem("Técnico", icon="i-wrench", children=_children("tec", ["Usuarios del sistema", "Parámetros generales", "Inmuebles"])),
+        NavItem("Impuestos", icon="gelectric:impuestos", children=_children("imp", ["IVA", "Ingresos Brutos (IIBB)", "SUSS / cargas sociales"])),
+        NavItem("Sueldos", icon="gelectric:sueldos", children=_children("sue", ["Liquidación mensual", "Vacaciones", "Libro de Sueldos Digital"])),
+        NavItem("Integraciones", icon="gelectric:integraciones", children=_children("int", ["Telemedición", "Terminal posnet", "Exportador GIS"])),
+        NavItem("Técnico", icon="gelectric:tecnico", children=_children("tec", ["Usuarios del sistema", "Parámetros generales", "Inmuebles"])),
     ]
 
 
 def nav_gema(request=None):
     return [
-        NavItem("Inicio", url="#inicio", icon="i-home"),
+        NavItem("Inicio", url="#inicio", icon="gema:inicio"),
         NavSection("Gestión"),
-        NavItem("Clientes", url="#clientes", icon="i-users"),
-        NavItem("Matafuegos", icon="i-extinguisher", keywords="extintores", children=[
+        NavItem("Clientes", url="#clientes", icon="gema:clientes"),
+        NavItem("Matafuegos", icon="gema:matafuegos", keywords="extintores", children=[
             NavItem("Listado de matafuegos", url="#matafuegos"),
             NavItem("Panel de vencimientos", url="#vencimientos", keywords="vencidos por vencer avisos whatsapp"),
         ]),
-        NavItem("Órdenes de trabajo", url="#ordenes", icon="i-clipboard", keywords="ot recargas"),
-        NavItem("Tareas", url="#tareas", icon="i-tasks", badge="4"),
+        NavItem("Órdenes de trabajo", url="#ordenes", icon="gema:ordenes", keywords="ot recargas"),
+        NavItem("Tareas", url="#tareas", icon="gema:tareas", badge="4"),
         NavSection("Administración"),
-        NavItem("Usuarios", url="#usuarios", icon="i-user"),
-        NavItem("Mi compañía", url="#compania", icon="i-building"),
+        NavItem("Usuarios", url="#usuarios", icon="gema:usuarios"),
+        NavItem("Mi compañía", url="#compania", icon="gema:compania"),
     ]
 
 
-def _geagro_common(base, field_label, extra_portal, extra_ops):
+def _geagro_common(product, base, field_label, extra_portal, extra_ops):
     return [
         NavSection(field_label),
-        NavItem("Dashboard", url="#inicio", icon="i-home"),
-        NavItem("Plan técnico", url=f"#{base}-plan", icon="i-book", badge="Nuevo"),
-        NavItem("Calendario", url=f"#{base}-cal", icon="i-calendar"),
-        NavItem("Alertas y avisos", url=f"#{base}-alertas", icon="i-bell", badge="3"),
-        NavItem("Clima", url=f"#{base}-clima", icon="i-cloud"),
+        NavItem("Dashboard", url="#inicio", icon=f"{product}:dashboard"),
+        NavItem("Plan técnico", url=f"#{base}-plan", icon=f"{product}:plan-tecnico", badge="Nuevo"),
+        NavItem("Calendario", url=f"#{base}-cal", icon=f"{product}:calendario"),
+        NavItem("Alertas y avisos", url=f"#{base}-alertas", icon=f"{product}:alertas", badge="3"),
+        NavItem("Clima", url=f"#{base}-clima", icon=f"{product}:clima"),
         *extra_portal,
         NavSection("Gestión"),
-        NavItem("Operaciones", icon="i-tasks", keywords="ot labores", children=[
+        NavItem("Operaciones", icon=f"{product}:operaciones", keywords="ot labores", children=[
             NavItem("Órdenes de trabajo", url=f"#{base}-ot"),
             NavItem("Calendario de OP", url=f"#{base}-cop"),
             *extra_ops,
@@ -75,35 +75,36 @@ def _geagro_common(base, field_label, extra_portal, extra_ops):
 
 
 def nav_geagro_cereales(request=None):
-    return _geagro_common("cer", "Campo actual", [
-        NavItem("Mis campos", url="#cer-campos", icon="i-map", keywords="lotes"),
-        NavItem("Insumos", url="#cer-insumos", icon="i-layers"),
+    return _geagro_common("geagro-cereales", "cer", "Campo actual", [
+        NavItem("Mis campos", url="#cer-campos", icon="geagro-cereales:campos", keywords="lotes"),
+        NavItem("Insumos", url="#cer-insumos", icon="geagro-cereales:insumos"),
     ], [
         NavItem("Insumos por campaña", url="#cer-ipc"),
         NavItem("Presupuesto vs real", url="#cer-pvr"),
         NavItem("Listado de órdenes", url="#cer-lo"),
     ]) + [
-        NavItem("Acopio", icon="i-silo", children=_children("acopio", [
+        NavItem("Acopio", icon="geagro-cereales:acopio", children=_children("acopio", [
             "Posición de stock", "Ledger de acopio", "Conciliación rinde", "Costos de acopio", "Antigüedad de stock"])),
-        NavItem("Ventas", icon="i-truck", children=_children("ventas", ["Trazabilidad de ventas"])),
-        NavItem("Parámetros", url="#cer-param", icon="i-gear", keywords="campañas cultivos"),
+        NavItem("Ventas", icon="geagro-cereales:ventas", children=_children("ventas", ["Trazabilidad de ventas"])),
+        NavItem("Parámetros", url="#cer-param", icon="geagro-cereales:parametros", keywords="campañas cultivos"),
     ]
 
 
 def nav_geagro_vid(request=None):
-    return _geagro_common("vid", "Viñedo actual", [
-        NavItem("Fenología", url="#vid-feno", icon="i-sprout", keywords="brotación floración envero"),
-        NavItem("Informes", url="#vid-inf", icon="i-chart", keywords="comparación de campañas"),
-        NavItem("Mis viñedos", url="#vid-vin", icon="i-grape", keywords="cuarteles"),
+    return _geagro_common("geagro-vid", "vid", "Viñedo actual", [
+        NavItem("Fenología", url="#vid-feno", icon="geagro-vid:fenologia", keywords="brotación floración envero"),
+        NavItem("Informes", url="#vid-inf", icon="geagro-vid:informes", keywords="comparación de campañas"),
+        NavItem("Mis viñedos", url="#vid-vin", icon="geagro-vid:vinedos", keywords="cuarteles"),
     ], []) + [
-        NavItem("Monitoreo de cultivo", url="#vid-mon", icon="i-leaf", keywords="plagas enfermedades"),
-        NavItem("Parámetros", url="#vid-param", icon="i-gear"),
+        NavItem("Monitoreo de cultivo", url="#vid-mon", icon="geagro-vid:monitoreo", keywords="plagas enfermedades"),
+        NavItem("Parámetros", url="#vid-param", icon="geagro-vid:parametros"),
     ]
 
 
 PRODUCTS = [
     {
         "key": "gelectric", "name": "GELECTRIC", "nav": nav_gelectric,
+        "mini_nav": [("Inicio", "i-home"), ("Asociados", "gelectric:asociados"), ("Comercial", "gelectric:comercial")],
         "logo_full": "demo/logos/gelectric-full.svg", "logo_icon": "demo/logos/gelectric-icon.svg",
         "tagline": "Energía que nos une", "version_label": "v1.0.0",
         "identity": "Verde por defecto, con la variante azul disponible.",
@@ -111,10 +112,10 @@ PRODUCTS = [
         "fonts": "Titillium Web 400 · 600 · 700 (dashboard.css)",
         "eyebrow": "Cooperativa eléctrica de ejemplo", "title": "Asociados", "desc": "Padrón de asociados, suministros y estado de cuenta.",
         "kpis": [
-            ("Asociados activos", "4.812", "", "i-users", "+38 este mes", "up:good"),
+            ("Asociados activos", "4.812", "", "gelectric:asociados@tile", "+38 este mes", "up:good"),
             ("Suministros", "6.204", "", "i-plug", "+0,6 %", "up:good"),
-            ("Consumo del mes", "2.418", "MWh", "i-bolt", "−3,2 % vs. sept.", "down:neutral"),
-            ("Deuda vencida", "$ 12,4", "M", "i-receipt", "214 cuentas", "flat"),
+            ("Consumo del mes", "2.418", "MWh", "gelectric:consumo@tile", "−3,2 % vs. sept.", "down:neutral"),
+            ("Deuda vencida", "$ 12,4", "M", "gelectric:comercial@tile", "214 cuentas", "flat"),
         ],
         "series_title": "Consumo de energía, últimos 6 meses (MWh)", "unit": "MWh",
         "series": [("May", 2580), ("Jun", 2795), ("Jul", 2910), ("Ago", 2702), ("Sep", 2498), ("Oct", 2418)],
@@ -130,6 +131,7 @@ PRODUCTS = [
     },
     {
         "key": "gema", "name": "GEMA", "nav": nav_gema,
+        "mini_nav": [("Inicio", "gema:inicio"), ("Clientes", "gema:clientes"), ("Órdenes", "gema:ordenes")],
         "logo_full": "demo/logos/gema-full.svg", "logo_icon": "demo/logos/gema-icon.svg",
         "tagline": "Gestión de matafuegos", "version_label": "",
         "identity": "Azul GEMA en el sidebar y naranja para la acción principal.",
@@ -137,10 +139,10 @@ PRODUCTS = [
         "fonts": "Titillium Web 300 · 400 · 600 · 700 (theme.css)",
         "eyebrow": "Matafuegos del Sur", "title": "Matafuegos", "desc": "Vencimientos, recargas y avisos a clientes.",
         "kpis": [
-            ("Matafuegos", "1.946", "", "i-extinguisher", "+52 este mes", "up:good"),
+            ("Matafuegos", "1.946", "", "gema:matafuegos@white", "+52 este mes", "up:good"),
             ("Por vencer (30 días)", "128", "", "i-clock", "41 sin avisar", "flat"),
-            ("Vencidos", "37", "", "i-alert", "+6 vs. sept.", "up:bad"),
-            ("Órdenes abiertas", "23", "", "i-clipboard", "9 para hoy", "flat"),
+            ("Vencidos", "37", "", "gema:vencimientos@white", "+6 vs. sept.", "up:bad"),
+            ("Órdenes abiertas", "23", "", "gema:ordenes@white", "9 para hoy", "flat"),
         ],
         "series_title": "Recargas por mes, últimos 6 meses", "unit": "recargas",
         "series": [("May", 212), ("Jun", 198), ("Jul", 245), ("Ago", 231), ("Sep", 268), ("Oct", 254)],
@@ -156,6 +158,7 @@ PRODUCTS = [
     },
     {
         "key": "geagro-cereales", "name": "GEAGRO Cereales", "nav": nav_geagro_cereales,
+        "mini_nav": [("Dashboard", "geagro-cereales:dashboard"), ("Mis campos", "geagro-cereales:campos"), ("Operaciones", "geagro-cereales:operaciones")],
         "logo_full": "demo/logos/geagro-cereales-full.svg", "logo_icon": "demo/logos/geagro-cereales-icon.svg",
         "tagline": "Campaña 2025/26", "version_label": "",
         "identity": "Verde campo con acentos amarillos del logo.",
@@ -163,10 +166,10 @@ PRODUCTS = [
         "fonts": "Titillium Web 300 · 400 · 600 · 700 (custom.css)",
         "eyebrow": "Establecimiento La Aurora", "title": "Órdenes de trabajo", "desc": "Labores por lote, insumos aplicados y costos de la campaña.",
         "kpis": [
-            ("Superficie sembrada", "1.240", "ha", "i-map", "Soja 62 %, maíz 38 %", "flat"),
-            ("Órdenes del mes", "48", "", "i-tasks", "12 pendientes", "flat"),
-            ("Lluvia acumulada", "312", "mm", "i-cloud", "+18 % vs. promedio", "up:neutral"),
-            ("Costo por ha", "US$ 214", "", "i-dollar", "−4 % vs. presupuesto", "down:good"),
+            ("Superficie sembrada", "1.240", "ha", "geagro-cereales:campos@white", "Soja 62 %, maíz 38 %", "flat"),
+            ("Órdenes del mes", "48", "", "geagro-cereales:operaciones@white", "12 pendientes", "flat"),
+            ("Lluvia acumulada", "312", "mm", "geagro-cereales:clima@white", "+18 % vs. promedio", "up:neutral"),
+            ("Costo por ha", "US$ 214", "", "", "−4 % vs. presupuesto", "down:good"),
         ],
         "series_title": "Lluvia mensual, últimos 6 meses (mm)", "unit": "mm",
         "series": [("May", 38), ("Jun", 12), ("Jul", 9), ("Ago", 21), ("Sep", 64), ("Oct", 88)],
@@ -182,6 +185,7 @@ PRODUCTS = [
     },
     {
         "key": "geagro-vid", "name": "GEAGRO Vid", "nav": nav_geagro_vid,
+        "mini_nav": [("Dashboard", "geagro-vid:dashboard"), ("Mis viñedos", "geagro-vid:vinedos"), ("Operaciones", "geagro-vid:operaciones")],
         "logo_full": "demo/logos/geagro-vid-full.svg", "logo_icon": "demo/logos/geagro-vid-icon.svg",
         "tagline": "Temporada 2026/27", "version_label": "",
         "identity": "Violeta vid con verde como acento de estado activo.",
@@ -189,10 +193,10 @@ PRODUCTS = [
         "fonts": "Titillium Web 300 · 400 · 600 · 700 (custom.css)",
         "eyebrow": "Finca Los Álamos", "title": "Cuarteles", "desc": "Fenología, sanidad y labores por cuartel.",
         "kpis": [
-            ("Superficie en producción", "86", "ha", "i-grape", "14 cuarteles", "flat"),
-            ("Alertas sanitarias", "3", "", "i-alert", "Peronospora: riesgo medio", "flat"),
-            ("Grados día acumulados", "412", "GDD", "i-sun", "+6 % vs. temporada anterior", "up:neutral"),
-            ("Labores de la semana", "17", "", "i-tasks", "5 pendientes", "flat"),
+            ("Superficie en producción", "86", "ha", "geagro-vid:vinedos@white", "14 cuarteles", "flat"),
+            ("Alertas sanitarias", "3", "", "geagro-vid:alertas@white", "Peronospora: riesgo medio", "flat"),
+            ("Grados día acumulados", "412", "GDD", "geagro-vid:clima@white", "+6 % vs. temporada anterior", "up:neutral"),
+            ("Labores de la semana", "17", "", "geagro-vid:operaciones@white", "5 pendientes", "flat"),
         ],
         "series_title": "Grados día acumulados por mes (GDD)", "unit": "GDD",
         "series": [("May", 0), ("Jun", 0), ("Jul", 0), ("Ago", 46), ("Sep", 158), ("Oct", 412)],

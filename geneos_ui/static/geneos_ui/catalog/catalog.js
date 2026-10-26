@@ -72,4 +72,33 @@
     document.querySelectorAll("#kit-filters-card [data-gn-remove-filter]").forEach(function (b) { b.click(); });
     GN.announce("Filtros quitados");
   });
+  // ---- iconografía por producto: filtros por producto, módulo y estado
+  var lib = document.querySelector("[data-kit-iconlib]");
+  if (lib) {
+    var selP = lib.querySelector("[data-kit-ic-product]"), selM = lib.querySelector("[data-kit-ic-module]");
+    var pills = lib.querySelector("[data-kit-ic-status]"), count = lib.querySelector("[data-kit-ic-count]");
+    var empty = lib.querySelector("[data-kit-ic-empty]"), cards = lib.querySelectorAll(".kit-ic");
+    var status = "";
+    var modOptions = Array.prototype.slice.call(selM.options);
+    function refreshModules() {
+      // solo los módulos que existen en el producto elegido
+      var prod = selP.value, present = {};
+      cards.forEach(function (c) { if (!prod || (" " + c.dataset.products + " ").indexOf(" " + prod + " ") > -1) present[c.dataset.module] = 1; });
+      modOptions.forEach(function (o) { o.hidden = !!o.value && !present[o.value]; });
+      if (selM.selectedOptions[0] && selM.selectedOptions[0].hidden) selM.value = "";
+    }
+    function apply() {
+      var prod = selP.value, mod = selM.value, n = 0;
+      cards.forEach(function (c) {
+        var ok = (!prod || (" " + c.dataset.products + " ").indexOf(" " + prod + " ") > -1) &&
+                 (!mod || c.dataset.module === mod) && (!status || c.dataset.status === status);
+        c.hidden = !ok; if (ok) n++;
+      });
+      count.textContent = n + (n === 1 ? " registro" : " registros");
+      empty.hidden = n > 0;
+    }
+    selP.addEventListener("change", function () { refreshModules(); apply(); });
+    selM.addEventListener("change", apply);
+    pills.addEventListener("gn:pill", function (e) { status = e.detail.value || ""; apply(); });
+  }
 })();

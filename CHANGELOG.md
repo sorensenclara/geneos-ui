@@ -4,6 +4,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 
 ## [Sin publicar]
 
+### Agregado · iconografía original
+- 119 archivos de íconos originales (SVG y PNG) de GELECTRIC, GEMA y GEAGRO, copiados byte a byte desde las ramas de trabajo con su nombre original, en `static/geneos_ui/icons/<producto>/activos|disponibles/`.
+- Manifiesto `geneos_ui/product_icons.json` con producto, módulo, variante, formato, ruta y commit de origen, SHA-256 y estado de uso (activo, disponible, pendiente). Lo genera `tools/import_product_icons.py`, que también verifica la copia contra los originales (`--check`).
+- `NavItem(icon="producto:módulo")` y `{% gn_product_icon %}`. Los ítems sin ícono propio (Fenología, Informes y Monitoreo de cultivo en Vid) se muestran con un marcador de pendiente.
+- Sección «Iconografía por producto» en el catálogo, con filtros por producto, módulo y estado.
+
+### Cambiado
+- El sidebar, los indicadores y la comparación del catálogo usan los íconos originales de cada producto.
+- Se quitaron del sprite 14 íconos dibujados para el catálogo que representaban módulos (matafuego, uva, silo, camión, etc.). El sprite queda para acciones comunes.
+
 ### Corregido
 - El catálogo de GitHub Pages abría en azul oscuro y el selector no pasaba a modo claro: el build agregaba un `@media (prefers-color-scheme: dark)` que mantenía el modo oscuro. Se quitó; el modo ya no depende del sistema operativo.
 

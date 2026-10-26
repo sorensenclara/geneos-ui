@@ -8,6 +8,7 @@ o publicarla como página.
     python tools/build_catalog.py --fragment → dist/ui-kit.fragment.html (sin <html>/<head>/<body>)
 """
 import base64
+from urllib.parse import unquote
 import os
 import re
 import sys
@@ -39,6 +40,7 @@ def read_static(path):
 
 
 def data_uri(path):
+    path = unquote(path)  # nombres originales con espacios y ñ
     found = finders.find(path)
     raw = Path(found).read_bytes()
     mime = "image/svg+xml" if path.endswith(".svg") else "image/png"

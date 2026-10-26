@@ -10,6 +10,7 @@
  */
 @layer geneos-ui {
   [data-gn-product="geagro-cereales"] {
+    --gn-nav-icon-size: 22px;   /* el portal usa 25px (custom.css .menu-icon-img); 22px en el sidebar compacto */
     --gn-c-sidebar: #113f2a;
     --gn-c-sidebar-deep: #0b3422;
     --gn-c-brand: #c6a400;

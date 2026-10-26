@@ -7,6 +7,7 @@
  */
 @layer geneos-ui {
   [data-gn-product="geagro-vid"] {
+    --gn-nav-icon-size: 22px;   /* el portal usa 25px (custom.css .menu-icon-img); 22px en el sidebar compacto */
     --gn-c-sidebar: #3F2642;
     --gn-c-sidebar-deep: #2c1830;
     --gn-c-brand: #6b3f6e;

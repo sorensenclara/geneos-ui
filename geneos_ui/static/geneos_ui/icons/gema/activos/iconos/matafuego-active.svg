@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-b7fb264b-cca1-4c17-a5f4-c0366bd6b1f7" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.82 98.82">
+  <rect x="0" width="98.82" height="98.82" rx="6" ry="6" fill="#fafafa"/>
+  <path d="M66.67,73.72l-1.85-38.83,7.25-8.82-7.54-5.49-15.13-8.89L0,38.81v54.02c0,3.31,2.69,6,6,6h50.21l10.46-25.1Z" fill="#010101" opacity=".05"/>
+  <path d="M92.82,94.49H6C2.69,94.49,0,91.81,0,88.49v4.33c0,3.31,2.69,6,6,6h86.82c3.31,0,6-2.69,6-6v-4.33c0,3.31-2.69,6-6,6Z" fill="#282929" opacity=".15"/>
+  <rect x="40.28" y="32.22" width="27.2" height="46.87" rx="9.11" ry="9.11" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <rect x="46.02" y="41.82" width="15.25" height="10.35" rx="2.75" ry="2.75" fill="#ec6d05"/>
+  <line x1="48.61" y1="57.39" x2="59.06" y2="57.39" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="48.61" y1="64.59" x2="59.06" y2="64.59" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <polygon points="28.39 44.14 21.21 63.81 35.11 65.35 33.95 44.56 28.39 44.14" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <path d="M31.05,43.17l.88-10.26c.61-7.06,6.27-12.61,13.34-13.08l2.02-.13" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <polyline points="47.29 32.22 47.29 26.29 60.42 26.29 60.42 32.22" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="61.27" y1="19.75" x2="72.07" y2="14.4" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="61.27" y1="19.75" x2="72.07" y2="26.07" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <circle cx="53.88" cy="19.7" r="6.59" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <circle cx="53.86" cy="19.7" r="2.35" fill="#ec6d05"/>
+</svg>

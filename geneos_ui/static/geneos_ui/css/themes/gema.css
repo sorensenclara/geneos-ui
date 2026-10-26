@@ -9,6 +9,7 @@
  */
 @layer geneos-ui {
   [data-gn-product="gema"] {
+    --gn-nav-icon-size: 22px;   /* theme.css: .nav-link img.nav-icon 22px */
     --gn-c-sidebar: #1B4B8D;
     --gn-c-sidebar-deep: #123b6e;
     --gn-c-brand: #EC6C05;

@@ -15,7 +15,8 @@ La estructura (sidebar, botones, tablas, filtros, formularios) toma como referen
 | Componentes | `static/geneos_ui/css/geneos-ui.css` | Clases `gn-*` dentro de `@layer geneos-ui`. |
 | Puentes | `static/geneos_ui/css/bridges/` | Opcionales: retintan Bootstrap 5 (Lexa) y Jazzmin con los tokens. |
 | JavaScript | `static/geneos_ui/js/geneos-ui.js` | Sin dependencias. Sidebar, buscador, dropdowns, pestañas, filtros, tablas, modales, notificaciones y gráficos. |
-| Íconos | `templates/geneos_ui/components/icon_sprite.html` | Sprite SVG de GELECTRIC más íconos genéricos agregados. |
+| Íconos de acciones | `templates/geneos_ui/components/icon_sprite.html` | Sprite SVG de GELECTRIC más acciones genéricas (descargar, eliminar, info…). |
+| Iconografía de producto | `static/geneos_ui/icons/<producto>/` y `product_icons.json` | Íconos originales de cada producto, sin modificar, con su nombre, origen y estado de uso. Ver [`docs/iconografia.md`](docs/iconografia.md). |
 | Templates | `templates/geneos_ui/` | Layout de aplicación, layout de login, sidebar, breadcrumbs y paginación. |
 | Navegación | `geneos_ui/navigation.py` | Menú declarativo con permisos, ítem activo e índice de búsqueda. |
 | Catálogo | `/ui-kit/` (vista del paquete) y `dist/ui-kit.html` | Todos los componentes, variantes y estados con los cuatro temas. |
@@ -72,19 +73,21 @@ from geneos_ui.navigation import NavItem, NavSection
 def get_nav(request):
     u = request.user
     return [
-        NavItem("Inicio", url="dashboard", icon="i-home"),
+        NavItem("Inicio", url="dashboard", icon="gema:inicio"),
         NavSection("Gestión"),
-        NavItem("Clientes", url="cliente:list", icon="i-users",
+        NavItem("Clientes", url="cliente:list", icon="gema:clientes",
                 visible=lambda r: u.is_company_admin or u.is_operador),
-        NavItem("Matafuegos", icon="i-extinguisher", children=[
+        NavItem("Matafuegos", icon="gema:matafuegos", children=[
             NavItem("Listado", url="matafuegos:list"),
             NavItem("Vencimientos", url="matafuegos:panel-vencimientos",
                     keywords="vencidos por vencer avisos whatsapp"),
         ]),
-        NavItem("Usuarios", url="accounts:user-list", icon="i-user",
+        NavItem("Usuarios", url="accounts:user-list", icon="gema:usuarios",
                 visible=lambda r: u.is_company_admin),
     ]
 ```
+
+`icon="gema:clientes"` usa el ícono original del producto (variante blanca en el sidebar). Si el módulo no tiene ícono propio, el manifiesto lo marca como pendiente y el sidebar muestra un marcador neutro. Los nombres `i-*` quedan para acciones comunes.
 
 Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa los permisos de Django y `visible=` acepta cualquier función.
 
@@ -95,7 +98,8 @@ Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa l
 {% gn_css %} {% gn_js %}
 {% gn_theme_boot %}                        {# en el <head>: aplica el modo guardado; sin preferencia, claro #}
 {% gn_theme_switch %}                      {# selector Claro / Oscuro; guarda la elección en localStorage #}
-{% gn_icon "i-users" %}
+{% gn_icon "i-download" %}                     {# acción común del sprite #}
+{% gn_product_icon "gema:clientes" "base" %}  {# ícono original: white, base, active, tile… #}
 {% gn_badge "Vencido" "critical" True %}
 {% gn_breadcrumbs crumbs %}                 {# [("Inicio", "/"), ("Clientes", None)] #}
 {% gn_sort_th "Nombre" "nombre" %}          {# ?o=nombre / ?o=-nombre, con aria-sort #}
@@ -112,6 +116,7 @@ pytest
 cd sandbox && python manage.py runserver      # http://127.0.0.1:8000/ catálogo · /demo/ listado
 GN_PRODUCT=gema python manage.py runserver    # otro producto en el layout de demo
 python tools/build_catalog.py                 # dist/ui-kit.html, catálogo en un solo archivo
+python tools/import_product_icons.py --check --gelectric … --gema … --geagro …   # copia de íconos idéntica a los originales
 ```
 
 Los logotipos de `sandbox/static/demo/logos/` son copias de los originales de cada repositorio y se usan solo en el catálogo. El paquete no incluye logotipos: cada producto los declara en `GENEOS_UI`.

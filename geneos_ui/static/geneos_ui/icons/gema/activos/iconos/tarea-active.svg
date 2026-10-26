@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-8579fb77-89f5-4e28-91f1-56546be5c00a" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.82 98.82">
+  <rect x="0" width="98.82" height="98.82" rx="6" ry="6" fill="#fafafa"/>
+  <path d="M76.71,73.23h-19.34l19.34-23.15h-18.07l18.07-23.36h-35.58l5.02-8.91-20.58,1.13L0,30.63v62.19c0,3.31,2.69,6,6,6h50.21l20.5-25.59Z" fill="#010101" opacity=".05"/>
+  <path d="M92.82,94.49H6C2.69,94.49,0,91.81,0,88.49v4.33c0,3.31,2.69,6,6,6h86.82c3.31,0,6-2.69,6-6v-4.33c0,3.31-2.69,6-6,6Z" fill="#282929" opacity=".15"/>
+  <rect x="25.57" y="18.94" width="15.56" height="15.56" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <polyline points="33.35 25.06 35.42 27.98 46.15 17.81" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="48.75" y1="26.72" x2="76.71" y2="26.72" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <rect x="25.57" y="42.3" width="15.56" height="15.56" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="48.75" y1="50.08" x2="76.71" y2="50.08" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <rect x="25.57" y="65.45" width="15.56" height="15.56" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <line x1="48.75" y1="73.23" x2="76.71" y2="73.23" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+</svg>

@@ -28,7 +28,7 @@ include-package-data = true
 include = ["geneos_ui*"]
 
 [tool.setuptools.package-data]
-geneos_ui = ["templates/**/*", "static/**/*"]
+geneos_ui = ["templates/**/*", "static/**/*", "product_icons.json"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "sandbox.settings"

@@ -43,7 +43,7 @@
     <div class="gn-notif__head"><b>Notificaciones</b><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm">Marcar todas como leídas</button></div>
     <ul class="gn-notif__list">
       <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--critical">{% gn_icon "i-alert" %}</span><div><div class="gn-notif__title">Vencieron 6 matafuegos sin aviso</div><div class="gn-notif__meta">Hace 12 minutos · Vencimientos</div></div></li>
-      <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--warning">{% gn_icon "i-cloud" %}</span><div><div class="gn-notif__title">Pronóstico de granizo para mañana</div><div class="gn-notif__meta">Hace 1 hora · Clima</div></div></li>
+      <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--warning">{% gn_icon "i-alert" %}</span><div><div class="gn-notif__title">Pronóstico de granizo para mañana</div><div class="gn-notif__meta">Hace 1 hora · Clima</div></div></li>
       <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--good">{% gn_icon "i-check" %}</span><div><div class="gn-notif__title">Facturación masiva de octubre terminada</div><div class="gn-notif__meta">Hoy 08:40 · Comercial</div></div></li>
       <li class="gn-notif__item"><span class="gn-list__icon">{% gn_icon "i-user-plus" %}</span><div><div class="gn-notif__title">Nuevo usuario: Laura Méndez</div><div class="gn-notif__meta">Ayer · Usuarios</div></div></li>
     </ul>
@@ -89,7 +89,7 @@
   </div>
 </div>
 <nav class="kit-toc" aria-label="Secciones del catálogo">
-  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
+  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
 </nav>
 {% endblock %}
 
@@ -184,9 +184,67 @@
     </div>
   </div>
   <div class="gn-card"><div class="gn-card__body">
-    <h3 class="kit-h3">Íconos <span class="kit-meta">sprite compartido, trazo 1,8 · {% gn_icon "i-info" "gn-icon--sm" %} los íconos propios de cada módulo siguen en su producto</span></h3>
+    <h3 class="kit-h3">Íconos de acciones comunes <span class="kit-meta">sprite de GELECTRIC más acciones genéricas, trazo 1,8 · los módulos usan los íconos originales de cada producto (ver <a href="#iconografia">Iconografía</a>)</span></h3>
     <ul class="kit-icons" id="kit-icons"></ul>
   </div></div>
+</section>
+
+{# =============================================================== ICONOGRAFÍA #}
+<section class="kit-section" id="iconografia" aria-labelledby="h-icon">
+  <header class="kit-section__head">
+    <h2 id="h-icon">Iconografía por producto</h2>
+    <p>Los íconos propios de cada producto, copiados sin cambios desde sus ramas de trabajo y con su nombre original. <b>Activos</b>: los usa hoy el producto o la navegación de GENEOS UI. <b>Disponibles</b>: originales sin uso actual. <b>Pendientes</b>: el producto necesita un ícono que todavía no existe; no se reemplaza por uno genérico.</p>
+  </header>
+  {% with inv=icon_inventory %}
+  <div class="gn-card kit-iconlib" data-kit-iconlib>
+    <div class="gn-card__body kit-iconlib__filters">
+      <div class="gn-field">
+        <label class="gn-field__label" for="kit-ic-product">Producto</label>
+        <select class="gn-select" id="kit-ic-product" data-kit-ic-product>
+          <option value="">Todos</option><option value="gelectric">GELECTRIC</option><option value="gema">GEMA</option>
+          <option value="geagro-cereales">GEAGRO Cereales</option><option value="geagro-vid">GEAGRO Vid</option>
+        </select>
+      </div>
+      <div class="gn-field">
+        <label class="gn-field__label" for="kit-ic-module">Módulo</label>
+        <select class="gn-select" id="kit-ic-module" data-kit-ic-module>
+          <option value="">Todos</option>
+          {% for slug, label in inv.modules %}<option value="{{ slug }}">{{ label }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="gn-field kit-iconlib__status">
+        <span class="gn-field__label" id="kit-ic-status-l">Estado de uso</span>
+        <div class="gn-filters__pills" data-gn-pills data-kit-ic-status role="group" aria-labelledby="kit-ic-status-l">
+          <button type="button" class="gn-pill-toggle" aria-pressed="true" data-value="">Todos<span>{{ inv.total }}</span></button>
+          <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="activo">Activos<span>{{ inv.counts.activo }}</span></button>
+          <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="disponible">Disponibles<span>{{ inv.counts.disponible }}</span></button>
+          <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="pendiente">Pendientes<span>{{ inv.counts.pendiente }}</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="kit-iconlib__meta"><span data-kit-ic-count aria-live="polite">{{ inv.total }} registros</span><span>{{ inv.files }} archivos originales · verificados por SHA-256 · manifiesto <code>geneos_ui/product_icons.json</code></span></div>
+    <ul class="kit-iconlib__grid">
+      {% for r in inv.rows %}
+      <li class="kit-ic" data-products="{{ r.filter_products }}" data-module="{{ r.module }}" data-status="{{ r.status }}">
+        <div class="kit-ic__thumb{% if r.dark_thumb %} is-dark{% endif %}{% if not r.file %} is-pending{% endif %}" data-gn-product="{{ r.theme }}">
+          {% if r.file %}<img src="{% static r.file %}" alt="">{% else %}<span>Ícono pendiente</span>{% endif %}
+        </div>
+        <div class="kit-ic__body">
+          <div class="kit-ic__top">
+            <b class="kit-ic__module">{{ r.module_label }}</b>
+            {% if r.status == "activo" %}{% gn_badge "Activo" "good" %}{% elif r.status == "pendiente" %}{% gn_badge "Pendiente" "warning" %}{% else %}{% gn_badge "Disponible" "neutral" %}{% endif %}
+          </div>
+          <span class="kit-ic__meta">{{ r.product_label }} · {{ r.variant_label }} · {{ r.format|upper }}{% if r.bytes %} · {{ r.bytes|filesizeformat }}{% endif %}</span>
+          {% if r.name %}<code class="kit-ic__name">{{ r.name }}</code>{% endif %}
+          {% if r.origin %}<span class="kit-ic__origin" title="{{ r.origin.repo }} · {{ r.origin_branches }} · {{ r.origin.commit }}">{{ r.origin.path }}</span>{% endif %}
+          <span class="kit-ic__usage">{% if r.status == "pendiente" %}{{ r.note }}{% elif r.used_in %}Uso en el producto: {{ r.used_in.0 }}{% if r.used_in|length > 1 %} y {{ r.used_in|length|add:"-1" }} más{% endif %}{% if r.kit_use %} · sidebar de GENEOS UI{% endif %}{% elif r.kit_use %}Sin uso en el producto · sidebar de GENEOS UI{% else %}Sin uso actual{% endif %}</span>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="kit-iconlib__empty" data-kit-ic-empty hidden>No hay íconos con esos filtros.</p>
+  </div>
+  {% endwith %}
 </section>
 
 {# =============================================================== NAVEGACIÓN #}
@@ -535,7 +593,7 @@
     <div class="gn-grid gn-grid--4">
       {% for k in p.kpis_view %}
       <article class="gn-card gn-kpi">
-        <div class="gn-kpi__top"><span class="gn-kpi__label">{{ k.label }}</span><span class="gn-kpi__icon{% if forloop.counter == 3 %} gn-kpi__icon--accent{% endif %}">{% gn_icon k.icon %}</span></div>
+        <div class="gn-kpi__top"><span class="gn-kpi__label">{{ k.label }}</span>{% if k.icon %}{% if ":" in k.icon %}<span class="gn-kpi__icon gn-kpi__icon--{{ k.icon_variant }}">{% gn_product_icon k.icon k.icon_variant %}</span>{% else %}<span class="gn-kpi__icon{% if forloop.counter == 3 %} gn-kpi__icon--accent{% endif %}">{% gn_icon k.icon %}</span>{% endif %}{% endif %}</div>
         <div class="gn-kpi__value">{{ k.value }}{% if k.unit %}<small>{{ k.unit }}</small>{% endif %}</div>
         <div class="gn-kpi__trend">{% if k.arrow %}<b class="is-{{ k.tone }}">{% if k.arrow == "up" %}{% gn_icon "i-arrowup" %}{% else %}{% gn_icon "i-arrowdown" %}{% endif %}</b>{% endif %}{{ k.trend }}</div>
       </article>
@@ -652,9 +710,7 @@
     <div class="kit-mini" data-gn-product="{{ p.key }}">
       <div class="kit-mini__side">
         <img src="{% static p.logo_full %}" alt="{{ p.name }}">
-        <span class="kit-mini__item">{% gn_icon "i-home" %}Inicio</span>
-        <span class="kit-mini__item is-active">{% gn_icon "i-users" %}Clientes</span>
-        <span class="kit-mini__item">{% gn_icon "i-tasks" %}Órdenes</span>
+        {% for label, ref in p.mini_nav %}<span class="kit-mini__item{% if forloop.counter == 2 %} is-active{% endif %}">{% gn_product_icon ref "white" "gn-nav__icon-img" %}{{ label }}</span>{% endfor %}
       </div>
       <div class="kit-mini__body">
         <span class="gn-eyebrow">{{ p.name }}</span>
@@ -705,6 +761,7 @@ GENEOS_UI = {
         <li><b>Sidebar:</b> estado inicial configurable por producto. GELECTRIC arranca contraído, como hoy; GEMA y GEAGRO, expandido.</li>
         <li><b>GEAGRO:</b> el sidebar nuevo va en el portal del productor de Cereales y Vid. El administrador Jazzmin no se modifica por ahora.</li>
         <li><b>Repositorio:</b> <code>geneos-ui</code> vive en el GitLab de GENEOS; GitHub queda como espejo opcional.</li>
+        <li><b>Iconografía:</b> se usan los íconos originales de cada producto, sin redibujar. Insumos de Cereales usa <code>insumos.svg</code> del backoffice. Informes, Fenología y Monitoreo de cultivo (Vid) quedan pendientes de diseño; el PNG de Gráficos queda como recurso disponible.</li>
       </ol>
     </div></div>
   </div>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-ad9a4db1-c1f8-4789-995e-0c7f833eb1a3" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.82 98.82">
+  <rect x="0" width="98.82" height="98.82" rx="6" ry="6" fill="#fafafa"/>
+  <path d="M83.31,53.55l-.36-9.06-1.6-6.46-4.07-7.91-12.74-9.54-25.26-6.95L0,35.19v57.64c0,3.31,2.69,6,6,6h58.54l10.81-25.22,6.2-13.44,1.75-6.61Z" fill="#010101" opacity=".05"/>
+  <path d="M92.82,94.49H6C2.69,94.49,0,91.81,0,88.49v4.33c0,3.31,2.69,6,6,6h86.82c3.31,0,6-2.69,6-6v-4.33c0,3.31-2.69,6-6,6Z" fill="#282929" opacity=".15"/>
+  <circle cx="49.41" cy="49.41" r="33.9" fill="none" stroke="#ec6d05" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  <g>
+    <circle cx="48.73" cy="37.82" r="9.79" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+    <path d="M37.5,70.79v-4.68c0-6.58,5.33-11.91,11.91-11.91h0c6.58,0,11.91,5.33,11.91,11.91v4.68" fill="none" stroke="#cc5a16" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+  </g>
+</svg>
