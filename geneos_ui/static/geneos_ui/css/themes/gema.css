@@ -1,0 +1,32 @@
+/*
+ * GENEOS UI · tema GEMA
+ * Identidad azul y naranja. Valores tomados de GEMA core/static/core/theme.css
+ * (--bs-primary #EC6C05, rojo #c62828, verde #17a672) y de
+ * empresas/templates/empresas/panel_base.html (--navy #1B4B8D,
+ * --navy-dark #123b6e, --orange-dark #c65a03).
+ * El sidebar toma el azul de marca; el naranja queda para la acción
+ * principal y el indicador de ítem activo.
+ */
+@layer geneos-ui {
+  [data-gn-product="gema"] {
+    --gn-c-sidebar: #1B4B8D;
+    --gn-c-sidebar-deep: #123b6e;
+    --gn-c-brand: #EC6C05;
+    --gn-c-brand-hover: #c65a03;
+    --gn-c-brand-press: #b0530a;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #b0530a;
+    --gn-c-accent: #EC6C05;
+    --gn-c-on-accent: #ffffff;
+    --gn-c-good: #17a672;
+    --gn-c-warning: #e0972b;
+    --gn-c-critical: #c62828;
+    --gn-c-info: #1B4B8D;
+    --gn-c-neutral: #8a92a3;
+    --gn-flourish: linear-gradient(90deg, #EC6C05, #4AC5F3);
+    --gn-chart-1: #1B4B8D;
+    --gn-chart-2: #EC6C05;
+    --gn-chart-3: #1F87B0;
+    --gn-chart-4: #c62828;
+  }
+}

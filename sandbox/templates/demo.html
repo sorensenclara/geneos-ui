@@ -1,0 +1,16 @@
+{% extends "geneos_ui/layouts/app.html" %}
+{% load geneos_ui %}
+{% block title %}Demo · {{ gn.product_name }}{% endblock %}
+{% block breadcrumbs %}{% gn_breadcrumbs crumbs %}{% endblock %}
+{% block page_head %}
+<div class="gn-page-head"><div class="gn-page-head__text"><span class="gn-eyebrow">Sandbox</span><h1>Listado de ejemplo</h1><p>Layout real de GENEOS UI con menú del producto, orden y paginación del servidor.</p></div></div>
+{% endblock %}
+{% block content %}
+<div class="gn-card"><div class="gn-card__body">
+  <div class="gn-table-wrap"><table class="gn-table gn-table--responsive">
+    <thead><tr><th scope="col">N.º</th>{% gn_sort_th "Nombre" "nombre" %}<th scope="col">Estado</th></tr></thead>
+    <tbody>{% for r in page_obj %}<tr>{% gn_cell "N.º" "is-num" %}{{ r.n }}{% endgn_cell %}{% gn_cell "Nombre" %}{{ r.nombre }}{% endgn_cell %}{% gn_cell "Estado" %}{% gn_badge r.estado.0 r.estado.1 True %}{% endgn_cell %}</tr>{% endfor %}</tbody>
+  </table></div>
+  <div class="gn-table-foot">{% gn_pagination page_obj %}</div>
+</div></div>
+{% endblock %}

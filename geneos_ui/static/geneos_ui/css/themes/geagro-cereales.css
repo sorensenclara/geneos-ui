@@ -1,0 +1,33 @@
+/*
+ * GENEOS UI · tema GEAGRO Cereales
+ * Identidad verde con acentos amarillos. Valores tomados de geneos-geagro
+ * (rama dev_agro) static/css/custom.css y static/css/jazzmin_custom.css
+ * (--geagro-green-*, --geagro-yellow-*, --geagro-success, --geagro-danger, --risk-med, --bs-info).
+ *
+ * Nota de accesibilidad: el botón primario amarillo (#c6a400) lleva texto
+ * oscuro (#2b2f24, --geagro-yellow-900 de jazzmin_custom.css). Con texto
+ * blanco, como hoy, el contraste es 2,4:1 y no alcanza el mínimo de 4,5:1.
+ */
+@layer geneos-ui {
+  [data-gn-product="geagro-cereales"] {
+    --gn-c-sidebar: #113f2a;
+    --gn-c-sidebar-deep: #0b3422;
+    --gn-c-brand: #c6a400;
+    --gn-c-brand-hover: #f3c600;
+    --gn-c-brand-press: #c6a400;
+    --gn-c-on-brand: #2b2f24;
+    --gn-c-ink: #816d09;
+    --gn-c-accent: #f3c600;
+    --gn-c-on-accent: #2b2f24;
+    --gn-c-good: #5a994c;
+    --gn-c-warning: #f0b429;
+    --gn-c-critical: #cf4e4e;
+    --gn-c-info: #1d4fa8; /* azul informativo compartido: #118237 (--bs-info) se confundía con "al día" */
+    --gn-c-neutral: #64748b;
+    --gn-flourish: linear-gradient(90deg, #22b24c, #f3c600);
+    --gn-chart-1: #1E7D3B;
+    --gn-chart-2: #f3c600;
+    --gn-chart-3: #22b24c;
+    --gn-chart-4: #cf4e4e;
+  }
+}

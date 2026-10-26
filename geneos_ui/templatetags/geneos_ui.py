@@ -1,0 +1,160 @@
+"""Template tags de GENEOS UI.
+
+    {% load geneos_ui %}
+    {% gn_css %} {% gn_js %}                      recursos de la librería
+    {% gn_icon "i-users" %}                       ícono del sprite
+    {% gn_badge "Vencido" "critical" %}           badge de estado
+    {% gn_sidebar %}                              sidebar con el menú del producto
+    {% gn_breadcrumbs crumbs %}                   [("Inicio", "/"), ("Clientes", None)]
+    {% gn_pagination page_obj %}                  paginación que conserva los filtros
+    {% gn_sort_th "Nombre" "nombre" %}            encabezado ordenable (?o=nombre / -nombre)
+    {% gn_cell "Etiqueta" %}…{% endgn_cell %}     <td data-th> para tablas responsive
+    {% gn_query page=2 %}                         querystring actual con cambios
+    {% gn_messages_json %}                        mensajes de Django como notificaciones
+"""
+from django import template
+from django.contrib.messages import get_messages
+from django.templatetags.static import static
+from django.utils.html import format_html, format_html_join
+from django.utils.safestring import mark_safe
+
+from ..conf import get_config
+
+register = template.Library()
+
+BADGE_KINDS = {"good", "warning", "critical", "info", "neutral", "brand", "solid"}
+MESSAGE_KINDS = {"debug": "info", "info": "info", "success": "good", "warning": "warning", "error": "critical"}
+
+
+@register.simple_tag
+def gn_css(product=None, bridges=None):
+    cfg = get_config()
+    product = product or cfg["PRODUCT"]
+    bridges = cfg["BRIDGES"] if bridges is None else [b for b in bridges.split(",") if b]
+    files = ["geneos_ui/css/tokens.css", f"geneos_ui/css/themes/{product}.css", "geneos_ui/css/geneos-ui.css"]
+    files += [f"geneos_ui/css/bridges/{b}.css" for b in bridges]
+    links = []
+    if cfg["LOAD_FONTS"]:
+        links.append(('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap',))
+    links += [(static(f),) for f in files]
+    return format_html_join("\n", '<link rel="stylesheet" href="{}">', links)
+
+
+@register.simple_tag
+def gn_js():
+    return format_html('<script src="{}" defer></script>', static("geneos_ui/js/geneos-ui.js"))
+
+
+@register.simple_tag
+def gn_icon(name, css_class="", label=""):
+    if label:
+        return format_html('<svg class="gn-icon {}" role="img" aria-label="{}"><use href="#{}"/></svg>', css_class, label, name)
+    return format_html('<svg class="gn-icon {}" aria-hidden="true"><use href="#{}"/></svg>', css_class, name)
+
+
+@register.simple_tag
+def gn_badge(label, kind="neutral", dot=False):
+    kind = kind if kind in BADGE_KINDS else "neutral"
+    return format_html('<span class="gn-badge gn-badge--{}{}">{}</span>', kind, " gn-badge--dot" if dot else "", label)
+
+
+@register.inclusion_tag("geneos_ui/components/sidebar.html", takes_context=True)
+def gn_sidebar(context, nav=None, sidebar_id="gn-sidebar", gn=None, hidden=False):
+    gn = gn or context.get("gn", {})
+    return {"gn": gn, "nav": nav if nav is not None else gn.get("nav", []), "sidebar_id": sidebar_id, "hidden": hidden, "request": context.get("request")}
+
+
+@register.inclusion_tag("geneos_ui/components/breadcrumbs.html")
+def gn_breadcrumbs(crumbs):
+    return {"crumbs": crumbs or []}
+
+
+@register.simple_tag(takes_context=True)
+def gn_query(context, **changes):
+    request = context.get("request")
+    params = request.GET.copy() if request else None
+    if params is None:
+        from django.http import QueryDict
+        params = QueryDict(mutable=True)
+    for k, v in changes.items():
+        if v is None:
+            params.pop(k, None)
+        else:
+            params[k] = v
+    qs = params.urlencode()
+    return "?" + qs if qs else "?"
+
+
+def _page_window(page, around=1):
+    total, current = page.paginator.num_pages, page.number
+    pages = sorted({1, total, *range(max(1, current - around), min(total, current + around) + 1)})
+    out, prev = [], 0
+    for p in pages:
+        if p - prev > 1:
+            out.append(None)
+        out.append(p)
+        prev = p
+    return out
+
+
+@register.inclusion_tag("geneos_ui/components/pagination.html", takes_context=True)
+def gn_pagination(context, page_obj, sizes="10,25,50,100", param="page", size_param="page_size"):
+    return {
+        "request": context.get("request"),
+        "page": page_obj,
+        "window": _page_window(page_obj) if page_obj else [],
+        "sizes": [int(s) for s in str(sizes).split(",") if s.strip().isdigit()],
+        "param": param,
+        "size_param": size_param,
+    }
+
+
+@register.simple_tag(takes_context=True)
+def gn_sort_th(context, label, field, param="o", css_class=""):
+    request = context.get("request")
+    current = request.GET.get(param, "") if request else ""
+    if current == field:
+        aria, nxt = "ascending", "-" + field
+    elif current == "-" + field:
+        aria, nxt = "descending", field
+    else:
+        aria, nxt = None, field
+    href = gn_query(context, **{param: nxt, "page": None})
+    sort_attr = format_html(' aria-sort="{}"', aria) if aria else ""
+    return format_html(
+        '<th scope="col" class="{}"{}><a class="gn-table__sort" href="{}">{}<span class="gn-table__sort-icon" aria-hidden="true"></span></a></th>',
+        css_class, sort_attr, href, label,
+    )
+
+
+class CellNode(template.Node):
+    def __init__(self, label, css, nodelist):
+        self.label, self.css, self.nodelist = label, css, nodelist
+
+    def render(self, context):
+        label = self.label.resolve(context)
+        css = self.css.resolve(context) if self.css else ""
+        return format_html('<td data-th="{}"{}>{}</td>', label, format_html(' class="{}"', css) if css else "", mark_safe(self.nodelist.render(context)))
+
+
+@register.tag(name="gn_cell")
+def do_cell(parser, token):
+    """{% gn_cell "Estado" %}…{% endgn_cell %} o {% gn_cell "Monto" "is-num" %}…"""
+    bits = token.split_contents()
+    if len(bits) not in (2, 3):
+        raise template.TemplateSyntaxError("gn_cell espera una etiqueta y, opcionalmente, clases CSS.")
+    nodelist = parser.parse(("endgn_cell",))
+    parser.delete_first_token()
+    return CellNode(parser.compile_filter(bits[1]), parser.compile_filter(bits[2]) if len(bits) == 3 else None, nodelist)
+
+
+@register.simple_tag(takes_context=True)
+def gn_messages_json(context):
+    request = context.get("request")
+    if not request:
+        return ""
+    data = [{"message": str(m), "kind": MESSAGE_KINDS.get(m.level_tag, "info")} for m in get_messages(request)]
+    if not data:
+        return ""
+    from django.utils.html import json_script
+    return json_script(data, "gn-messages")

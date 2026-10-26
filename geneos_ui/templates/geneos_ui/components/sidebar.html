@@ -1,0 +1,61 @@
+{% load static geneos_ui %}{# Sidebar oficial GENEOS (estructura de GELECTRIC). Variables: gn, nav, sidebar_id #}
+<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}" aria-label="Navegación principal"{% if hidden %} hidden{% endif %}>
+  <div class="gn-sidebar__brand">
+    <a href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
+      {% if gn.logo_full %}<img class="gn-sidebar__logo-full" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}
+      {% if gn.logo_icon %}<img class="gn-sidebar__logo-icon" src="{% static gn.logo_icon %}" alt="">{% endif %}
+    </a>
+  </div>
+  <div class="gn-sidebar__body">
+    <div class="gn-sidebar__search" role="search">
+      <label class="gn-sidebar__search-box">
+        {% gn_icon "i-search" %}
+        <span class="gn-visually-hidden">Buscar en el menú</span>
+        <input type="search" class="gn-sidebar__search-input" id="{{ sidebar_id }}-q" placeholder="Buscar en el menú…" autocomplete="off" aria-controls="{{ sidebar_id }}-nav" aria-describedby="{{ sidebar_id }}-status">
+        <button type="button" class="gn-sidebar__search-clear" aria-label="Limpiar búsqueda" hidden>{% gn_icon "i-x" %}</button>
+      </label>
+      <button type="button" class="gn-sidebar__search-btn" aria-label="Buscar en el menú">{% gn_icon "i-search" %}</button>
+      <span class="gn-visually-hidden gn-sidebar__status" id="{{ sidebar_id }}-status" aria-live="polite"></span>
+    </div>
+
+    <nav class="gn-sidebar__nav" id="{{ sidebar_id }}-nav" aria-label="Menú de {{ gn.product_name }}">
+      <ul class="gn-nav">
+        {% for e in nav %}
+        {% if e.type == "section" %}
+        <li class="gn-nav__section" role="presentation">{{ e.label }}</li>
+        {% elif e.type == "group" %}
+        <li class="gn-nav__entry{% if e.has_active %} has-active{% endif %}">
+          <button type="button" class="gn-nav__item gn-nav__toggle" data-gn-group-toggle aria-expanded="{% if e.has_active %}true{% else %}false{% endif %}" aria-controls="{{ sidebar_id }}-g-{{ e.id }}"{% if e.keywords %} data-gn-keywords="{{ e.keywords }}"{% endif %}>
+            {% if e.icon_static %}<img class="gn-nav__icon-img" src="{% static e.icon_static %}" alt="">{% else %}{% gn_icon e.icon|default:"i-file" %}{% endif %}
+            <span class="gn-nav__label">{{ e.label }}</span>
+            {% if e.badge %}<span class="gn-nav__badge">{{ e.badge }}</span>{% endif %}
+            {% gn_icon "i-chevdown" "gn-nav__chev" %}
+          </button>
+          <ul class="gn-nav__sub" id="{{ sidebar_id }}-g-{{ e.id }}"{% if not e.has_active %} hidden{% endif %}>
+            {% for c in e.children %}
+            <li><a class="gn-nav__subitem" href="{{ c.href }}"{% if c.active %} aria-current="page"{% endif %}{% if c.keywords %} data-gn-keywords="{{ c.keywords }}"{% endif %}>{{ c.label }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+        <li class="gn-nav__entry">
+          <a class="gn-nav__item" href="{{ e.href }}"{% if e.active %} aria-current="page"{% endif %}{% if e.keywords %} data-gn-keywords="{{ e.keywords }}"{% endif %}>
+            {% if e.icon_static %}<img class="gn-nav__icon-img" src="{% static e.icon_static %}" alt="">{% else %}{% gn_icon e.icon|default:"i-file" %}{% endif %}
+            <span class="gn-nav__label">{{ e.label }}</span>
+            {% if e.badge %}<span class="gn-nav__badge">{{ e.badge }}</span>{% endif %}
+          </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+      <p class="gn-sidebar__empty" hidden></p>
+    </nav>
+
+    <div class="gn-sidebar__foot">
+      {% block sidebar_foot %}{% endblock %}
+      <div class="gn-sidebar__divider"></div>
+      <div class="gn-sidebar__flourish" aria-hidden="true"><span></span></div>
+      <div class="gn-sidebar__meta"><b>{{ gn.product_name }}{% if gn.version_label %} {{ gn.version_label }}{% endif %}</b>{% if gn.tagline %}<span>{{ gn.tagline }}</span>{% endif %}</div>
+    </div>
+  </div>
+</aside>

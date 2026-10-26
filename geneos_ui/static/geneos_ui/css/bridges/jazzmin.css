@@ -1,0 +1,17 @@
+/*
+ * GENEOS UI · puente Jazzmin / AdminLTE 3 (backoffice /admin/ de GEAGRO)
+ *
+ * Opcional y solo de color: no reemplaza templates del admin. Se agrega en
+ * JAZZMIN_SETTINGS["custom_css"] después de jazzmin_custom.css, junto con
+ * tokens.css y el tema del producto. Para que el tema aplique hace falta
+ * data-gn-product="geagro-cereales" (o "geagro-vid") en <html>, que se
+ * agrega con un override mínimo de admin/base.html (etapa 6 del plan).
+ */
+.main-sidebar { background-color: var(--gn-sidebar-bg) !important; }
+.main-sidebar .brand-link { background-color: var(--gn-sidebar-brand-bg) !important; }
+.main-sidebar .nav-sidebar .nav-link.active,
+.main-sidebar .nav-sidebar > .nav-item.menu-open > .nav-link { background-color: var(--gn-sidebar-active-bg) !important; color: #fff !important; box-shadow: inset 3px 0 0 var(--gn-sidebar-indicator); }
+.main-sidebar .nav-sidebar .nav-link.active .nav-icon { color: var(--gn-sidebar-indicator) !important; }
+.btn-primary { background-color: var(--gn-brand) !important; border-color: var(--gn-brand) !important; color: var(--gn-on-brand) !important; }
+.btn-primary:hover { background-color: var(--gn-brand-hover) !important; border-color: var(--gn-brand-hover) !important; }
+.page-item.active .page-link { background-color: var(--gn-brand) !important; border-color: var(--gn-brand) !important; }

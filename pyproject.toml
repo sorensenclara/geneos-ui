@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geneos-ui"
+version = "0.1.0"
+description = "Sistema de diseño y componentes compartidos para los productos Django de GENEOS (GELECTRIC, GEMA, GEAGRO)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Propietario: Cooperativa GENEOS" }
+authors = [{ name = "GENEOS" }]
+dependencies = ["Django>=5.0,<6.0"]
+classifiers = [
+  "Framework :: Django",
+  "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.2",
+  "Programming Language :: Python :: 3",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-django>=4.8"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["geneos_ui*"]
+
+[tool.setuptools.package-data]
+geneos_ui = ["templates/**/*", "static/**/*"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "sandbox.settings"
+pythonpath = [".", "sandbox"]
+testpaths = ["tests"]

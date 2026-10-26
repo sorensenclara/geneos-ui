@@ -1,0 +1,736 @@
+{% extends "geneos_ui/layouts/app.html" %}
+{% load static geneos_ui %}
+
+{% block title %}GENEOS UI Kit{% endblock %}
+
+{% block head_css %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="{% static 'geneos_ui/css/tokens.css' %}">
+{% for p in products %}<link rel="stylesheet" href="{% static 'geneos_ui/css/themes/'|add:p.key|add:'.css' %}">
+{% endfor %}<link rel="stylesheet" href="{% static 'geneos_ui/css/geneos-ui.css' %}">
+<link rel="stylesheet" href="{% static 'geneos_ui/catalog/catalog.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+{% for p in products %}{% if p.key == active.key %}{% gn_sidebar nav=p.nav_built gn=p.gn sidebar_id="gn-sidebar-"|add:p.key %}{% else %}{% gn_sidebar nav=p.nav_built gn=p.gn sidebar_id="gn-sidebar-"|add:p.key hidden=True %}{% endif %}{% endfor %}
+{% endblock %}
+
+{% block topbar_search %}
+<label class="gn-search">
+  {% gn_icon "i-search" %}
+  <span class="gn-visually-hidden">Buscar en el sistema</span>
+  <input type="search" id="kit-global-search" placeholder="Buscar cliente, orden, comprobante…" autocomplete="off">
+  <kbd>⌘K</kbd>
+</label>
+{% endblock %}
+
+{% block topbar_context %}
+{% for p in products %}{% if p.key == "geagro-cereales" or p.key == "geagro-vid" %}
+<div class="kit-context" data-kit-product="{{ p.key }}" hidden>
+  <label class="gn-visually-hidden" for="kit-campaign-{{ p.key }}">Campaña</label>
+  <select class="gn-select gn-select--sm" id="kit-campaign-{{ p.key }}"><option>{% if p.key == "geagro-vid" %}Temporada 2026/27{% else %}Campaña 2025/26{% endif %}</option><option>{% if p.key == "geagro-vid" %}Temporada 2025/26{% else %}Campaña 2024/25{% endif %}</option></select>
+  <label class="gn-visually-hidden" for="kit-crop-{{ p.key }}">{% if p.key == "geagro-vid" %}Viñedo{% else %}Cultivo{% endif %}</label>
+  <select class="gn-select gn-select--sm" id="kit-crop-{{ p.key }}">{% if p.key == "geagro-vid" %}<option>Finca Los Álamos</option><option>Finca El Molle</option>{% else %}<option>Soja de primera</option><option>Maíz tardío</option>{% endif %}</select>
+</div>
+{% endif %}{% endfor %}
+{% endblock %}
+
+{% block topbar_actions %}
+<button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--lg" id="kit-theme-toggle" data-gn-tooltip="Cambiar entre modo claro y oscuro" aria-label="Modo oscuro" aria-pressed="false">{% gn_icon "i-moon" %}</button>
+<div class="gn-dropdown">
+  <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--lg" data-gn-dropdown="kit-notif" aria-label="Notificaciones, 3 sin leer">{% gn_icon "i-bell" %}<span class="gn-btn__dot" aria-hidden="true">3</span></button>
+  <div class="gn-dropdown__menu gn-dropdown__menu--wide gn-notif" id="kit-notif" hidden>
+    <div class="gn-notif__head"><b>Notificaciones</b><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm">Marcar todas como leídas</button></div>
+    <ul class="gn-notif__list">
+      <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--critical">{% gn_icon "i-alert" %}</span><div><div class="gn-notif__title">Vencieron 6 matafuegos sin aviso</div><div class="gn-notif__meta">Hace 12 minutos · Vencimientos</div></div></li>
+      <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--warning">{% gn_icon "i-cloud" %}</span><div><div class="gn-notif__title">Pronóstico de granizo para mañana</div><div class="gn-notif__meta">Hace 1 hora · Clima</div></div></li>
+      <li class="gn-notif__item is-unread"><span class="gn-list__icon gn-list__icon--good">{% gn_icon "i-check" %}</span><div><div class="gn-notif__title">Facturación masiva de octubre terminada</div><div class="gn-notif__meta">Hoy 08:40 · Comercial</div></div></li>
+      <li class="gn-notif__item"><span class="gn-list__icon">{% gn_icon "i-user-plus" %}</span><div><div class="gn-notif__title">Nuevo usuario: Laura Méndez</div><div class="gn-notif__meta">Ayer · Usuarios</div></div></li>
+    </ul>
+    <div class="gn-notif__foot"><a class="gn-btn gn-btn--ghost gn-btn--sm gn-btn--block" href="#estados">Ver todas</a></div>
+  </div>
+</div>
+<div class="gn-dropdown">
+  <button type="button" class="gn-user-chip" data-gn-dropdown="kit-user-menu">
+    <span class="gn-avatar" aria-hidden="true">CS</span>
+    <span class="gn-user-chip__who"><b>Clara Sorensen</b><span>Administradora</span></span>
+    {% gn_icon "i-chevdown" %}
+  </button>
+  <div class="gn-dropdown__menu" id="kit-user-menu" role="menu" hidden>
+    <button type="button" class="gn-dropdown__item" role="menuitem">{% gn_icon "i-user" %}Mi perfil</button>
+    <button type="button" class="gn-dropdown__item" role="menuitem">{% gn_icon "i-key" %}Cambiar contraseña</button>
+    <div class="gn-dropdown__sep" role="separator"></div>
+    <button type="button" class="gn-dropdown__item" role="menuitem">{% gn_icon "i-logout" %}Cerrar sesión</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block user_menu %}{% endblock %}
+
+{% block breadcrumbs %}
+<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v{{ version }}</span></li></ol></nav>
+{% endblock %}
+
+{% block page_head %}
+<div class="gn-page-head" id="inicio">
+  <div class="gn-page-head__text">
+    <span class="gn-eyebrow">Sistema de diseño compartido · en revisión visual</span>
+    <h1>GENEOS UI Kit</h1>
+    <p>Componentes, variantes y estados de la biblioteca <code>geneos-ui</code> con la estructura de GELECTRIC y la identidad de cada producto. Elegí un producto para ver su tema aplicado a toda la página.</p>
+  </div>
+  <div class="gn-page-head__actions">
+    <div class="kit-switcher" role="radiogroup" aria-label="Producto">
+      {% for p in products %}
+      <button type="button" role="radio" class="kit-switcher__btn" data-kit-switch="{{ p.key }}" aria-checked="{% if p.key == active.key %}true{% else %}false{% endif %}">
+        <i class="kit-switcher__dot" data-gn-product="{{ p.key }}" aria-hidden="true"></i>{{ p.name }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<nav class="kit-toc" aria-label="Secciones del catálogo">
+  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+{# ================================================================ IDENTIDAD #}
+<section class="kit-section" id="identidad" aria-labelledby="h-identidad">
+  <header class="kit-section__head">
+    <h2 id="h-identidad">Identidad del producto</h2>
+    <p>Cada producto declara solo sus colores reales; el resto de la paleta (tintes, hover, foco, estados) se deriva de ellos. Los logotipos son los originales de cada repositorio.</p>
+  </header>
+  {% for p in products %}
+  <div class="kit-identity" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>
+    <div class="kit-identity__brand" data-gn-product="{{ p.key }}">
+      <img src="{% static p.logo_full %}" alt="Logotipo de {{ p.name }}">
+      <img src="{% static p.logo_icon %}" alt="" class="kit-identity__iso">
+    </div>
+    <div class="kit-identity__info">
+      <h3>{{ p.name }}</h3>
+      <p>{{ p.identity }}</p>
+      <ul class="kit-swatches">
+        {% for name, hex, src in p.swatches %}
+        <li><span class="kit-swatch" style="--sw: {{ hex }}"></span><span class="kit-swatch__name">{{ name }}</span><span class="kit-swatch__meta"><code>{{ hex }}</code> <small>{{ src }}</small></span></li>
+        {% endfor %}
+      </ul>
+      <p class="kit-note kit-identity__fonts">{% gn_icon "i-book" "gn-icon--sm" %} {{ p.fonts }}. Colores y logotipos verificados contra la rama <code>{% if p.key == "geagro-cereales" %}2026-cereales{% elif p.key == "geagro-vid" %}2026-vid{% else %}2026{% endif %}</code>.</p>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="kit-grid-2">
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Tokens semánticos del tema activo</h3>
+      <ul class="kit-tokens">
+        <li><span class="kit-swatch" style="--sw: var(--gn-sidebar-bg)"></span><code>--gn-sidebar-bg</code></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-brand)"></span><code>--gn-brand</code></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-brand-soft)"></span><code>--gn-brand-soft</code></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-brand-ink)"></span><code>--gn-brand-ink</code></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-accent)"></span><code>--gn-accent</code></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-focus)"></span><code>--gn-focus</code></li>
+      </ul>
+    </div></div>
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Estados semánticos</h3>
+      <ul class="kit-tokens">
+        <li><span class="kit-swatch" style="--sw: var(--gn-good)"></span><code>--gn-good</code><span class="gn-badge gn-badge--good">Al día</span></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-warning)"></span><code>--gn-warning</code><span class="gn-badge gn-badge--warning">Por vencer</span></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-critical)"></span><code>--gn-critical</code><span class="gn-badge gn-badge--critical">Vencido</span></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-info)"></span><code>--gn-info</code><span class="gn-badge gn-badge--info">Avisado</span></li>
+        <li><span class="kit-swatch" style="--sw: var(--gn-neutral)"></span><code>--gn-neutral</code><span class="gn-badge gn-badge--neutral">Archivado</span></li>
+      </ul>
+    </div></div>
+  </div>
+</section>
+
+{# ============================================================== FUNDAMENTOS #}
+<section class="kit-section" id="fundamentos" aria-labelledby="h-fund">
+  <header class="kit-section__head">
+    <h2 id="h-fund">Tipografía, espaciado e iconografía</h2>
+    <p>Titillium Web en los cuatro productos (ya es la fuente de GELECTRIC, GEMA y GEAGRO). Escala de 4 px para espacios y los radios de GELECTRIC.</p>
+  </header>
+  <div class="kit-grid-2">
+    <div class="gn-card"><div class="gn-card__body kit-type">
+      <div><span class="kit-meta">2xl · 26/700 · títulos de página</span><p style="font-size:var(--gn-fs-2xl);font-weight:700">Padrón de asociados</p></div>
+      <div><span class="kit-meta">xl · 20/700 · títulos de módulo</span><p style="font-size:var(--gn-fs-xl);font-weight:700">Órdenes de trabajo</p></div>
+      <div><span class="kit-meta">lg · 18/700 · títulos de tarjeta</span><p style="font-size:var(--gn-fs-lg);font-weight:700">Vencimientos del mes</p></div>
+      <div><span class="kit-meta">base · 13,5/400 · texto</span><p>El matafuego AB-22018 vence el 12/11/2026. El cliente todavía no fue avisado.</p></div>
+      <div><span class="kit-meta">sm · 12,5 · etiquetas y ayudas</span><p style="font-size:var(--gn-fs-sm);color:var(--gn-text-2)">Fecha de la última recarga</p></div>
+      <div><span class="kit-meta">xs · 11,5/600 · eyebrow</span><p class="gn-eyebrow">Comercial · Facturación</p></div>
+      <div><span class="kit-meta">Números tabulares</span><p class="kit-tabular">$ 184.320,50<br>$ &nbsp;&nbsp;62.115,00</p></div>
+    </div></div>
+    <div class="kit-stack">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Espaciado</h3>
+        <ul class="kit-spacing">
+          <li><span style="width:4px"></span><code>--gn-space-1</code> 4</li>
+          <li><span style="width:8px"></span><code>--gn-space-2</code> 8</li>
+          <li><span style="width:12px"></span><code>--gn-space-3</code> 12</li>
+          <li><span style="width:16px"></span><code>--gn-space-4</code> 16</li>
+          <li><span style="width:24px"></span><code>--gn-space-6</code> 24</li>
+          <li><span style="width:32px"></span><code>--gn-space-8</code> 32</li>
+        </ul>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Radios y elevación</h3>
+        <div class="kit-radii">
+          <div style="border-radius:var(--gn-radius-sm)"><code>radius-sm</code>9</div>
+          <div style="border-radius:var(--gn-radius)"><code>radius</code>14</div>
+          <div style="border-radius:var(--gn-radius-btn)"><code>radius-btn</code>32</div>
+          <div style="border-radius:var(--gn-radius);box-shadow:var(--gn-shadow-lg)"><code>shadow-lg</code>menús</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+  <div class="gn-card"><div class="gn-card__body">
+    <h3 class="kit-h3">Íconos <span class="kit-meta">sprite compartido, trazo 1,8 · {% gn_icon "i-info" "gn-icon--sm" %} los íconos propios de cada módulo siguen en su producto</span></h3>
+    <ul class="kit-icons" id="kit-icons"></ul>
+  </div></div>
+</section>
+
+{# =============================================================== NAVEGACIÓN #}
+<section class="kit-section" id="navegacion" aria-labelledby="h-nav">
+  <header class="kit-section__head">
+    <h2 id="h-nav">Sidebar, encabezado y navegación</h2>
+    <p>El sidebar de esta página es el componente real. Probá escribir <kbd>factura</kbd>, <kbd>vencimientos</kbd> o <kbd>fenologia</kbd> (sin tilde) en su buscador, contraerlo con el botón de menú, o recorrerlo con <kbd>Tab</kbd> y las flechas.</p>
+  </header>
+  <div class="kit-grid-2">
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Comportamiento del sidebar</h3>
+      <ul class="kit-checklist">
+        <li>{% gn_icon "i-check" %}<span>Íconos y etiquetas; contraído muestra solo íconos con globito al pasar el mouse o el foco.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Contraer y expandir, recordado entre páginas (migra la preferencia guardada por GELECTRIC).</span></li>
+        <li>{% gn_icon "i-check" %}<span>Submenús desplegables; el grupo del ítem activo arranca abierto.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Ítem activo con <code>aria-current="page"</code>, fondo y barra de acento.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Buscador en tiempo real, sin mayúsculas ni tildes, por palabra clave y sinónimos.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Abre los grupos con coincidencias, resalta el texto y los vuelve a su estado al limpiar.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Permisos: el servidor arma el menú con las reglas de cada producto.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Móvil: cajón con fondo oscurecido, foco atrapado y cierre con <kbd>Esc</kbd>.</span></li>
+        <li>{% gn_icon "i-check" %}<span>Teclado: <kbd>/</kbd> enfoca el buscador, <kbd>↓</kbd> pasa a los resultados, <kbd>Enter</kbd> abre el primero.</span></li>
+      </ul>
+    </div></div>
+    <div class="kit-stack">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Breadcrumbs</h3>
+        <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol><li><a href="#navegacion">Inicio</a></li><li><a href="#navegacion">Matafuegos</a></li><li><span aria-current="page">AB-22018</span></li></ol></nav>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Pestañas</h3>
+        <div class="gn-tabs" role="tablist" aria-label="Ficha del asociado">
+          <button class="gn-tabs__tab" role="tab" id="t-datos" aria-controls="tp-datos" aria-selected="true">Datos</button>
+          <button class="gn-tabs__tab" role="tab" id="t-sum" aria-controls="tp-sum" aria-selected="false">Suministros<span class="gn-tabs__count">3</span></button>
+          <button class="gn-tabs__tab" role="tab" id="t-cta" aria-controls="tp-cta" aria-selected="false">Cuenta corriente</button>
+          <button class="gn-tabs__tab" role="tab" id="t-rec" aria-controls="tp-rec" aria-selected="false">Reclamos</button>
+        </div>
+        <div class="gn-tab-panel" role="tabpanel" id="tp-datos" aria-labelledby="t-datos" tabindex="0">
+          <dl class="gn-dl"><div><dt>Titular</dt><dd>Taller Rossi SRL</dd></div><div><dt>CUIT</dt><dd>30-71234567-8</dd></div><div><dt>Categoría</dt><dd>Comercial</dd></div><div><dt>Alta</dt><dd>14/03/2011</dd></div></dl>
+        </div>
+        <div class="gn-tab-panel" role="tabpanel" id="tp-sum" aria-labelledby="t-sum" tabindex="0" hidden><p class="kit-muted">3 suministros activos: Av. San Martín 812, Ruta 5 km 3 y depósito Calle 9.</p></div>
+        <div class="gn-tab-panel" role="tabpanel" id="tp-cta" aria-labelledby="t-cta" tabindex="0" hidden><p class="kit-muted">Saldo deudor: $ 184.320,50 en 2 facturas vencidas.</p></div>
+        <div class="gn-tab-panel" role="tabpanel" id="tp-rec" aria-labelledby="t-rec" tabindex="0" hidden><p class="kit-muted">Sin reclamos abiertos.</p></div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Menú desplegable</h3>
+        <div class="gn-btn-group">
+          <div class="gn-dropdown">
+            <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="kit-export">{% gn_icon "i-download" %}Exportar{% gn_icon "i-chevdown" %}</button>
+            <div class="gn-dropdown__menu gn-dropdown__menu--start" id="kit-export" role="menu" hidden>
+              <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-toast="Se descargó asociados.csv" data-gn-toast-kind="good">{% gn_icon "i-file" %}CSV</button>
+              <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-toast="Se descargó asociados.xlsx" data-gn-toast-kind="good">{% gn_icon "i-file" %}Excel</button>
+              <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-toast="Se descargó asociados.pdf" data-gn-toast-kind="good">{% gn_icon "i-file-out" %}PDF</button>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+{# ================================================================ BOTONES #}
+<section class="kit-section" id="acciones" aria-labelledby="h-btn">
+  <header class="kit-section__head">
+    <h2 id="h-btn">Botones</h2>
+    <p>Button System de GELECTRIC: una clase base <code>gn-btn</code> más una variante. Primario, secundario y terciario siguen el color de marca; peligro, éxito, advertencia e información usan los colores de estado.</p>
+  </header>
+  <div class="gn-card"><div class="gn-card__body kit-specimens">
+    <div class="kit-specimen">
+      <span class="kit-meta">Jerarquía</span>
+      <div class="gn-btn-group">
+        <button type="button" class="gn-btn gn-btn--primary">{% gn_icon "i-plus" %}Nuevo matafuego</button>
+        <button type="button" class="gn-btn gn-btn--secondary">{% gn_icon "i-edit" %}Editar</button>
+        <button type="button" class="gn-btn gn-btn--tertiary">Cancelar</button>
+        <button type="button" class="gn-btn gn-btn--ghost">{% gn_icon "i-gear" %}Configurar</button>
+      </div>
+    </div>
+    <div class="kit-specimen">
+      <span class="kit-meta">Semánticos</span>
+      <div class="gn-btn-group">
+        <button type="button" class="gn-btn gn-btn--danger">{% gn_icon "i-trash" %}Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
+        <button type="button" class="gn-btn gn-btn--success">{% gn_icon "i-check" %}Aprobar</button>
+        <button type="button" class="gn-btn gn-btn--warning">{% gn_icon "i-flag" %}Revisar</button>
+        <button type="button" class="gn-btn gn-btn--info">{% gn_icon "i-info" %}Más información</button>
+      </div>
+    </div>
+    <div class="kit-specimen">
+      <span class="kit-meta">Estados: reposo, hover, activo, foco, deshabilitado y cargando</span>
+      <div class="gn-btn-group">
+        <button type="button" class="gn-btn gn-btn--primary">Reposo</button>
+        <button type="button" class="gn-btn gn-btn--primary kit-force-hover">Hover</button>
+        <button type="button" class="gn-btn gn-btn--primary kit-force-active">Activo</button>
+        <button type="button" class="gn-btn gn-btn--primary kit-force-focus">Foco</button>
+        <button type="button" class="gn-btn gn-btn--primary" disabled>Deshabilitado</button>
+        <button type="button" class="gn-btn gn-btn--primary" id="kit-save">{% gn_icon "i-check" %}Guardar</button>
+      </div>
+      <div class="gn-btn-group">
+        <button type="button" class="gn-btn gn-btn--secondary">Reposo</button>
+        <button type="button" class="gn-btn gn-btn--secondary kit-force-hover">Hover</button>
+        <button type="button" class="gn-btn gn-btn--secondary kit-force-active">Activo</button>
+        <button type="button" class="gn-btn gn-btn--secondary kit-force-focus">Foco</button>
+        <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
+        <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true">{% gn_icon "i-spinner" %}Exportando…</button>
+      </div>
+      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+    </div>
+    <div class="kit-specimen">
+      <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
+      <div class="gn-btn-group">
+        <button type="button" class="gn-btn gn-btn--primary gn-btn--sm">{% gn_icon "i-plus" %}Nuevo</button>
+        <button type="button" class="gn-btn gn-btn--primary">{% gn_icon "i-plus" %}Nuevo</button>
+        <button type="button" class="gn-btn gn-btn--primary gn-btn--lg">{% gn_icon "i-plus" %}Nuevo</button>
+        <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-tooltip="Editar">{% gn_icon "i-edit" %}</button>
+        <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon" data-gn-tooltip="Ver detalle">{% gn_icon "i-eye" %}</button>
+        <button type="button" class="gn-btn gn-btn--secondary gn-btn--icon" data-gn-tooltip="Descargar PDF">{% gn_icon "i-download" %}</button>
+        <button type="button" class="gn-btn gn-btn--danger gn-btn--icon gn-btn--lg" data-gn-tooltip="Eliminar">{% gn_icon "i-trash" %}</button>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+{# ============================================================ FORMULARIOS #}
+<section class="kit-section" id="formularios" aria-labelledby="h-form">
+  <header class="kit-section__head">
+    <h2 id="h-form">Formularios, buscadores y filtros</h2>
+    <p>Campos con etiqueta visible, ayuda y error asociados por <code>aria-describedby</code>. Los filtros se arman sin enviar el formulario hasta presionar Filtrar, como en GELECTRIC.</p>
+  </header>
+  <div class="kit-grid-2">
+    <form class="gn-card" novalidate id="kit-form"><div class="gn-card__head"><div><h3 class="gn-card__title">Alta de matafuego</h3><p class="gn-card__sub">Los campos con * son obligatorios.</p></div></div>
+      <div class="gn-card__body">
+        <div class="gn-alert gn-alert--critical" role="alert">{% gn_icon "i-x-circle" %}<div class="gn-alert__body"><span class="gn-alert__title">Revisá 2 campos antes de guardar</span><ul><li><a href="#f-serie">Número de serie</a>: ya existe en otro cliente.</li><li><a href="#f-vence">Vencimiento</a>: no puede ser anterior a la recarga.</li></ul></div></div>
+        <div class="gn-form-grid" style="margin-top:16px">
+          <div class="gn-field gn-field--full">
+            <label class="gn-field__label" for="f-cliente">Cliente<span class="gn-required" aria-hidden="true">*</span></label>
+            <div class="gn-input-group">{% gn_icon "i-search" %}<input class="gn-input" id="f-cliente" value="Panadería La Espiga" required aria-describedby="f-cliente-h"></div>
+            <span class="gn-field__help" id="f-cliente-h">Buscá por nombre, CUIT o dirección.</span>
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-serie">Número de serie<span class="gn-required" aria-hidden="true">*</span></label>
+            <input class="gn-input" id="f-serie" value="AB-19244" aria-invalid="true" aria-describedby="f-serie-e" required>
+            <span class="gn-field__error" id="f-serie-e">{% gn_icon "i-alert" %}Ya existe en Club Atlético Unión.</span>
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-tipo">Tipo de agente</label>
+            <select class="gn-select" id="f-tipo"><option>ABC polvo</option><option>CO₂</option><option>Agua</option><option>Espuma AFFF</option></select>
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-recarga">Última recarga</label>
+            <input class="gn-input" id="f-recarga" type="date" value="2026-10-03">
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-vence">Vencimiento<span class="gn-required" aria-hidden="true">*</span></label>
+            <input class="gn-input" id="f-vence" type="date" value="2026-09-30" aria-invalid="true" aria-describedby="f-vence-e" required>
+            <span class="gn-field__error" id="f-vence-e">{% gn_icon "i-alert" %}Es anterior a la última recarga.</span>
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-cap">Capacidad (kg)</label>
+            <input class="gn-input" id="f-cap" inputmode="decimal" value="5">
+          </div>
+          <div class="gn-field">
+            <label class="gn-field__label" for="f-codigo">Código interno</label>
+            <input class="gn-input" id="f-codigo" value="GEMA-00412" readonly aria-describedby="f-codigo-h">
+            <span class="gn-field__help" id="f-codigo-h">Se genera automáticamente.</span>
+          </div>
+          <div class="gn-field gn-field--full">
+            <label class="gn-field__label" for="f-obs">Observaciones</label>
+            <textarea class="gn-textarea" id="f-obs" placeholder="Ubicación en el local, accesos, horario de atención…"></textarea>
+          </div>
+          <fieldset class="gn-field gn-field--full kit-fieldset">
+            <legend class="gn-field__label">Avisos al cliente</legend>
+            <div class="gn-check-list">
+              <label class="gn-check"><input type="checkbox" checked><span class="gn-check__text">WhatsApp 30 días antes<small>Se prepara el mensaje; el envío es manual.</small></span></label>
+              <label class="gn-check"><input type="checkbox"><span class="gn-check__text">Correo electrónico</span></label>
+              <label class="gn-check"><input type="checkbox" disabled><span class="gn-check__text">SMS (no disponible)</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="gn-field kit-fieldset">
+            <legend class="gn-field__label">Ubicación</legend>
+            <div class="gn-check-list">
+              <label class="gn-check"><input type="radio" name="kit-ubic" checked>Interior</label>
+              <label class="gn-check"><input type="radio" name="kit-ubic">Exterior</label>
+            </div>
+          </fieldset>
+          <div class="gn-field">
+            <span class="gn-field__label">Estado</span>
+            <label class="gn-switch"><input type="checkbox" role="switch" checked>Activo</label>
+          </div>
+        </div>
+      </div>
+      <div class="gn-card__foot">
+        <button type="button" class="gn-btn gn-btn--tertiary">Cancelar</button>
+        <button type="submit" class="gn-btn gn-btn--primary">{% gn_icon "i-check" %}Guardar matafuego</button>
+      </div>
+    </form>
+
+    <div class="kit-stack">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Campos: reposo, foco, deshabilitado, error</h3>
+        <div class="kit-stack kit-stack--tight">
+          <input class="gn-input" aria-label="Ejemplo en reposo" placeholder="Reposo">
+          <input class="gn-input kit-force-focus-input" aria-label="Ejemplo con foco" value="Con foco">
+          <input class="gn-input" aria-label="Ejemplo deshabilitado" value="Deshabilitado" disabled>
+          <input class="gn-input" aria-label="Ejemplo con error" value="Con error" aria-invalid="true">
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Buscador</h3>
+        <label class="gn-search">{% gn_icon "i-search" %}<span class="gn-visually-hidden">Buscar asociado</span><input type="search" placeholder="Buscar por nombre, N.º de socio o CUIT"></label>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="gn-card" id="kit-filters-card"><div class="gn-card__body">
+    <h3 class="kit-h3">Filtros combinados</h3>
+    <form class="gn-filters" data-gn-filter-builder="kit-filter-defs" onsubmit="return false">
+      <div class="gn-pills" data-gn-pills role="group" aria-label="Filtro rápido por estado">
+        <button type="button" class="gn-pill-toggle" aria-pressed="true" data-value="">Todos<span>5</span></button>
+        <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="warning">Por vencer<span>1</span></button>
+        <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="critical">Vencidos<span>1</span></button>
+        <button type="button" class="gn-pill-toggle" aria-pressed="false" data-value="good">Vigentes<span>2</span></button>
+      </div>
+      <div class="gn-filters__bar">
+        <label class="gn-search">{% gn_icon "i-search" %}<span class="gn-visually-hidden">Buscar</span><input type="search" placeholder="Buscar cliente o número de serie"></label>
+        <button type="button" class="gn-filters__toggle" data-gn-filters-toggle aria-controls="kit-filters-panel" aria-expanded="false">{% gn_icon "i-filter" %}<span>Filtros</span><span class="gn-filters__count">2</span>{% gn_icon "i-chevdown" "gn-filters__chev" %}</button>
+        <div class="gn-filters__panel" id="kit-filters-panel">
+          <div class="gn-filters__fields" data-gn-filter-fields>
+            <div class="gn-filter" data-filter-key="localidad">
+              <div class="gn-filter__head"><label class="gn-filter__label" for="kf-loc">Localidad</label><button type="button" class="gn-filter__remove" data-gn-remove-filter aria-label="Quitar filtro Localidad">{% gn_icon "i-x" %}</button></div>
+              <select class="gn-select" id="kf-loc"><option>Todas</option><option selected>Tandil</option><option>Azul</option></select>
+            </div>
+            <div class="gn-filter" data-filter-key="tipo">
+              <div class="gn-filter__head"><label class="gn-filter__label" for="kf-tipo">Tipo</label><button type="button" class="gn-filter__remove" data-gn-remove-filter aria-label="Quitar filtro Tipo">{% gn_icon "i-x" %}</button></div>
+              <select class="gn-select" id="kf-tipo"><option>Todos</option><option selected>ABC polvo</option><option>CO₂</option></select>
+            </div>
+          </div>
+          <div class="gn-filters__actions">
+            <div class="gn-dropdown">
+              <button type="button" class="gn-btn gn-btn--ghost" data-gn-dropdown="kit-add-filter">{% gn_icon "i-plus" %}Agregar filtro</button>
+              <div class="gn-dropdown__menu gn-dropdown__menu--start" id="kit-add-filter" role="menu" data-gn-filter-menu hidden>
+                <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-add-filter="localidad">Localidad</button>
+                <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-add-filter="tipo">Tipo</button>
+                <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-add-filter="vence">Fecha de vencimiento</button>
+                <button type="button" class="gn-dropdown__item" role="menuitem" data-gn-add-filter="cuit">CUIT</button>
+              </div>
+            </div>
+            <button type="button" class="gn-btn gn-btn--tertiary" id="kit-clear-filters">Limpiar</button>
+            <button type="submit" class="gn-btn gn-btn--primary">{% gn_icon "i-filter" %}Filtrar</button>
+          </div>
+        </div>
+      </div>
+      <div class="gn-chips" aria-label="Filtros aplicados">
+        <span class="gn-chip">Localidad: <b>Tandil</b><button type="button" aria-label="Quitar Localidad">{% gn_icon "i-x" %}</button></span>
+        <span class="gn-chip">Tipo: <b>ABC polvo</b><button type="button" aria-label="Quitar Tipo">{% gn_icon "i-x" %}</button></span>
+      </div>
+    </form>
+    <script type="application/json" id="kit-filter-defs">[{"key":"localidad","label":"Localidad","type":"select","options":[{"value":"tandil","label":"Tandil"},{"value":"azul","label":"Azul"}]},{"key":"tipo","label":"Tipo","type":"select","options":[{"value":"abc","label":"ABC polvo"},{"value":"co2","label":"CO₂"}]},{"key":"vence","label":"Fecha de vencimiento","type":"daterange","params":["vence_desde","vence_hasta"]},{"key":"cuit","label":"CUIT","type":"text","placeholder":"30-00000000-0"}]</script>
+  </div></div>
+</section>
+
+{# ================================================================== DATOS #}
+<section class="kit-section" id="datos" aria-labelledby="h-datos">
+  <header class="kit-section__head">
+    <h2 id="h-datos">Tablas y listados</h2>
+    <p>Encabezado ordenable con <code>aria-sort</code>, números alineados a la derecha y acciones por fila. En pantallas angostas cada fila se convierte en una tarjeta que se abre como acordeón, sin scroll horizontal.</p>
+  </header>
+  {% for p in products %}
+  <div class="gn-card" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>
+    <div class="gn-card__head"><div><h3 class="gn-card__title">{{ p.table_title }} <span class="gn-badge gn-badge--neutral gn-badge--count">{{ p.rows|length }}</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+      <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm">{% gn_icon "i-download" %}Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm">{% gn_icon "i-plus" %}Nuevo</button></div>
+    </div>
+    <div class="gn-card__body">
+      <div class="gn-table-wrap">
+        <table class="gn-table gn-table--responsive gn-table--accordion" data-gn-sort="client">
+          <caption class="gn-visually-hidden">{{ p.table_title }}, ordenable por columna</caption>
+          <thead><tr>
+            {% for c in p.cols %}<th scope="col"{% if forloop.counter in p.num %} class="is-num"{% endif %}{% if forloop.counter == 4 %} data-gn-type="number"{% endif %}><button type="button" class="gn-table__sort">{{ c }}<span class="gn-table__sort-icon" aria-hidden="true"></span></button></th>{% endfor %}
+            <th scope="col" class="is-actions"><span class="gn-visually-hidden">Acciones</span></th>
+          </tr></thead>
+          <tbody>
+          {% for r in p.rows %}
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span><span class="gn-row-summary__title">{{ r.0 }}</span><span class="gn-row-summary__meta">{{ r.1 }} · <span class="gn-badge gn-badge--{{ r.5.1 }} gn-badge--dot">{{ r.5.0 }}</span></span></span>{% gn_icon "i-chevdown" %}</button></td>
+              <td data-th="{{ p.cols.0 }}" class="gn-accordion-hide"><span class="gn-table__primary">{{ r.0 }}</span></td>
+              <td data-th="{{ p.cols.1 }}">{{ r.1 }}</td>
+              <td data-th="{{ p.cols.2 }}">{{ r.2 }}</td>
+              <td data-th="{{ p.cols.3 }}" class="is-num" data-value="{{ r.3 }}">{{ r.3 }}</td>
+              <td data-th="{{ p.cols.4 }}"{% if 5 in p.num %} class="is-num"{% endif %}>{{ r.4 }}</td>
+              <td data-th="{{ p.cols.5 }}" data-value="{{ r.5.0 }}" class="gn-accordion-hide"><span class="gn-badge gn-badge--{{ r.5.1 }} gn-badge--dot">{{ r.5.0 }}</span></td>
+              <td class="is-actions">
+                <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-tooltip="Ver {{ r.0 }}">{% gn_icon "i-eye" %}</button>
+                <div class="gn-dropdown">
+                  <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-dropdown="kit-row-{{ p.key }}-{{ forloop.counter }}" aria-label="Más acciones para {{ r.0 }}">{% gn_icon "i-more" %}</button>
+                  <div class="gn-dropdown__menu" id="kit-row-{{ p.key }}-{{ forloop.counter }}" role="menu" hidden>
+                    <button type="button" class="gn-dropdown__item" role="menuitem">{% gn_icon "i-edit" %}Editar</button>
+                    <button type="button" class="gn-dropdown__item" role="menuitem">{% gn_icon "i-file-out" %}Descargar comprobante</button>
+                    <div class="gn-dropdown__sep" role="separator"></div>
+                    <button type="button" class="gn-dropdown__item gn-dropdown__item--danger" role="menuitem" data-gn-modal-open="kit-confirm">{% gn_icon "i-trash" %}Eliminar</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="gn-table-foot">
+        <span>Mostrando 1 a 5 de 248 registros</span>
+        <div class="gn-pagination">
+          <div class="gn-pagination__size"><label for="kit-size-{{ p.key }}">Mostrar</label><select id="kit-size-{{ p.key }}" class="gn-select"><option>10</option><option selected>25</option><option>50</option></select></div>
+          <nav aria-label="Paginación de {{ p.table_title|lower }}"><ul class="gn-pagination__pages">
+            <li><span class="gn-pagination__link" aria-disabled="true">{% gn_icon "i-chevleft" "gn-icon--sm" %}<span class="gn-visually-hidden">Página anterior</span></span></li>
+            <li><a class="gn-pagination__link" href="#datos" aria-current="page" aria-label="Página 1, actual">1</a></li>
+            <li><a class="gn-pagination__link" href="#datos" aria-label="Página 2">2</a></li>
+            <li class="is-far"><a class="gn-pagination__link" href="#datos" aria-label="Página 3">3</a></li>
+            <li class="gn-pagination__gap" aria-hidden="true">…</li>
+            <li><a class="gn-pagination__link" href="#datos" aria-label="Página 10">10</a></li>
+            <li><a class="gn-pagination__link" href="#datos" aria-label="Página siguiente">{% gn_icon "i-chevright" "gn-icon--sm" %}</a></li>
+          </ul></nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="gn-card"><div class="gn-card__body">
+    <div class="gn-empty">
+      <span class="gn-tile-icon">{% gn_icon "i-search" %}</span>
+      <h3>No hay resultados con estos filtros</h3>
+      <p>Probá quitar algún filtro o buscar por otro dato, como el CUIT o la dirección.</p>
+      <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm">Limpiar filtros</button>
+    </div>
+  </div></div>
+</section>
+
+{# =============================================================== DASHBOARD #}
+<section class="kit-section" id="dashboard" aria-labelledby="h-dash">
+  <header class="kit-section__head">
+    <h2 id="h-dash">Tarjetas, indicadores y gráficos</h2>
+    <p>Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.</p>
+  </header>
+  {% for p in products %}
+  <div class="kit-stack" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>
+    <div class="gn-page-head kit-inner-head">
+      <div class="gn-page-head__text"><span class="gn-eyebrow">{{ p.eyebrow }}</span><h3 class="kit-h2">{{ p.title }}</h3><p>{{ p.desc }}</p></div>
+      <span class="gn-date-pill">{% gn_icon "i-calendar" %}<b>Lunes 26 de octubre</b> · 2026</span>
+    </div>
+    <div class="gn-grid gn-grid--4">
+      {% for k in p.kpis_view %}
+      <article class="gn-card gn-kpi">
+        <div class="gn-kpi__top"><span class="gn-kpi__label">{{ k.label }}</span><span class="gn-kpi__icon{% if forloop.counter == 3 %} gn-kpi__icon--accent{% endif %}">{% gn_icon k.icon %}</span></div>
+        <div class="gn-kpi__value">{{ k.value }}{% if k.unit %}<small>{{ k.unit }}</small>{% endif %}</div>
+        <div class="gn-kpi__trend">{% if k.arrow %}<b class="is-{{ k.tone }}">{% if k.arrow == "up" %}{% gn_icon "i-arrowup" %}{% else %}{% gn_icon "i-arrowdown" %}{% endif %}</b>{% endif %}{{ k.trend }}</div>
+      </article>
+      {% endfor %}
+    </div>
+    <div class="gn-grid gn-grid--main-aside">
+      <div class="gn-card"><div class="gn-card__head"><h3 class="gn-card__title">{{ p.series_title }}</h3><span class="gn-badge gn-badge--brand">Últimos 6 meses</span></div>
+        <div class="gn-card__body"><div class="gn-chart" data-gn-chart="line" data-gn-source="kit-series-{{ p.key }}" data-gn-unit="{{ p.unit }}" data-gn-title="{{ p.series_title }}"></div></div></div>
+      <div class="gn-card"><div class="gn-card__head"><h3 class="gn-card__title">{{ p.donut_title }}</h3></div>
+        <div class="gn-card__body"><div class="gn-donut" data-gn-chart="donut" data-gn-source="kit-donut-{{ p.key }}"></div></div></div>
+    </div>
+    <script type="application/json" id="kit-series-{{ p.key }}">{{ p.series_json|safe }}</script>
+    <script type="application/json" id="kit-donut-{{ p.key }}">{{ p.donut_json|safe }}</script>
+  </div>
+  {% endfor %}
+  <div class="gn-grid gn-grid--3">
+    <div class="gn-card"><div class="gn-card__head"><h3 class="gn-card__title">Requieren atención</h3><a class="gn-table-link" href="#dashboard">Ver todas{% gn_icon "i-chevright" "gn-icon--sm" %}</a></div>
+      <div class="gn-card__body"><ul class="gn-list">
+        <li><a class="gn-list__row" href="#dashboard"><span class="gn-list__icon gn-list__icon--critical">{% gn_icon "i-alert" %}</span><span class="gn-list__body"><span class="gn-list__title">Avisos de corte sin notificar</span><span class="gn-list__sub">Comercial</span></span><span class="gn-list__end is-critical">12</span></a></li>
+        <li><a class="gn-list__row" href="#dashboard"><span class="gn-list__icon gn-list__icon--warning">{% gn_icon "i-clock" %}</span><span class="gn-list__body"><span class="gn-list__title">Órdenes atrasadas</span><span class="gn-list__sub">Operaciones</span></span><span class="gn-list__end">5</span></a></li>
+        <li><a class="gn-list__row" href="#dashboard"><span class="gn-list__icon gn-list__icon--good">{% gn_icon "i-check" %}</span><span class="gn-list__body"><span class="gn-list__title">Conciliaciones listas para cerrar</span><span class="gn-list__sub">Contabilidad</span></span><span class="gn-list__end">3</span></a></li>
+      </ul></div></div>
+    <div class="gn-card"><div class="gn-card__head"><h3 class="gn-card__title">Avance por sector</h3></div>
+      <div class="gn-card__body"><ul class="gn-bars">
+        <li><span>Facturación</span><span class="gn-bars__track"><span style="width:92%"></span></span><b>92 %</b></li>
+        <li><span>Cobranzas</span><span class="gn-bars__track"><span style="width:71%"></span></span><b>71 %</b></li>
+        <li><span>Lecturas</span><span class="gn-bars__track"><span style="width:58%"></span></span><b>58 %</b></li>
+        <li><span>Reclamos</span><span class="gn-bars__track"><span style="width:34%"></span></span><b>34 %</b></li>
+      </ul></div></div>
+    <a class="gn-card gn-card--link" href="#dashboard"><span class="gn-tile-icon">{% gn_icon "i-idcard" %}</span><span><b class="kit-link-title">Ficha del asociado</b><span class="kit-muted">Datos, suministros, cuenta y reclamos en 8 solapas.</span></span>{% gn_icon "i-chevright" "gn-card__chev" %}</a>
+  </div>
+</section>
+
+{# ================================================================ ESTADOS #}
+<section class="kit-section" id="estados" aria-labelledby="h-est">
+  <header class="kit-section__head">
+    <h2 id="h-est">Estados e interacción</h2>
+    <p>Badges, alertas, notificaciones, modales, tooltips, acordeones, menús de acciones y pasos. Los colores de estado son independientes de la marca.</p>
+  </header>
+  <div class="kit-grid-2">
+    <div class="gn-card"><div class="gn-card__body kit-specimens">
+      <div class="kit-specimen"><span class="kit-meta">Badges</span>
+        <div class="gn-btn-group">
+          <span class="gn-badge gn-badge--good gn-badge--dot">Al día</span><span class="gn-badge gn-badge--warning gn-badge--dot">Por vencer</span><span class="gn-badge gn-badge--critical gn-badge--dot">Vencido</span><span class="gn-badge gn-badge--info gn-badge--dot">Avisado</span><span class="gn-badge gn-badge--neutral">Archivado</span><span class="gn-badge gn-badge--brand">Comercial</span><span class="gn-badge gn-badge--solid">Nuevo</span>
+        </div>
+      </div>
+      <div class="kit-specimen"><span class="kit-meta">Alertas</span>
+        <div class="kit-stack kit-stack--tight">
+          <div class="gn-alert gn-alert--good" role="status">{% gn_icon "i-check-circle" %}<div class="gn-alert__body">Los cambios se guardaron correctamente.</div><button type="button" class="gn-alert__close" data-gn-dismiss aria-label="Cerrar">{% gn_icon "i-x" %}</button></div>
+          <div class="gn-alert gn-alert--warning" role="status">{% gn_icon "i-alert" %}<div class="gn-alert__body"><span class="gn-alert__title">41 matafuegos por vencer sin aviso</span>Revisalos en el panel de vencimientos antes del viernes.</div></div>
+          <div class="gn-alert gn-alert--critical" role="alert">{% gn_icon "i-x-circle" %}<div class="gn-alert__body">No se pudo autorizar la factura B 0003-00012458 en ARCA. Volvé a intentarlo en unos minutos.</div></div>
+          <div class="gn-alert gn-alert--info" role="status">{% gn_icon "i-info" %}<div class="gn-alert__body">Estás viendo la ficha en modo consulta. Para editar, usá el botón Editar.</div></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="gn-card"><div class="gn-card__body kit-specimens">
+      <div class="kit-specimen"><span class="kit-meta">Notificaciones emergentes</span>
+        <div class="gn-btn-group">
+          <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm" data-gn-toast="La orden OT-2291 quedó asignada a Taller Norte." data-gn-toast-kind="good" data-gn-toast-title="Orden guardada">Éxito</button>
+          <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm" data-gn-toast="Hay 3 lotes sin labor registrada esta semana." data-gn-toast-kind="warning">Advertencia</button>
+          <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm" data-gn-toast="No se pudo conectar con el servicio de clima." data-gn-toast-kind="critical" data-gn-toast-title="Error de conexión">Error</button>
+          <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm" data-gn-toast="La exportación va a llegar a tu correo en unos minutos." data-gn-toast-kind="info">Información</button>
+        </div>
+        <p class="kit-note">También hay un panel de notificaciones en la campana del encabezado.</p>
+      </div>
+      <div class="kit-specimen"><span class="kit-meta">Modales</span>
+        <div class="gn-btn-group">
+          <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="kit-confirm">{% gn_icon "i-trash" %}Eliminar cliente</button>
+          <button type="button" class="gn-btn gn-btn--primary" data-gn-modal-open="kit-form-modal">{% gn_icon "i-plus" %}Registrar recarga</button>
+        </div>
+      </div>
+      <div class="kit-specimen"><span class="kit-meta">Tooltips</span>
+        <div class="gn-btn-group">
+          <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon" data-gn-tooltip="Imprimir oblea">{% gn_icon "i-file" %}</button>
+          <span class="kit-muted">Saldo <button type="button" class="kit-info-btn" data-gn-tooltip="Incluye intereses por mora al día de hoy">{% gn_icon "i-info" "gn-icon--sm" %}</button></span>
+        </div>
+      </div>
+      <div class="kit-specimen"><span class="kit-meta">Pasos de un proceso</span>
+        <ol class="gn-steps">
+          <li class="is-done"><span class="gn-steps__dot">{% gn_icon "i-check" %}</span><span class="gn-steps__label">Datos del titular</span></li>
+          <li class="is-current" aria-current="step"><span class="gn-steps__dot">2</span><span class="gn-steps__label">Suministro</span></li>
+          <li><span class="gn-steps__dot">3</span><span class="gn-steps__label">Documentación</span></li>
+          <li><span class="gn-steps__dot">4</span><span class="gn-steps__label">Confirmación</span></li>
+        </ol>
+      </div>
+    </div></div>
+  </div>
+  <div class="kit-grid-2">
+    <div class="gn-accordion">
+      <details open><summary>{% gn_icon "i-help" %}¿Cómo se calcula el vencimiento?{% gn_icon "i-chevdown" %}</summary><div class="gn-accordion__body">Se suma un año a la fecha de la última recarga. Si la prueba hidráulica vence antes, se toma esa fecha.</div></details>
+      <details><summary>{% gn_icon "i-help" %}¿Quién recibe los avisos?{% gn_icon "i-chevdown" %}</summary><div class="gn-accordion__body">El contacto principal del cliente. El mensaje se prepara en el sistema y el envío por WhatsApp es manual.</div></details>
+      <details><summary>{% gn_icon "i-help" %}¿Puedo deshacer una baja?{% gn_icon "i-chevdown" %}</summary><div class="gn-accordion__body">Sí, durante 30 días desde Usuarios → Bajas recientes.</div></details>
+    </div>
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Carga de contenido</h3>
+      <div class="kit-stack kit-stack--tight" aria-hidden="true">
+        <span class="gn-skeleton" style="height:14px;width:40%"></span>
+        <span class="gn-skeleton" style="height:28px;width:70%"></span>
+        <span class="gn-skeleton" style="height:12px;width:90%"></span>
+        <span class="gn-skeleton" style="height:12px;width:82%"></span>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+{# ============================================================= COMPARACIÓN #}
+<section class="kit-section" id="comparacion" aria-labelledby="h-comp">
+  <header class="kit-section__head">
+    <h2 id="h-comp">Mismos componentes, cuatro identidades</h2>
+    <p>Cada columna usa exactamente el mismo HTML; solo cambia el atributo <code>data-gn-product</code>.</p>
+  </header>
+  <div class="kit-compare">
+    {% for p in products %}
+    <div class="kit-mini" data-gn-product="{{ p.key }}">
+      <div class="kit-mini__side">
+        <img src="{% static p.logo_full %}" alt="{{ p.name }}">
+        <span class="kit-mini__item">{% gn_icon "i-home" %}Inicio</span>
+        <span class="kit-mini__item is-active">{% gn_icon "i-users" %}Clientes</span>
+        <span class="kit-mini__item">{% gn_icon "i-tasks" %}Órdenes</span>
+      </div>
+      <div class="kit-mini__body">
+        <span class="gn-eyebrow">{{ p.name }}</span>
+        <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--primary gn-btn--sm">Guardar</button><button type="button" class="gn-btn gn-btn--secondary gn-btn--sm">Editar</button></div>
+        <div class="gn-tabs" aria-hidden="true"><span class="gn-tabs__tab" aria-selected="true">Datos</span><span class="gn-tabs__tab">Historial</span></div>
+        <div class="gn-btn-group"><span class="gn-badge gn-badge--good gn-badge--dot">Al día</span><span class="gn-badge gn-badge--brand">Marca</span></div>
+        <label class="gn-check"><input type="checkbox" checked>Recordarme</label>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ================================================================== USO #}
+<section class="kit-section" id="uso" aria-labelledby="h-uso">
+  <header class="kit-section__head">
+    <h2 id="h-uso">Uso en un producto y decisiones</h2>
+    <p>Así se integrará cada producto en su rama de trabajo, una vez aprobado visualmente este catálogo. Ninguno de los cuatro sistemas fue modificado todavía.</p>
+  </header>
+  <div class="kit-grid-2">
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Instalación</h3>
+<pre class="kit-code"><code># requirements.txt
+geneos-ui @ git+https://gitlab.coopgeneos.com/geneos/geneos-ui.git@v{{ version }}
+
+# settings.py
+INSTALLED_APPS += ["geneos_ui"]
+TEMPLATES[0]["OPTIONS"]["context_processors"] += [
+    "geneos_ui.context_processors.geneos_ui",
+]
+GENEOS_UI = {
+    "PRODUCT": "gema",
+    "NAV": "core.navigation.get_nav",
+    "LOGO_FULL": "core/images/gema-logo-white.svg",
+    "LOGO_ICON": "core/images/gema-logo-favicon.svg",
+    "BRIDGES": ["bootstrap5"],
+}
+
+{% templatetag openblock %} extends "geneos_ui/layouts/app.html" {% templatetag closeblock %}</code></pre>
+    </div></div>
+    <div class="gn-card"><div class="gn-card__body">
+      <h3 class="kit-h3">Decisiones aprobadas · 26/10/2026</h3>
+      <ol class="kit-decisions">
+        <li><b>GEAGRO Cereales:</b> botón primario amarillo con texto oscuro (<code>#2b2f24</code>, de su propio CSS). Contraste 5,7:1; con blanco era 2,4:1.</li>
+        <li><b>GEMA:</b> el naranja <code>#EC6C05</code> sigue siendo el color principal; textos y enlaces naranjas sobre fondo claro usan <code>#b0530a</code> (5,1:1).</li>
+        <li><b>Neutros compartidos</b> en los cuatro productos, en modo claro y oscuro. El texto tenue pasa a <code>#666e8a</code> (4,7:1) y los bordes de campos a <code>#8991a8</code> (3,1:1).</li>
+        <li><b>GEAGRO:</b> los mensajes informativos usan azul, distinto del verde de los estados positivos.</li>
+        <li><b>Sidebar:</b> estado inicial configurable por producto. GELECTRIC arranca contraído, como hoy; GEMA y GEAGRO, expandido.</li>
+        <li><b>GEAGRO:</b> el sidebar nuevo va en el portal del productor de Cereales y Vid. El administrador Jazzmin no se modifica por ahora.</li>
+        <li><b>Repositorio:</b> <code>geneos-ui</code> vive en el GitLab de GENEOS; GitHub queda como espejo opcional.</li>
+      </ol>
+    </div></div>
+  </div>
+</section>
+
+{# ------------------------------------------------------------- modales #}
+<dialog class="gn-modal" id="kit-confirm" aria-labelledby="kit-confirm-t" aria-describedby="kit-confirm-d">
+  <div class="gn-modal__head"><span class="gn-modal__icon">{% gn_icon "i-trash" %}</span><h2 class="gn-modal__title" id="kit-confirm-t">¿Eliminar a Taller Rossi SRL?</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar">{% gn_icon "i-x" %}</button></div>
+  <div class="gn-modal__body" id="kit-confirm-d"><p>Se van a eliminar también sus 3 suministros y el historial de reclamos. Esta acción no se puede deshacer.</p></div>
+  <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="Cliente eliminado." data-gn-toast-kind="good">Eliminar cliente</button></div>
+</dialog>
+<dialog class="gn-modal" id="kit-form-modal" aria-labelledby="kit-form-modal-t">
+  <form method="dialog" class="kit-modal-form">
+    <div class="gn-modal__head"><h2 class="gn-modal__title" id="kit-form-modal-t">Registrar recarga</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar">{% gn_icon "i-x" %}</button></div>
+    <div class="gn-modal__body">
+      <div class="gn-form-grid">
+        <div class="gn-field gn-field--full"><label class="gn-field__label" for="m-serie">Matafuego</label><input class="gn-input" id="m-serie" value="AB-22018 · Panadería La Espiga"></div>
+        <div class="gn-field"><label class="gn-field__label" for="m-fecha">Fecha</label><input class="gn-input" id="m-fecha" type="date" value="2026-10-26"></div>
+        <div class="gn-field"><label class="gn-field__label" for="m-tec">Técnico</label><select class="gn-select" id="m-tec"><option>Julián Pereyra</option><option>Marta Ocampo</option></select></div>
+      </div>
+    </div>
+    <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close>Cancelar</button><button type="submit" class="gn-btn gn-btn--primary" data-gn-toast="Recarga registrada. El nuevo vencimiento es 26/10/2027." data-gn-toast-kind="good">Registrar</button></div>
+  </form>
+</dialog>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'geneos_ui/catalog/catalog.js' %}"></script>
+{% endblock %}

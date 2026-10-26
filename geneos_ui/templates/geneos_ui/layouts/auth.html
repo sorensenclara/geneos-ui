@@ -1,0 +1,18 @@
+{% load static geneos_ui %}<!doctype html>
+<html lang="es" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}Ingresar · {{ gn.product_name }}{% endblock %}</title>
+{% gn_css %}
+</head>
+<body class="gn-root">
+{% include "geneos_ui/components/icon_sprite.html" %}
+<main class="gn-auth">
+  <div class="gn-auth__card">
+    {% block auth_content %}{% endblock %}
+  </div>
+</main>
+{% gn_js %}
+</body>
+</html>

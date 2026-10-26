@@ -1,0 +1,1 @@
+{% if crumbs %}<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol>{% for label, href in crumbs %}<li>{% if href and not forloop.last %}<a href="{{ href }}">{{ label }}</a>{% else %}<span aria-current="page">{{ label }}</span>{% endif %}</li>{% endfor %}</ol></nav>{% endif %}

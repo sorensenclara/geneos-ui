@@ -1,0 +1,30 @@
+/*
+ * GENEOS UI · tema GEAGRO Vid
+ * Identidad verde y violeta. Valores tomados de geneos-geagro (rama
+ * vid_alert) static/css/custom.css (--geagro-purple-*, sidebar #3F2642,
+ * activo #2c1830, hover del primario #5a345d) y jazzmin_custom.css
+ * (--geagro-green-400 #22b24c para el ítem activo).
+ */
+@layer geneos-ui {
+  [data-gn-product="geagro-vid"] {
+    --gn-c-sidebar: #3F2642;
+    --gn-c-sidebar-deep: #2c1830;
+    --gn-c-brand: #6b3f6e;
+    --gn-c-brand-hover: #5a345d;
+    --gn-c-brand-press: #3F2642;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #6b3f6e;
+    --gn-c-accent: #22b24c;
+    --gn-c-on-accent: #ffffff;
+    --gn-c-good: #5a994c;
+    --gn-c-warning: #f0b429;
+    --gn-c-critical: #cf4e4e;
+    --gn-c-info: #1d4fa8; /* azul informativo compartido: #118237 (--bs-info) se confundía con "al día" */
+    --gn-c-neutral: #64748b;
+    --gn-flourish: linear-gradient(90deg, #6b3f6e, #22b24c);
+    --gn-chart-1: #6b3f6e;
+    --gn-chart-2: #22b24c;
+    --gn-chart-3: #906693;
+    --gn-chart-4: #cf4e4e;
+  }
+}

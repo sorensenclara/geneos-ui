@@ -1,0 +1,26 @@
+{% load geneos_ui %}{% if page and page.paginator.count %}
+<div class="gn-pagination">
+  <form method="get" class="gn-pagination__size">
+    {% for key, values in request.GET.lists %}{% if key != size_param and key != param %}{% for v in values %}<input type="hidden" name="{{ key }}" value="{{ v }}">{% endfor %}{% endif %}{% endfor %}
+    <label for="gn-page-size">Mostrar</label>
+    <select id="gn-page-size" name="{{ size_param }}" class="gn-select" onchange="this.form.submit()">
+      {% for s in sizes %}<option value="{{ s }}"{% if s == page.paginator.per_page %} selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select>
+    <span>de {{ page.paginator.count }} registros</span>
+    <noscript><button class="gn-btn gn-btn--ghost gn-btn--sm" type="submit">Aplicar</button></noscript>
+  </form>
+  {% if page.paginator.num_pages > 1 %}
+  <nav aria-label="Paginación">
+    <ul class="gn-pagination__pages">
+      <li>{% if page.has_previous %}<a class="gn-pagination__link" href="{% gn_query page=page.previous_page_number %}" aria-label="Página anterior">{% gn_icon "i-chevleft" "gn-icon--sm" %}</a>{% else %}<span class="gn-pagination__link" aria-disabled="true">{% gn_icon "i-chevleft" "gn-icon--sm" %}</span>{% endif %}</li>
+      {% for n in window %}
+      {% if n is None %}<li class="gn-pagination__gap" aria-hidden="true">…</li>
+      {% elif n == page.number %}<li><a class="gn-pagination__link" href="{% gn_query page=n %}" aria-current="page" aria-label="Página {{ n }}, actual">{{ n }}</a></li>
+      {% else %}<li><a class="gn-pagination__link" href="{% gn_query page=n %}" aria-label="Página {{ n }}">{{ n }}</a></li>{% endif %}
+      {% endfor %}
+      <li>{% if page.has_next %}<a class="gn-pagination__link" href="{% gn_query page=page.next_page_number %}" aria-label="Página siguiente">{% gn_icon "i-chevright" "gn-icon--sm" %}</a>{% else %}<span class="gn-pagination__link" aria-disabled="true">{% gn_icon "i-chevright" "gn-icon--sm" %}</span>{% endif %}</li>
+    </ul>
+  </nav>
+  {% endif %}
+</div>
+{% endif %}

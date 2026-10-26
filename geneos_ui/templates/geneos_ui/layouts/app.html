@@ -1,0 +1,53 @@
+{% load static geneos_ui %}<!doctype html>
+<html lang="es" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{% block title %}{{ gn.product_name }}{% endblock %}</title>
+{% block favicon %}{% endblock %}
+{% block head_css %}{% gn_css %}{% endblock %}
+{% block extra_css %}{% endblock %}
+</head>
+<body class="gn-root {% block body_class %}{% endblock %}">
+{% include "geneos_ui/components/icon_sprite.html" %}
+<a class="gn-skip-link" href="#gn-main-content">Saltar al contenido</a>
+<div class="gn-app">
+  {% block sidebar %}{% gn_sidebar %}{% endblock %}
+  <div class="gn-scrim" data-gn-scrim hidden></div>
+  <div class="gn-main">
+    <header class="gn-topbar">
+      <button type="button" class="gn-topbar__menu" data-gn-sidebar-toggle aria-label="Menú">{% gn_icon "i-menu" %}</button>
+      <div class="gn-topbar__search">{% block topbar_search %}{% endblock %}</div>
+      <div class="gn-topbar__context">{% block topbar_context %}{% endblock %}</div>
+      <div class="gn-topbar__spacer"></div>
+      <div class="gn-topbar__actions">
+        {% block topbar_actions %}{% endblock %}
+        {% block user_menu %}
+        {% if request.user.is_authenticated %}
+        <div class="gn-dropdown">
+          <button type="button" class="gn-user-chip" data-gn-dropdown="gn-user-menu">
+            <span class="gn-avatar" aria-hidden="true">{{ request.user.get_username|slice:":2"|upper }}</span>
+            <span class="gn-user-chip__who"><b>{{ request.user.get_full_name|default:request.user.get_username }}</b><span>{% block user_role %}{% if request.user.is_superuser %}Administrador{% else %}Usuario{% endif %}{% endblock %}</span></span>
+            {% gn_icon "i-chevdown" %}
+          </button>
+          <div class="gn-dropdown__menu" id="gn-user-menu" role="menu" hidden>
+            {% block user_menu_items %}{% endblock %}
+            {% block logout %}{% endblock %}
+          </div>
+        </div>
+        {% endif %}
+        {% endblock %}
+      </div>
+    </header>
+    <main class="gn-content" id="gn-main-content" tabindex="-1">
+      {% block breadcrumbs %}{% endblock %}
+      {% block page_head %}{% endblock %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+{% gn_messages_json %}
+{% gn_js %}
+{% block extra_js %}{% endblock %}
+</body>
+</html>

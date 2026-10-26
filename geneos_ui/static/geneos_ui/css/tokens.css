@@ -1,0 +1,175 @@
+/*
+ * GENEOS UI · tokens base
+ *
+ * Capas de variables:
+ *   1. Neutros, tipografía, espaciado, radios y sombras: compartidos por los
+ *      cuatro productos (tomados de GELECTRIC, la referencia estructural).
+ *   2. Colores de identidad "--gn-c-*": los define cada tema de producto
+ *      (themes/*.css). Acá van los valores de GELECTRIC como respaldo, para
+ *      que la librería se vea bien aunque no se cargue ningún tema.
+ *   3. Tokens derivados (--gn-brand-soft, --gn-good-ink, etc.): se calculan
+ *      a partir de 1 y 2 con color-mix(), así un tema solo declara sus
+ *      colores reales y todo lo demás lo hereda.
+ *
+ * Personalización: cualquier proyecto puede redefinir una variable --gn-*
+ * en su propio CSS (después de cargar el tema) sin tocar este archivo.
+ *
+ * Modo oscuro: opt-in con data-gn-theme="dark" en <html>. Ningún producto
+ * lo usa hoy; queda disponible y es el que usa el catálogo.
+ */
+@layer geneos-ui {
+  :root,
+  [data-gn-product] {
+    /* ---- tipografía ---- */
+    --gn-font: 'Titillium Web', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    --gn-font-display: var(--gn-font);
+    --gn-fs-2xs: 10.5px;
+    --gn-fs-xs: 11.5px;
+    --gn-fs-sm: 12.5px;
+    --gn-fs-base: 13.5px;
+    --gn-fs-md: 15px;
+    --gn-fs-lg: 18px;
+    --gn-fs-xl: 20px;
+    --gn-fs-2xl: 26px;
+    --gn-fw-regular: 400;
+    --gn-fw-semibold: 600;
+    --gn-fw-bold: 700;
+
+    /* ---- espaciado (escala de 4px) ---- */
+    --gn-space-1: 4px;
+    --gn-space-2: 8px;
+    --gn-space-3: 12px;
+    --gn-space-4: 16px;
+    --gn-space-5: 20px;
+    --gn-space-6: 24px;
+    --gn-space-8: 32px;
+    --gn-space-10: 40px;
+
+    /* ---- radios ---- */
+    --gn-radius: 14px;
+    --gn-radius-sm: 9px;
+    --gn-radius-btn: 32px;
+    --gn-radius-pill: 999px;
+
+    /* ---- alturas de control ---- */
+    --gn-control-sm: 28px;
+    --gn-control: 32px;
+    --gn-control-lg: 40px;
+
+    /* ---- layout ---- */
+    --gn-sidebar-w: 252px;
+    --gn-sidebar-w-collapsed: 80px;
+    --gn-content-max: 1280px;
+    --gn-bp-mobile: 860px; /* referencia; las media queries usan el número */
+
+    /* ---- neutros (GELECTRIC) ---- */
+    --gn-bg: #f7fafe;
+    --gn-surface: #ffffff;
+    --gn-surface-2: #f5f7fc;
+    --gn-border: #e3e7f2;
+    --gn-border-strong: #cad0e3;
+    --gn-text: #141b3c;
+    --gn-text-2: #4c5573;
+    /* #666e8a: el gris tenue de GELECTRIC (#8991a8) oscurecido dentro del mismo tono
+       para llegar a 4,7:1 sobre fondos claros; #8991a8 queda para bordes de controles. */
+    --gn-text-muted: #666e8a;
+    --gn-border-control: #8991a8;
+    --gn-shadow: 0 1px 2px rgba(20, 26, 58, .05), 0 8px 24px rgba(20, 26, 58, .06);
+    --gn-shadow-lg: 0 8px 40px rgba(10, 20, 50, .22);
+    --gn-scrim: rgba(10, 14, 30, .45);
+
+    /* ---- identidad de producto (respaldo = GELECTRIC verde) ---- */
+    --gn-c-sidebar: #1b6b4c;
+    --gn-c-sidebar-deep: #0d4530;
+    --gn-c-brand: #1b6b4c;
+    --gn-c-brand-hover: #0d4530;
+    --gn-c-brand-press: #0d4530;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #1b6b4c;
+    --gn-c-accent: #17a672;
+    --gn-c-on-accent: #ffffff;
+    --gn-c-good: #17a672;
+    --gn-c-warning: #e0972b;
+    --gn-c-critical: #e5484d;
+    --gn-c-info: #1d4fa8;
+    --gn-c-neutral: #8991a8;
+    --gn-flourish: linear-gradient(90deg, #17a672, #2e6fe0, #e0972b);
+
+    /* ---- sidebar ---- */
+    --gn-sidebar-bg: var(--gn-c-sidebar);
+    --gn-sidebar-brand-bg: var(--gn-c-sidebar-deep);
+    --gn-sidebar-active-bg: var(--gn-c-sidebar-deep);
+    --gn-sidebar-text: rgba(255, 255, 255, .85);
+    --gn-sidebar-text-muted: rgba(255, 255, 255, .58);
+    --gn-sidebar-text-active: #ffffff;
+    --gn-sidebar-hover-bg: rgba(255, 255, 255, .07);
+    --gn-sidebar-border: rgba(255, 255, 255, .1);
+    --gn-sidebar-indicator: var(--gn-c-accent);
+
+    /* ---- derivados de marca ---- */
+    --gn-brand: var(--gn-c-brand);
+    --gn-brand-hover: var(--gn-c-brand-hover);
+    --gn-brand-press: var(--gn-c-brand-press);
+    --gn-on-brand: var(--gn-c-on-brand);
+    --gn-brand-ink: var(--gn-c-ink);
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 12%, var(--gn-surface));
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 20%, var(--gn-surface));
+    --gn-accent: var(--gn-c-accent);
+    --gn-focus: var(--gn-c-ink);
+    --gn-focus-ring: 0 0 0 3px color-mix(in srgb, var(--gn-c-ink) 28%, transparent);
+
+    /* ---- estados semánticos: base, tinte y tinta legible ---- */
+    --gn-good: var(--gn-c-good);
+    --gn-warning: var(--gn-c-warning);
+    --gn-critical: var(--gn-c-critical);
+    --gn-info: var(--gn-c-info);
+    --gn-neutral: var(--gn-c-neutral);
+    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 13%, var(--gn-surface));
+    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 15%, var(--gn-surface));
+    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 12%, var(--gn-surface));
+    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 11%, var(--gn-surface));
+    --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 62%, var(--gn-text));
+    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 55%, var(--gn-text));
+    --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 75%, var(--gn-text));
+    --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 85%, var(--gn-text));
+
+    /* ---- gráficos: paleta categórica ordenada desde la identidad ---- */
+    --gn-chart-1: var(--gn-c-brand);
+    --gn-chart-2: var(--gn-c-accent);
+    --gn-chart-3: var(--gn-c-info);
+    --gn-chart-4: var(--gn-c-warning);
+    --gn-chart-5: var(--gn-c-neutral);
+    --gn-chart-grid: var(--gn-border);
+    --gn-chart-axis: var(--gn-text-muted);
+  }
+
+  :root[data-gn-theme="dark"],
+  [data-gn-theme="dark"] [data-gn-product],
+  [data-gn-product][data-gn-theme="dark"] {
+    --gn-bg: #0c1226;
+    --gn-surface: #131a34;
+    --gn-surface-2: #0f1530;
+    --gn-border: #232c50;
+    --gn-border-strong: #323c66;
+    --gn-text: #eef0fa;
+    --gn-text-2: #b6bcda;
+    --gn-text-muted: #7c84ab;
+    --gn-border-control: #5d658e;
+    --gn-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 8px 24px rgba(0, 0, 0, .35);
+    --gn-shadow-lg: 0 8px 40px rgba(0, 0, 0, .5);
+    --gn-scrim: rgba(0, 0, 0, .55);
+    --gn-brand-ink: color-mix(in srgb, var(--gn-c-ink) 52%, #ffffff);
+    --gn-brand-soft: color-mix(in srgb, var(--gn-c-brand) 30%, var(--gn-surface));
+    --gn-brand-soft-2: color-mix(in srgb, var(--gn-c-brand) 42%, var(--gn-surface));
+    --gn-focus: color-mix(in srgb, var(--gn-c-ink) 45%, #ffffff);
+    --gn-good-soft: color-mix(in srgb, var(--gn-c-good) 22%, var(--gn-surface));
+    --gn-warning-soft: color-mix(in srgb, var(--gn-c-warning) 22%, var(--gn-surface));
+    --gn-critical-soft: color-mix(in srgb, var(--gn-c-critical) 22%, var(--gn-surface));
+    --gn-info-soft: color-mix(in srgb, var(--gn-c-info) 26%, var(--gn-surface));
+    --gn-good-ink: color-mix(in srgb, var(--gn-c-good) 60%, #ffffff);
+    --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 62%, #ffffff);
+    --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 60%, #ffffff);
+    --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 40%, #ffffff);
+    color-scheme: dark;
+  }
+}

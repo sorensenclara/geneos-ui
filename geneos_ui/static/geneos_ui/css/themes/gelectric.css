@@ -1,0 +1,35 @@
+/*
+ * GENEOS UI · tema GELECTRIC
+ * Identidad verde (decisión 14/10/2026: verde por defecto). Valores tomados
+ * de geletric-django core/static/core/css/dashboard.css (:root y
+ * [data-brand="green"]). La variante azul histórica queda disponible con
+ * data-gn-variant="blue".
+ */
+@layer geneos-ui {
+  [data-gn-product="gelectric"] {
+    --gn-c-sidebar: #1b6b4c;
+    --gn-c-sidebar-deep: #0d4530;
+    --gn-c-brand: #1b6b4c;
+    --gn-c-brand-hover: #0d4530;
+    --gn-c-brand-press: #0d4530;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #0d7a53;
+    --gn-c-accent: #17a672;
+    --gn-c-on-accent: #ffffff;
+    --gn-c-good: #17a672;
+    --gn-c-warning: #e0972b;
+    --gn-c-critical: #e5484d;
+    --gn-c-info: #1d4fa8;
+    --gn-c-neutral: #8991a8;
+    --gn-flourish: linear-gradient(90deg, #17a672, #2e6fe0, #e0972b);
+    --gn-chart-3: #2e6fe0;
+  }
+  [data-gn-product="gelectric"][data-gn-variant="blue"] {
+    --gn-c-sidebar: #244c97;
+    --gn-c-sidebar-deep: #0c3a84;
+    --gn-c-brand: #244c97;
+    --gn-c-brand-hover: #0c3a84;
+    --gn-c-brand-press: #0c3a84;
+    --gn-c-ink: #1d4fa8;
+  }
+}
