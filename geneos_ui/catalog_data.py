@@ -56,49 +56,37 @@ def nav_gema(request=None):
     ]
 
 
-def _geagro_common(product, base, field_label, extra_portal, extra_ops):
+def _geagro_portal(product, field_label, extra):
+    """Sidebar del portal del productor (templates/partials/sidebar.html de cada rama).
+
+    Operaciones, Acopio, Ventas, Productores y Parámetros son del backoffice
+    (Jazzmin) y no van en este menú: ver BACKOFFICE en catalog_examples.py.
+    """
     return [
         NavSection(field_label),
         NavItem("Dashboard", url="#inicio", icon=f"{product}:dashboard"),
-        NavItem("Plan técnico", url=f"#{base}-plan", icon=f"{product}:plan-tecnico", badge="Nuevo"),
-        NavItem("Calendario", url=f"#{base}-cal", icon=f"{product}:calendario"),
-        NavItem("Alertas y avisos", url=f"#{base}-alertas", icon=f"{product}:alertas", badge="3"),
-        NavItem("Clima", url=f"#{base}-clima", icon=f"{product}:clima"),
-        *extra_portal,
-        NavSection("Gestión"),
-        NavItem("Operaciones", icon=f"{product}:operaciones", keywords="ot labores", children=[
-            NavItem("Órdenes de trabajo", url=f"#{base}-ot"),
-            NavItem("Calendario de OP", url=f"#{base}-cop"),
-            *extra_ops,
-        ]),
+        NavItem("Plan técnico", url=f"#{product}-plan", icon=f"{product}:plan-tecnico", badge="Nuevo", keywords="labores"),
+        NavItem("Calendario", url=f"#{product}-cal", icon=f"{product}:calendario"),
+        NavItem("Alertas y avisos", url=f"#{product}-alertas", icon=f"{product}:alertas", badge="Atención", keywords="alertas avisos"),
+        NavItem("Clima", url=f"#{product}-clima", icon=f"{product}:clima", keywords="lluvia pronóstico"),
+        *extra,
     ]
 
 
 def nav_geagro_cereales(request=None):
-    return _geagro_common("geagro-cereales", "cer", "Campo actual", [
+    return _geagro_portal("geagro-cereales", "Campo actual", [
         NavItem("Mis campos", url="#cer-campos", icon="geagro-cereales:campos", keywords="lotes"),
+        # el portal usa mdi-package-variant; se usa el SVG propio del backoffice (decisión del 27/10/2026)
         NavItem("Insumos", url="#cer-insumos", icon="geagro-cereales:insumos"),
-    ], [
-        NavItem("Insumos por campaña", url="#cer-ipc"),
-        NavItem("Presupuesto vs real", url="#cer-pvr"),
-        NavItem("Listado de órdenes", url="#cer-lo"),
-    ]) + [
-        NavItem("Acopio", icon="geagro-cereales:acopio", children=_children("acopio", [
-            "Posición de stock", "Ledger de acopio", "Conciliación rinde", "Costos de acopio", "Antigüedad de stock"])),
-        NavItem("Ventas", icon="geagro-cereales:ventas", children=_children("ventas", ["Trazabilidad de ventas"])),
-        NavItem("Parámetros", url="#cer-param", icon="geagro-cereales:parametros", keywords="campañas cultivos"),
-    ]
+    ])
 
 
 def nav_geagro_vid(request=None):
-    return _geagro_common("geagro-vid", "vid", "Viñedo actual", [
+    return _geagro_portal("geagro-vid", "Viñedo actual", [
         NavItem("Fenología", url="#vid-feno", icon="geagro-vid:fenologia", keywords="brotación floración envero"),
         NavItem("Informes", url="#vid-inf", icon="geagro-vid:informes", keywords="comparación de campañas"),
-        NavItem("Mis viñedos", url="#vid-vin", icon="geagro-vid:vinedos", keywords="cuarteles"),
-    ], []) + [
-        NavItem("Monitoreo de cultivo", url="#vid-mon", icon="geagro-vid:monitoreo", keywords="plagas enfermedades"),
-        NavItem("Parámetros", url="#vid-param", icon="geagro-vid:parametros"),
-    ]
+        NavItem("Mis viñedos", url="#vid-vin", icon="geagro-vid:vinedos", keywords="lotes"),
+    ])
 
 
 PRODUCTS = [
@@ -158,23 +146,23 @@ PRODUCTS = [
     },
     {
         "key": "geagro-cereales", "name": "GEAGRO Cereales", "nav": nav_geagro_cereales,
-        "mini_nav": [("Dashboard", "geagro-cereales:dashboard"), ("Mis campos", "geagro-cereales:campos"), ("Operaciones", "geagro-cereales:operaciones")],
+        "mini_nav": [("Dashboard", "geagro-cereales:dashboard"), ("Mis campos", "geagro-cereales:campos"), ("Plan técnico", "geagro-cereales:plan-tecnico")],
         "logo_full": "demo/logos/geagro-cereales-full.svg", "logo_icon": "demo/logos/geagro-cereales-icon.svg",
         "tagline": "Campaña 2025/26", "version_label": "",
         "identity": "Verde campo con acentos amarillos del logo.",
         "swatches": [("Sidebar", "#113f2a", "custom.css:15"), ("Activo", "#0b3422", "custom.css:13"), ("Amarillo", "#c6a400", "custom.css:10"), ("Amarillo claro", "#f3c600", "custom.css:11"), ("Texto amarillo", "#816d09", "custom.css:9"), ("Texto sobre amarillo", "#2b2f24", "jazzmin_custom.css:26"), ("Verde", "#22b24c", "custom.css:18")],
         "fonts": "Titillium Web 300 · 400 · 600 · 700 (custom.css)",
-        "eyebrow": "Establecimiento La Aurora", "title": "Órdenes de trabajo", "desc": "Labores por lote, insumos aplicados y costos de la campaña.",
+        "eyebrow": "Establecimiento La Aurora · Campaña 2025/26", "title": "Plan técnico", "desc": "Labores por lote, avance de la campaña y alertas.",
         "kpis": [
             ("Superficie sembrada", "1.240", "ha", "geagro-cereales:campos@white", "Soja 62 %, maíz 38 %", "flat"),
-            ("Órdenes del mes", "48", "", "geagro-cereales:operaciones@white", "12 pendientes", "flat"),
+            ("Labores del mes", "48", "", "geagro-cereales:plan-tecnico@white", "12 pendientes", "flat"),
             ("Lluvia acumulada", "312", "mm", "geagro-cereales:clima@white", "+18 % vs. promedio", "up:neutral"),
-            ("Costo por ha", "US$ 214", "", "", "−4 % vs. presupuesto", "down:good"),
+            ("Alertas activas", "2", "", "geagro-cereales:alertas@white", "Granizo y malezas", "flat"),
         ],
         "series_title": "Lluvia mensual, últimos 6 meses (mm)", "unit": "mm",
         "series": [("May", 38), ("Jun", 12), ("Jul", 9), ("Ago", 21), ("Sep", 64), ("Oct", 88)],
         "donut_title": "Superficie por cultivo", "donut": [("Soja", 768), ("Maíz", 472)], "num": [4],
-        "table_title": "Órdenes de trabajo", "cols": ["Lote", "Labor", "Cultivo", "Superficie (ha)", "Fecha", "Estado"],
+        "table_title": "Labores de la campaña", "cols": ["Lote", "Labor", "Cultivo", "Superficie (ha)", "Fecha", "Estado"],
         "rows": [
             ("Lote 7 · El Bajo", "Siembra", "Soja", 86, "21/10/2026", ("En curso", "info")),
             ("Lote 3 · La Loma", "Pulverización", "Maíz", 120, "18/10/2026", ("Terminada", "good")),
@@ -185,29 +173,29 @@ PRODUCTS = [
     },
     {
         "key": "geagro-vid", "name": "GEAGRO Vid", "nav": nav_geagro_vid,
-        "mini_nav": [("Dashboard", "geagro-vid:dashboard"), ("Mis viñedos", "geagro-vid:vinedos"), ("Operaciones", "geagro-vid:operaciones")],
+        "mini_nav": [("Dashboard", "geagro-vid:dashboard"), ("Mis viñedos", "geagro-vid:vinedos"), ("Plan técnico", "geagro-vid:plan-tecnico")],
         "logo_full": "demo/logos/geagro-vid-full.svg", "logo_icon": "demo/logos/geagro-vid-icon.svg",
-        "tagline": "Temporada 2026/27", "version_label": "",
+        "tagline": "Campaña 2026/27", "version_label": "",
         "identity": "Violeta vid con verde como acento de estado activo.",
         "swatches": [("Sidebar", "#3F2642", "custom.css:9"), ("Activo", "#2c1830", "custom.css:77"), ("Violeta", "#6b3f6e", "custom.css:10"), ("Hover violeta", "#5a345d", "custom.css:634"), ("Violeta claro", "#906693", "custom.css:11"), ("Verde", "#22b24c", "jazzmin_custom.css:34")],
         "fonts": "Titillium Web 300 · 400 · 600 · 700 (custom.css)",
-        "eyebrow": "Finca Los Álamos", "title": "Cuarteles", "desc": "Fenología, sanidad y labores por cuartel.",
+        "eyebrow": "Finca Los Álamos · Campaña 2026/27", "title": "Lotes", "desc": "Fenología, alertas sanitarias y labores por lote.",
         "kpis": [
-            ("Superficie en producción", "86", "ha", "geagro-vid:vinedos@white", "14 cuarteles", "flat"),
+            ("Superficie en producción", "86", "ha", "geagro-vid:vinedos@white", "14 lotes", "flat"),
             ("Alertas sanitarias", "3", "", "geagro-vid:alertas@white", "Peronospora: riesgo medio", "flat"),
-            ("Grados día acumulados", "412", "GDD", "geagro-vid:clima@white", "+6 % vs. temporada anterior", "up:neutral"),
-            ("Labores de la semana", "17", "", "geagro-vid:operaciones@white", "5 pendientes", "flat"),
+            ("Grados día acumulados", "412", "GDD", "geagro-vid:clima@white", "+6 % vs. campaña anterior", "up:neutral"),
+            ("Labores de la semana", "17", "", "geagro-vid:plan-tecnico@white", "5 pendientes", "flat"),
         ],
         "series_title": "Grados día acumulados por mes (GDD)", "unit": "GDD",
         "series": [("May", 0), ("Jun", 0), ("Jul", 0), ("Ago", 46), ("Sep", 158), ("Oct", 412)],
         "donut_title": "Estado fenológico", "donut": [("Brotación", 9), ("Hojas extendidas", 4), ("Dormancia", 1)], "num": [4],
-        "table_title": "Cuarteles", "cols": ["Cuartel", "Variedad", "Conducción", "Superficie (ha)", "Fenología", "Sanidad"],
+        "table_title": "Lotes", "cols": ["Lote", "Variedad", "Conducción", "Superficie (ha)", "Fenología", "Sanidad"],
         "rows": [
-            ("C-04 · Norte", "Malbec", "Espaldero", 6.2, "Brotación", ("Sin riesgo", "good")),
-            ("C-07 · Río", "Cabernet Sauvignon", "Espaldero", 8.4, "Hojas extendidas", ("Riesgo medio", "warning")),
-            ("C-11 · Alto", "Torrontés", "Parral", 5.1, "Brotación", ("Riesgo alto", "critical")),
-            ("C-02 · Casa", "Malbec", "Parral", 7.8, "Brotación", ("Sin riesgo", "good")),
-            ("C-15 · Oeste", "Bonarda", "Espaldero", 4.6, "Dormancia", ("En monitoreo", "info")),
+            ("Lote 4 · Norte", "Malbec", "Espaldero", 6.2, "Brotación", ("Sin riesgo", "good")),
+            ("Lote 7 · Río", "Cabernet Sauvignon", "Espaldero", 8.4, "Hojas extendidas", ("Riesgo medio", "warning")),
+            ("Lote 11 · Alto", "Torrontés", "Parral", 5.1, "Brotación", ("Riesgo alto", "critical")),
+            ("Lote 2 · Casa", "Malbec", "Parral", 7.8, "Brotación", ("Sin riesgo", "good")),
+            ("Lote 15 · Oeste", "Bonarda", "Espaldero", 4.6, "Dormancia", ("En monitoreo", "info")),
         ],
     },
 ]

@@ -1,0 +1,10 @@
+{% load geneos_ui %}{# Campo de ejemplo: f = dict de catalog_examples, k = prefijo de id del producto #}
+<div class="gn-field{% if f.full %} gn-field--full{% endif %}">
+  <label class="gn-field__label" for="{{ k }}-{{ f.id }}">{{ f.label }}{% if f.required %}<span class="gn-required" aria-hidden="true">*</span>{% endif %}</label>
+  {% if f.kind == "select" %}<select class="gn-select" id="{{ k }}-{{ f.id }}"{% if f.required %} required{% endif %}>{% for o in f.options %}<option>{{ o }}</option>{% endfor %}</select>
+  {% elif f.kind == "textarea" %}<textarea class="gn-textarea" id="{{ k }}-{{ f.id }}"{% if f.placeholder %} placeholder="{{ f.placeholder }}"{% endif %}></textarea>
+  {% elif f.kind == "search" %}<div class="gn-input-group">{% gn_icon "i-search" %}<input class="gn-input" id="{{ k }}-{{ f.id }}" value="{{ f.value }}"{% if f.required %} required{% endif %}{% if f.help %} aria-describedby="{{ k }}-{{ f.id }}-h"{% endif %}></div>
+  {% else %}<input class="gn-input" id="{{ k }}-{{ f.id }}"{% if f.kind == "date" %} type="date"{% endif %}{% if f.value %} value="{{ f.value }}"{% endif %}{% if f.readonly %} readonly{% endif %}{% if f.required %} required{% endif %}{% if f.error %} aria-invalid="true" aria-describedby="{{ k }}-{{ f.id }}-e"{% elif f.help %} aria-describedby="{{ k }}-{{ f.id }}-h"{% endif %}>
+  {% endif %}
+  {% if f.error %}<span class="gn-field__error" id="{{ k }}-{{ f.id }}-e">{% gn_icon "i-alert" %}{{ f.error }}</span>{% elif f.help %}<span class="gn-field__help" id="{{ k }}-{{ f.id }}-h">{{ f.help }}</span>{% endif %}
+</div>

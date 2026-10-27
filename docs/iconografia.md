@@ -9,11 +9,11 @@ Generado por `tools/icon_inventory_md.py` desde `geneos_ui/product_icons.json`. 
 | Producto | Activos | Disponibles | Pendientes | Archivos |
 | --- | ---: | ---: | ---: | ---: |
 | GELECTRIC | 23 | 0 | 0 | 23 |
-| GEMA | 22 | 1 | 0 | 23 |
-| GEAGRO (compartidos Cereales y Vid) | 18 | 46 | 0 | 64 |
+| GEMA | 23 | 0 | 0 | 23 |
+| GEAGRO (compartidos Cereales y Vid) | 19 | 45 | 0 | 64 |
 | GEAGRO Cereales | 2 | 7 | 0 | 9 |
 | GEAGRO Vid | 0 | 0 | 3 | 0 |
-| **Total** | 65 | 54 | 3 | 119 |
+| **Total** | 67 | 52 | 3 | 119 |
 
 ## GELECTRIC
 
@@ -21,11 +21,11 @@ Generado por `tools/icon_inventory_md.py` desde `geneos_ui/product_icons.json`. 
 | --- | --- | --- | --- | --- | --- | --- |
 | activo | Abastecimiento | tile | SVG | `gelectric/activos/SVG/icon - Abastecimiento.svg` | `core/static/core/images/SVG/icon - Abastecimiento.svg` (2026 · 3772f02) | `core/modules_data.py:38` |
 | activo | Abastecimiento | white | SVG | `gelectric/activos/SVG/icon white -Abastecimiento.svg` | `core/static/core/images/SVG/icon white -Abastecimiento.svg` (2026 · 3772f02) | `core/modules_data.py:39`; sidebar de GENEOS UI |
-| activo | Asociados y servicios | tile | SVG | `gelectric/activos/SVG/icon - Asociados y Servicio.svg` | `core/static/core/images/SVG/icon - Asociados y Servicio.svg` (2026 · 3772f02) | `core/modules_data.py:21` |
+| activo | Asociados y servicios | tile | SVG | `gelectric/activos/SVG/icon - Asociados y Servicio.svg` | `core/static/core/images/SVG/icon - Asociados y Servicio.svg` (2026 · 3772f02) | `core/modules_data.py:21`; sidebar de GENEOS UI |
 | activo | Asociados y servicios | white | SVG | `gelectric/activos/SVG/icon white -Asociados y Servicio.svg` | `core/static/core/images/SVG/icon white -Asociados y Servicio.svg` (2026 · 3772f02) | `core/modules_data.py:22`; sidebar de GENEOS UI |
-| activo | Comercial | tile | SVG | `gelectric/activos/SVG/icon - Comercial.svg` | `core/static/core/images/SVG/icon - Comercial.svg` (2026 · 3772f02) | `core/modules_data.py:78` |
+| activo | Comercial | tile | SVG | `gelectric/activos/SVG/icon - Comercial.svg` | `core/static/core/images/SVG/icon - Comercial.svg` (2026 · 3772f02) | `core/modules_data.py:78`; sidebar de GENEOS UI |
 | activo | Comercial | white | SVG | `gelectric/activos/SVG/icon white -Comercial.svg` | `core/static/core/images/SVG/icon white -Comercial.svg` (2026 · 3772f02) | `core/modules_data.py:79`; sidebar de GENEOS UI |
-| activo | Consumo | tile | SVG | `gelectric/activos/SVG/icon - Consumo.svg` | `core/static/core/images/SVG/icon - Consumo.svg` (2026 · 3772f02) | `core/modules_data.py:163` |
+| activo | Consumo | tile | SVG | `gelectric/activos/SVG/icon - Consumo.svg` | `core/static/core/images/SVG/icon - Consumo.svg` (2026 · 3772f02) | `core/modules_data.py:163`; sidebar de GENEOS UI |
 | activo | Consumo | white | SVG | `gelectric/activos/SVG/icon white -Consumo.svg` | `core/static/core/images/SVG/icon white -Consumo.svg` (2026 · 3772f02) | `core/modules_data.py:164`; sidebar de GENEOS UI |
 | activo | Contabilidad y Finanzas | tile | SVG | `gelectric/activos/SVG/icon - Contabilidad.svg` | `core/static/core/images/SVG/icon - Contabilidad.svg` (2026 · 3772f02) | `core/modules_data.py:59` |
 | activo | Contabilidad y Finanzas | white | SVG | `gelectric/activos/SVG/icon white - Contabilidad.svg` | `core/static/core/images/SVG/icon white - Contabilidad.svg` (2026 · 3772f02) | `core/modules_data.py:60`; sidebar de GENEOS UI |
@@ -68,30 +68,31 @@ Generado por `tools/icon_inventory_md.py` desde `geneos_ui/product_icons.json`. 
 | activo | Usuarios | active | SVG | `gema/activos/iconos/usuarios-active.svg` | `core/static/core/images/iconos/usuarios-active.svg` (2026 · 4ff87ef) | `core/templates/core/base.html:97` |
 | activo | Usuarios | base | SVG | `gema/activos/iconos/usuarios.svg` | `core/static/core/images/iconos/usuarios.svg` (2026 · 4ff87ef) | `core/templates/core/base.html:97`; `core/templates/core/dashboard.html:262` |
 | activo | Usuarios | white | SVG | `gema/activos/iconos/usuarios-white.svg` | `core/static/core/images/iconos/usuarios-white.svg` (2026 · 4ff87ef) | sidebar de GENEOS UI |
+| activo | Vencimientos | base | SVG | `gema/activos/iconos/vencimientos.svg` | `core/static/core/images/iconos/vencimientos.svg` (2026 · 4ff87ef) | sidebar de GENEOS UI |
 | activo | Vencimientos | white | SVG | `gema/activos/iconos/vencimientos-white.svg` | `core/static/core/images/iconos/vencimientos-white.svg` (2026 · 4ff87ef) | `core/templates/core/dashboard.html:74`; sidebar de GENEOS UI |
-| disponible | Vencimientos | base | SVG | `gema/disponibles/iconos/vencimientos.svg` | `core/static/core/images/iconos/vencimientos.svg` (2026 · 4ff87ef) | sin uso |
 
 ## GEAGRO (compartidos Cereales y Vid)
 
 | Estado | Módulo | Variante | Formato | Archivo en GENEOS UI | Origen | Uso |
 | --- | --- | --- | --- | --- | --- | --- |
 | activo | Alertas y avisos | white | SVG | `geagro/activos/images/icon/alert.svg` | `agro_system/static/images/icon/alert.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/partials/sidebar.html:39`; `Vid: agro_system/templates/partials/sidebar.html:39`; sidebar de GENEOS UI |
-| activo | Alertas y avisos | white | SVG | `geagro/activos/img/icons/alert.svg` | `agro_system/static/img/icons/alert.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:407`; `Vid: agro_system/static/css/jazzmin_custom.css:402` |
-| activo | Autenticación | white | SVG | `geagro/activos/img/icons/authentication.svg` | `agro_system/static/img/icons/authentication.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:334`; `Vid: agro_system/static/css/jazzmin_custom.css:329` |
+| activo | Alertas y avisos | white | SVG | `geagro/activos/img/icons/alert.svg` | `agro_system/static/img/icons/alert.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:407`; `Vid: agro_system/static/css/jazzmin_custom.css:402`; sidebar de GENEOS UI |
+| activo | Autenticación | white | SVG | `geagro/activos/img/icons/authentication.svg` | `agro_system/static/img/icons/authentication.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:334`; `Vid: agro_system/static/css/jazzmin_custom.css:329`; sidebar de GENEOS UI |
 | activo | Calendario | white | SVG | `geagro/activos/images/icon/calendar.svg` | `agro_system/static/images/icon/calendar.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/partials/sidebar.html:32`; `Vid: agro_system/templates/partials/sidebar.html:32`; sidebar de GENEOS UI |
 | activo | Clima | white | SVG | `geagro/activos/images/icon/weather.svg` | `agro_system/static/images/icon/weather.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/partials/sidebar.html:47`; `Vid: agro_system/templates/partials/sidebar.html:47`; sidebar de GENEOS UI |
-| activo | Clima | white | SVG | `geagro/activos/img/icons/weather.svg` | `agro_system/static/img/icons/weather.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:403`; `Vid: agro_system/static/css/jazzmin_custom.css:398` |
+| activo | Clima | white | SVG | `geagro/activos/img/icons/weather.svg` | `agro_system/static/img/icons/weather.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:403`; `Vid: agro_system/static/css/jazzmin_custom.css:398`; sidebar de GENEOS UI |
 | activo | Configuración | white | SVG | `geagro/activos/img/icons/configuracion.svg` | `agro_system/static/img/icons/configuracion.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:338`; `Vid: agro_system/static/css/jazzmin_custom.css:333` |
 | activo | Dashboard | white | SVG | `geagro/activos/images/icon/dashboard.svg` | `agro_system/static/images/icon/dashboard.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/partials/sidebar.html:17`; `Vid: agro_system/templates/partials/sidebar.html:17`; sidebar de GENEOS UI |
-| activo | Dashboard | white | SVG | `geagro/activos/img/icons/dashboard.svg` | `agro_system/static/img/icons/dashboard.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:342`; `Cereales: agro_system/static/css/jazzmin_custom.css:356` y 4 más |
+| activo | Dashboard | white | SVG | `geagro/activos/img/icons/dashboard.svg` | `agro_system/static/img/icons/dashboard.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:342`; `Cereales: agro_system/static/css/jazzmin_custom.css:356` y 4 más; sidebar de GENEOS UI |
 | activo | Insumos | white | SVG | `geagro/activos/img/icons/insumos.svg` | `agro_system/static/img/icons/insumos.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:306`; `Vid: agro_system/static/css/jazzmin_custom.css:305`; sidebar de GENEOS UI |
 | activo | Operaciones | white | SVG | `geagro/activos/img/icons/operaciones.svg` | `agro_system/static/img/icons/operaciones.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:310`; `Vid: agro_system/static/css/jazzmin_custom.css:309`; sidebar de GENEOS UI |
 | activo | Parámetros | white | SVG | `geagro/activos/img/icons/parametros.svg` | `agro_system/static/img/icons/parametros.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:314`; `Vid: agro_system/static/css/jazzmin_custom.css:313`; sidebar de GENEOS UI |
-| activo | Plan técnico | color | SVG | `geagro/activos/images/icon/technical_plan_color.svg` | `agro_system/static/images/icon/technical_plan_color.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/pages/dashboard.html:109`; `Cereales: agro_system/templates/pages/plan.html:340` y 2 más |
+| activo | Plan técnico | color | SVG | `geagro/activos/images/icon/technical_plan_color.svg` | `agro_system/static/images/icon/technical_plan_color.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/pages/dashboard.html:109`; `Cereales: agro_system/templates/pages/plan.html:340` y 2 más; sidebar de GENEOS UI |
 | activo | Plan técnico | white | SVG | `geagro/activos/images/icon/technical_plan.svg` | `agro_system/static/images/icon/technical_plan.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/templates/partials/sidebar.html:24`; `Vid: agro_system/templates/partials/sidebar.html:24`; sidebar de GENEOS UI |
-| activo | Productores | white | SVG | `geagro/activos/img/icons/producer.svg` | `agro_system/static/img/icons/producer.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:302`; `Vid: agro_system/static/css/jazzmin_custom.css:301` |
-| activo | Usuarios | white | SVG | `geagro/activos/img/icons/user.svg` | `agro_system/static/img/icons/user.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:330`; `Vid: agro_system/static/css/jazzmin_custom.css:325` |
+| activo | Productores | white | SVG | `geagro/activos/img/icons/producer.svg` | `agro_system/static/img/icons/producer.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:302`; `Vid: agro_system/static/css/jazzmin_custom.css:301`; sidebar de GENEOS UI |
+| activo | Usuarios | white | SVG | `geagro/activos/img/icons/user.svg` | `agro_system/static/img/icons/user.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:330`; `Vid: agro_system/static/css/jazzmin_custom.css:325`; sidebar de GENEOS UI |
 | activo | Ventas | white | SVG | `geagro/activos/img/icons/ventas.svg` | `agro_system/static/img/icons/ventas.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Cereales: agro_system/static/css/jazzmin_custom.css:318`; `Vid: agro_system/static/css/jazzmin_custom.css:317`; sidebar de GENEOS UI |
+| activo | Mis viñedos | color | SVG | `geagro/activos/images/icon/vinedos-color.svg` | `agro_system/static/images/icon/vinedos-color.svg` (2026-cereales, 2026-vid · 25fdfa8) | sidebar de GENEOS UI |
 | activo | Mis viñedos | white | SVG | `geagro/activos/images/icon/vinedos.svg` | `agro_system/static/images/icon/vinedos.svg` (2026-cereales, 2026-vid · 25fdfa8) | `Vid: agro_system/templates/partials/sidebar.html:70`; sidebar de GENEOS UI |
 | disponible | Alertas y avisos | simple | SVG | `geagro/disponibles/img/icons/alert simple.svg` | `agro_system/static/img/icons/alert simple.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Alertas y avisos | tile-vid | SVG | `geagro/disponibles/img/icons/GEAGRO - Alert VID.svg` | `agro_system/static/img/icons/GEAGRO - Alert VID.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
@@ -135,7 +136,6 @@ Generado por `tools/icon_inventory_md.py` desde `geneos_ui/product_icons.json`. 
 | disponible | Usuarios | simple | SVG | `geagro/disponibles/img/icons/user simple.svg` | `agro_system/static/img/icons/user simple.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Ventas | simple | SVG | `geagro/disponibles/img/icons/ventas simple.svg` | `agro_system/static/img/icons/ventas simple.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Ventas | tile-vid | SVG | `geagro/disponibles/img/icons/GEAGRO - Ventas VID.svg` | `agro_system/static/img/icons/GEAGRO - Ventas VID.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
-| disponible | Mis viñedos | color | SVG | `geagro/disponibles/images/icon/vinedos-color.svg` | `agro_system/static/images/icon/vinedos-color.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Mis viñedos | simple | SVG | `geagro/disponibles/img/icons/vinedos simple.svg` | `agro_system/static/img/icons/vinedos simple.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Mis viñedos | tile-vid | SVG | `geagro/disponibles/img/icons/GEAGRO - Viñedos VID.svg` | `agro_system/static/img/icons/GEAGRO - Viñedos VID.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
 | disponible | Mis viñedos | white | SVG | `geagro/disponibles/img/icons/vinedos.svg` | `agro_system/static/img/icons/vinedos.svg` (2026-cereales, 2026-vid · 25fdfa8) | sin uso |
@@ -158,9 +158,13 @@ Generado por `tools/icon_inventory_md.py` desde `geneos_ui/product_icons.json`. 
 
 | Estado | Módulo | Variante | Formato | Archivo en GENEOS UI | Origen | Uso |
 | --- | --- | --- | --- | --- | --- | --- |
-| pendiente | Fenología | white | SVG | — | — | El portal usa mdi mdi-sprout-outline. Pendiente de diseño (decisión del 26/10/2026). |
-| pendiente | Informes (gráficos) | white | SVG | — | — | Falta la versión SVG blanca o monocromática. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible; no se usa en el sidebar (decisión del 26/10/2026). El portal usa mdi mdi-chart-bar. |
-| pendiente | Monitoreo de cultivo | white | SVG | — | — | Sin ícono propio. Pendiente de diseño (decisión del 26/10/2026). |
+| pendiente | Fenología | white | SVG | — | — | Necesita un ícono original definitivo (versión blanca para el sidebar del portal). Hoy el portal usa mdi mdi-sprout-outline; el catálogo muestra un marcador pendiente. |
+| pendiente | Informes (gráficos) | white | SVG | — | — | Necesita un ícono original definitivo en SVG blanco o monocromático. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible, pero no se usa en el sidebar (decisión del 26/10/2026). Hoy el portal usa mdi mdi-chart-bar; el catálogo muestra un marcador pendiente. |
+| pendiente | Monitoreo de cultivo | white | SVG | — | — | App crop_monitoring del backoffice (Jazzmin) sin ícono asignado en JAZZMIN_SETTINGS["icons"]. Pendiente de diseño (decisión del 26/10/2026). |
+
+## Pendientes de diseño
+
+Fenología e Informes (portal de GEAGRO Vid) y Monitoreo de cultivo (backoffice de Vid) necesitan íconos originales definitivos. El catálogo muestra un marcador pendiente y no los reemplaza por íconos genéricos. Detalle en [`pendientes.md`](pendientes.md).
 
 ## No incorporados
 

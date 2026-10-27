@@ -112,12 +112,12 @@
 
 /* ---- iconografía por producto */
 .kit-iconlib { overflow: hidden; }
-.kit-iconlib__filters { display: grid; grid-template-columns: minmax(160px, 220px) minmax(160px, 240px) 1fr; gap: 14px 18px; align-items: end; }
+.kit-iconlib__filters { display: grid; grid-template-columns: repeat(3, minmax(150px, 220px)) 1fr; gap: 14px 18px; align-items: end; }
 .kit-iconlib__status .gn-filters__pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .kit-iconlib__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 10px 20px; border-block: 1px solid var(--gn-border); background: var(--gn-surface); font-size: 12.5px; color: var(--gn-text-muted); }
 .kit-iconlib__meta [data-kit-ic-count] { font-weight: 600; color: var(--gn-text); }
 .kit-iconlib__grid { list-style: none; margin: 0; padding: 16px 20px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
-.kit-ic { display: grid; grid-template-rows: auto 1fr; border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); overflow: hidden; background: var(--gn-elevated); min-width: 0; }
+.kit-ic { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); overflow: hidden; background: var(--gn-elevated); min-width: 0; }
 .kit-ic__thumb { height: 84px; display: grid; place-items: center; background: #ffffff; border-bottom: 1px solid var(--gn-border); }
 .kit-ic__thumb.is-dark { background: var(--gn-sidebar-bg); }
 .kit-ic__thumb img { max-width: 60%; max-height: 54px; object-fit: contain; }
@@ -131,5 +131,36 @@
 .kit-ic__name { font-size: 11.5px; overflow-wrap: anywhere; justify-self: start; }
 .kit-ic__origin { font-family: var(--gn-font-mono, ui-monospace, monospace); font-size: 11px; color: var(--gn-text-muted); overflow-wrap: anywhere; }
 .kit-iconlib__empty { padding: 0 20px 20px; color: var(--gn-text-muted); }
-@media (max-width: 760px) { .kit-iconlib__filters { grid-template-columns: 1fr 1fr; } .kit-iconlib__status { grid-column: 1 / -1; } }
+@media (max-width: 1100px) { .kit-iconlib__filters { grid-template-columns: repeat(3, 1fr); } .kit-iconlib__status { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .kit-iconlib__filters { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 460px) { .kit-iconlib__filters { grid-template-columns: 1fr; } .kit-iconlib__grid { padding-inline: 12px; } }
+
+/* fondo de las miniaturas (solo la vista previa) */
+.kit-iconlib__bgbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 0 20px 16px; }
+.kit-iconlib__bgbar .gn-filters__pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.kit-iconlib__bgbar .kit-muted { font-size: 12px; }
+.kit-iconlib__grid[data-bg="light"] .kit-ic__thumb:not(.is-pending) { background: #ffffff; }
+.kit-iconlib__grid[data-bg="dark"] .kit-ic__thumb:not(.is-pending) { background: #090909; }
+.kit-iconlib__grid[data-bg="brand"] .kit-ic__thumb:not(.is-pending) { background: var(--gn-sidebar-bg); }
+
+/* sprite: íconos que representan módulos de GELECTRIC */
+.kit-icons li.is-product { background: var(--gn-surface-2); }
+.kit-icons li small { font-size: 9.5px; color: var(--gn-text-muted); }
+
+/* acceso con ícono original del producto */
+.gn-tile-icon--product { background: none; }
+.gn-tile-icon--product .gn-product-icon { width: 44px; height: 44px; }
+
+/* GEAGRO: portal del productor y backoffice */
+.kit-interfaces__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 14px; }
+.kit-interfaces__col { display: grid; align-content: start; gap: 8px; min-width: 0; }
+.kit-ref-nav { list-style: none; margin: 0; padding: 10px; border-radius: var(--gn-radius-sm); background: var(--gn-sidebar-bg); color: var(--gn-sidebar-text); display: grid; gap: 2px; }
+.kit-ref-nav li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 6px 8px; border-radius: 7px; font-size: 13px; }
+.kit-ref-nav li > span { flex: 1; }
+.kit-ref-nav li small { flex-basis: 100%; padding-left: 32px; font-size: 11.5px; color: var(--gn-sidebar-text-muted); }
+.kit-ref-nav__section { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--gn-sidebar-text-muted); }
+.kit-ref-nav .gn-nav__icon-img, .kit-ref-nav__icon, .kit-ref-nav .gn-product-icon { width: 22px; height: 22px; margin: 0; opacity: 1; }
+.kit-ref-nav .gn-nav__icon-pending, .kit-ref-nav .gn-product-icon--pending { flex: none; width: 20px; height: 20px; border: 1.5px dashed var(--gn-sidebar-text-muted); border-radius: 50%; opacity: 1; }
+.kit-ref-nav--admin { background: color-mix(in srgb, var(--gn-sidebar-bg) 82%, #000); }
+.kit-pending { margin-top: 16px; }
+.kit-pending ul { margin: 4px 0 0; padding-left: 18px; }

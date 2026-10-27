@@ -4,6 +4,17 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 
 ## [Sin publicar]
 
+### Cambiado · contenido por producto y GEAGRO portal/backoffice
+- Los ejemplos del catálogo (tipografía, navegación, botones, formularios, filtros, tablas, indicadores, estados, modales, notificaciones y comparación) usan los datos y procesos de cada sistema: GELECTRIC (asociados, suministros, reclamos, cuota capital), GEMA (clientes, matafuegos, recargas, pruebas hidráulicas, vencimientos), GEAGRO Cereales (campaña, lotes, cultivos, labores, alertas) y GEAGRO Vid (cuarteles, fenología, alertas sanitarias, labores). El contenido vive en `geneos_ui/catalog_examples.py`.
+- El sidebar de GEAGRO es solo el del portal del productor, igual al de `templates/partials/sidebar.html`. Operaciones, Acopio, Ventas, Productores, Parámetros, Usuarios y Monitoreo de cultivo son del backoffice (Jazzmin) y se muestran aparte, como referencia, con sus propios íconos.
+- GEAGRO Vid usa «Campaña» y «Lote», como el sistema.
+- El menú de GEAGRO dice «Alertas y avisos».
+- Sidebar: los nombres que no entran y se cortan con «…» muestran el nombre completo en un tooltip también con el sidebar expandido.
+- `docs/pendientes.md`: Historial de GEAGRO (sin URL ni navegación) y los íconos definitivos que faltan (Fenología, Informes, Monitoreo de cultivo).
+- Iconografía: filtro por conjunto (portal, backoffice, línea VID, PNG…) y fondo de vista previa claro, oscuro o del producto.
+- Sección propia «Íconos de acciones comunes»: el set original de 47 íconos de GELECTRIC (marcando los que solo usa GELECTRIC) y las 14 acciones agregadas.
+- Tests: términos de un producto no aparecen en otro; el menú del portal coincide con el real; el backoffice usa solo íconos del backoffice.
+
 ### Agregado · iconografía original
 - 119 archivos de íconos originales (SVG y PNG) de GELECTRIC, GEMA y GEAGRO, copiados byte a byte desde las ramas de trabajo con su nombre original, en `static/geneos_ui/icons/<producto>/activos|disponibles/`.
 - Manifiesto `geneos_ui/product_icons.json` con producto, módulo, variante, formato, ruta y commit de origen, SHA-256 y estado de uso (activo, disponible, pendiente). Lo genera `tools/import_product_icons.py`, que también verifica la copia contra los originales (`--check`).

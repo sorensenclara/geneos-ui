@@ -66,10 +66,29 @@ def test_navegacion_del_catalogo_usa_originales():
 
 def test_pendientes_de_vid_no_usan_iconos_genericos():
     nav = {e["label"]: e for e in build_nav(next(p for p in PRODUCTS if p["key"] == "geagro-vid")["nav"](None), None)}
-    for label in ("Fenología", "Informes", "Monitoreo de cultivo"):
+    for label in ("Fenología", "Informes"):
         assert nav[label]["icon_pending"] and not nav[label]["icon"]
     html = Template("{% load geneos_ui %}{% gn_nav_icon e %}").render(Context({"e": nav["Fenología"]}))
     assert "gn-nav__icon-pending" in html and "<use" not in html
+    # Monitoreo de cultivo es una app del backoffice (crop_monitoring) sin ícono propio
+    rec = product_icons.resolve("geagro-vid:monitoreo", set_name="backoffice")
+    assert rec["status"] == "pendiente" and rec["file"] is None
+
+
+def test_portal_geagro_igual_al_sidebar_real():
+    """Solo los ítems de templates/partials/sidebar.html; nada del backoffice."""
+    expected = {
+        "geagro-cereales": ["Dashboard", "Plan técnico", "Calendario", "Alertas y avisos", "Clima", "Mis campos", "Insumos"],
+        "geagro-vid": ["Dashboard", "Plan técnico", "Calendario", "Alertas y avisos", "Clima", "Fenología", "Informes", "Mis viñedos"],
+    }
+    for key, labels in expected.items():
+        nav = [e for e in build_nav(next(p for p in PRODUCTS if p["key"] == key)["nav"](None), None) if e["type"] != "section"]
+        assert [e["label"] for e in nav] == labels
+        for e in nav:
+            if e["icon_static"]:
+                rec = next(r for r in ICONS if r["file"] == e["icon_static"])
+                # portal del productor; la única excepción aprobada es Insumos
+                assert rec["set"] == "portal" or e["label"] == "Insumos", (key, e["label"])
 
 
 def test_insumos_cereales_usa_el_svg_del_backoffice():

@@ -86,7 +86,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:39"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 852,
    "sha256": "0e194f3e46ddc3be98bc280c560308b6b6db0330878f27a4a48c41054343805b",
@@ -122,7 +122,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:32"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 878,
    "sha256": "652310745baf9480130ebd43a0fc98377b99ac630288aa4e6658e001a5150a33",
@@ -157,7 +157,7 @@
     "agro_system/templates/partials/sidebar.html:54"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 1913,
    "sha256": "03860614b95abf2610ed2c2e3bf86e60c50e2255bed6ece9470cd8d69945c651",
@@ -187,7 +187,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:17"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 1822,
    "sha256": "f5c74b12dd9767e3dd893a5f23f101a3f69a70b915c3d1f7e70c62ffc709287c",
@@ -223,7 +223,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:24"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 1123,
    "sha256": "b6ead5b2e86f82551bc1148d44c26b1a3720c418205e2bb91daa2945578f62eb",
@@ -253,14 +253,16 @@
    "name": "technical_plan_color.svg",
    "file": "geneos_ui/icons/geagro/activos/images/icon/technical_plan_color.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/templates/pages/dashboard.html:109",
     "Cereales: agro_system/templates/pages/plan.html:340",
     "Vid: agro_system/templates/pages/dashboard.html:171",
     "Vid: agro_system/templates/pages/plan.html:425"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 1126,
    "sha256": "4822fcd61504d0b38fa8d20c7b35a16edb292cef3e09c9c3797fe8f10f064c2f",
    "source": [
@@ -287,11 +289,13 @@
    "variant": "color",
    "format": "svg",
    "name": "vinedos-color.svg",
-   "file": "geneos_ui/icons/geagro/disponibles/images/icon/vinedos-color.svg",
-   "status": "disponible",
-   "usage": "sin uso",
+   "file": "geneos_ui/icons/geagro/activos/images/icon/vinedos-color.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
    "used_in": [],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 1181,
    "sha256": "82177f1e7d2ddaa03c045f8fd11828680e692fcdadf827adc532678749cc2550",
    "source": [
@@ -325,7 +329,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:70"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 1297,
    "sha256": "2efff6cc55271e16328a3dd4469e56616ec92638f12f5180d14c31f13949a67d",
@@ -361,7 +365,7 @@
     "Vid: agro_system/templates/partials/sidebar.html:47"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 1111,
    "sha256": "0e2d18e17b8ed404619e18945ad4d9bb601d655fc751e9c8b9f9f750c9c74a6f",
@@ -396,7 +400,7 @@
     "agro_system/static/css/jazzmin_custom.css:322"
    ],
    "kit_use": [
-    "sidebar"
+    "referencia del backoffice"
    ],
    "bytes": 2254,
    "sha256": "734c654745eca91e02b8982c9d03349f83d7e0ff2a09c9bb1852bf1f78e8df3f",
@@ -1413,12 +1417,14 @@
    "name": "alert.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/alert.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:407",
     "Vid: agro_system/static/css/jazzmin_custom.css:402"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 852,
    "sha256": "0e194f3e46ddc3be98bc280c560308b6b6db0330878f27a4a48c41054343805b",
    "source": [
@@ -1478,12 +1484,14 @@
    "name": "authentication.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/authentication.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:334",
     "Vid: agro_system/static/css/jazzmin_custom.css:329"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 2829,
    "sha256": "766fe58424f860d5084a601d397b81020f5d60a2ba7db8ddfaed193362670fd8",
    "source": [
@@ -1670,7 +1678,7 @@
    "name": "dashboard.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/dashboard.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:342",
     "Cereales: agro_system/static/css/jazzmin_custom.css:356",
@@ -1679,7 +1687,9 @@
     "Vid: agro_system/static/css/jazzmin_custom.css:351",
     "Vid: agro_system/static/css/jazzmin_custom.css:378"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 1694,
    "sha256": "39426c4f23ca084c739f67ec55dd54bfc33fd7b38921b91273fe748b29c799fd",
    "source": [
@@ -1745,7 +1755,8 @@
     "Vid: agro_system/static/css/jazzmin_custom.css:305"
    ],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal",
+    "referencia del backoffice"
    ],
    "bytes": 2083,
    "sha256": "d8ac96a616d184f716762303675609f1e502de7fe47e32b8ef12da68f39ae9d6",
@@ -1843,7 +1854,7 @@
     "Vid: agro_system/static/css/jazzmin_custom.css:309"
    ],
    "kit_use": [
-    "sidebar"
+    "referencia del backoffice"
    ],
    "bytes": 1672,
    "sha256": "87e3d0ea66c1a2395bf402ee12113f331b527533af45b46111af3f06a9aeeadd",
@@ -1910,7 +1921,7 @@
     "Vid: agro_system/static/css/jazzmin_custom.css:313"
    ],
    "kit_use": [
-    "sidebar"
+    "referencia del backoffice"
    ],
    "bytes": 2205,
    "sha256": "63e7fde4f8ec85a82f14c25e9fb01e15d73618d7c449299e6eaee9e04eb25120",
@@ -1971,12 +1982,14 @@
    "name": "producer.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/producer.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:302",
     "Vid: agro_system/static/css/jazzmin_custom.css:301"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 2313,
    "sha256": "c32654c0af9956988a7335c61f6f1f3ac2b2c3847dd1eefe0d9e32f87e430e0d",
    "source": [
@@ -2098,12 +2111,14 @@
    "name": "user.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/user.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:330",
     "Vid: agro_system/static/css/jazzmin_custom.css:325"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 1600,
    "sha256": "a10844592f6ef51c06fca8d3f71d6aa613b953d698815299133ae5b42ca2fc4a",
    "source": [
@@ -2169,7 +2184,7 @@
     "Vid: agro_system/static/css/jazzmin_custom.css:317"
    ],
    "kit_use": [
-    "sidebar"
+    "referencia del backoffice"
    ],
    "bytes": 1149,
    "sha256": "7f264bad90106eafa30ff0a2c4ea8ab8c5c143fa68623a8d41176c6f817f09cf",
@@ -2292,12 +2307,14 @@
    "name": "weather.svg",
    "file": "geneos_ui/icons/geagro/activos/img/icons/weather.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "Cereales: agro_system/static/css/jazzmin_custom.css:403",
     "Vid: agro_system/static/css/jazzmin_custom.css:398"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "referencia del backoffice"
+   ],
    "bytes": 1111,
    "sha256": "0e2d18e17b8ed404619e18945ad4d9bb601d655fc751e9c8b9f9f750c9c74a6f",
    "source": [
@@ -2434,11 +2451,13 @@
    "name": "icon - Asociados y Servicio.svg",
    "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Asociados y Servicio.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "core/modules_data.py:21"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 2358,
    "sha256": "762aed43a362dda4ce7e9d8f927f8b295b9e46e158063b7cc7d0897f7639423c",
    "source": [
@@ -2461,11 +2480,13 @@
    "name": "icon - Comercial.svg",
    "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Comercial.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "core/modules_data.py:78"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 1786,
    "sha256": "8977e84026c4f5276f5658dccfa28a9ec2e2044b937de174b7f44e2c97deca99",
    "source": [
@@ -2488,11 +2509,13 @@
    "name": "icon - Consumo.svg",
    "file": "geneos_ui/icons/gelectric/activos/SVG/icon - Consumo.svg",
    "status": "activo",
-   "usage": "producto",
+   "usage": "producto y GENEOS UI",
    "used_in": [
     "core/modules_data.py:163"
    ],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 1977,
    "sha256": "a8de4a135d588ce2fcc959d513bcc65d22dd6eaae90e86c2deed05849311abea",
    "source": [
@@ -3554,7 +3577,7 @@
     "core/templates/core/dashboard.html:74"
    ],
    "kit_use": [
-    "sidebar"
+    "tarjetas e indicadores"
    ],
    "bytes": 1037,
    "sha256": "8d75a45fc6c2ab90e5d7eb9c77a4d66675306c4135f7577effb3cb22f3e75170",
@@ -3576,11 +3599,13 @@
    "variant": "base",
    "format": "svg",
    "name": "vencimientos.svg",
-   "file": "geneos_ui/icons/gema/disponibles/iconos/vencimientos.svg",
-   "status": "disponible",
-   "usage": "sin uso",
+   "file": "geneos_ui/icons/gema/activos/iconos/vencimientos.svg",
+   "status": "activo",
+   "usage": "GENEOS UI",
    "used_in": [],
-   "kit_use": [],
+   "kit_use": [
+    "tarjetas e indicadores"
+   ],
    "bytes": 1143,
    "sha256": "91fc201ca19fc730b41cd05913d5015dbbadb488d531448abc043410784beddc",
    "source": [
@@ -3606,17 +3631,17 @@
    "usage": "pendiente de diseño",
    "used_in": [],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 0,
    "sha256": null,
    "source": [],
-   "note": "El portal usa mdi mdi-sprout-outline. Pendiente de diseño (decisión del 26/10/2026)."
+   "note": "Necesita un ícono original definitivo (versión blanca para el sidebar del portal). Hoy el portal usa mdi mdi-sprout-outline; el catálogo muestra un marcador pendiente."
   },
   {
    "id": "geagro-vid/pendiente/monitoreo",
    "product": "geagro-vid",
-   "set": "portal",
+   "set": "backoffice",
    "module": "monitoreo",
    "module_label": "Monitoreo de cultivo",
    "variant": "white",
@@ -3627,12 +3652,12 @@
    "usage": "pendiente de diseño",
    "used_in": [],
    "kit_use": [
-    "sidebar"
+    "referencia del backoffice"
    ],
    "bytes": 0,
    "sha256": null,
    "source": [],
-   "note": "Sin ícono propio. Pendiente de diseño (decisión del 26/10/2026)."
+   "note": "App crop_monitoring del backoffice (Jazzmin) sin ícono asignado en JAZZMIN_SETTINGS[\"icons\"]. Pendiente de diseño (decisión del 26/10/2026)."
   },
   {
    "id": "geagro-vid/pendiente/informes",
@@ -3648,12 +3673,12 @@
    "usage": "pendiente de diseño",
    "used_in": [],
    "kit_use": [
-    "sidebar"
+    "sidebar del portal"
    ],
    "bytes": 0,
    "sha256": null,
    "source": [],
-   "note": "Falta la versión SVG blanca o monocromática. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible; no se usa en el sidebar (decisión del 26/10/2026). El portal usa mdi mdi-chart-bar."
+   "note": "Necesita un ícono original definitivo en SVG blanco o monocromático. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible, pero no se usa en el sidebar (decisión del 26/10/2026). Hoy el portal usa mdi mdi-chart-bar; el catálogo muestra un marcador pendiente."
   }
  ]
 }

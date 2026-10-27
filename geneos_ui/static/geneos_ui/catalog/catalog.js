@@ -14,6 +14,9 @@
     switches.forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-kit-switch") === key ? "true" : "false"); });
     document.querySelectorAll("[data-kit-product]").forEach(function (el) { el.hidden = el.getAttribute("data-kit-product") !== key; });
     document.querySelectorAll("[data-gn-sidebar]").forEach(function (sb) { sb.hidden = sb.id !== "gn-sidebar-" + key; });
+    // el buscador del encabezado cambia solo el texto de ayuda (el diseño del topbar no cambia)
+    var gs = document.getElementById("kit-global-search");
+    if (gs && gs.dataset.kitPlaceholders) { try { gs.placeholder = JSON.parse(gs.dataset.kitPlaceholders)[key] || gs.placeholder; } catch (e) {} }
     if (persist) set(KEY_P, key);
     if (window.GN && GN.renderCharts) GN.renderCharts(document);
     if (window.GN && GN.syncSidebars) GN.syncSidebars();
@@ -33,33 +36,26 @@
   // El modo claro/oscuro lo maneja geneos-ui.js (GN.setTheme, data-gn-theme-switch):
   // arranca en claro y recuerda la elección en localStorage ("gn-theme").
 
-  // ---- grilla de íconos a partir del sprite
-  var grid = document.getElementById("kit-icons");
-  if (grid) {
-    var html = "";
-    document.querySelectorAll("svg defs symbol[id]").forEach(function (s) {
-      html += '<li><svg class="gn-icon" aria-hidden="true"><use href="#' + s.id + '"/></svg>' + s.id + "</li>";
-    });
-    grid.innerHTML = html;
-  }
-
   // ---- demo de botón con carga
-  var save = document.getElementById("kit-save");
-  if (save) save.addEventListener("click", function () {
-    GN.setLoading(save, true, "Guardando…");
-    setTimeout(function () { GN.setLoading(save, false); GN.toast("Cambios guardados.", { kind: "good" }); }, 1400);
+  document.querySelectorAll("[data-kit-save]").forEach(function (save) {
+    save.addEventListener("click", function () {
+      GN.setLoading(save, true, "Guardando…");
+      setTimeout(function () { GN.setLoading(save, false); GN.toast("Cambios guardados.", { kind: "good" }); }, 1400);
+    });
   });
 
   // ---- formulario de ejemplo: no se envía
-  var form = document.getElementById("kit-form");
-  if (form) form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    GN.toast("Corregí los 2 campos marcados antes de guardar.", { kind: "critical", title: "No se guardó" });
-    var first = form.querySelector('[aria-invalid="true"]'); if (first) first.focus();
+  document.querySelectorAll("[data-kit-form]").forEach(function (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      GN.toast("Corregí los " + form.dataset.kitErrors + " campos marcados antes de guardar.", { kind: "critical", title: "No se guardó" });
+      var first = form.querySelector('[aria-invalid="true"]'); if (first) first.focus();
+    });
   });
 
-  // ---- pills filtran la tabla visible por estado
+  // ---- pills de "Filtros combinados" filtran la tabla visible por estado
   document.addEventListener("gn:pill", function (e) {
+    if (!e.target.closest || !e.target.closest("[data-kit-table-pills]")) return;
     var v = e.detail.value || "";
     document.querySelectorAll('[data-kit-product]:not([hidden]) table tbody tr').forEach(function (tr) {
       var badge = tr.querySelector("td[data-value] .gn-badge");
@@ -67,15 +63,16 @@
       tr.hidden = !!v && kind !== v;
     });
   });
-  var clear = document.getElementById("kit-clear-filters");
-  if (clear) clear.addEventListener("click", function () {
-    document.querySelectorAll("#kit-filters-card [data-gn-remove-filter]").forEach(function (b) { b.click(); });
-    GN.announce("Filtros quitados");
+  document.querySelectorAll("[data-kit-clear-filters]").forEach(function (clear) {
+    clear.addEventListener("click", function () {
+      clear.closest("[data-kit-filters-card]").querySelectorAll("[data-gn-remove-filter]").forEach(function (b) { b.click(); });
+      GN.announce("Filtros quitados");
+    });
   });
   // ---- iconografía por producto: filtros por producto, módulo y estado
   var lib = document.querySelector("[data-kit-iconlib]");
   if (lib) {
-    var selP = lib.querySelector("[data-kit-ic-product]"), selM = lib.querySelector("[data-kit-ic-module]");
+    var selP = lib.querySelector("[data-kit-ic-product]"), selM = lib.querySelector("[data-kit-ic-module]"), selS = lib.querySelector("[data-kit-ic-set]");
     var pills = lib.querySelector("[data-kit-ic-status]"), count = lib.querySelector("[data-kit-ic-count]");
     var empty = lib.querySelector("[data-kit-ic-empty]"), cards = lib.querySelectorAll(".kit-ic");
     var status = "";
@@ -91,7 +88,8 @@
       var prod = selP.value, mod = selM.value, n = 0;
       cards.forEach(function (c) {
         var ok = (!prod || (" " + c.dataset.products + " ").indexOf(" " + prod + " ") > -1) &&
-                 (!mod || c.dataset.module === mod) && (!status || c.dataset.status === status);
+                 (!mod || c.dataset.module === mod) && (!status || c.dataset.status === status) &&
+                 (!selS.value || c.dataset.set === selS.value);
         c.hidden = !ok; if (ok) n++;
       });
       count.textContent = n + (n === 1 ? " registro" : " registros");
@@ -99,6 +97,10 @@
     }
     selP.addEventListener("change", function () { refreshModules(); apply(); });
     selM.addEventListener("change", apply);
+    selS.addEventListener("change", apply);
+    // fondo de las miniaturas: no cambia los archivos, solo el fondo de la vista previa
+    var grid = lib.querySelector("[data-kit-ic-grid]");
+    lib.querySelector("[data-kit-ic-bg]").addEventListener("gn:pill", function (e) { grid.dataset.bg = e.detail.value || "auto"; });
     pills.addEventListener("gn:pill", function (e) { status = e.detail.value || ""; apply(); });
   }
 })();

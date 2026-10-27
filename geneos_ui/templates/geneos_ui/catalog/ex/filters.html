@@ -1,0 +1,38 @@
+{% load geneos_ui %}{% with k=p.key fl=p.ex.filters %}
+<div class="gn-card" data-kit-filters-card><div class="gn-card__body">
+  <h3 class="kit-h3">Filtros combinados</h3>
+  <form class="gn-filters" data-gn-filter-builder="{{ k }}-filter-defs" onsubmit="return false">
+    <div class="gn-pills" data-gn-pills data-kit-table-pills role="group" aria-label="Filtro rápido por estado">
+      {% for label, n, val in fl.pills %}<button type="button" class="gn-pill-toggle" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" data-value="{{ val }}">{{ label }}<span>{{ n }}</span></button>{% endfor %}
+    </div>
+    <div class="gn-filters__bar">
+      <label class="gn-search">{% gn_icon "i-search" %}<span class="gn-visually-hidden">Buscar</span><input type="search" placeholder="{{ fl.search }}"></label>
+      <button type="button" class="gn-filters__toggle" data-gn-filters-toggle aria-controls="{{ k }}-filters-panel" aria-expanded="false">{% gn_icon "i-filter" %}<span>Filtros</span><span class="gn-filters__count">{{ fl.fields|length }}</span>{% gn_icon "i-chevdown" "gn-filters__chev" %}</button>
+      <div class="gn-filters__panel" id="{{ k }}-filters-panel">
+        <div class="gn-filters__fields" data-gn-filter-fields>
+          {% for key, label, options, selected in fl.fields %}
+          <div class="gn-filter" data-filter-key="{{ key }}">
+            <div class="gn-filter__head"><label class="gn-filter__label" for="{{ k }}-kf-{{ key }}">{{ label }}</label><button type="button" class="gn-filter__remove" data-gn-remove-filter aria-label="Quitar filtro {{ label }}">{% gn_icon "i-x" %}</button></div>
+            <select class="gn-select" id="{{ k }}-kf-{{ key }}">{% for o in options %}<option{% if o == selected %} selected{% endif %}>{{ o }}</option>{% endfor %}</select>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="gn-filters__actions">
+          <div class="gn-dropdown">
+            <button type="button" class="gn-btn gn-btn--ghost" data-gn-dropdown="{{ k }}-add-filter">{% gn_icon "i-plus" %}Agregar filtro</button>
+            <div class="gn-dropdown__menu gn-dropdown__menu--start" id="{{ k }}-add-filter" role="menu" data-gn-filter-menu hidden>
+              {% for key, label in fl.add %}<button type="button" class="gn-dropdown__item" role="menuitem" data-gn-add-filter="{{ key }}">{{ label }}</button>{% endfor %}
+            </div>
+          </div>
+          <button type="button" class="gn-btn gn-btn--tertiary" data-kit-clear-filters>Limpiar</button>
+          <button type="submit" class="gn-btn gn-btn--primary">{% gn_icon "i-filter" %}Filtrar</button>
+        </div>
+      </div>
+    </div>
+    <div class="gn-chips" aria-label="Filtros aplicados">
+      {% for key, label, options, selected in fl.fields %}<span class="gn-chip">{{ label }}: <b>{{ selected }}</b><button type="button" aria-label="Quitar {{ label }}">{% gn_icon "i-x" %}</button></span>{% endfor %}
+    </div>
+  </form>
+  <script type="application/json" id="{{ k }}-filter-defs">{{ p.filter_defs_json|safe }}</script>
+</div></div>
+{% endwith %}

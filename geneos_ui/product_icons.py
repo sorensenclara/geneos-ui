@@ -15,6 +15,7 @@ Los nombres ``i-*`` del sprite siguen siendo los íconos de acciones comunes.
 from __future__ import annotations
 
 import json
+import re
 from functools import lru_cache
 from pathlib import Path
 
@@ -47,21 +48,27 @@ def _chain(product: str) -> tuple[str, ...]:
 
 
 def is_product_ref(name: str | None) -> bool:
-    return bool(name) and ":" in name and not name.startswith("i-")
+    """"gema:clientes" sí; "i-users" o un texto con dos puntos, no."""
+    return bool(name) and re.fullmatch(r"[a-z]+(-[a-z]+)*:[a-z]+(-[a-z]+)*", name) is not None
 
 
-def resolve(ref: str, variant: str = NAV_VARIANT) -> dict | None:
-    """``"gema:clientes"`` → registro del manifiesto (o el registro pendiente)."""
+def resolve(ref: str, variant: str = NAV_VARIANT, set_name: str | None = None) -> dict | None:
+    """``"gema:clientes"`` → registro del manifiesto (o el registro pendiente).
+
+    ``set_name`` restringe a un conjunto: en GEAGRO, "portal" (portal del productor)
+    o "backoffice" (Jazzmin), que tienen íconos distintos para el mismo módulo.
+    """
     product, _, module = ref.partition(":")
     chain = _chain(product)
     candidates = [i for i in manifest()["icons"]
-                  if i["product"] in chain and i["module"] == module and i["variant"] == variant]
+                  if i["product"] in chain and i["module"] == module and i["variant"] == variant
+                  and (set_name is None or i["set"] == set_name)]
     if not candidates:
         return None
     candidates.sort(key=lambda i: (i["status"] == "pendiente", chain.index(i["product"]), SET_PRIORITY.get(i["set"], 2)))
     return candidates[0]
 
 
-def static_path(ref: str, variant: str = NAV_VARIANT) -> str | None:
-    rec = resolve(ref, variant)
+def static_path(ref: str, variant: str = NAV_VARIANT, set_name: str | None = None) -> str | None:
+    rec = resolve(ref, variant, set_name)
     return rec["file"] if rec else None

@@ -36,6 +36,9 @@ for p, n in NAMES.items():
             use = i["note"]
         f = f"`{i['file'].split('/icons/', 1)[1]}`" if i["file"] else "—"
         md.append(f"| {i['status']} | {i['module_label']} | {i['variant']} | {i['format'].upper()} | {f} | {origin} | {use or 'sin uso'} |")
+md += ["", "## Pendientes de diseño", "",
+       "Fenología e Informes (portal de GEAGRO Vid) y Monitoreo de cultivo (backoffice de Vid) necesitan íconos originales definitivos. "
+       "El catálogo muestra un marcador pendiente y no los reemplaza por íconos genéricos. Detalle en [`pendientes.md`](pendientes.md)."]
 md += ["", "## No incorporados", "",
        "- Duplicados por normalización Unicode (mismo contenido, nombre en NFD): `compañia.svg` de GEMA y los PNG «Gráficos» y «Parámetros» de GEAGRO. Se copió la versión NFC.",
        "- Ilustraciones de reportes de GEAGRO en `templates/operations/img/` (educación, familiares, género, persona, salud, el logo de Granero de Sueños y una foto): no son íconos de módulo y ningún template las usa.",

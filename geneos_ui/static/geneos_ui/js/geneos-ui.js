@@ -194,11 +194,16 @@
       if (sub) sub.hidden = !open;
     }
 
-    // tooltips de íconos con el sidebar contraído
-    $$(".gn-nav__item, .gn-sidebar__search-btn", sidebar).forEach(function (el) {
-      var label = el.querySelector(".gn-nav__label");
+    // tooltips: con el sidebar contraído muestran el nombre del ítem; expandido,
+    // solo cuando el nombre no entra y se ve cortado con "…" (p. ej. "Contabilidad y Finanzas")
+    function truncated(label) { return !!label && label.scrollWidth > label.clientWidth + 1; }
+    $$(".gn-nav__item, .gn-nav__subitem, .gn-sidebar__search-btn", sidebar).forEach(function (el) {
+      var label = el.classList.contains("gn-nav__subitem") ? el : el.querySelector(".gn-nav__label");
       var text = label ? label.textContent.trim() : el.getAttribute("aria-label");
-      function show() { if (isCollapsed()) showTip(el, text, "nav"); }
+      function show() {
+        if (isCollapsed() && !el.classList.contains("gn-nav__subitem")) showTip(el, text, "nav");
+        else if (truncated(label)) showTip(el, text, "nav");
+      }
       el.addEventListener("mouseenter", show);
       el.addEventListener("focus", show);
       el.addEventListener("mouseleave", hideTip);

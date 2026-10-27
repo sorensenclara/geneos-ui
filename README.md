@@ -139,4 +139,4 @@ SemVer con `CHANGELOG.md` y tags `vX.Y.Z`.
 
 Los tags se crean en GitLab. Cada producto fija una versión exacta y la actualiza con su propio merge request, en su rama de trabajo (`2026`, `2026-cereales`, `2026-vid`).
 
-Más detalle en [`docs/componentes.md`](docs/componentes.md) y [`docs/integracion.md`](docs/integracion.md).
+Más detalle en [`docs/componentes.md`](docs/componentes.md), [`docs/integracion.md`](docs/integracion.md), [`docs/iconografia.md`](docs/iconografia.md) y [`docs/pendientes.md`](docs/pendientes.md).

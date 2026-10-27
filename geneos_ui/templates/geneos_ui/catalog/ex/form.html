@@ -1,0 +1,28 @@
+{% load geneos_ui %}{% with k=p.key fm=p.ex.form %}
+<form class="gn-card" novalidate data-kit-form data-kit-errors="{{ fm.errors|length }}"><div class="gn-card__head"><div><h3 class="gn-card__title">{{ fm.title }}</h3><p class="gn-card__sub">Los campos con * son obligatorios.</p></div></div>
+  <div class="gn-card__body">
+    <div class="gn-alert gn-alert--critical" role="alert">{% gn_icon "i-x-circle" %}<div class="gn-alert__body"><span class="gn-alert__title">Revisá {{ fm.errors|length }} campos antes de guardar</span><ul>{% for id, label, msg in fm.errors %}<li><a href="#{{ k }}-{{ id }}">{{ label }}</a>: {{ msg }}</li>{% endfor %}</ul></div></div>
+    <div class="gn-form-grid" style="margin-top:16px">
+      {% for f in fm.fields %}{% include "geneos_ui/catalog/ex/field.html" with f=f k=k %}{% endfor %}
+      <fieldset class="gn-field gn-field--full kit-fieldset">
+        <legend class="gn-field__label">{{ fm.checks.0 }}</legend>
+        <div class="gn-check-list">
+          {% for label, small, checked, disabled in fm.checks.1 %}<label class="gn-check"><input type="checkbox"{% if checked %} checked{% endif %}{% if disabled %} disabled{% endif %}><span class="gn-check__text">{{ label }}{% if small %}<small>{{ small }}</small>{% endif %}</span></label>{% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="gn-field kit-fieldset">
+        <legend class="gn-field__label">{{ fm.radios.0 }}</legend>
+        <div class="gn-check-list">{% for r in fm.radios.1 %}<label class="gn-check"><input type="radio" name="{{ k }}-radio"{% if forloop.first %} checked{% endif %}>{{ r }}</label>{% endfor %}</div>
+      </fieldset>
+      <div class="gn-field">
+        <span class="gn-field__label">{{ fm.switch.0 }}</span>
+        <label class="gn-switch"><input type="checkbox" role="switch" checked>{{ fm.switch.1 }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="gn-card__foot">
+    <button type="button" class="gn-btn gn-btn--tertiary">Cancelar</button>
+    <button type="submit" class="gn-btn gn-btn--primary">{% gn_icon "i-check" %}{{ fm.submit }}</button>
+  </div>
+</form>
+{% endwith %}

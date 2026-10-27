@@ -63,8 +63,8 @@ MODULES = [
     ("transporte", "Transporte", r"transporte"),
 ]
 
-# ítems de la navegación de GENEOS UI que usan cada archivo (convierte el archivo en "activo")
-KIT_NAV = {
+# usos dentro de GENEOS UI (convierten el archivo en "activo")
+KIT_SIDEBAR = {
     ("gelectric", "SVG/icon white -Asociados y Servicio.svg"), ("gelectric", "SVG/icon white -Abastecimiento.svg"),
     ("gelectric", "SVG/icon white - Contabilidad.svg"), ("gelectric", "SVG/icon white -Comercial.svg"),
     ("gelectric", "SVG/icon white -Reportes.svg"), ("gelectric", "SVG/icon white -Impuestos.svg"),
@@ -72,22 +72,35 @@ KIT_NAV = {
     ("gelectric", "SVG/icon white -Consumo.svg"), ("gelectric", "SVG/icon white -Tecnico.svg"),
     ("gema", "iconos/inicio-white.svg"), ("gema", "iconos/clientes-white.svg"), ("gema", "iconos/matafuego-white.svg"),
     ("gema", "iconos/ordenes de trabajo-white.svg"), ("gema", "iconos/tarea-white.svg"), ("gema", "iconos/usuarios-white.svg"),
-    ("gema", "iconos/compañia-white.svg"), ("gema", "iconos/vencimientos-white.svg"),
+    ("gema", "iconos/compañia-white.svg"),
+    # portal del productor de GEAGRO
     ("geagro", "images/icon/dashboard.svg"), ("geagro", "images/icon/technical_plan.svg"), ("geagro", "images/icon/calendar.svg"),
     ("geagro", "images/icon/alert.svg"), ("geagro", "images/icon/weather.svg"), ("geagro-cereales", "images/icon/campo.svg"),
-    ("geagro", "images/icon/vinedos.svg"), ("geagro", "img/icons/operaciones.svg"), ("geagro", "img/icons/insumos.svg"),
-    ("geagro-cereales", "img/icons/Acopio-white.svg"), ("geagro", "img/icons/ventas.svg"), ("geagro", "img/icons/parametros.svg"),
+    ("geagro", "images/icon/vinedos.svg"),
+    # Insumos de Cereales: SVG del backoffice en el portal (decisión del 27/10/2026)
+    ("geagro", "img/icons/insumos.svg"),
 }
+# referencia del backoffice (Jazzmin) en el catálogo: mismos archivos que usa jazzmin_custom.css
+KIT_BACKOFFICE = {("geagro", f"img/icons/{n}") for n in (
+    "dashboard.svg", "operaciones.svg", "alert.svg", "authentication.svg", "weather.svg", "insumos.svg",
+    "parametros.svg", "producer.svg", "user.svg", "ventas.svg")} | {("geagro-cereales", "img/icons/Acopio-white.svg")}
+# indicadores, tarjetas y comparación del catálogo
+KIT_CARDS = {
+    ("gelectric", "SVG/icon - Asociados y Servicio.svg"), ("gelectric", "SVG/icon - Consumo.svg"), ("gelectric", "SVG/icon - Comercial.svg"),
+    ("gema", "iconos/vencimientos-white.svg"), ("gema", "iconos/vencimientos.svg"),
+    ("geagro", "images/icon/technical_plan_color.svg"), ("geagro", "images/icon/vinedos-color.svg"),
+}
+
 
 # íconos que el producto necesita y no existen: se registran sin archivo
 PENDING = [
     {"product": "geagro-vid", "module": "fenologia", "module_label": "Fenología", "variant": "white",
-     "note": "El portal usa mdi mdi-sprout-outline. Pendiente de diseño (decisión del 26/10/2026)."},
-    {"product": "geagro-vid", "module": "monitoreo", "module_label": "Monitoreo de cultivo", "variant": "white",
-     "note": "Sin ícono propio. Pendiente de diseño (decisión del 26/10/2026)."},
+     "note": "Necesita un ícono original definitivo (versión blanca para el sidebar del portal). Hoy el portal usa mdi mdi-sprout-outline; el catálogo muestra un marcador pendiente."},
+    {"product": "geagro-vid", "module": "monitoreo", "module_label": "Monitoreo de cultivo", "variant": "white", "set": "backoffice",
+     "note": "App crop_monitoring del backoffice (Jazzmin) sin ícono asignado en JAZZMIN_SETTINGS[\"icons\"]. Pendiente de diseño (decisión del 26/10/2026)."},
     {"product": "geagro-vid", "module": "informes", "module_label": "Informes (gráficos)", "variant": "white",
-     "note": "Falta la versión SVG blanca o monocromática. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible; "
-             "no se usa en el sidebar (decisión del 26/10/2026). El portal usa mdi mdi-chart-bar."},
+     "note": "Necesita un ícono original definitivo en SVG blanco o monocromático. Existe el PNG a color «GEAGRO - Icon Gráficos» como recurso disponible, "
+             "pero no se usa en el sidebar (decisión del 26/10/2026). Hoy el portal usa mdi mdi-chart-bar; el catálogo muestra un marcador pendiente."},
 ]
 
 
@@ -226,7 +239,9 @@ def build_records(found):
         for s in all_sources:
             tag = {"2026-cereales": "Cereales", "2026-vid": "Vid"}.get(s["branch"], "")
             used_in += [(f"{tag}: " if tag and product == "geagro" else "") + r for r in s["refs"]]
-        kit_use = ["sidebar"] if (product, rel) in KIT_NAV else []
+        kit_use = ([("sidebar del portal" if product.startswith("geagro") else "sidebar")] if (product, rel) in KIT_SIDEBAR else []) \
+            + (["referencia del backoffice"] if (product, rel) in KIT_BACKOFFICE else []) \
+            + (["tarjetas e indicadores"] if (product, rel) in KIT_CARDS else [])
         status = "activo" if (used_in or kit_use) else "disponible"
         usage = ("producto y GENEOS UI" if used_in and kit_use else "producto" if used_in
                  else "GENEOS UI" if kit_use else "sin uso")
@@ -251,9 +266,9 @@ def build_records(found):
             "_data": src["data"],
         })
     for p in PENDING:
-        records.append({"id": f"{p['product']}/pendiente/{p['module']}", "product": p["product"], "set": "portal",
+        records.append({"id": f"{p['product']}/pendiente/{p['module']}", "product": p["product"], "set": p.get("set", "portal"),
                         "module": p["module"], "module_label": p["module_label"], "variant": p["variant"], "format": "svg",
-                        "name": None, "file": None, "status": "pendiente", "usage": "pendiente de diseño", "used_in": [], "kit_use": ["sidebar"],
+                        "name": None, "file": None, "status": "pendiente", "usage": "pendiente de diseño", "used_in": [], "kit_use": ["sidebar del portal" if p.get("set", "portal") == "portal" else "referencia del backoffice"],
                         "bytes": 0, "sha256": None, "source": [], "note": p["note"]})
     return records
 

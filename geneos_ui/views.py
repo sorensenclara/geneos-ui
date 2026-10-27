@@ -1,4 +1,6 @@
 import json
+import re
+from pathlib import Path
 
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -6,6 +8,7 @@ from django.shortcuts import render
 
 from . import __version__
 from .catalog_data import PRODUCTS
+from .catalog_examples import BACKOFFICE, EXAMPLES, GELECTRIC_ONLY, GELECTRIC_SPRITE, PENDING_FEATURES
 from .conf import SIDEBAR_DEFAULTS, get_config
 from .navigation import build_nav
 from . import product_icons
@@ -35,6 +38,8 @@ VARIANT_LABELS = {
 PRODUCT_LABELS = {"gelectric": "GELECTRIC", "gema": "GEMA", "geagro": "GEAGRO (Cereales y Vid)",
                   "geagro-cereales": "GEAGRO Cereales", "geagro-vid": "GEAGRO Vid"}
 STATUS_ORDER = {"activo": 0, "pendiente": 1, "disponible": 2}
+SET_LABELS = {"modulos": "Módulos", "menu": "Menú", "marca": "Marca", "portal": "Portal del productor",
+              "backoffice": "Backoffice (Jazzmin)", "vid": "Línea VID", "png": "Set PNG"}
 
 
 def icon_inventory():
@@ -49,6 +54,7 @@ def icon_inventory():
             "filter_products": "geagro-cereales geagro-vid" if prod == "geagro" else prod,
             "theme": "geagro-cereales" if prod == "geagro" else prod,
             "variant_label": VARIANT_LABELS.get(i["variant"], i["variant"]),
+            "set_label": SET_LABELS.get(i["set"], i["set"]),
             "dark_thumb": i["variant"] in ("white", "white-png"),
             "origin": i["source"][0] if i["source"] else None,
             "origin_branches": " · ".join(s["branch"] for s in i["source"]),
@@ -56,8 +62,20 @@ def icon_inventory():
     rows.sort(key=lambda r: (list(PRODUCT_LABELS).index(r["product"]), STATUS_ORDER[r["status"]], r["module"], r["variant"]))
     modules = sorted({(r["module"], r["module_label"]) for r in rows}, key=lambda m: m[1])
     counts = {k: sum(1 for r in rows if r["status"] == k) for k in ("activo", "disponible", "pendiente")}
-    return {"rows": rows, "modules": modules, "counts": counts, "total": len(rows),
+    sets = [(k, v) for k, v in SET_LABELS.items() if any(r["set"] == k for r in rows)]
+    return {"rows": rows, "modules": modules, "sets": sets, "counts": counts, "total": len(rows),
             "files": sum(1 for r in rows if r["file"])}
+
+
+SPRITE_FILE = Path(__file__).parent / "templates" / "geneos_ui" / "components" / "icon_sprite.html"
+
+
+def sprite_groups():
+    """Sprite de interfaz: el set original de GELECTRIC y las acciones agregadas por GENEOS UI."""
+    ids = re.findall(r'<symbol id="(i-[\w-]+)"', SPRITE_FILE.read_text(encoding="utf-8"))
+    gel = [{"id": i, "only": i in GELECTRIC_ONLY} for i in ids if i in GELECTRIC_SPRITE]
+    kit = [{"id": i, "only": False} for i in ids if i not in GELECTRIC_SPRITE]
+    return {"gelectric": gel, "kit": kit}
 
 
 def catalog(request):
@@ -85,6 +103,12 @@ def catalog(request):
             "series_json": json.dumps([{"label": a, "value": b} for a, b in p["series"]]),
             "donut_json": json.dumps([{"label": d[0], "value": d[1], **({"color": d[2]} if len(d) > 2 else {})} for d in p["donut"]]),
             "kpis_view": [_kpi(k) for k in p["kpis"]],
+            "ex": EXAMPLES[p["key"]],
+            "filter_defs_json": json.dumps(EXAMPLES[p["key"]]["filters"]["defs"], ensure_ascii=False),
+            "pending_features": PENDING_FEATURES.get(p["key"], []),
+            "backoffice": [{"label": label, "ref": f"{p['key']}:{module}", "children": children,
+                            "pending": (product_icons.resolve(f"{p['key']}:{module}", set_name="backoffice") or {}).get("status") == "pendiente"}
+                           for label, module, children in BACKOFFICE.get(p["key"], [])],
         })
     active = next(p for p in products if p["key"] == current)
     return render(request, "geneos_ui/catalog/index.html", {
@@ -94,4 +118,6 @@ def catalog(request):
         "version": __version__,
         "static_build": request.GET.get("static") == "1",
         "icon_inventory": icon_inventory(),
+        "sprite_groups": sprite_groups(),
+        "search_placeholders": json.dumps({p["key"]: EXAMPLES[p["key"]]["search_global"] for p in PRODUCTS}, ensure_ascii=False),
     })

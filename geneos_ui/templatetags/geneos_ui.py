@@ -82,11 +82,14 @@ def gn_nav_icon(entry):
 
 
 @register.simple_tag
-def gn_product_icon(ref, variant="white", css_class="", label=""):
-    """{% gn_product_icon "gema:clientes" "base" %} → <img> con el archivo original."""
+def gn_product_icon(ref, variant="white", css_class="", label="", set_name=None):
+    """{% gn_product_icon "gema:clientes" "base" %} → <img> con el archivo original.
+
+    set_name="backoffice" elige el ícono del backoffice de GEAGRO en lugar del portal.
+    """
     if not product_icons.is_product_ref(ref):
         return gn_icon(ref, css_class, label)
-    rec = product_icons.resolve(ref, variant)
+    rec = product_icons.resolve(ref, variant, set_name or None)
     if not rec or not rec["file"]:
         return format_html('<span class="gn-product-icon gn-product-icon--pending {}" title="Ícono pendiente de diseño"></span>', css_class)
     return format_html('<img class="gn-product-icon {}" src="{}" alt="{}">', css_class, static(rec["file"]), label)
