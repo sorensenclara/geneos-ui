@@ -25,6 +25,10 @@
 
 **GEAGRO Cereales y Vid**: el portal (`templates/partials/base.html`, `sidebar.html`, `topbar.html`) pasa al layout del paquete; el filtro campaña/cultivo va en el bloque `topbar_context`. El backoffice Jazzmin **no se modifica** por ahora (decisión del 26/10/2026): ni navegación ni colores. Las dos ramas usan la misma versión del paquete y difieren solo en `PRODUCT` y `NAV`.
 
+## Disposición del menú
+
+Cada producto declara su disposición por defecto con `GENEOS_UI["NAV_LAYOUT"]` (GEMA `"horizontal"`; GELECTRIC y GEAGRO `"vertical"`) y su logo para fondo claro con `LOGO_TOPBAR`. El usuario la cambia con `{% gn_nav_switch %}` y queda guardada en su navegador. Para guardarla por usuario en el servidor hace falta un campo en el modelo de usuario del producto (migración propia) y una vista que reciba el evento `gn:nav`; queda para cuando se integre cada producto.
+
 ## Riesgos a vigilar
 
 - No cargar el sidebar de Lexa y el de GENEOS UI en la misma página (`app.js` de Lexa controla clases del `<body>`).

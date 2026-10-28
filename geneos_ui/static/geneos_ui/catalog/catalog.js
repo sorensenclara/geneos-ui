@@ -17,6 +17,19 @@
     // el buscador del encabezado cambia solo el texto de ayuda (el diseño del topbar no cambia)
     var gs = document.getElementById("kit-global-search");
     if (gs && gs.dataset.kitPlaceholders) { try { gs.placeholder = JSON.parse(gs.dataset.kitPlaceholders)[key] || gs.placeholder; } catch (e) {} }
+    // cada producto tiene su disposición de menú por defecto (GEMA horizontal, el resto vertical);
+    // si el usuario eligió una, se respeta en todos los productos
+    var sw = document.querySelector('[data-kit-switch="' + key + '"]');
+    if (sw) {
+      var def = sw.getAttribute("data-kit-nav-default") === "horizontal" ? "horizontal" : "vertical";
+      if (window.GN && GN.setNavDefault) GN.setNavDefault(def);
+      else {
+        // geneos-ui.js todavía no cargó (es defer): se aplica el atributo y GN lo toma al iniciar
+        root.setAttribute("data-gn-nav-default", def);
+        var savedNav = get("gn-nav");
+        if (savedNav !== "vertical" && savedNav !== "horizontal") root.setAttribute("data-gn-nav", def);
+      }
+    }
     if (persist) set(KEY_P, key);
     if (window.GN && GN.renderCharts) GN.renderCharts(document);
     if (window.GN && GN.syncSidebars) GN.syncSidebars();

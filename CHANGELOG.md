@@ -2,7 +2,26 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
-## [Sin publicar]
+## [0.2.0] · 2026-10-28
+
+### Navegación horizontal: ajustes finales
+- La barra horizontal queda siempre en una fila. Los módulos que no entran pasan al menú «Más», agrupados por módulo y con el estado activo; se recalcula al cambiar el tamaño de la ventana, la disposición o el producto. En GELECTRIC aparece desde 1024 px (Sueldos, Integraciones y Técnico).
+- Módulo activo más claro en GELECTRIC y GEAGRO: fondo del ítem activo del sidebar, texto en negrita y línea inferior del color de acento. GEMA conserva su estilo (solo texto y línea naranja).
+- Altura uniforme: todos los ítems miden lo mismo, con el ícono arriba, el texto en hasta dos líneas y la línea del activo alineada abajo.
+- Los desplegables se alinean a la derecha si no entran en la ventana y limitan su alto con desplazamiento interno.
+- Barra alineada con el ancho del contenido en pantallas grandes. Los badges van a la derecha del ícono.
+- Encabezado entre 861 y 1279 px: los selectores de tema y navegación muestran solo el ícono y, con selectores de contexto (GEAGRO), el chip de usuario muestra solo el avatar, para que nada se superponga.
+- Fenología e Informes (GEAGRO Vid) siguen pendientes: no hay íconos originales en ninguna rama ni en el historial de `geneos-geagro`.
+- Probado en 1024, 1280, 1440 y 1920 px; en pantallas de hasta 860 px sigue el menú lateral desplegable.
+
+
+### Agregado · disposición del menú
+- Segunda preferencia de visualización, con la misma lógica que el modo claro/oscuro: navegación **horizontal** o **vertical** (`data-gn-nav`, `localStorage["gn-nav"]`, `{% gn_nav_boot %}`, `{% gn_nav_switch %}`, `GN.setNav()` / `GN.getNav()`, evento `gn:nav`). Cambia sin recargar y es independiente del tema y del producto.
+- Valor por producto (`GENEOS_UI["NAV_LAYOUT"]`): GEMA horizontal; GELECTRIC, GEAGRO Cereales y GEAGRO Vid vertical.
+- Un solo menú para las dos disposiciones: el mismo `gn-sidebar` se reacomoda como barra horizontal. Submenús como desplegables (uno por vez, Esc, clic afuera, flechas izquierda/derecha).
+- GEMA en horizontal conserva su menú superior: barra blanca flotante sobre la franja azul, ícono arriba del texto, SVG normal y `-active` originales y línea naranja bajo el ítem activo. GELECTRIC y GEAGRO usan en horizontal una barra con el color de su sidebar y sus mismos íconos blancos.
+- `LOGO_TOPBAR`: logo original para fondo claro en el encabezado con menú horizontal (en modo oscuro se usa el logo blanco del sidebar). Copias verificadas en `sandbox/static/demo/logos/*-topbar.svg`.
+- En pantallas chicas se usa siempre el menú lateral desplegable.
 
 ### Cambiado · contenido por producto y GEAGRO portal/backoffice
 - Los ejemplos del catálogo (tipografía, navegación, botones, formularios, filtros, tablas, indicadores, estados, modales, notificaciones y comparación) usan los datos y procesos de cada sistema: GELECTRIC (asociados, suministros, reclamos, cuota capital), GEMA (clientes, matafuegos, recargas, pruebas hidráulicas, vencimientos), GEAGRO Cereales (campaña, lotes, cultivos, labores, alertas) y GEAGRO Vid (cuarteles, fenología, alertas sanitarias, labores). El contenido vive en `geneos_ui/catalog_examples.py`.

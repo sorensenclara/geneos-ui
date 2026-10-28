@@ -164,3 +164,4 @@
 .kit-ref-nav--admin { background: color-mix(in srgb, var(--gn-sidebar-bg) 82%, #000); }
 .kit-pending { margin-top: 16px; }
 .kit-pending ul { margin: 4px 0 0; padding-left: 18px; }
+.kit-topbar-brand { display: contents; }

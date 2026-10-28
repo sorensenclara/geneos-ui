@@ -112,6 +112,27 @@
     --gn-sidebar-border: rgba(255, 255, 255, .1);
     --gn-sidebar-indicator: var(--gn-c-accent);
 
+    /* ---- navegación horizontal (data-gn-nav="horizontal", solo escritorio) ----
+       Por defecto la barra usa los colores del sidebar del producto, así los
+       mismos íconos blancos se ven igual. GEMA la redefine en su tema. */
+    --gn-hnav-bg: var(--gn-sidebar-bg);
+    --gn-hnav-text: var(--gn-sidebar-text);
+    --gn-hnav-text-hover: var(--gn-sidebar-text-active);
+    --gn-hnav-active-text: var(--gn-sidebar-text-active);
+    --gn-hnav-active-line: var(--gn-sidebar-indicator);
+    --gn-hnav-active-bg: var(--gn-sidebar-active-bg);   /* fondo del ítem activo, como en el sidebar */
+    --gn-hnav-active-weight: 600;
+    --gn-hnav-hover-bg: var(--gn-sidebar-hover-bg);
+    --gn-hnav-hover-line: transparent;
+    --gn-hnav-band: transparent;     /* franja de color entre el encabezado y la barra */
+    --gn-hnav-band-h: 0px;
+    --gn-hnav-overlap: 0px;          /* cuánto se monta la barra sobre la franja */
+    --gn-hnav-inset: 0px;            /* margen lateral de la barra */
+    --gn-hnav-radius: 0px;
+    --gn-hnav-shadow: none;
+    --gn-hnav-font-size: 13.5px;
+    --gn-hnav-icon-size: var(--gn-nav-icon-size, 19px);
+
     /* ---- derivados de marca ---- */
     --gn-brand: var(--gn-c-brand);
     --gn-brand-hover: var(--gn-c-brand-hover);

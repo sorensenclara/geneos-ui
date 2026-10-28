@@ -54,6 +54,27 @@ def gn_theme_boot():
     return mark_safe(THEME_BOOT)
 
 
+NAV_BOOT = (
+    "<script>(function(){var d=document.documentElement,n=d.getAttribute('data-gn-nav-default')||'vertical';"
+    "try{var s=localStorage.getItem('gn-nav');if(s==='vertical'||s==='horizontal')n=s;}catch(e){}"
+    "d.setAttribute('data-gn-nav',n);})();</script>"
+)
+
+
+@register.simple_tag
+def gn_nav_boot():
+    """Aplica la disposición de navegación guardada antes de pintar (va en el <head>).
+
+    Sin preferencia guardada usa data-gn-nav-default del <html> (valor del producto).
+    """
+    return mark_safe(NAV_BOOT)
+
+
+@register.inclusion_tag("geneos_ui/components/nav_switch.html")
+def gn_nav_switch():
+    return {}
+
+
 @register.inclusion_tag("geneos_ui/components/theme_switch.html")
 def gn_theme_switch():
     return {}
@@ -75,7 +96,13 @@ def gn_icon(name, css_class="", label=""):
 def gn_nav_icon(entry):
     """Ícono de un ítem del sidebar: original del producto, pendiente o del sprite."""
     if entry.get("icon_static"):
-        return format_html('<img class="gn-nav__icon-img" src="{}" alt="">', static(entry["icon_static"]))
+        html = format_html('<img class="gn-nav__icon-img" src="{}" alt="">', static(entry["icon_static"]))
+        # navegación horizontal sobre barra clara (GEMA): las variantes originales normal y activa
+        if entry.get("icon_h"):
+            html += format_html('<img class="gn-nav__icon-h" src="{}" alt="">', static(entry["icon_h"]))
+        if entry.get("icon_h_active"):
+            html += format_html('<img class="gn-nav__icon-h-active" src="{}" alt="">', static(entry["icon_h_active"]))
+        return html
     if entry.get("icon_pending"):
         return mark_safe('<span class="gn-nav__icon-pending" title="Ícono pendiente de diseño" aria-hidden="true"></span>')
     return gn_icon(entry.get("icon") or "i-file")

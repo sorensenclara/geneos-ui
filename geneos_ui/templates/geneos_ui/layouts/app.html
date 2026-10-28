@@ -1,9 +1,10 @@
 {% load static geneos_ui %}<!doctype html>
-<html lang="es" data-gn-theme="light" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
+<html lang="es" data-gn-theme="light" data-gn-nav="{{ gn.nav_layout|default:'vertical' }}" data-gn-nav-default="{{ gn.nav_layout|default:'vertical' }}" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% gn_theme_boot %}
+{% gn_nav_boot %}
 <title>{% block title %}{{ gn.product_name }}{% endblock %}</title>
 {% block favicon %}{% endblock %}
 {% block head_css %}{% gn_css %}{% endblock %}
@@ -18,6 +19,7 @@
   <div class="gn-main">
     <header class="gn-topbar">
       <button type="button" class="gn-topbar__menu" data-gn-sidebar-toggle aria-label="Menú">{% gn_icon "i-menu" %}</button>
+      {% block topbar_brand %}{% include "geneos_ui/components/topbar_brand.html" %}{% endblock %}
       <div class="gn-topbar__search">{% block topbar_search %}{% endblock %}</div>
       <div class="gn-topbar__context">{% block topbar_context %}{% endblock %}</div>
       <div class="gn-topbar__spacer"></div>

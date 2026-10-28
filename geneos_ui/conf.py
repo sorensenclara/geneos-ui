@@ -10,6 +10,8 @@ Ejemplo en el settings de un producto::
         "LOGO_ICON": "core/images/SVG/Iso GELETRIC.svg",
         "TAGLINE": "Energía que nos une",
         "BRIDGES": [],                          # "bootstrap5", "jazzmin"
+        "NAV_LAYOUT": "vertical",               # opcional; el usuario puede cambiarla
+        "LOGO_TOPBAR": "core/images/SVG/Isologotipo GELETRIC Color.svg",
     }
 """
 from django.conf import settings
@@ -34,6 +36,18 @@ SIDEBAR_DEFAULTS = {
     "geagro-vid": "expanded",
 }
 
+# Disposición de la navegación en escritorio para cada producto: GEMA usa hoy
+# un menú horizontal y el resto un sidebar. El usuario puede cambiarla con el
+# selector de navegación; el navegador recuerda su elección ("gn-nav"). En
+# pantallas chicas siempre se usa el menú lateral desplegable.
+NAV_LAYOUT_DEFAULTS = {
+    "gelectric": "vertical",
+    "gema": "horizontal",
+    "geagro-cereales": "vertical",
+    "geagro-vid": "vertical",
+}
+NAV_LAYOUTS = ("vertical", "horizontal")
+
 DEFAULTS = {
     "PRODUCT": "gelectric",
     "VARIANT": None,
@@ -46,6 +60,8 @@ DEFAULTS = {
     "HOME_URL": "/",
     "BRIDGES": [],
     "SIDEBAR_DEFAULT": None,         # "expanded" | "collapsed"; None = el valor del producto
+    "NAV_LAYOUT": None,              # "vertical" | "horizontal"; None = el valor del producto
+    "LOGO_TOPBAR": None,             # logo para fondo claro, en el encabezado con navegación horizontal
     "LOAD_FONTS": True,              # Titillium Web desde Google Fonts
     "CATALOG": None,                 # None = solo con DEBUG o para staff
 }
@@ -56,6 +72,8 @@ def get_config():
     cfg = {**DEFAULTS, **user}
     if not cfg["SIDEBAR_DEFAULT"]:
         cfg["SIDEBAR_DEFAULT"] = SIDEBAR_DEFAULTS.get(cfg["PRODUCT"], "expanded")
+    if cfg["NAV_LAYOUT"] not in NAV_LAYOUTS:
+        cfg["NAV_LAYOUT"] = NAV_LAYOUT_DEFAULTS.get(cfg["PRODUCT"], "vertical")
     if not cfg["PRODUCT_NAME"]:
         cfg["PRODUCT_NAME"] = PRODUCTS.get(cfg["PRODUCT"], cfg["PRODUCT"])
     return cfg

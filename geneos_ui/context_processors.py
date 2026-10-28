@@ -22,11 +22,13 @@ def geneos_ui(request):
             "product_name": cfg["PRODUCT_NAME"],
             "logo_full": cfg["LOGO_FULL"],
             "logo_icon": cfg["LOGO_ICON"],
+            "logo_topbar": cfg["LOGO_TOPBAR"],
             "tagline": cfg["TAGLINE"],
             "version_label": cfg["VERSION_LABEL"],
             "home_url": cfg["HOME_URL"],
             "bridges": cfg["BRIDGES"],
             "sidebar_default": cfg["SIDEBAR_DEFAULT"],
+            "nav_layout": cfg["NAV_LAYOUT"],
             "load_fonts": cfg["LOAD_FONTS"],
             "nav": nav,
         }

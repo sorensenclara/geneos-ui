@@ -26,13 +26,13 @@ LOGOS = ROOT / "sandbox" / "static" / "demo" / "logos"
 
 PRODUCTS = {
     "gelectric": {"repo": "gelectric", "branch": "2026", "name": "GELECTRIC",
-                  "logos": {"full": "core/static/core/images/SVG/Isologotipo GELETRIC white.svg", "icon": "core/static/core/images/SVG/Iso GELETRIC.svg"}},
+                  "logos": {"full": "core/static/core/images/SVG/Isologotipo GELETRIC white.svg", "icon": "core/static/core/images/SVG/Iso GELETRIC.svg", "topbar": "core/static/core/images/SVG/Isologotipo GELETRIC Color.svg"}},
     "gema": {"repo": "gema", "branch": "2026", "name": "GEMA",
-             "logos": {"full": "core/static/core/images/gema-logo-white.svg", "icon": "core/static/core/images/gema-logo-favicon.svg"}},
+             "logos": {"full": "core/static/core/images/gema-logo-white.svg", "icon": "core/static/core/images/gema-logo-favicon.svg", "topbar": "core/static/core/images/gema-logo.svg"}},
     "geagro-cereales": {"repo": "geagro", "branch": "2026-cereales", "name": "GEAGRO Cereales",
-                        "logos": {"full": "agro_system/static/images/logo-geagro-cereal.svg", "icon": "agro_system/static/img/logo-sm-GEAGRO-cereal.svg"}},
+                        "logos": {"full": "agro_system/static/images/logo-geagro-cereal.svg", "icon": "agro_system/static/img/logo-sm-GEAGRO-cereal.svg", "topbar": "agro_system/static/img/logo-geagro-cereal.svg"}},
     "geagro-vid": {"repo": "geagro", "branch": "2026-vid", "name": "GEAGRO Vid",
-                   "logos": {"full": "agro_system/static/images/logo-geagro-light.svg", "icon": "agro_system/static/img/logo-sm-GEAGRO-vid.svg"}},
+                   "logos": {"full": "agro_system/static/images/logo-geagro-light.svg", "icon": "agro_system/static/img/logo-sm-GEAGRO-vid.svg", "topbar": "agro_system/static/img/logo-GEAGRO-vid.svg"}},
 }
 # Archivos de terceros que no cuentan como identidad del producto
 VENDOR = re.compile(r"(/lexa/|/libs/|bootstrap|app(-rtl)?\.min\.css|app\.css|icons(\.min)?\.css|typicons|/vendor/|templates/(components|extras)/)", re.I)

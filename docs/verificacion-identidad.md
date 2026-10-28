@@ -30,6 +30,7 @@ Generado por `tools/verify_identity.py` contra las ramas de trabajo publicadas. 
 | --- | --- | --- |
 | full | `core/static/core/images/SVG/Isologotipo GELETRIC white.svg` | Sí, idéntico (SHA-256) |
 | icon | `core/static/core/images/SVG/Iso GELETRIC.svg` | Sí, idéntico (SHA-256) |
+| topbar | `core/static/core/images/SVG/Isologotipo GELETRIC Color.svg` | Sí, idéntico (SHA-256) |
 
 ### Tipografía
 
@@ -68,6 +69,7 @@ GENEOS UI carga Titillium Web 400, 600 y 700 (los pesos que usan los componentes
 | --- | --- | --- |
 | full | `core/static/core/images/gema-logo-white.svg` | Sí, idéntico (SHA-256) |
 | icon | `core/static/core/images/gema-logo-favicon.svg` | Sí, idéntico (SHA-256) |
+| topbar | `core/static/core/images/gema-logo.svg` | Sí, idéntico (SHA-256) |
 
 ### Tipografía
 
@@ -106,6 +108,7 @@ GENEOS UI carga Titillium Web 400, 600 y 700 (los pesos que usan los componentes
 | --- | --- | --- |
 | full | `agro_system/static/images/logo-geagro-cereal.svg` | Sí, idéntico (SHA-256) |
 | icon | `agro_system/static/img/logo-sm-GEAGRO-cereal.svg` | Sí, idéntico (SHA-256) |
+| topbar | `agro_system/static/img/logo-geagro-cereal.svg` | Sí, idéntico (SHA-256) |
 
 ### Tipografía
 
@@ -144,6 +147,7 @@ GENEOS UI carga Titillium Web 400, 600 y 700 (los pesos que usan los componentes
 | --- | --- | --- |
 | full | `agro_system/static/images/logo-geagro-light.svg` | Sí, idéntico (SHA-256) |
 | icon | `agro_system/static/img/logo-sm-GEAGRO-vid.svg` | Sí, idéntico (SHA-256) |
+| topbar | `agro_system/static/img/logo-GEAGRO-vid.svg` | Sí, idéntico (SHA-256) |
 
 ### Tipografía
 
@@ -173,8 +177,8 @@ Mínimos: 4,5:1 texto normal, 3:1 texto grande y bordes de controles.
 | GEAGRO Vid | Texto de marca sobre blanco (`#6b3f6e` / `#ffffff`) | 8.20:1 ✓ |
 | GEAGRO Vid | Texto del sidebar sobre el fondo (`#e2dee3` / `#3F2642`) | 10.08:1 ✓ |
 | GEAGRO Vid | Indicador activo sobre el ítem activo (`#22b24c` / `#2c1830`) | 5.89:1 ✓ |
-| Compartido | Texto tenue sobre superficie (`#666e8a` / `#ffffff`) | 5.05:1 ✓ |
-| Compartido | Texto tenue sobre superficie 2 (`#666e8a` / `#f5f7fc`) | 4.71:1 ✓ |
-| Compartido | Texto secundario sobre fondo (`#4c5573` / `#f7fafe`) | 7.03:1 ✓ |
-| Compartido | Borde de campo sobre superficie (`#8991a8` / `#ffffff`) | 3.14:1 ✓ |
+| Compartido | Texto tenue sobre superficie (`#63636b` / `#f7f7f8`) | 5.56:1 ✓ |
+| Compartido | Texto tenue sobre superficie 2 (`#63636b` / `#eeeef0`) | 5.14:1 ✓ |
+| Compartido | Texto secundario sobre fondo (`#45454d` / `#ffffff`) | 9.50:1 ✓ |
+| Compartido | Borde de campo sobre superficie (`#80808a` / `#f7f7f8`) | 3.65:1 ✓ |
 

@@ -1,0 +1,5 @@
+{% load static %}{# Logo del encabezado: solo se ve con navegación horizontal en escritorio (en vertical el logo está en el sidebar). #}
+<a class="gn-topbar__brand" href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
+  {% if gn.logo_topbar %}<img class="gn-topbar__logo gn-topbar__logo--light" src="{% static gn.logo_topbar %}" alt="{{ gn.product_name }}">{% elif gn.logo_icon %}<img class="gn-topbar__logo gn-topbar__logo--light gn-topbar__logo--icon" src="{% static gn.logo_icon %}" alt="{{ gn.product_name }}">{% endif %}
+  {% if gn.logo_full %}<img class="gn-topbar__logo gn-topbar__logo--dark" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}
+</a>

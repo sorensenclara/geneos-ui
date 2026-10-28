@@ -73,9 +73,13 @@ def _icon_fields(entry) -> dict:
     if product_icons.is_product_ref(entry.icon):
         rec = product_icons.resolve(entry.icon)
         if rec and rec["file"]:
-            return {"icon": None, "icon_static": rec["file"], "icon_pending": False, "icon_ref": entry.icon}
-        return {"icon": None, "icon_static": None, "icon_pending": True, "icon_ref": entry.icon}
-    return {"icon": entry.icon, "icon_static": entry.icon_static, "icon_pending": False, "icon_ref": None}
+            h, h_active = product_icons.hnav_paths(entry.icon)
+            return {"icon": None, "icon_static": rec["file"], "icon_pending": False, "icon_ref": entry.icon,
+                    "icon_h": h, "icon_h_active": h_active}
+        return {"icon": None, "icon_static": None, "icon_pending": True, "icon_ref": entry.icon,
+                "icon_h": None, "icon_h_active": None}
+    return {"icon": entry.icon, "icon_static": entry.icon_static, "icon_pending": False, "icon_ref": None,
+            "icon_h": None, "icon_h_active": None}
 
 
 def _allowed(entry, request) -> bool:

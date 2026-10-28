@@ -4,7 +4,7 @@ Sistema de diseño y biblioteca de componentes compartida para los productos Dja
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.1.0, borrador para aprobación.** Todavía no está integrado en ningún producto.
+> Estado: **v0.2.0.** Catálogo aprobado visualmente (tema, navegación, iconografía y contenido por producto). Todavía no está integrado en ningún producto.
 
 ## Qué incluye
 
@@ -33,7 +33,7 @@ El repositorio principal es **GitHub**: https://github.com/sorensenclara/geneos-
 
 ```text
 # requirements.txt — usar un tag publicado después de aprobar el diseño
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.1.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.2.0
 ```
 
 ```python
@@ -52,6 +52,8 @@ GENEOS_UI = {
     "TAGLINE": "Gestión de matafuegos",
     "BRIDGES": ["bootstrap5"],              # solo si hay pantallas con Bootstrap sin migrar
     # "SIDEBAR_DEFAULT": "expanded",        # opcional; por defecto GELECTRIC arranca contraído y el resto expandido
+    # "NAV_LAYOUT": "horizontal",           # opcional; por defecto GEMA horizontal y el resto vertical
+    "LOGO_TOPBAR": "core/images/gema-logo.svg",  # logo para fondo claro (encabezado con menú horizontal)
 }
 
 # urls.py (opcional: catálogo visible con DEBUG o para staff)
@@ -91,6 +93,19 @@ def get_nav(request):
 
 Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa los permisos de Django y `visible=` acepta cualquier función.
 
+## Preferencias de visualización
+
+Dos preferencias globales, independientes entre sí y del producto, con la misma lógica:
+
+| Preferencia | Atributo en `<html>` | Valores | Se guarda en | Por defecto |
+| --- | --- | --- | --- | --- |
+| Tema | `data-gn-theme` | `light` · `dark` | `localStorage["gn-theme"]` | Claro |
+| Navegación | `data-gn-nav` | `vertical` · `horizontal` | `localStorage["gn-nav"]` | La del producto (`GENEOS_UI["NAV_LAYOUT"]`): GEMA horizontal; GELECTRIC y GEAGRO vertical |
+
+- Hay un solo menú (`NavItem`, permisos, íconos y buscador). La disposición horizontal reacomoda el mismo `<aside class="gn-sidebar">` como barra debajo del encabezado; los grupos con submenú se abren como desplegables.
+- En pantallas de hasta 860 px se usa siempre el menú lateral desplegable, sea cual sea la preferencia.
+- API: `GN.setTheme()`, `GN.getTheme()`, `GN.setNav()`, `GN.getNav()` y los eventos `gn:theme` y `gn:nav`. Un producto que quiera guardar la preferencia por usuario en su base de datos puede escuchar `gn:nav` y guardarla con su propia vista.
+
 ## Template tags
 
 ```django
@@ -98,6 +113,8 @@ Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa l
 {% gn_css %} {% gn_js %}
 {% gn_theme_boot %}                        {# en el <head>: aplica el modo guardado; sin preferencia, claro #}
 {% gn_theme_switch %}                      {# selector Claro / Oscuro; guarda la elección en localStorage #}
+{% gn_nav_boot %}                          {# en el <head>: aplica la disposición del menú guardada; sin preferencia, la del producto #}
+{% gn_nav_switch %}                        {# selector Horizontal / Vertical (solo escritorio) #}
 {% gn_icon "i-download" %}                     {# acción común del sprite #}
 {% gn_product_icon "gema:clientes" "base" %}  {# ícono original: white, base, active, tile… #}
 {% gn_badge "Vencido" "critical" True %}

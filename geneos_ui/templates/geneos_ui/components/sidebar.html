@@ -47,6 +47,13 @@
         </li>
         {% endif %}
         {% endfor %}
+        {# Solo en navegación horizontal: reúne los módulos que no entran en la barra (lo arma geneos-ui.js) #}
+        <li class="gn-nav__entry gn-nav__more" data-gn-nav-more hidden>
+          <button type="button" class="gn-nav__item gn-nav__toggle" data-gn-group-toggle aria-expanded="false" aria-controls="{{ sidebar_id }}-more">
+            {% gn_icon "i-more" %}<span class="gn-nav__label">Más</span>{% gn_icon "i-chevdown" "gn-nav__chev" %}
+          </button>
+          <ul class="gn-nav__sub gn-nav__more-list" id="{{ sidebar_id }}-more" hidden></ul>
+        </li>
       </ul>
       <p class="gn-sidebar__empty" hidden></p>
     </nav>

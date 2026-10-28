@@ -24,6 +24,20 @@ MANIFEST = Path(__file__).with_name("product_icons.json")
 # en el sidebar se usa la variante blanca; el set del portal tiene prioridad sobre el del backoffice
 NAV_VARIANT = "white"
 SET_PRIORITY = {"portal": 0, "modulos": 0, "menu": 0, "backoffice": 1}
+# Navegación horizontal: variantes (reposo, activo) para productos cuya barra horizontal
+# es clara. GEMA usa hoy en su menú superior los SVG normales y "-active" (core/base.html).
+# El resto no tiene variantes para fondo claro: su barra horizontal usa el color del
+# sidebar y los mismos íconos blancos.
+HNAV_VARIANTS = {"gema": ("base", "active")}
+
+
+def hnav_paths(ref: str) -> tuple[str | None, str | None]:
+    """Íconos de la navegación horizontal para "producto:módulo" (o (None, None))."""
+    product = ref.partition(":")[0]
+    variants = HNAV_VARIANTS.get(product)
+    if not variants:
+        return None, None
+    return tuple(static_path(ref, v) for v in variants)
 
 
 @lru_cache(maxsize=1)

@@ -15,6 +15,10 @@
 {% for p in products %}{% if p.key == active.key %}{% gn_sidebar nav=p.nav_built gn=p.gn sidebar_id="gn-sidebar-"|add:p.key %}{% else %}{% gn_sidebar nav=p.nav_built gn=p.gn sidebar_id="gn-sidebar-"|add:p.key hidden=True %}{% endif %}{% endfor %}
 {% endblock %}
 
+{% block topbar_brand %}
+{% for p in products %}<div class="kit-topbar-brand" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>{% include "geneos_ui/components/topbar_brand.html" with gn=p.gn %}</div>{% endfor %}
+{% endblock %}
+
 {% block topbar_search %}
 <label class="gn-search">
   {% gn_icon "i-search" %}
@@ -36,6 +40,7 @@
 {% endblock %}
 
 {% block topbar_actions %}
+{% gn_nav_switch %}
 {% gn_theme_switch %}
 <div class="gn-dropdown">
   <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--lg" data-gn-dropdown="kit-notif" aria-label="Notificaciones, 3 sin leer">{% gn_icon "i-bell" %}<span class="gn-btn__dot" aria-hidden="true">3</span></button>
@@ -81,7 +86,7 @@
   <div class="gn-page-head__actions">
     <div class="kit-switcher" role="radiogroup" aria-label="Producto">
       {% for p in products %}
-      <button type="button" role="radio" class="kit-switcher__btn" data-kit-switch="{{ p.key }}" aria-checked="{% if p.key == active.key %}true{% else %}false{% endif %}">
+      <button type="button" role="radio" class="kit-switcher__btn" data-kit-switch="{{ p.key }}" data-kit-nav-default="{{ p.gn.nav_layout }}" aria-checked="{% if p.key == active.key %}true{% else %}false{% endif %}">
         <i class="kit-switcher__dot" data-gn-product="{{ p.key }}" aria-hidden="true"></i>{{ p.name }}
       </button>
       {% endfor %}
@@ -294,6 +299,7 @@
       <ul class="kit-checklist">
         <li>{% gn_icon "i-check" %}<span>Íconos y etiquetas; contraído muestra solo íconos con globito al pasar el mouse o el foco.</span></li>
         <li>{% gn_icon "i-check" %}<span>Contraer y expandir, recordado entre páginas (migra la preferencia guardada por GELECTRIC).</span></li>
+        <li>{% gn_icon "i-check" %}<span>Disposición horizontal o vertical con el selector del encabezado, independiente del tema. Mismo menú, mismos permisos e íconos; en celular siempre es lateral.</span></li>
         <li>{% gn_icon "i-check" %}<span>Submenús desplegables; el grupo del ítem activo arranca abierto.</span></li>
         <li>{% gn_icon "i-check" %}<span>Ítem activo con <code>aria-current="page"</code>, fondo y barra de acento.</span></li>
         <li>{% gn_icon "i-check" %}<span>Buscador en tiempo real, sin mayúsculas ni tildes, por palabra clave y sinónimos.</span></li>
@@ -714,6 +720,7 @@ GENEOS_UI = {
         <li><b>Iconografía:</b> se usan los íconos originales de cada producto, sin redibujar. Insumos de Cereales usa <code>insumos.svg</code> del backoffice. Informes, Fenología y Monitoreo de cultivo (Vid) quedan pendientes de diseño; el PNG de Gráficos queda como recurso disponible.</li>
         <li><b>GEAGRO:</b> el portal del productor y el backoffice (Jazzmin) son interfaces separadas, con menús e íconos propios. Jazzmin se usa solo como referencia.</li>
         <li><b>Contenido de ejemplo:</b> cada producto muestra sus propios datos y procesos; los componentes son compartidos.</li>
+        <li><b>Navegación:</b> el usuario elige horizontal o vertical. Por defecto, GEMA horizontal y el resto vertical (decisión del 28/10/2026).</li>
         <li><b>GEAGRO Vid:</b> se usa «Lote», como en el sistema. Historial queda pendiente (sin URL ni navegación) y Fenología e Informes esperan íconos originales definitivos. Ver <code>docs/pendientes.md</code>.</li>
       </ol>
     </div></div>

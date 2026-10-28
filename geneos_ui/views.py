@@ -9,7 +9,7 @@ from django.shortcuts import render
 from . import __version__
 from .catalog_data import PRODUCTS
 from .catalog_examples import BACKOFFICE, EXAMPLES, GELECTRIC_ONLY, GELECTRIC_SPRITE, PENDING_FEATURES
-from .conf import SIDEBAR_DEFAULTS, get_config
+from .conf import NAV_LAYOUT_DEFAULTS, SIDEBAR_DEFAULTS, get_config
 from .navigation import build_nav
 from . import product_icons
 
@@ -95,6 +95,7 @@ def catalog(request):
         gn = {
             "product": p["key"], "product_name": p["name"], "logo_full": p["logo_full"], "logo_icon": p["logo_icon"],
             "tagline": p["tagline"], "version_label": p["version_label"], "home_url": "#inicio", "sidebar_default": SIDEBAR_DEFAULTS[p["key"]],
+            "logo_topbar": p["logo_topbar"], "nav_layout": NAV_LAYOUT_DEFAULTS[p["key"]],
         }
         products.append({
             **p,

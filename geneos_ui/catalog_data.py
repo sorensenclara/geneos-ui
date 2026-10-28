@@ -93,7 +93,7 @@ PRODUCTS = [
     {
         "key": "gelectric", "name": "GELECTRIC", "nav": nav_gelectric,
         "mini_nav": [("Inicio", "i-home"), ("Asociados", "gelectric:asociados"), ("Comercial", "gelectric:comercial")],
-        "logo_full": "demo/logos/gelectric-full.svg", "logo_icon": "demo/logos/gelectric-icon.svg",
+        "logo_full": "demo/logos/gelectric-full.svg", "logo_icon": "demo/logos/gelectric-icon.svg", "logo_topbar": "demo/logos/gelectric-topbar.svg",
         "tagline": "Energía que nos une", "version_label": "v1.0.0",
         "identity": "Verde por defecto, con la variante azul disponible.",
         "swatches": [("Sidebar", "#1b6b4c", "dashboard.css:84"), ("Marca / activo", "#0d4530", "dashboard.css:85"), ("Acento", "#17a672", "dashboard.css:23"), ("Texto de marca", "#0d7a53", "dashboard.css:24"), ("Variante azul", "#244c97", "dashboard.css:14")],
@@ -120,7 +120,7 @@ PRODUCTS = [
     {
         "key": "gema", "name": "GEMA", "nav": nav_gema,
         "mini_nav": [("Inicio", "gema:inicio"), ("Clientes", "gema:clientes"), ("Órdenes", "gema:ordenes")],
-        "logo_full": "demo/logos/gema-full.svg", "logo_icon": "demo/logos/gema-icon.svg",
+        "logo_full": "demo/logos/gema-full.svg", "logo_icon": "demo/logos/gema-icon.svg", "logo_topbar": "demo/logos/gema-topbar.svg",
         "tagline": "Gestión de matafuegos", "version_label": "",
         "identity": "Azul GEMA en el sidebar y naranja para la acción principal.",
         "swatches": [("Sidebar (navy)", "#1B4B8D", "theme.css:269"), ("Marca / activo", "#123b6e", "panel_base.html:11"), ("Naranja", "#EC6C05", "theme.css:147"), ("Naranja oscuro", "#c65a03", "panel_base.html:14"), ("Texto naranja", "#b0530a", "theme.css:714"), ("Rojo GEMA", "#c62828", "theme.css:25")],
@@ -147,7 +147,7 @@ PRODUCTS = [
     {
         "key": "geagro-cereales", "name": "GEAGRO Cereales", "nav": nav_geagro_cereales,
         "mini_nav": [("Dashboard", "geagro-cereales:dashboard"), ("Mis campos", "geagro-cereales:campos"), ("Plan técnico", "geagro-cereales:plan-tecnico")],
-        "logo_full": "demo/logos/geagro-cereales-full.svg", "logo_icon": "demo/logos/geagro-cereales-icon.svg",
+        "logo_full": "demo/logos/geagro-cereales-full.svg", "logo_icon": "demo/logos/geagro-cereales-icon.svg", "logo_topbar": "demo/logos/geagro-cereales-topbar.svg",
         "tagline": "Campaña 2025/26", "version_label": "",
         "identity": "Verde campo con acentos amarillos del logo.",
         "swatches": [("Sidebar", "#113f2a", "custom.css:15"), ("Activo", "#0b3422", "custom.css:13"), ("Amarillo", "#c6a400", "custom.css:10"), ("Amarillo claro", "#f3c600", "custom.css:11"), ("Texto amarillo", "#816d09", "custom.css:9"), ("Texto sobre amarillo", "#2b2f24", "jazzmin_custom.css:26"), ("Verde", "#22b24c", "custom.css:18")],
@@ -174,7 +174,7 @@ PRODUCTS = [
     {
         "key": "geagro-vid", "name": "GEAGRO Vid", "nav": nav_geagro_vid,
         "mini_nav": [("Dashboard", "geagro-vid:dashboard"), ("Mis viñedos", "geagro-vid:vinedos"), ("Plan técnico", "geagro-vid:plan-tecnico")],
-        "logo_full": "demo/logos/geagro-vid-full.svg", "logo_icon": "demo/logos/geagro-vid-icon.svg",
+        "logo_full": "demo/logos/geagro-vid-full.svg", "logo_icon": "demo/logos/geagro-vid-icon.svg", "logo_topbar": "demo/logos/geagro-vid-topbar.svg",
         "tagline": "Campaña 2026/27", "version_label": "",
         "identity": "Violeta vid con verde como acento de estado activo.",
         "swatches": [("Sidebar", "#3F2642", "custom.css:9"), ("Activo", "#2c1830", "custom.css:77"), ("Violeta", "#6b3f6e", "custom.css:10"), ("Hover violeta", "#5a345d", "custom.css:634"), ("Violeta claro", "#906693", "custom.css:11"), ("Verde", "#22b24c", "jazzmin_custom.css:34")],

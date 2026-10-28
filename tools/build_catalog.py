@@ -26,7 +26,7 @@ from django.conf import settings  # noqa: E402
 from django.contrib.staticfiles import finders  # noqa: E402
 from django.test import Client  # noqa: E402
 
-from geneos_ui.templatetags.geneos_ui import THEME_BOOT  # noqa: E402
+from geneos_ui.templatetags.geneos_ui import NAV_BOOT, THEME_BOOT  # noqa: E402
 
 settings.DEBUG = True
 settings.ALLOWED_HOSTS = ["*"]
@@ -79,7 +79,8 @@ def build(fragment=False):
         head = re.sub(r'<meta name="viewport"[^>]*>\s*', "", head)
         body_match = re.search(r'<body class="([^"]*)">(.*)</body>', html, re.S)
         classes, body = body_match.group(1).strip(), body_match.group(2)
-        boot = "<script>document.documentElement.setAttribute('data-gn-product','gelectric');</script>\n" + THEME_BOOT
+        boot = ("<script>document.documentElement.setAttribute('data-gn-product','gelectric');"
+                "document.documentElement.setAttribute('data-gn-nav-default','vertical');</script>\n" + THEME_BOOT + NAV_BOOT)
         html = head.strip() + "\n" + boot + f'\n<div class="{classes}">\n' + body + "\n</div>\n"
         out = ROOT / "dist" / "ui-kit.fragment.html"
     else:

@@ -121,7 +121,8 @@
       syncToggles();
       if (persist !== false) store(key, expanded ? "1" : "0");
     }
-    function isCollapsed() { return DESKTOP.matches && sidebar.classList.contains("is-collapsed"); }
+    function isHorizontal() { return DESKTOP.matches && getNav() === "horizontal"; }
+    function isCollapsed() { return DESKTOP.matches && !isHorizontal() && sidebar.classList.contains("is-collapsed"); }
     function syncToggles() {
       if (sidebar.hidden) return;
       toggles.forEach(function (b) {
@@ -173,12 +174,21 @@
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     });
-    DESKTOP.addEventListener("change", function () { closeDrawer(false); hideTip(); syncToggles(); });
+    DESKTOP.addEventListener("change", function () { closeDrawer(false); hideTip(); syncToggles(); applyLayout(); });
 
     // grupos con submenú
     $$("[data-gn-group-toggle]", sidebar).forEach(function (btn) {
       var sub = document.getElementById(btn.getAttribute("aria-controls"));
       btn.addEventListener("click", function () {
+        if (isHorizontal()) {
+          // barra horizontal: el submenú es un desplegable y se abre uno por vez
+          var open = btn.getAttribute("aria-expanded") !== "true";
+          closeGroups(btn);
+          setGroup(btn, sub, open);
+          if (open) placeDropdown(sub);
+          hideTip();
+          return;
+        }
         if (isCollapsed()) {
           // contraído: el grupo no tiene dónde desplegarse, así que primero se expande el sidebar
           setExpanded(true);
@@ -193,6 +203,91 @@
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       if (sub) sub.hidden = !open;
     }
+    var groupToggles = $$("[data-gn-group-toggle]", sidebar);
+    function closeGroups(except) {
+      groupToggles.forEach(function (b) { if (b !== except) setGroup(b, document.getElementById(b.getAttribute("aria-controls")), false); });
+    }
+    // Al cambiar de disposición: en horizontal los desplegables arrancan cerrados;
+    // en vertical vuelve a abrirse el grupo que contiene la página actual.
+    function applyLayout() {
+      hideTip();
+      groupToggles.forEach(function (b) {
+        var entry = b.closest(".gn-nav__entry");
+        setGroup(b, document.getElementById(b.getAttribute("aria-controls")), !isHorizontal() && !!entry && entry.classList.contains("has-active"));
+      });
+      syncToggles();
+    }
+    document.addEventListener("gn:nav", applyLayout);
+
+    // Barra horizontal en una sola fila: los módulos que no entran pasan al menú «Más»
+    // (copias de sus enlaces; los originales solo se ocultan, así permisos, estado activo
+    // y buscador siguen saliendo del mismo menú).
+    var navList = $(".gn-nav", sidebar);
+    var more = $("[data-gn-nav-more]", sidebar);
+    var moreList = more && $(".gn-nav__more-list", more);
+    function moreLink(a, text) {
+      var li = document.createElement("li"), c = document.createElement("a");
+      c.className = "gn-nav__subitem"; c.href = a.getAttribute("href") || "#"; c.textContent = text;
+      if (a.getAttribute("aria-current")) c.setAttribute("aria-current", a.getAttribute("aria-current"));
+      li.appendChild(c); return li;
+    }
+    function fitBar() {
+      if (!more || !navList) return;
+      var tops = $$(".gn-nav > .gn-nav__entry:not(.gn-nav__more)", sidebar);
+      tops.forEach(function (e) { e.classList.remove("is-overflow"); });
+      moreList.innerHTML = "";
+      more.classList.remove("has-active");
+      more.hidden = true;
+      if (!isHorizontal() || sidebar.hidden || !navList.clientWidth) return;
+      if (navList.scrollWidth <= navList.clientWidth + 1) return;
+      more.hidden = false;
+      for (var i = tops.length - 1; i > 0 && navList.scrollWidth > navList.clientWidth + 1; i--) tops[i].classList.add("is-overflow");
+      tops.filter(function (e) { return e.classList.contains("is-overflow"); }).forEach(function (e) {
+        var item = $(".gn-nav__item", e), label = $(".gn-nav__label", item);
+        var text = label ? (label.__gnText || label.textContent).trim() : "";
+        var subs = $$(".gn-nav__subitem", e);
+        if (!subs.length) moreList.appendChild(moreLink(item, text));
+        else {
+          var h = document.createElement("li"); h.className = "gn-nav__more-heading"; h.textContent = text; moreList.appendChild(h);
+          subs.forEach(function (sa) { moreList.appendChild(moreLink(sa, (sa.__gnText || sa.textContent).trim())); });
+        }
+        if (e.classList.contains("has-active") || item.getAttribute("aria-current")) more.classList.add("has-active");
+      });
+    }
+    var fitFrame = 0;
+    function scheduleFit() { cancelAnimationFrame(fitFrame); fitFrame = requestAnimationFrame(fitBar); }
+    window.addEventListener("resize", scheduleFit);
+    document.addEventListener("gn:nav", scheduleFit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
+    SIDEBAR_SYNC.push(scheduleFit);
+
+    // desplegables de la barra: dentro de la ventana, alineados a la derecha si no entran
+    function placeDropdown(sub) {
+      if (!sub) return;
+      sub.classList.remove("is-end");
+      sub.style.maxHeight = "";
+      var r = sub.getBoundingClientRect();
+      if (r.right > window.innerWidth - 8) sub.classList.add("is-end");
+      sub.style.maxHeight = Math.max(160, window.innerHeight - sub.getBoundingClientRect().top - 12) + "px";
+    }
+    document.addEventListener("click", function (e) { if (isHorizontal() && !sidebar.contains(e.target)) closeGroups(); });
+    sidebar.addEventListener("keydown", function (e) {
+      if (!isHorizontal()) return;
+      if (e.key === "Escape") {
+        var open = groupToggles.filter(function (b) { return b.getAttribute("aria-expanded") === "true"; })[0];
+        if (open) { closeGroups(); open.focus(); }
+        return;
+      }
+      // flechas izquierda/derecha entre los ítems principales de la barra
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      var tops = $$(".gn-nav > .gn-nav__entry > .gn-nav__item", sidebar).filter(function (el) { return el.offsetParent !== null; });
+      var cur = document.activeElement.closest(".gn-nav__entry");
+      var i = tops.indexOf(cur ? $(".gn-nav__item", cur) : null);
+      if (i === -1) return;
+      e.preventDefault();
+      closeGroups();
+      tops[(i + (e.key === "ArrowRight" ? 1 : -1) + tops.length) % tops.length].focus();
+    });
 
     // tooltips: con el sidebar contraído muestran el nombre del ítem; expandido,
     // solo cuando el nombre no entra y se ve cortado con "…" (p. ej. "Contabilidad y Finanzas")
@@ -238,6 +333,8 @@
     });
 
     initSidebarSearch(sidebar, setGroup);
+    if (isHorizontal()) applyLayout();
+    fitBar();
     syncToggles();
     SIDEBAR_SYNC.push(syncToggles);
 
@@ -255,7 +352,7 @@
     var empty = $(".gn-sidebar__empty", sidebar);
     var status = $(".gn-sidebar__status", sidebar);
     var foot = $(".gn-sidebar__foot", sidebar);
-    var entries = $$(".gn-nav__entry", nav);
+    var entries = $$(".gn-nav__entry:not(.gn-nav__more)", nav);
     var sections = $$(".gn-nav__section", nav);
     var initial = null;
 
@@ -799,9 +896,74 @@
     syncThemeSwitches();
   }
 
+  // ------------------------------------------------- disposición del menú
+  // Misma lógica que el modo de color: data-gn-nav en <html> ("vertical" u
+  // "horizontal"), elección guardada en localStorage ("gn-nav") y aplicada en
+  // el <head> por {% gn_nav_boot %}. Sin elección guardada se usa el valor del
+  // producto (data-gn-nav-default). Es independiente del tema y del producto.
+  // En pantallas chicas siempre se usa el menú lateral desplegable.
+  var NAV_KEY = "gn-nav";
+  function getNav() {
+    return document.documentElement.getAttribute("data-gn-nav") === "horizontal" ? "horizontal" : "vertical";
+  }
+  function navDefault() {
+    return document.documentElement.getAttribute("data-gn-nav-default") === "horizontal" ? "horizontal" : "vertical";
+  }
+  function syncNavSwitches() {
+    var n = getNav();
+    $$("[data-gn-nav-switch]").forEach(function (group) {
+      $$("[data-gn-nav-value]", group).forEach(function (b) {
+        var on = b.getAttribute("data-gn-nav-value") === n;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+  }
+  function setNav(layout, persist) {
+    var n = layout === "horizontal" ? "horizontal" : "vertical";
+    var changed = n !== getNav();
+    document.documentElement.setAttribute("data-gn-nav", n);
+    if (persist !== false) store(NAV_KEY, n);
+    syncNavSwitches();
+    if (changed || persist !== false) document.dispatchEvent(new CustomEvent("gn:nav", { detail: { layout: n } }));
+    return n;
+  }
+  // Cambia el valor por defecto (p. ej. al cambiar de producto en el catálogo) y lo aplica si el usuario no eligió.
+  function setNavDefault(layout) {
+    document.documentElement.setAttribute("data-gn-nav-default", layout === "horizontal" ? "horizontal" : "vertical");
+    var saved = store(NAV_KEY);
+    if (saved !== "vertical" && saved !== "horizontal") setNav(navDefault(), false);
+  }
+  function initNav(root) {
+    if (!initNav.__done) {
+      initNav.__done = true;
+      var saved = store(NAV_KEY);
+      setNav(saved === "vertical" || saved === "horizontal" ? saved : navDefault(), false);
+    }
+    $$("[data-gn-nav-switch]", root).forEach(function (group) {
+      if (group.__gn) return; group.__gn = true;
+      var buttons = $$("[data-gn-nav-value]", group);
+      buttons.forEach(function (b, i) {
+        b.addEventListener("click", function () {
+          var n = setNav(b.getAttribute("data-gn-nav-value"));
+          announce(n === "horizontal" ? "Menú horizontal" : "Menú vertical");
+        });
+        b.addEventListener("keydown", function (e) {
+          var d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var nb = buttons[(i + d + buttons.length) % buttons.length];
+          nb.focus(); nb.click();
+        });
+      });
+    });
+    syncNavSwitches();
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
     initTheme(root);
+    initNav(root);
     initTooltips(root);
     initDropdowns(root);
     initTabs(root);
@@ -814,7 +976,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.1.0";
+  window.GN.version = "0.2.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;
@@ -826,6 +988,9 @@
   window.GN.normalize = normalize;
   window.GN.setTheme = setTheme;
   window.GN.getTheme = getTheme;
+  window.GN.setNav = setNav;
+  window.GN.getNav = getNav;
+  window.GN.setNavDefault = setNavDefault;
 
   function boot() { initSidebars(); init(document); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
