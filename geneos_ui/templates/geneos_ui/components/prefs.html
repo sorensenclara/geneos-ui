@@ -1,0 +1,18 @@
+{% load geneos_ui %}<div class="gn-prefs" data-gn-prefs>
+  <button type="button" class="gn-prefs__tab" aria-expanded="false" aria-controls="gn-prefs-panel" aria-label="Preferencias de interfaz" data-gn-prefs-toggle>{% gn_icon "i-gear" %}</button>
+  <section class="gn-prefs__panel" id="gn-prefs-panel" role="dialog" aria-labelledby="gn-prefs-title" tabindex="-1" hidden>
+    <header class="gn-prefs__head">
+      <h2 class="gn-prefs__title" id="gn-prefs-title">Preferencias de interfaz</h2>
+      <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" aria-label="Cerrar preferencias" data-gn-prefs-close>{% gn_icon "i-x" %}</button>
+    </header>
+    <div class="gn-prefs__group">
+      <span class="gn-prefs__label" aria-hidden="true">Apariencia</span>
+      {% gn_theme_switch %}
+    </div>
+    <div class="gn-prefs__group gn-prefs__group--nav">
+      <span class="gn-prefs__label" aria-hidden="true">Navegación en escritorio</span>
+      {% gn_nav_switch %}
+    </div>
+    <p class="gn-prefs__note">Se guarda en este navegador.</p>
+  </section>
+</div>

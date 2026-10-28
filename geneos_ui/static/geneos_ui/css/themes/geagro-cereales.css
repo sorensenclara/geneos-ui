@@ -30,5 +30,10 @@
     --gn-chart-2: #f3c600;
     --gn-chart-3: #22b24c;
     --gn-chart-4: #cf4e4e;
+
+    /* Navegación horizontal: el amarillo de marca (#c6a400) tiene 2,4:1 sobre la barra
+       blanca, no alcanza para el indicador del activo. En claro se usa el dorado oscuro de
+       la marca (--gn-c-ink, 5,1:1); en oscuro, el amarillo #f3c600 (10,5:1, regla común). */
+    --gn-hnav-accent: var(--gn-c-ink);
   }
 }

@@ -113,25 +113,39 @@
     --gn-sidebar-indicator: var(--gn-c-accent);
 
     /* ---- navegación horizontal (data-gn-nav="horizontal", solo escritorio) ----
-       Por defecto la barra usa los colores del sidebar del producto, así los
-       mismos íconos blancos se ven igual. GEMA la redefine en su tema. */
-    --gn-hnav-bg: var(--gn-sidebar-bg);
-    --gn-hnav-text: var(--gn-sidebar-text);
-    --gn-hnav-text-hover: var(--gn-sidebar-text-active);
-    --gn-hnav-active-text: var(--gn-sidebar-text-active);
-    --gn-hnav-active-line: var(--gn-sidebar-indicator);
-    --gn-hnav-active-bg: var(--gn-sidebar-active-bg);   /* fondo del ítem activo, como en el sidebar */
-    --gn-hnav-active-weight: 600;
-    --gn-hnav-hover-bg: var(--gn-sidebar-hover-bg);
-    --gn-hnav-hover-line: transparent;
-    --gn-hnav-band: transparent;     /* franja de color entre el encabezado y la barra */
-    --gn-hnav-band-h: 0px;
-    --gn-hnav-overlap: 0px;          /* cuánto se monta la barra sobre la franja */
-    --gn-hnav-inset: 0px;            /* margen lateral de la barra */
-    --gn-hnav-radius: 0px;
-    --gn-hnav-shadow: none;
-    --gn-hnav-font-size: 13.5px;
-    --gn-hnav-icon-size: var(--gn-nav-icon-size, 19px);
+       Un solo diseño para los cuatro productos, el del menú superior de GEMA:
+       barra blanca (oscura en modo oscuro) flotando sobre una franja del color
+       institucional, con márgenes laterales, esquinas de 8 px, sombra suave, misma
+       altura e ícono arriba del texto. Cada tema define solo sus colores
+       (--gn-c-sidebar para la franja, --gn-hnav-accent para los indicadores). */
+    --gn-hnav-radius: 8px;
+    --gn-hnav-inset: 24px;            /* margen lateral de la barra */
+    --gn-hnav-offset: 20px;           /* la barra se monta 20 px sobre la franja */
+    --gn-hnav-shadow: 0 -3px 31px 0 rgba(0, 0, 0, .05), 0 6px 20px 0 rgba(0, 0, 0, .06);
+    --gn-hnav-height: 76px;           /* alto mínimo de los ítems: igual en todos los productos */
+    --gn-hnav-icon-size: 22px;
+    --gn-hnav-font-size: 15px;
+    --gn-hnav-label-max: 12em;        /* más largo: «…» y tooltip con el nombre completo */
+    /* franja de color institucional detrás de la barra. Es configurable: un producto
+       puede cambiarle el color o quitarla (--gn-hnav-band-h: 0px) */
+    --gn-hnav-band: var(--gn-c-sidebar);
+    --gn-hnav-band-h: 40px;
+    /* color de identidad para la línea del activo, el hover y los íconos activos.
+       Debe tener contraste ≥ 3:1 sobre --gn-hnav-bg */
+    --gn-hnav-accent: var(--gn-c-brand);
+    --gn-hnav-bg: var(--gn-elevated);
+    --gn-hnav-text: #495057;
+    --gn-hnav-text-hover: var(--gn-brand-ink);
+    --gn-hnav-active-text: var(--gn-brand-ink);
+    --gn-hnav-active-line: var(--gn-hnav-accent);
+    --gn-hnav-active-bg: transparent;
+    --gn-hnav-active-weight: 400;
+    --gn-hnav-hover-bg: transparent;
+    --gn-hnav-hover-line: var(--gn-hnav-accent);
+    /* productos que solo tienen íconos blancos (GEAGRO): el mismo SVG original se usa
+       como máscara y se pinta con estos colores sobre la barra clara */
+    --gn-hnav-icon-tint: var(--gn-c-sidebar);
+    --gn-hnav-icon-tint-active: var(--gn-hnav-accent);
 
     /* ---- derivados de marca ---- */
     --gn-brand: var(--gn-c-brand);
@@ -206,6 +220,10 @@
     --gn-warning-ink: color-mix(in srgb, var(--gn-c-warning) 62%, #ffffff);
     --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 60%, #ffffff);
     --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 40%, #ffffff);
+    --gn-hnav-shadow: 0 6px 24px rgba(0, 0, 0, .45);
+    --gn-hnav-text: var(--gn-text-2);
+    --gn-hnav-accent: var(--gn-c-accent);
+    --gn-hnav-icon-tint: var(--gn-text-2);
     color-scheme: dark;
   }
 }

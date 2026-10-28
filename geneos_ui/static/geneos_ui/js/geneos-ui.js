@@ -960,10 +960,40 @@
     syncNavSwitches();
   }
 
+  // ------------------------------------------------- panel de preferencias
+  // {% gn_prefs %}: solapa flotante que abre un panel con los mismos selectores
+  // de tema y de menú (los inicializan initTheme e initNav; acá solo se abre y
+  // se cierra). Se cierra con la X, con Esc o con un clic afuera.
+  function initPrefs(root) {
+    $$("[data-gn-prefs]", root).forEach(function (box) {
+      if (box.__gn) return; box.__gn = true;
+      var tab = $("[data-gn-prefs-toggle]", box);
+      var panel = document.getElementById(tab.getAttribute("aria-controls"));
+      function isOpen() { return !panel.hidden; }
+      function open() {
+        panel.hidden = false; tab.setAttribute("aria-expanded", "true");
+        panel.focus();   // el siguiente Tab llega al primer selector
+      }
+      function close(restore) {
+        if (!isOpen()) return;
+        panel.hidden = true; tab.setAttribute("aria-expanded", "false");
+        if (restore !== false) tab.focus();
+      }
+      tab.addEventListener("click", function () { if (isOpen()) close(); else open(); });
+      $$("[data-gn-prefs-close]", panel).forEach(function (b) { b.addEventListener("click", function () { close(); }); });
+      box.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isOpen()) { e.stopPropagation(); close(); }
+      });
+      document.addEventListener("click", function (e) { if (isOpen() && !box.contains(e.target)) close(false); });
+      window.GN.prefs = { open: open, close: close };
+    });
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
     initTheme(root);
     initNav(root);
+    initPrefs(root);
     initTooltips(root);
     initDropdowns(root);
     initTabs(root);
@@ -976,7 +1006,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.2.0";
+  window.GN.version = "0.2.1";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

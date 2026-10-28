@@ -27,7 +27,7 @@
 
 ## Disposición del menú
 
-Cada producto declara su disposición por defecto con `GENEOS_UI["NAV_LAYOUT"]` (GEMA `"horizontal"`; GELECTRIC y GEAGRO `"vertical"`) y su logo para fondo claro con `LOGO_TOPBAR`. El usuario la cambia con `{% gn_nav_switch %}` y queda guardada en su navegador. Para guardarla por usuario en el servidor hace falta un campo en el modelo de usuario del producto (migración propia) y una vista que reciba el evento `gn:nav`; queda para cuando se integre cada producto.
+Cada producto declara su disposición por defecto con `GENEOS_UI["NAV_LAYOUT"]` (GEMA `"horizontal"`; GELECTRIC y GEAGRO `"vertical"`) y su logo para fondo claro con `LOGO_TOPBAR`. El usuario la cambia desde la solapa de Preferencias de interfaz (`{% gn_prefs %}`, ya incluida en el layout base) y queda guardada en su navegador. Para guardarla por usuario en el servidor hace falta un campo en el modelo de usuario del producto (migración propia) y una vista que reciba el evento `gn:nav`; queda para cuando se integre cada producto.
 
 ## Riesgos a vigilar
 

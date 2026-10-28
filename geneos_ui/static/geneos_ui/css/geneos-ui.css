@@ -248,7 +248,7 @@
    ===================================================================== */
 .gn-topbar__brand { display: none; }
 .gn-nav__more { display: none; }
-.gn-nav__icon-h, .gn-nav__icon-h-active { display: none; }
+.gn-nav__icon-h, .gn-nav__icon-h-active, .gn-nav__icon-tint { display: none; }
 @media (min-width: 861px) {
   :root[data-gn-nav="horizontal"] .gn-app {
     display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto 1fr; align-items: start;
@@ -278,7 +278,7 @@
     grid-row: 2; grid-column: 1; position: relative; z-index: 15;
     width: auto; height: auto; overflow: visible; transform: none; visibility: visible;
     /* alineada con el contenido (que tiene un ancho máximo) en pantallas grandes */
-    margin: var(--gn-hnav-overlap) max(var(--gn-hnav-inset), calc((100% - var(--gn-content-max)) / 2 + var(--gn-hnav-inset))) 0;
+    margin: var(--gn-hnav-offset) max(var(--gn-hnav-inset), calc((100% - var(--gn-content-max)) / 2 + var(--gn-hnav-inset))) 0;
     background: var(--gn-hnav-bg); color: var(--gn-hnav-text);
     border-radius: var(--gn-hnav-radius); box-shadow: var(--gn-hnav-shadow);
   }
@@ -287,7 +287,7 @@
   :root[data-gn-nav="horizontal"] .gn-sidebar__foot,
   :root[data-gn-nav="horizontal"] .gn-sidebar__empty,
   :root[data-gn-nav="horizontal"] .gn-nav__section { display: none; }
-  :root[data-gn-nav="horizontal"] .gn-sidebar__body { padding: 0 max(12px, calc((100% - var(--gn-content-max)) / 2 + 12px)); gap: 0; }
+  :root[data-gn-nav="horizontal"] .gn-sidebar__body { padding: 0 12px; gap: 0; }
   /* una sola fila: lo que no entra pasa al menú «Más» (geneos-ui.js) */
   :root[data-gn-nav="horizontal"] .gn-nav { flex-direction: row; flex-wrap: nowrap; align-items: stretch; gap: 0 2px; }
   :root[data-gn-nav="horizontal"] .gn-nav__entry { position: relative; flex: none; display: flex; }
@@ -296,16 +296,17 @@
 
   /* ítems: ícono arriba del texto y línea inferior para el activo (menú superior de GEMA) */
   :root[data-gn-nav="horizontal"] .gn-nav__item {
-    flex-direction: column; justify-content: flex-start; gap: 8px; width: auto; min-height: 100%;
+    flex-direction: column; justify-content: flex-start; gap: 8px; width: auto; min-height: var(--gn-hnav-height);
     padding: 14px 14px 11px; border-radius: 0; border-bottom: 3px solid transparent;
     background: none; color: var(--gn-hnav-text); font-size: var(--gn-hnav-font-size); font-weight: 400; text-align: center;
   }
   :root[data-gn-nav="horizontal"] .gn-nav__item::before { display: none; }
-  /* misma altura en todos los ítems: el ícono arriba, el texto en hasta dos líneas y la línea del activo siempre abajo */
+  /* misma altura en todos los ítems y productos (--gn-hnav-height): ícono arriba, texto en una línea
+     (si no entra, «…» y tooltip con el nombre completo) y la línea del activo siempre abajo */
   :root[data-gn-nav="horizontal"] .gn-nav__label {
-    flex: none; max-width: 10em; white-space: normal; overflow: hidden; text-overflow: clip; line-height: 1.2;
-    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+    flex: none; max-width: var(--gn-hnav-label-max); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2;
   }
+
   :root[data-gn-nav="horizontal"] .gn-nav__item:hover,
   :root[data-gn-nav="horizontal"] .gn-nav__item:focus-visible { background: var(--gn-hnav-hover-bg); color: var(--gn-hnav-text-hover); border-bottom-color: var(--gn-hnav-hover-line); }
   :root[data-gn-nav="horizontal"] .gn-nav__item[aria-current="page"],
@@ -317,9 +318,19 @@
   :root[data-gn-nav="horizontal"] .gn-nav__icon-img,
   :root[data-gn-nav="horizontal"] .gn-nav__icon-h,
   :root[data-gn-nav="horizontal"] .gn-nav__icon-h-active,
+  :root[data-gn-nav="horizontal"] .gn-nav__icon-tint,
   :root[data-gn-nav="horizontal"] .gn-nav__icon-pending { width: var(--gn-hnav-icon-size); height: var(--gn-hnav-icon-size); margin: 0; opacity: 1; color: inherit; }
   :root[data-gn-nav="horizontal"] .gn-nav__icon-pending { border-color: currentColor; opacity: .6; }
-  /* productos con variantes para barra clara (GEMA): reposo y activo originales */
+  /* productos con solo íconos blancos (GEAGRO): el SVG original como máscara, con los colores del tema */
+  :root[data-gn-nav="horizontal"] .gn-nav__item:has(.gn-nav__icon-tint) .gn-nav__icon-img { display: none; }
+  :root[data-gn-nav="horizontal"] .gn-nav__icon-tint {
+    display: block; flex: none; background: var(--gn-hnav-icon-tint);
+    -webkit-mask: var(--gn-icon-src) center / contain no-repeat; mask: var(--gn-icon-src) center / contain no-repeat;
+  }
+  :root[data-gn-nav="horizontal"] .gn-nav__item[aria-current="page"] .gn-nav__icon-tint,
+  :root[data-gn-nav="horizontal"] .gn-nav__entry.has-active > .gn-nav__item .gn-nav__icon-tint { background: var(--gn-hnav-icon-tint-active); }
+  @media (forced-colors: active) { :root[data-gn-nav="horizontal"] .gn-nav__icon-tint { background: CanvasText; } }
+  /* productos con variantes originales para barra clara (GEMA, GELECTRIC): reposo y activo */
   :root[data-gn-nav="horizontal"] .gn-nav__item:has(.gn-nav__icon-h) .gn-nav__icon-img { display: none; }
   :root[data-gn-nav="horizontal"] .gn-nav__icon-h { display: block; object-fit: contain; }
   :root[data-gn-nav="horizontal"] .gn-nav__item[aria-current="page"]:has(.gn-nav__icon-h-active) .gn-nav__icon-h,
@@ -353,13 +364,13 @@
 
   /* el selector de navegación solo tiene sentido en escritorio */
 }
-@media (max-width: 860px) { .gn-theme-switch.gn-nav-switch { display: none; } }
+@media (max-width: 860px) { .gn-topbar .gn-theme-switch.gn-nav-switch { display: none; } }
 @media (min-width: 861px) and (max-width: 1279px) {
   /* con selectores de contexto (GEAGRO: campaña y cultivo) el chip de usuario muestra solo el avatar */
   .gn-topbar:has(.gn-topbar__context > :not([hidden])) .gn-user-chip__who { display: none; }
   .gn-topbar:has(.gn-topbar__context > :not([hidden])) .gn-topbar__context { flex-shrink: 0; }
-  .gn-theme-switch__btn { padding: 0 8px; }
-  .gn-theme-switch__btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gn-topbar .gn-theme-switch__btn { padding: 0 8px; }
+  .gn-topbar .gn-theme-switch__btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 
 /* =====================================================================
@@ -423,9 +434,66 @@
 .gn-theme-switch__btn[aria-checked="true"] { background: var(--gn-elevated); color: var(--gn-text); box-shadow: 0 0 0 1px var(--gn-border-strong), 0 1px 2px rgba(0, 0, 0, .12); }
 .gn-theme-switch__btn:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 1px; }
 @media (max-width: 600px) {
-  .gn-theme-switch__btn { padding: 0 8px; }
-  .gn-theme-switch__btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gn-topbar .gn-theme-switch__btn { padding: 0 8px; }
+  .gn-topbar .gn-theme-switch__btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
+
+/* =====================================================================
+   Preferencias de interfaz ({% gn_prefs %})
+   Solapa flotante en el borde izquierdo y panel compacto con los mismos
+   selectores de tema y de menú. Ambos son position: fixed: se superponen al
+   contenido sin moverlo ni cambiar su ancho.
+   ===================================================================== */
+.gn-prefs {
+  --gn-prefs-left: 0px;                 /* borde donde se apoya la solapa */
+  --gn-prefs-top: 50%;
+  --gn-prefs-tab-w: 30px;
+  --gn-prefs-tab-h: 44px;
+}
+.gn-prefs__tab {
+  position: fixed; z-index: 30; left: var(--gn-prefs-left); top: var(--gn-prefs-top); transform: translateY(-50%);
+  display: flex; align-items: center; justify-content: center; width: var(--gn-prefs-tab-w); height: var(--gn-prefs-tab-h);
+  padding: 0 0 0 2px; cursor: pointer; color: var(--gn-text-2);
+  background: var(--gn-elevated); border: 1px solid var(--gn-border-strong); border-left: 0;
+  border-radius: 0 var(--gn-radius-sm) var(--gn-radius-sm) 0; box-shadow: 0 2px 10px rgba(0, 0, 0, .10);
+  transition: color .15s, width .15s, background-color .15s, left .2s ease;   /* acompaña al sidebar al contraerse */
+}
+.gn-prefs__tab .gn-icon { width: 17px; height: 17px; }
+.gn-prefs__tab:hover, .gn-prefs__tab[aria-expanded="true"] { color: var(--gn-brand-ink); width: calc(var(--gn-prefs-tab-w) + 4px); }
+.gn-prefs__tab:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
+.gn-prefs__panel {
+  position: fixed; z-index: 60; left: calc(var(--gn-prefs-left) + var(--gn-prefs-tab-w) + 10px); top: var(--gn-prefs-top); transform: translateY(-50%);
+  width: min(288px, calc(100vw - var(--gn-prefs-left) - var(--gn-prefs-tab-w) - 26px)); padding: 12px 14px 14px;
+  background: var(--gn-elevated); color: var(--gn-text); border: 1px solid var(--gn-border);
+  border-radius: var(--gn-radius); box-shadow: var(--gn-shadow-lg);
+}
+.gn-prefs__panel[hidden] { display: none; }
+.gn-prefs__panel:focus { outline: none; }
+.gn-prefs__panel { transition: left .2s ease; }
+.gn-prefs__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 -4px 8px 0; }
+.gn-prefs__title { margin: 0; font-family: var(--gn-font-display); font-size: 14px; font-weight: 700; }
+.gn-prefs__group { display: flex; flex-direction: column; gap: 6px; padding: 8px 0; }
+.gn-prefs__group + .gn-prefs__group { border-top: 1px solid var(--gn-border); }
+.gn-prefs__label { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--gn-text-muted); }
+.gn-prefs .gn-theme-switch { display: flex; }
+.gn-prefs .gn-theme-switch__btn { flex: 1; justify-content: center; height: 30px; }
+.gn-prefs__note { margin: 6px 0 0; font-size: 11.5px; color: var(--gn-text-muted); }
+@media (prefers-reduced-motion: reduce) { .gn-prefs__tab { transition: none; } }
+
+/* escritorio con menú vertical: la solapa se apoya en el borde del sidebar, no lo tapa */
+@media (min-width: 861px) {
+  :root:not([data-gn-nav="horizontal"]) .gn-prefs { --gn-prefs-left: var(--gn-sidebar-w); }
+  :root:not([data-gn-nav="horizontal"]):has(.gn-sidebar.is-collapsed:not([hidden])) .gn-prefs { --gn-prefs-left: var(--gn-sidebar-w-collapsed); }
+}
+/* celulares: el menú es el desplegable lateral. La solapa baja cerca del borde inferior
+   (alcance del pulgar), queda por debajo del menú abierto y del fondo oscuro, y el
+   selector de disposición no se muestra porque ahí no aplica */
+@media (max-width: 860px) {
+  .gn-prefs { --gn-prefs-top: calc(100% - 96px - env(safe-area-inset-bottom, 0px)); --gn-prefs-left: env(safe-area-inset-left, 0px); }
+  .gn-prefs__panel { top: auto; bottom: calc(96px + env(safe-area-inset-bottom, 0px) - var(--gn-prefs-tab-h) / 2); transform: none; }
+  .gn-prefs__group--nav { display: none; }
+}
+@media print { .gn-prefs { display: none; } }
 
 /* =====================================================================
    Encabezado de página y breadcrumbs

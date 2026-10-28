@@ -4,7 +4,7 @@ Sistema de diseño y biblioteca de componentes compartida para los productos Dja
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.2.0.** Catálogo aprobado visualmente (tema, navegación, iconografía y contenido por producto). Todavía no está integrado en ningún producto.
+> Estado: **v0.2.1.** Catálogo aprobado visualmente (tema, navegación, iconografía y contenido por producto). Todavía no está integrado en ningún producto.
 
 ## Qué incluye
 
@@ -33,7 +33,7 @@ El repositorio principal es **GitHub**: https://github.com/sorensenclara/geneos-
 
 ```text
 # requirements.txt — usar un tag publicado después de aprobar el diseño
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.2.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.2.1
 ```
 
 ```python
@@ -102,8 +102,10 @@ Dos preferencias globales, independientes entre sí y del producto, con la misma
 | Tema | `data-gn-theme` | `light` · `dark` | `localStorage["gn-theme"]` | Claro |
 | Navegación | `data-gn-nav` | `vertical` · `horizontal` | `localStorage["gn-nav"]` | La del producto (`GENEOS_UI["NAV_LAYOUT"]`): GEMA horizontal; GELECTRIC y GEAGRO vertical |
 
+- Los dos selectores están en la solapa flotante de **Preferencias de interfaz** (`{% gn_prefs %}`), en el borde izquierdo de la pantalla. El layout base la incluye en `{% block prefs %}`; se cierra con la X, Esc o un clic afuera, y no desplaza el contenido. Con menú vertical se apoya en el borde del sidebar; en celulares baja cerca del borde inferior y muestra solo la apariencia.
 - Hay un solo menú (`NavItem`, permisos, íconos y buscador). La disposición horizontal reacomoda el mismo `<aside class="gn-sidebar">` como barra debajo del encabezado; los grupos con submenú se abren como desplegables.
 - En pantallas de hasta 860 px se usa siempre el menú lateral desplegable, sea cual sea la preferencia.
+- Menú horizontal: el mismo diseño en los cuatro productos (el de GEMA): barra blanca —oscura en modo oscuro— flotando sobre una franja del color institucional (`--gn-hnav-band`, `--gn-hnav-band-h`; configurable o desactivable), con esquinas de 8 px, sombra suave y márgenes de 24 px. Cada tema define solo sus colores: la franja sale de `--gn-c-sidebar` y los indicadores del activo de `--gn-hnav-accent`. Íconos: GEMA usa sus SVG normal y `-active`; GELECTRIC, sus íconos de color de los módulos; GEAGRO, su SVG blanco original como máscara pintada con `--gn-hnav-icon-tint`.
 - API: `GN.setTheme()`, `GN.getTheme()`, `GN.setNav()`, `GN.getNav()` y los eventos `gn:theme` y `gn:nav`. Un producto que quiera guardar la preferencia por usuario en su base de datos puede escuchar `gn:nav` y guardarla con su propia vista.
 
 ## Template tags
@@ -115,6 +117,7 @@ Dos preferencias globales, independientes entre sí y del producto, con la misma
 {% gn_theme_switch %}                      {# selector Claro / Oscuro; guarda la elección en localStorage #}
 {% gn_nav_boot %}                          {# en el <head>: aplica la disposición del menú guardada; sin preferencia, la del producto #}
 {% gn_nav_switch %}                        {# selector Horizontal / Vertical (solo escritorio) #}
+{% gn_prefs %}                             {# solapa flotante con los dos selectores (ya incluida en layouts/app.html) #}
 {% gn_icon "i-download" %}                     {# acción común del sprite #}
 {% gn_product_icon "gema:clientes" "base" %}  {# ícono original: white, base, active, tile… #}
 {% gn_badge "Vencido" "critical" True %}

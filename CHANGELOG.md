@@ -2,6 +2,23 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.2.1] · 2026-10-28
+
+### Cambiado · menú horizontal unificado
+- Los cuatro productos usan la estructura del menú superior de GEMA: barra blanca en modo claro y oscura en modo oscuro, flotando sobre una franja del color institucional (GEMA azul, GELECTRIC verde, GEAGRO Cereales verde oscuro, GEAGRO Vid violeta). Esquinas de 8 px, sombra suave, márgenes laterales de 24 px, alto de 76 px, ícono arriba y texto en una línea (con «…» y tooltip si no entra).
+- Todo se define en los tokens compartidos (`tokens.css`); los temas aportan solo sus colores. La franja es configurable (`--gn-hnav-band`, `--gn-hnav-band-h`) y los indicadores del activo usan `--gn-hnav-accent` (por defecto el color de marca en claro y el de acento en oscuro). GEMA no necesita tokens propios.
+- GEAGRO Cereales: en modo claro la línea del activo usa el dorado oscuro de la marca (5,1:1 sobre blanco); el amarillo #c6a400 daba 2,4:1. En modo oscuro sigue el amarillo #f3c600.
+- Íconos sobre fondo claro, siempre originales: GEMA con sus SVG normal y `-active`; GELECTRIC con sus íconos de color de los módulos (`product_icons.HNAV_VARIANTS`); GEAGRO, que solo tiene completos los SVG blancos, con ese mismo archivo como máscara pintada con `--gn-hnav-icon-tint` / `--gn-hnav-icon-tint-active` (`product_icons.HNAV_TINT`).
+- Contraste medido: texto activo ≥ 5,1:1 y línea del activo ≥ 3,1:1 en los ocho casos (cuatro productos, claro y oscuro).
+- `tools/build_catalog.py` incrusta también los íconos usados como máscara.
+
+### Agregado · preferencias de interfaz
+- Solapa flotante en el borde izquierdo (`{% gn_prefs %}`, incluida en `layouts/app.html` en `{% block prefs %}`) que abre un panel compacto con **Apariencia** (Claro / Oscuro) y **Navegación en escritorio** (Horizontal / Vertical). Reutiliza `{% gn_theme_switch %}` y `{% gn_nav_switch %}` con su misma lógica y persistencia; los cambios se aplican sin recargar.
+- Se cierra con la X, Esc o un clic afuera; el foco vuelve a la solapa. Es `position: fixed`: no desplaza el contenido ni cambia su ancho. API: `GN.prefs.open()` / `GN.prefs.close()`.
+- Con menú vertical la solapa se apoya en el borde del sidebar (expandido o contraído) y nunca lo tapa. En celulares baja cerca del borde inferior, queda debajo del menú lateral abierto y muestra solo la apariencia.
+- Los selectores de tema y navegación salen del encabezado del catálogo.
+- El ícono `i-gear` se redibujó como engranaje con dientes: el anterior se confundía con `i-sun`.
+
 ## [0.2.0] · 2026-10-28
 
 ### Navegación horizontal: ajustes finales

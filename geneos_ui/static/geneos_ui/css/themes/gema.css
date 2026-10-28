@@ -30,31 +30,9 @@
     --gn-chart-3: #1F87B0;
     --gn-chart-4: #c62828;
 
-    /* Navegación horizontal: el menú superior actual de GEMA (core/static/core/theme.css):
-       barra blanca flotante con sombra sobre la franja azul, texto #495057, ícono arriba del
-       texto y línea naranja de 3 px bajo el ítem activo. El texto activo usa el naranja
-       legible #b0530a (decisión del 26/10/2026); la línea, el naranja de marca. */
-    --gn-hnav-bg: var(--gn-elevated);
-    --gn-hnav-text: #495057;
-    --gn-hnav-text-hover: var(--gn-brand-ink);
-    --gn-hnav-active-text: var(--gn-brand-ink);
-    --gn-hnav-active-line: var(--gn-c-brand);
-    --gn-hnav-active-bg: transparent;
-    --gn-hnav-active-weight: 400;
-    --gn-hnav-hover-bg: transparent;
-    --gn-hnav-hover-line: var(--gn-c-brand);   /* GEMA: la línea naranja también en hover */
-    --gn-hnav-band: var(--gn-c-sidebar);
-    --gn-hnav-band-h: 40px;
-    --gn-hnav-overlap: 20px;
-    --gn-hnav-inset: 24px;
-    --gn-hnav-radius: 8px;
-    --gn-hnav-shadow: 0 -3px 31px 0 rgba(0, 0, 0, .05), 0 6px 20px 0 rgba(0, 0, 0, .02);
-    --gn-hnav-font-size: 15px;
-    --gn-hnav-icon-size: 22px;
-  }
-  [data-gn-theme="dark"][data-gn-product="gema"],
-  [data-gn-theme="dark"] [data-gn-product="gema"] {
-    --gn-hnav-text: var(--gn-text-2);
-    --gn-hnav-shadow: 0 6px 24px rgba(0, 0, 0, .45);
+    /* Navegación horizontal: usa tal cual el diseño compartido de tokens.css (que sale de
+       este menú): franja azul, barra blanca, línea naranja de marca y texto activo en el
+       naranja legible #b0530a (decisión del 26/10/2026). Íconos: variantes originales
+       normal y "-active" (product_icons.HNAV_VARIANTS). No necesita tokens propios. */
   }
 }

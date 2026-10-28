@@ -3,6 +3,7 @@
     {% load geneos_ui %}
     {% gn_css %} {% gn_js %}                      recursos de la librería
     {% gn_theme_boot %} {% gn_theme_switch %}     modo claro/oscuro (claro por defecto)
+    {% gn_prefs %}                                solapa flotante de preferencias (tema y menú)
     {% gn_icon "i-users" %}                       ícono del sprite
     {% gn_badge "Vencido" "critical" %}           badge de estado
     {% gn_sidebar %}                              sidebar con el menú del producto
@@ -75,6 +76,16 @@ def gn_nav_switch():
     return {}
 
 
+@register.inclusion_tag("geneos_ui/components/prefs.html")
+def gn_prefs():
+    """Solapa flotante con las preferencias de interfaz (modo de color y disposición del menú).
+
+    Reúne {% gn_theme_switch %} y {% gn_nav_switch %}, que siguen funcionando igual
+    (mismo JS, mismo localStorage). El layout base la incluye en {% block prefs %}.
+    """
+    return {}
+
+
 @register.inclusion_tag("geneos_ui/components/theme_switch.html")
 def gn_theme_switch():
     return {}
@@ -97,7 +108,11 @@ def gn_nav_icon(entry):
     """Ícono de un ítem del sidebar: original del producto, pendiente o del sprite."""
     if entry.get("icon_static"):
         html = format_html('<img class="gn-nav__icon-img" src="{}" alt="">', static(entry["icon_static"]))
-        # navegación horizontal sobre barra clara (GEMA): las variantes originales normal y activa
+        # navegación horizontal (barra clara): variantes originales normal y activa (GEMA, GELECTRIC)
+        # o, si el producto solo tiene el SVG blanco (GEAGRO), ese mismo archivo como máscara
+        if entry.get("icon_h_tint"):
+            html += format_html('<span class="gn-nav__icon-tint" style="--gn-icon-src: url(&quot;{}&quot;)" aria-hidden="true"></span>',
+                                static(entry["icon_static"]))
         if entry.get("icon_h"):
             html += format_html('<img class="gn-nav__icon-h" src="{}" alt="">', static(entry["icon_h"]))
         if entry.get("icon_h_active"):

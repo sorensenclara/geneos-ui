@@ -50,9 +50,25 @@ def test_un_solo_menu_con_iconos_para_las_dos_disposiciones():
     assert clientes["icon_h_active"].endswith("iconos/clientes-active.svg")
     html = Template("{% load geneos_ui %}{% gn_nav_icon e %}").render(Context({"e": clientes}))
     assert html.count("<img") == 3
-    # los productos sin variantes para barra clara usan solo los íconos blancos
-    gel = build_nav(next(p for p in PRODUCTS if p["key"] == "gelectric")["nav"](None), None)
-    assert all(not e.get("icon_h") for e in gel if e["type"] != "section")
+
+def _nav(key):
+    return build_nav(next(p for p in PRODUCTS if p["key"] == key)["nav"](None), None)
+
+
+def test_gelectric_usa_sus_iconos_de_color_en_la_barra_clara():
+    gel = [e for e in _nav("gelectric") if e.get("icon_static")]
+    assert gel and all(e["icon_h"] and "/icon - " in e["icon_h"] for e in gel)
+    assert all(not e["icon_h_active"] and not e["icon_h_tint"] for e in gel)
+
+
+def test_geagro_pinta_su_svg_blanco_original_con_los_tokens():
+    for key in ("geagro-cereales", "geagro-vid"):
+        items = [e for e in _nav(key) if e.get("icon_static")]
+        assert items and all(e["icon_h_tint"] and not e["icon_h"] for e in items)
+        html = Template("{% load geneos_ui %}{% gn_nav_icon e %}").render(Context({"e": items[0]}))
+        assert 'class="gn-nav__icon-tint"' in html and items[0]["icon_static"].split("/")[-1] in html
+        # los pendientes siguen con el marcador neutro, sin máscara
+        assert all(not e["icon_h_tint"] for e in _nav(key) if e.get("icon_pending"))
 
 
 @override_settings(DEBUG=True)
@@ -77,5 +93,32 @@ def test_tokens_de_activo_por_producto():
     css = Path(__file__).resolve().parent.parent / "geneos_ui" / "static" / "geneos_ui" / "css"
     tokens = (css / "tokens.css").read_text()
     gema = (css / "themes" / "gema.css").read_text()
-    assert "--gn-hnav-active-bg: var(--gn-sidebar-active-bg)" in tokens
-    assert "--gn-hnav-active-bg: transparent" in gema and "--gn-hnav-active-weight: 400" in gema
+    # un solo diseño (el de GEMA) en los tokens compartidos: barra blanca sobre franja institucional
+    for decl in ("--gn-hnav-bg: var(--gn-elevated)", "--gn-hnav-band: var(--gn-c-sidebar)", "--gn-hnav-band-h: 40px",
+                 "--gn-hnav-radius: 8px", "--gn-hnav-inset: 24px", "--gn-hnav-active-bg: transparent",
+                 "--gn-hnav-active-line: var(--gn-hnav-accent)"):
+        assert decl in tokens
+    # los temas no redefinen la estructura ni el fondo de la barra
+    for f in (css / "themes").glob("*.css"):
+        t = f.read_text()
+        for prop in ("--gn-hnav-bg:", "--gn-hnav-radius:", "--gn-hnav-inset:", "--gn-hnav-height:", "--gn-hnav-shadow:"):
+            assert prop not in t, (f.name, prop)
+    # GEMA es la referencia: no declara ningún token propio de la barra
+    import re
+    assert not re.search(r"--gn-hnav-[a-z-]+\s*:", gema)
+
+
+def test_panel_de_preferencias_reune_los_dos_selectores():
+    out = Template("{% load geneos_ui %}{% gn_prefs %}").render(Context())
+    assert 'data-gn-prefs-toggle' in out and 'aria-controls="gn-prefs-panel"' in out and 'aria-expanded="false"' in out
+    assert 'role="dialog"' in out and "data-gn-prefs-close" in out
+    assert out.count("data-gn-theme-switch") == 1 and out.count("data-gn-nav-switch") == 1
+    assert "Apariencia" in out and "Navegación en escritorio" in out
+
+
+@override_settings(DEBUG=True)
+def test_selectores_fuera_del_encabezado_y_en_la_solapa():
+    html = Client().get("/?static=1").content.decode()
+    topbar = html.split('<header class="gn-topbar">', 1)[1].split("</header>", 1)[0]
+    assert "data-gn-theme-switch" not in topbar and "data-gn-nav-switch" not in topbar
+    assert html.count("data-gn-prefs-toggle") == 1

@@ -67,6 +67,8 @@ def build(fragment=False):
 
     # imágenes como data URI
     html = re.sub(r'src="' + re.escape(static_url) + r'([^"]+)"', lambda m: f'src="{data_uri(m.group(1))}"', html)
+    # íconos pintados por máscara en la barra horizontal (style="--gn-icon-src: url(...)")
+    html = re.sub(r'url\(&quot;' + re.escape(static_url) + r'([^&]+)&quot;\)', lambda m: f'url(&quot;{data_uri(m.group(1))}&quot;)', html)
 
     # Claro por defecto: el modo lo decide solo la elección guardada del usuario
     # (no el modo del sistema operativo), así que no se agregan media queries.
