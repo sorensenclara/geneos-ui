@@ -178,6 +178,19 @@ def build_nav(entries, request) -> list[dict]:
             "has_active": child_active,
         })
 
+    # si varios ítems coinciden con la ruta (p. ej. un "Inicio" en /flota/ y "Vehículos" en
+    # /flota/vehiculos/), queda activo solo el de la ruta más larga
+    hits = [(e, None, e["href"]) for e in out if e.get("active") and e.get("href")]
+    hits += [(e, c, c["href"]) for e in out for c in e.get("children", []) if c.get("active")]
+    if len(hits) > 1:
+        best = max(hits, key=lambda h: len(h[2]))
+        for e, c, _ in hits:
+            if (e, c) != best[:2]:
+                (c if c is not None else e)["active"] = False
+        for e in out:
+            if e.get("children"):
+                e["has_active"] = any(c["active"] for c in e["children"])
+
     # títulos de sección que quedaron sin contenido debajo
     cleaned = []
     for i, e in enumerate(out):

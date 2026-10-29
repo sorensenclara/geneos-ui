@@ -61,3 +61,23 @@ def test_ids_unicos_y_indice_de_busqueda():
     assert out[0]["id"] != out[1]["id"]
     idx = search_index(out)
     assert {"label": "B", "parent": "Reportes", "href": "/b/", "keywords": ""} in idx
+
+
+def test_gana_la_ruta_mas_especifica():
+    from django.test import RequestFactory
+    from geneos_ui.navigation import NavItem, build_nav
+    nav = build_nav([NavItem("Inicio", url="/flota/"), NavItem("Vehículos", url="/flota/vehiculos/")],
+                    RequestFactory().get("/flota/vehiculos/12/"))
+    assert [e["active"] for e in nav] == [False, True]
+    nav = build_nav([NavItem("Inicio", url="/flota/"), NavItem("Vehículos", url="/flota/vehiculos/")],
+                    RequestFactory().get("/flota/"))
+    assert [e["active"] for e in nav] == [True, False]
+
+
+def test_gana_la_ruta_mas_especifica_tambien_en_submenus():
+    from django.test import RequestFactory
+    from geneos_ui.navigation import NavItem, build_nav
+    nav = build_nav([NavItem("Inicio", url="/flota/"),
+                     NavItem("Mantenimiento", children=[NavItem("Órdenes", url="/flota/ordenes/")])],
+                    RequestFactory().get("/flota/ordenes/"))
+    assert nav[0]["active"] is False and nav[1]["has_active"] is True
