@@ -846,19 +846,21 @@
 .gn-prefs {
   --gn-prefs-left: 0px;                 /* borde donde se apoya la solapa */
   --gn-prefs-top: 50%;
-  --gn-prefs-tab-w: 30px;
+  /* 22 px: entra en el margen de 24 px del contenido sin tapar ningún control (WCAG 2.5.8:
+     44 px de alto y sin otro control en 24 px a la redonda) */
+  --gn-prefs-tab-w: 22px;
   --gn-prefs-tab-h: 44px;
 }
 .gn-prefs__tab {
   position: fixed; z-index: 30; left: var(--gn-prefs-left); top: var(--gn-prefs-top); transform: translateY(-50%);
   display: flex; align-items: center; justify-content: center; width: var(--gn-prefs-tab-w); height: var(--gn-prefs-tab-h);
-  padding: 0 0 0 2px; cursor: pointer; color: var(--gn-text-2);
+  padding: 0; cursor: pointer; color: var(--gn-text-2);
   background: var(--gn-elevated); border: 1px solid var(--gn-border-strong); border-left: 0;
   border-radius: 0 var(--gn-radius-sm) var(--gn-radius-sm) 0; box-shadow: 0 2px 10px rgba(0, 0, 0, .10);
   transition: color .15s, width .15s, background-color .15s, left .2s ease;   /* acompaña al sidebar al contraerse */
 }
-.gn-prefs__tab .gn-icon { width: 17px; height: 17px; }
-.gn-prefs__tab:hover, .gn-prefs__tab[aria-expanded="true"] { color: var(--gn-brand-ink); width: calc(var(--gn-prefs-tab-w) + 4px); }
+.gn-prefs__tab .gn-icon { width: 16px; height: 16px; }
+.gn-prefs__tab:hover, .gn-prefs__tab[aria-expanded="true"] { color: var(--gn-brand-ink); background: var(--gn-surface-2); }
 .gn-prefs__tab:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
 .gn-prefs__panel {
   position: fixed; z-index: 60; left: calc(var(--gn-prefs-left) + var(--gn-prefs-tab-w) + 10px); top: var(--gn-prefs-top); transform: translateY(-50%);
@@ -888,7 +890,13 @@
    (alcance del pulgar), queda por debajo del menú abierto y del fondo oscuro, y el
    selector de disposición no se muestra porque ahí no aplica */
 @media (max-width: 860px) {
-  .gn-prefs { --gn-prefs-top: calc(100% - 96px - env(safe-area-inset-bottom, 0px)); --gn-prefs-left: env(safe-area-inset-left, 0px); }
+  .gn-prefs { --gn-prefs-top: calc(100% - 96px - env(safe-area-inset-bottom, 0px)); --gn-prefs-left: env(safe-area-inset-left, 0px); --gn-prefs-tab-w: 30px; }
+  /* como todo botón flotante, el contenido pasa por debajo al desplazarse; este margen
+     final deja que lo último de la página siempre se pueda subir por encima de la solapa */
+  /* WCAG 2.4.11: el control con foco no queda tapado; al recorrer con Tab el navegador
+     lo deja por encima de la franja de la solapa */
+  html:has(body > .gn-prefs) { scroll-padding-bottom: calc(96px + var(--gn-prefs-tab-h) / 2 + 16px + env(safe-area-inset-bottom, 0px)); }
+  body:has(> .gn-prefs) .gn-content { padding-bottom: calc(96px + var(--gn-prefs-tab-h) / 2 + 16px + env(safe-area-inset-bottom, 0px)); }
   .gn-prefs__panel { top: auto; bottom: calc(96px + env(safe-area-inset-bottom, 0px) - var(--gn-prefs-tab-h) / 2); transform: none; }
   .gn-prefs__group--nav { display: none; }
 }

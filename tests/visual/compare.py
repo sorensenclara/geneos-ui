@@ -1,6 +1,9 @@
 """Compara dos carpetas de capturas.
 
-    python tests/visual/compare.py <referencia> <actual> [--max 0.001] [--diffs <carpeta>]
+    python tests/visual/compare.py <referencia> <actual> [--max 0.001] [--diffs <carpeta>] [--esperados <archivo>]
+
+--esperados: archivo con cambios buscados respecto de la referencia, una línea
+por captura: "<archivo.png> <máximo %> <motivo>". Cada uno se revisa a mano.
 
 Falla (código 1) si alguna captura difiere en más de --max (fracción de píxeles)
 o si falta. Guarda una imagen de diferencias por captura que no coincide.
@@ -27,7 +30,14 @@ def main(argv=None):
     ap.add_argument("cur")
     ap.add_argument("--max", type=float, default=0.001)
     ap.add_argument("--diffs")
+    ap.add_argument("--esperados")
     args = ap.parse_args(argv)
+    allowed = {}
+    if args.esperados and Path(args.esperados).exists():
+        for line in Path(args.esperados).read_text(encoding="utf-8").splitlines():
+            if line.strip() and not line.startswith("#"):
+                name, pct, *_ = line.split(maxsplit=2)
+                allowed[name] = float(pct) / 100
     bad = []
     for ref in sorted(Path(args.ref).glob("*.png")):
         cur = Path(args.cur) / ref.name
@@ -35,9 +45,10 @@ def main(argv=None):
             bad.append((ref.name, "falta"))
             continue
         r, diff = ratio(ref, cur)
-        status = "ok" if r <= args.max else "DIFIERE"
+        limit = allowed.get(ref.name, args.max)
+        status = "ok" if r <= args.max else "esperado" if r <= limit else "DIFIERE"
         print(f"{status:8} {r * 100:7.3f} %  {ref.name}")
-        if r > args.max:
+        if r > limit:
             bad.append((ref.name, f"{r * 100:.3f} %"))
             if args.diffs and diff:
                 Path(args.diffs).mkdir(parents=True, exist_ok=True)

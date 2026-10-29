@@ -1,0 +1,4 @@
+# Cambios visuales buscados respecto de la versión de referencia (VISUAL_REF en CI).
+# <captura> <máximo % de píxeles> <motivo>. Se vacía al cambiar la referencia.
+gelectric-preferencias.png 1.0 0.3.0: solapa de preferencias de 30 a 22 px para no tapar controles; el panel se corre 8 px
+gema-preferencias-oscuro.png 1.0 0.3.0: idem

@@ -75,7 +75,7 @@ jobs:
           python tests/visual/capture.py ../ref/dist/ui-kit.html shots/ref
           python tests/visual/capture.py dist/ui-kit.html shots/actual
           test ! -s shots/actual/errores.txt
-      - run: python tests/visual/compare.py shots/ref shots/actual --diffs shots/diferencias
+      - run: python tests/visual/compare.py shots/ref shots/actual --diffs shots/diferencias --esperados tests/visual/cambios-esperados.txt
       - run: python -m pytest -q tests/visual
       - if: failure()
         uses: actions/upload-artifact@v4

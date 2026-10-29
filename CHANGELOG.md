@@ -23,6 +23,7 @@ Un producto nuevo se incorpora desde su propio `settings.py`, sin cambiar la bib
 - Los tripletes `--bs-*-rgb` del puente Bootstrap ya no están en `bridges/bootstrap5.css`: los escribe `gn_css` desde `BOOTSTRAP_RGB` (mismos valores), con `:root[data-gn-product]` para ganarle a Bootstrap en cualquier orden. HTML: un `<style>` después del puente.
 - La migración de la clave vieja del sidebar de GELECTRIC pasó del JS a la configuración. HTML: atributo `data-gn-legacy-key` en el sidebar de GELECTRIC.
 - Menú: si varias rutas coinciden, queda activa la más específica. No cambia nada en los cuatro productos, cuyo inicio es `/`.
+- Solapa de preferencias: 22 px de ancho en escritorio (antes 30) para entrar en el margen de 24 px del contenido sin tapar ningún control; 44 px de alto (WCAG 2.5.8). En el celular sigue de 30 px; el contenido deja lugar al final de la página y el foco del teclado no queda debajo de la solapa (WCAG 2.4.11). Únicas capturas distintas de la 0.2.1: las dos con el panel abierto, que se corre 8 px.
 
 ### Deprecado
 - `geneos_ui.conf.PRODUCTS`, `SIDEBAR_DEFAULTS`, `NAV_LAYOUT_DEFAULTS` y `geneos_ui.product_icons.HNAV_VARIANTS`, `HNAV_TINT`. Siguen funcionando con aviso; se quitan en la 0.4.0.
