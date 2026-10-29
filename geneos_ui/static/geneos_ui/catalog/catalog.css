@@ -165,3 +165,12 @@
 .kit-pending { margin-top: 16px; }
 .kit-pending ul { margin: 4px 0 0; padding-left: 18px; }
 .kit-topbar-brand { display: contents; }
+
+/* Marcas: qué es componente de la biblioteca y qué es HTML de referencia o ejemplo */
+.kit-kind { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-left: 6px; padding: 2px 8px; border-radius: var(--gn-radius-pill);
+  font-size: 11.5px; font-weight: 600; line-height: 1.5; vertical-align: middle; border: 1px solid; }
+.kit-kind code { font-size: 11px; padding: 0 4px; background: none; }
+.kit-kind--component { color: var(--gn-good-ink); border-color: var(--gn-good); background: var(--gn-good-soft); }
+.kit-kind--reference { color: var(--gn-warning-ink); border-color: var(--gn-warning); background: var(--gn-warning-soft); }
+.kit-kind--example { color: var(--gn-text-2); border-color: var(--gn-border-strong); background: var(--gn-surface-2); }
+.kit-kind--legend { display: block; margin: 10px 0 0; padding: 0; border: 0; background: none; font-weight: 400; font-size: 12.5px; color: var(--gn-text-2); }

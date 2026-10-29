@@ -79,7 +79,7 @@
   <div class="gn-page-head__text">
     <span class="gn-eyebrow">Sistema de diseño compartido · en revisión visual</span>
     <h1>GENEOS UI Kit</h1>
-    <p>Componentes, variantes y estados de la biblioteca <code>geneos-ui</code> con la estructura de GELECTRIC y la identidad de cada producto. Elegí un producto para ver su tema aplicado a toda la página.</p>
+    <p>Componentes, variantes y estados de la biblioteca <code>geneos-ui</code> con la estructura de GELECTRIC y la identidad de cada producto. Elegí un producto para ver su tema aplicado a toda la página.</p><span class="kit-kind kit-kind--legend"><b>Componente</b>: se usa con un tag o template de la biblioteca y recibe sus mejoras al actualizar la versión. <b>HTML de referencia</b>: el estilo y el comportamiento son compartidos, pero el HTML se copia en cada pantalla. <b>Ejemplo</b>: contenido de demostración.</span>
   </div>
   <div class="gn-page-head__actions">
     <div class="kit-switcher" role="radiogroup" aria-label="Producto">
@@ -101,7 +101,7 @@
 {# ================================================================ IDENTIDAD #}
 <section class="kit-section" id="identidad" aria-labelledby="h-identidad">
   <header class="kit-section__head">
-    <h2 id="h-identidad">Identidad del producto</h2>
+    <h2 id="h-identidad">Identidad del producto<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>THEME_CSS</code> <code>gn_css</code></span></h2>
     <p>Cada producto declara solo sus colores reales; el resto de la paleta (tintes, hover, foco, estados) se deriva de ellos. Los logotipos son los originales de cada repositorio.</p>
   </header>
   {% for p in products %}
@@ -149,7 +149,7 @@
 {# ============================================================== FUNDAMENTOS #}
 <section class="kit-section" id="fundamentos" aria-labelledby="h-fund">
   <header class="kit-section__head">
-    <h2 id="h-fund">Tipografía y espaciado</h2>
+    <h2 id="h-fund">Tipografía y espaciado<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>--gn-*</code></span></h2>
     <p>Titillium Web en los cuatro productos (ya es la fuente de GELECTRIC, GEMA y GEAGRO). Escala de 4 px para espacios y los radios de GELECTRIC.</p>
   </header>
   <div class="kit-grid-2">
@@ -192,7 +192,7 @@
 {# =============================================================== ICONOGRAFÍA #}
 <section class="kit-section" id="iconografia" aria-labelledby="h-icon">
   <header class="kit-section__head">
-    <h2 id="h-icon">Iconografía por producto</h2>
+    <h2 id="h-icon">Iconografía por producto<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_product_icon</code> <code>NavItem(icon=…)</code></span></h2>
     <p>Los íconos propios de cada producto, copiados sin cambios desde sus ramas de trabajo y con su nombre original. <b>Activos</b>: los usa hoy el producto o la navegación de GENEOS UI. <b>Disponibles</b>: originales sin uso actual. <b>Pendientes</b>: el producto necesita un ícono que todavía no existe; no se reemplaza por uno genérico.</p>
   </header>
   {% with inv=icon_inventory %}
@@ -268,7 +268,7 @@
 {# ======================================================= ÍCONOS DE ACCIONES #}
 <section class="kit-section" id="acciones-comunes" aria-labelledby="h-acc">
   <header class="kit-section__head">
-    <h2 id="h-acc">Íconos de acciones comunes</h2>
+    <h2 id="h-acc">Íconos de acciones comunes<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_icon</code></span></h2>
     <p>Sprite SVG de trazo para acciones de interfaz: buscar, editar, eliminar, descargar, ordenar, filtrar, cerrar, expandir, información, ayuda y navegación secundaria. No representan módulos: para eso están los íconos originales de cada producto.</p>
   </header>
   <div class="kit-grid-2">
@@ -288,7 +288,7 @@
 {# =============================================================== NAVEGACIÓN #}
 <section class="kit-section" id="navegacion" aria-labelledby="h-nav">
   <header class="kit-section__head">
-    <h2 id="h-nav">Sidebar, encabezado y navegación</h2>
+    <h2 id="h-nav">Sidebar, encabezado y navegación<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>layouts/app.html</code> <code>gn_sidebar</code> <code>gn_prefs</code></span></h2>
     <p>El sidebar de esta página es el componente real, con el menú y los íconos de cada producto. Probá buscar <kbd>facturacion</kbd> en GELECTRIC, <kbd>vencimientos</kbd> en GEMA o <kbd>fenologia</kbd> en GEAGRO Vid (sin tilde), contraerlo con el botón de menú o recorrerlo con <kbd>Tab</kbd> y las flechas.</p>
   </header>
   <div class="kit-grid-2">
@@ -310,11 +310,11 @@
     {% for p in products %}{% with k=p.key ex=p.ex %}
     <div class="kit-stack" data-kit-product="{{ k }}"{% if k != active.key %} hidden{% endif %}>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Breadcrumbs</h3>
+        <h3 class="kit-h3">Breadcrumbs<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_breadcrumbs</code></span></h3>
         <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol>{% for c in ex.breadcrumbs %}{% if forloop.last %}<li><span aria-current="page">{{ c }}</span></li>{% else %}<li><a href="#navegacion">{{ c }}</a></li>{% endif %}{% endfor %}</ol></nav>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Pestañas</h3>
+        <h3 class="kit-h3">Pestañas<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-tabs</code></span></h3>
         <div class="gn-tabs" role="tablist" aria-label="{{ ex.tabs.label }}">
           <button class="gn-tabs__tab" role="tab" id="{{ k }}-t0" aria-controls="{{ k }}-tp0" aria-selected="true">Datos</button>
           {% for title, count, text in ex.tabs.items %}<button class="gn-tabs__tab" role="tab" id="{{ k }}-t{{ forloop.counter }}" aria-controls="{{ k }}-tp{{ forloop.counter }}" aria-selected="false">{{ title }}{% if count %}<span class="gn-tabs__count">{{ count }}</span>{% endif %}</button>{% endfor %}
@@ -325,7 +325,7 @@
         {% for title, count, text in ex.tabs.items %}<div class="gn-tab-panel" role="tabpanel" id="{{ k }}-tp{{ forloop.counter }}" aria-labelledby="{{ k }}-t{{ forloop.counter }}" tabindex="0" hidden><p class="kit-muted">{{ text }}</p></div>{% endfor %}
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Menú desplegable</h3>
+        <h3 class="kit-h3">Menú desplegable<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>data-gn-dropdown</code></span></h3>
         <div class="gn-btn-group">
           <div class="gn-dropdown">
             <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="{{ k }}-export">{% gn_icon "i-download" %}Exportar{% gn_icon "i-chevdown" %}</button>
@@ -343,7 +343,7 @@
 
   {% for p in products %}{% if p.backoffice %}
   <div class="gn-card kit-interfaces" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}><div class="gn-card__body">
-    <h3 class="kit-h3">{{ p.name }}: portal del productor y backoffice</h3>
+    <h3 class="kit-h3">{{ p.name }}: portal del productor y backoffice<span class="kit-kind kit-kind--example" title="Contenido de demostración del catálogo, no es parte de la biblioteca">Ejemplo · menús reales de GEAGRO</span></h3>
     <p class="kit-muted">Son dos interfaces distintas, con menú e íconos propios. El sidebar de esta página es el del <b>portal del productor</b> (<code>templates/partials/sidebar.html</code>). El <b>backoffice</b> es el administrador Jazzmin: no se modifica y se muestra solo como referencia, con los íconos de <code>static/img/icons/</code> que le asigna <code>jazzmin_custom.css</code>.</p>
     <div class="kit-interfaces__cols">
       <div class="kit-interfaces__col">
@@ -370,7 +370,7 @@
 {# ================================================================ BOTONES #}
 <section class="kit-section" id="acciones" aria-labelledby="h-btn">
   <header class="kit-section__head">
-    <h2 id="h-btn">Botones</h2>
+    <h2 id="h-btn">Botones<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-btn</code></span></h2>
     <p>Button System de GELECTRIC: una clase base <code>gn-btn</code> más una variante. Primario, secundario y terciario siguen el color de marca; peligro, éxito, advertencia e información usan los colores de estado.</p>
   </header>
   {% for p in products %}{% with b=p.ex.buttons %}
@@ -433,7 +433,7 @@
 {# ============================================================ FORMULARIOS #}
 <section class="kit-section" id="formularios" aria-labelledby="h-form">
   <header class="kit-section__head">
-    <h2 id="h-form">Formularios, buscadores y filtros</h2>
+    <h2 id="h-form">Formularios, buscadores y filtros<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-field</code> <code>gn-filters</code></span></h2>
     <p>Campos con etiqueta visible, ayuda y error vinculados con <code>aria-describedby</code>. Los filtros se arman sin enviar el formulario hasta presionar Filtrar, como en GELECTRIC.</p>
   </header>
   {% for p in products %}
@@ -464,7 +464,7 @@
 {# ================================================================== DATOS #}
 <section class="kit-section" id="datos" aria-labelledby="h-datos">
   <header class="kit-section__head">
-    <h2 id="h-datos">Tablas y listados</h2>
+    <h2 id="h-datos">Tablas y listados<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_sort_th</code> <code>gn_cell</code> <code>gn_pagination</code></span><span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · tarjeta, barra y acciones</span></h2>
     <p>Encabezado ordenable con <code>aria-sort</code>, números alineados a la derecha y acciones por fila. En pantallas angostas cada fila se convierte en una tarjeta que se abre como acordeón, sin scroll horizontal.</p>
   </header>
   {% for p in products %}
@@ -540,7 +540,7 @@
 {# =============================================================== DASHBOARD #}
 <section class="kit-section" id="dashboard" aria-labelledby="h-dash">
   <header class="kit-section__head">
-    <h2 id="h-dash">Tarjetas, indicadores y gráficos</h2>
+    <h2 id="h-dash">Tarjetas, indicadores y gráficos<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-card</code> <code>gn-kpi</code> <code>data-gn-chart</code></span></h2>
     <p>Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.</p>
   </header>
   {% for p in products %}
@@ -588,7 +588,7 @@
 {# ================================================================ ESTADOS #}
 <section class="kit-section" id="estados" aria-labelledby="h-est">
   <header class="kit-section__head">
-    <h2 id="h-est">Estados e interacción</h2>
+    <h2 id="h-est">Estados e interacción<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_badge</code> <code>gn_messages_json</code></span><span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · alertas, modales, acordeones</span></h2>
     <p>Badges, alertas, notificaciones, modales, tooltips, acordeones, menús de acciones y pasos. Los colores de estado son independientes de la marca.</p>
   </header>
   {% for p in products %}{% with ex=p.ex k=p.key %}
@@ -656,7 +656,7 @@
 {# ============================================================= COMPARACIÓN #}
 <section class="kit-section" id="comparacion" aria-labelledby="h-comp">
   <header class="kit-section__head">
-    <h2 id="h-comp">Mismos componentes, cuatro sistemas</h2>
+    <h2 id="h-comp">Mismos componentes, cuatro sistemas<span class="kit-kind kit-kind--example" title="Contenido de demostración del catálogo, no es parte de la biblioteca">Ejemplo · contenido de cada producto</span></h2>
     <p>Los cuatro productos comparten los componentes y el atributo <code>data-gn-product</code> aplica su identidad. El contenido y los íconos son los de cada sistema.</p>
   </header>
   <div class="kit-compare">
