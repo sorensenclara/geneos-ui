@@ -1,12 +1,83 @@
 name: Tests
 on: [push, pull_request]
+
 jobs:
   pytest:
+    name: Python ${{ matrix.python }} · Django 5.2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[test]" "Django>=5.2,<5.3"
+      - run: python -m pytest -q
+
+  django-next:
+    name: Django 6.1 (informativo)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --no-deps -e . && python -m pip install "Django>=6.1,<6.2" pytest pytest-django
+      - run: python -m pytest -q
+
+  paquete:
+    name: Instalación limpia del paquete
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - run: python -m pip install -e ".[test]"
-      - run: python -m pytest -q
+          python-version: '3.12'
+      - run: python -m pip install build && python -m build --wheel
+      - name: Instalar el wheel en un entorno vacío y comprobar estáticos y templates
+        run: |
+          python -m venv /tmp/venv
+          /tmp/venv/bin/pip install dist/*.whl
+          cd /tmp && /tmp/venv/bin/python - <<'PY'
+          import importlib.resources as r
+          base = r.files("geneos_ui")
+          for f in ("static/geneos_ui/css/tokens.css", "static/geneos_ui/js/geneos-ui.js",
+                    "templates/geneos_ui/layouts/app.html", "templates/geneos_ui/components/prefs.html",
+                    "product_icons.json"):
+              assert (base / f).is_file(), f
+          print("ok")
+          PY
+
+  visual:
+    name: Capturas comparadas con la versión de referencia
+    runs-on: ubuntu-latest
+    env:
+      VISUAL_REF: v0.2.1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e ".[test]" pillow playwright && python -m playwright install --with-deps chromium
+      - name: Catálogo actual y catálogo de referencia
+        run: |
+          python tools/build_catalog.py
+          git worktree add ../ref "$VISUAL_REF"
+          (cd ../ref && python tools/build_catalog.py)
+      - name: Capturas
+        run: |
+          python tests/visual/capture.py ../ref/dist/ui-kit.html shots/ref
+          python tests/visual/capture.py dist/ui-kit.html shots/actual
+          test ! -s shots/actual/errores.txt
+      - run: python tests/visual/compare.py shots/ref shots/actual --diffs shots/diferencias
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas
+          path: shots

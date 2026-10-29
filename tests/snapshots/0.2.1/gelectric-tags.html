@@ -1,0 +1,75 @@
+<script>(function(){var t='light';try{if(localStorage.getItem('gn-theme')==='dark')t='dark';}catch(e){}document.documentElement.setAttribute('data-gn-theme',t);})();</script><script>(function(){var d=document.documentElement,n=d.getAttribute('data-gn-nav-default')||'vertical';try{var s=localStorage.getItem('gn-nav');if(s==='vertical'||s==='horizontal')n=s;}catch(e){}d.setAttribute('data-gn-nav',n);})();</script><div class="gn-prefs" data-gn-prefs>
+  <button type="button" class="gn-prefs__tab" aria-expanded="false" aria-controls="gn-prefs-panel" aria-label="Preferencias de interfaz" data-gn-prefs-toggle><svg class="gn-icon " aria-hidden="true"><use href="#i-gear"/></svg></button>
+  <section class="gn-prefs__panel" id="gn-prefs-panel" role="dialog" aria-labelledby="gn-prefs-title" tabindex="-1" hidden>
+    <header class="gn-prefs__head">
+      <h2 class="gn-prefs__title" id="gn-prefs-title">Preferencias de interfaz</h2>
+      <button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" aria-label="Cerrar preferencias" data-gn-prefs-close><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button>
+    </header>
+    <div class="gn-prefs__group">
+      <span class="gn-prefs__label" aria-hidden="true">Apariencia</span>
+      <div class="gn-theme-switch" role="radiogroup" aria-label="Modo de color" data-gn-theme-switch>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-theme-value="light"><svg class="gn-icon " aria-hidden="true"><use href="#i-sun"/></svg><span>Claro</span></button>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-theme-value="dark"><svg class="gn-icon " aria-hidden="true"><use href="#i-moon"/></svg><span>Oscuro</span></button>
+</div>
+
+    </div>
+    <div class="gn-prefs__group gn-prefs__group--nav">
+      <span class="gn-prefs__label" aria-hidden="true">Navegación en escritorio</span>
+      <div class="gn-theme-switch gn-nav-switch" role="radiogroup" aria-label="Disposición del menú" data-gn-nav-switch>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-nav-value="horizontal"><svg class="gn-icon " aria-hidden="true"><use href="#i-layout-top"/></svg><span>Horizontal</span></button>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-nav-value="vertical"><svg class="gn-icon " aria-hidden="true"><use href="#i-layout-side"/></svg><span>Vertical</span></button>
+</div>
+
+    </div>
+    <p class="gn-prefs__note">Se guarda en este navegador.</p>
+  </section>
+</div>
+<div class="gn-theme-switch" role="radiogroup" aria-label="Modo de color" data-gn-theme-switch>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-theme-value="light"><svg class="gn-icon " aria-hidden="true"><use href="#i-sun"/></svg><span>Claro</span></button>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-theme-value="dark"><svg class="gn-icon " aria-hidden="true"><use href="#i-moon"/></svg><span>Oscuro</span></button>
+</div>
+<div class="gn-theme-switch gn-nav-switch" role="radiogroup" aria-label="Disposición del menú" data-gn-nav-switch>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-nav-value="horizontal"><svg class="gn-icon " aria-hidden="true"><use href="#i-layout-top"/></svg><span>Horizontal</span></button>
+  <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-nav-value="vertical"><svg class="gn-icon " aria-hidden="true"><use href="#i-layout-side"/></svg><span>Vertical</span></button>
+</div>
+
+<div class="gn-pagination">
+  <form method="get" class="gn-pagination__size">
+    <input type="hidden" name="q" value="abc">
+    <label for="gn-page-size">Mostrar</label>
+    <select id="gn-page-size" name="page_size" class="gn-select" onchange="this.form.submit()">
+      <option value="10">10</option><option value="25" selected>25</option><option value="50">50</option><option value="100">100</option>
+    </select>
+    <span>de 300 registros</span>
+    <noscript><button class="gn-btn gn-btn--ghost gn-btn--sm" type="submit">Aplicar</button></noscript>
+  </form>
+  
+  <nav aria-label="Paginación">
+    <ul class="gn-pagination__pages">
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=3" aria-label="Página anterior"><svg class="gn-icon gn-icon--sm" aria-hidden="true"><use href="#i-chevleft"/></svg></a></li>
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=1" aria-label="Página 1">1</a></li>
+      
+      <li class="gn-pagination__gap" aria-hidden="true">…</li>
+      
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=3" aria-label="Página 3">3</a></li>
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=4" aria-current="page" aria-label="Página 4, actual">4</a></li>
+      
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=5" aria-label="Página 5">5</a></li>
+      
+      <li class="gn-pagination__gap" aria-hidden="true">…</li>
+      
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=12" aria-label="Página 12">12</a></li>
+      
+      <li><a class="gn-pagination__link" href="?q=abc&amp;page=5" aria-label="Página siguiente"><svg class="gn-icon gn-icon--sm" aria-hidden="true"><use href="#i-chevright"/></svg></a></li>
+    </ul>
+  </nav>
+  
+</div>
+
+<th scope="col" class=""><a class="gn-table__sort" href="?q=abc&amp;o=nombre">Nombre<span class="gn-table__sort-icon" aria-hidden="true"></span></a></th><span class="gn-badge gn-badge--critical gn-badge--dot">Vencido</span><nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="/">Inicio</a></li><li><span aria-current="page">Clientes</span></li></ol></nav>
+<svg class="gn-icon " aria-hidden="true"><use href="#i-gear"/></svg><img class="gn-product-icon " src="/static/geneos_ui/icons/gema/activos/iconos/clientes-white.svg" alt=""><img class="gn-product-icon " src="/static/geneos_ui/icons/gema/activos/iconos/clientes.svg" alt=""><img class="gn-product-icon " src="/static/geneos_ui/icons/gelectric/activos/SVG/icon%20white%20-Asociados%20y%20Servicio.svg" alt=""><span class="gn-product-icon gn-product-icon--pending " title="Ícono pendiente de diseño"></span><img class="gn-product-icon " src="/static/geneos_ui/icons/geagro/activos/images/icon/dashboard.svg" alt=""><span class="gn-product-icon gn-product-icon--pending " title="Ícono pendiente de diseño"></span><img class="gn-product-icon " src="/static/geneos_ui/icons/geagro-cereales/activos/images/icon/campo.svg" alt=""><span class="gn-product-icon gn-product-icon--pending " title="Ícono pendiente de diseño"></span><span class="gn-product-icon gn-product-icon--pending " title="Ícono pendiente de diseño"></span><span class="gn-product-icon gn-product-icon--pending " title="Ícono pendiente de diseño"></span>
