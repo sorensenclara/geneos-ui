@@ -7,7 +7,7 @@
  * al CSS de Lexa, así que se carga DESPUÉS de bootstrap.min.css y app.min.css.
  *
  * Bootstrap usa también --bs-*-rgb (tripletes "r, g, b") que CSS no puede
- * calcular desde un hex, por eso van por producto.
+ * calcular desde un hex: cada tema los declara (o GENEOS_UI["BOOTSTRAP_RGB"]).
  */
 :root {
   --bs-primary: var(--gn-brand);
@@ -20,10 +20,6 @@
   --bs-border-radius: var(--gn-radius-sm);
   --bs-body-font-family: var(--gn-font);
 }
-[data-gn-product="gema"] { --bs-primary-rgb: 236, 108, 5; --bs-danger-rgb: 198, 40, 40; --bs-success-rgb: 23, 166, 114; }
-[data-gn-product="geagro-cereales"] { --bs-primary-rgb: 198, 164, 0; --bs-success-rgb: 90, 153, 76; --bs-danger-rgb: 207, 78, 78; --bs-info-rgb: 17, 130, 55; }
-[data-gn-product="geagro-vid"] { --bs-primary-rgb: 107, 63, 110; --bs-success-rgb: 90, 153, 76; --bs-danger-rgb: 207, 78, 78; --bs-info-rgb: 17, 130, 55; }
-[data-gn-product="gelectric"] { --bs-primary-rgb: 27, 107, 76; --bs-success-rgb: 23, 166, 114; --bs-danger-rgb: 229, 72, 77; }
 
 [data-gn-product] .btn-primary {
   --bs-btn-bg: var(--gn-brand);

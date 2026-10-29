@@ -20,7 +20,7 @@ from django.templatetags.static import static
 from django.utils.html import format_html, format_html_join
 from django.utils.safestring import mark_safe
 
-from .. import product_icons
+from .. import __version__, presets, product_icons
 from ..conf import get_config
 
 register = template.Library()
@@ -29,18 +29,61 @@ BADGE_KINDS = {"good", "warning", "critical", "info", "neutral", "brand", "solid
 MESSAGE_KINDS = {"debug": "info", "info": "info", "success": "good", "warning": "warning", "error": "critical"}
 
 
-@register.simple_tag
-def gn_css(product=None, bridges=None):
+def _asset(path, cfg):
+    url = static(path)
+    if cfg["STATIC_VERSION_QUERY"]:
+        url += ("&" if "?" in url else "?") + "v=" + __version__
+    return url
+
+
+def _nonce(context):
+    """Nonce de CSP del request (django-csp o el CSP de Django 6), si lo hay."""
+    if not context:
+        return ""
+    nonce = context.get("csp_nonce")
+    request = context.get("request")
+    if not nonce and request is not None:
+        nonce = getattr(request, "csp_nonce", None)
+    return str(nonce) if nonce else ""
+
+
+def _with_nonce(script, context):
+    nonce = _nonce(context)
+    if nonce:
+        script = script.replace("<script>", format_html('<script nonce="{}">', nonce), 1)
+    return mark_safe(script)
+
+
+def _nonce_attr(context):
+    nonce = _nonce(context)
+    return format_html(' nonce="{}"', nonce) if nonce else ""
+
+
+@register.simple_tag(takes_context=True)
+def gn_css(context, product=None, bridges=None):
+    """Fuente, tokens, tema del producto, componentes y puentes, en ese orden."""
     cfg = get_config()
-    product = product or cfg["PRODUCT"]
+    if product and product != cfg["PRODUCT"]:
+        themes = presets.preset(product).get("THEME_CSS") or [f"geneos_ui/css/themes/{product}.css"]
+    else:
+        product = cfg["PRODUCT"]
+        themes = cfg["THEME_CSS"]
     bridges = cfg["BRIDGES"] if bridges is None else [b for b in bridges.split(",") if b]
-    files = ["geneos_ui/css/tokens.css", f"geneos_ui/css/themes/{product}.css", "geneos_ui/css/geneos-ui.css"]
-    files += [f"geneos_ui/css/bridges/{b}.css" for b in bridges]
     links = []
-    if cfg["LOAD_FONTS"]:
-        links.append(('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap',))
-    links += [(static(f),) for f in files]
-    return format_html_join("\n", '<link rel="stylesheet" href="{}">', links)
+    font = cfg["FONT_CSS"]
+    if font:
+        links.append((font if font.startswith(("http://", "https://", "//")) else static(font),))
+    links.append((_asset("geneos_ui/css/tokens.css", cfg),))
+    links += [(static(t),) for t in themes]
+    links.append((_asset("geneos_ui/css/geneos-ui.css", cfg),))
+    links += [(_asset(f"geneos_ui/css/bridges/{b}.css", cfg),) for b in bridges]
+    html = format_html_join("\n", '<link rel="stylesheet" href="{}">', links)
+    rgb = cfg["BOOTSTRAP_RGB"] if product == cfg["PRODUCT"] else {}
+    if rgb and "bootstrap5" in bridges:
+        # fuera de la @layer y con :root[…] para ganarle a Bootstrap en cualquier orden
+        decls = format_html_join(" ", "--bs-{}-rgb: {};", sorted(rgb.items()))
+        html += format_html('\n<style{}>:root[data-gn-product="{}"] {{ {} }}</style>', _nonce_attr(context), product, decls)
+    return html
 
 
 THEME_BOOT = (
@@ -49,10 +92,10 @@ THEME_BOOT = (
 )
 
 
-@register.simple_tag
-def gn_theme_boot():
+@register.simple_tag(takes_context=True)
+def gn_theme_boot(context=None):
     """Aplica el modo guardado antes de pintar (va en el <head>). Sin preferencia: claro."""
-    return mark_safe(THEME_BOOT)
+    return _with_nonce(THEME_BOOT, context)
 
 
 NAV_BOOT = (
@@ -62,13 +105,13 @@ NAV_BOOT = (
 )
 
 
-@register.simple_tag
-def gn_nav_boot():
+@register.simple_tag(takes_context=True)
+def gn_nav_boot(context=None):
     """Aplica la disposición de navegación guardada antes de pintar (va en el <head>).
 
     Sin preferencia guardada usa data-gn-nav-default del <html> (valor del producto).
     """
-    return mark_safe(NAV_BOOT)
+    return _with_nonce(NAV_BOOT, context)
 
 
 @register.inclusion_tag("geneos_ui/components/nav_switch.html")
@@ -93,7 +136,7 @@ def gn_theme_switch():
 
 @register.simple_tag
 def gn_js():
-    return format_html('<script src="{}" defer></script>', static("geneos_ui/js/geneos-ui.js"))
+    return format_html('<script src="{}" defer></script>', _asset("geneos_ui/js/geneos-ui.js", get_config()))
 
 
 @register.simple_tag
