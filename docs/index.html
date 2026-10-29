@@ -1674,6 +1674,15 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 .kit-pending ul { margin: 4px 0 0; padding-left: 18px; }
 .kit-topbar-brand { display: contents; }
 
+/* Marcas: qué es componente de la biblioteca y qué es HTML de referencia o ejemplo */
+.kit-kind { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-left: 6px; padding: 2px 8px; border-radius: var(--gn-radius-pill);
+  font-size: 11.5px; font-weight: 600; line-height: 1.5; vertical-align: middle; border: 1px solid; }
+.kit-kind code { font-size: 11px; padding: 0 4px; background: none; }
+.kit-kind--component { color: var(--gn-good-ink); border-color: var(--gn-good); background: var(--gn-good-soft); }
+.kit-kind--reference { color: var(--gn-warning-ink); border-color: var(--gn-warning); background: var(--gn-warning-soft); }
+.kit-kind--example { color: var(--gn-text-2); border-color: var(--gn-border-strong); background: var(--gn-surface-2); }
+.kit-kind--legend { display: block; margin: 10px 0 0; padding: 0; border: 0; background: none; font-weight: 400; font-size: 12.5px; color: var(--gn-text-2); }
+
 </style>
 
 
@@ -1755,7 +1764,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 <div class="gn-app">
   
 
-<aside class="gn-sidebar" id="gn-sidebar-gelectric" data-gn-sidebar data-gn-default="collapsed" data-gn-storage-key="gn-sidebar-expanded:gelectric" aria-label="Navegación principal">
+<aside class="gn-sidebar" id="gn-sidebar-gelectric" data-gn-sidebar data-gn-default="collapsed" data-gn-storage-key="gn-sidebar-expanded:gelectric" data-gn-legacy-key="geletric-sidebar-pinned" aria-label="Navegación principal">
   <div class="gn-sidebar__brand">
     <a href="#inicio" aria-label="GELECTRIC: inicio">
       <img class="gn-sidebar__logo-full" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0idXVpZC0wMjczYTEzYy0yNjkxLTQzYjItYWUwOS05YjQ2NjZjOGFjN2EiIGRhdGEtbmFtZT0idXVpZC01MzFjMWM4ZS05YjBjLTQyNzctOWZkYS04NjhjODk2YWNkNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI1OC4yIDUxLjEiPgogIDxwYXRoIGQ9Ik04MC4yNCwxOC4yOGgtMTEuNDd2Mi43N2MwLDEuNTIsMS4yMywyLjc3LDIuNzQsMi43N2g1LjkydjMuOTdjLTIuMDUsMi40My00LjcsMy42NS03Ljk2LDMuNjUtMi44NywwLTUuMzEtMS4wMy03LjM2LTMuMDktMi4wNy0yLjAyLTMuMDktNC40NS0zLjA5LTcuMzJzMS4wMy01LjI0LDMuMDktNy4zMmMyLjAxLTIuMDIsNC40Ny0zLjAzLDcuMzYtMy4wMywxLjY0LDAsMy4yNC40Myw0LjgzLDEuMjcuODYuNDcsMS42NiwxLjAzLDIuMzksMS43LjA0LjA0LjA5LjA3LjE1LjExbC4zLjI0Yy44NC43MSwxLjk4LjgyLDIuOTMuMzdoLjA2bC40My0uM3MuMDQtLjAyLjA2LS4wNGwyLjM5LTEuNjdjLTEuNzMtMi4zLTMuNzctNC4wOC02LjE1LTUuMzUtMi4zOS0xLjI3LTQuODUtMS45My03LjM2LTEuOTMtNC40MiwwLTguMiwxLjU3LTExLjM3LDQuNzItMy4wOSwzLjA3LTQuNjYsNi44MS00LjY2LDExLjE5czEuNTUsOC4xNiw0LjY2LDExLjIzYzMuMTMsMy4xMSw2LjkyLDQuNjgsMTEuMzcsNC42OCwxLjM0LDAsMi42NS0uMTcsMy45My0uNDksMS4yOS0uMzIsMi41LS44LDMuNjUtMS40MiwxLjE2LS42NCwyLjIyLTEuMzgsMy4yMS0yLjI4LjkzLS44NCwxLjc1LTEuOCwyLjQ2LTIuODQuMDQtLjA2LjI4LS42OS4yOC0uNjl2LTguMjJjLS4wMi0xLjQ4LTEuMjUtMi43MS0yLjc2LTIuNzF2LjAyWiIgZmlsbD0iIzFlOWY0YiIvPgogIDxwYXRoIGQ9Ik0yNTQuNDQsMjguMjRjLTEuMDUtLjI2LTIuMTUsMC0yLjk2LjcyLTEuODYsMS42NS00LjEzLDIuNDctNi44MSwyLjQ3LTIuODcsMC01LjMxLTEuMDMtNy4zNi0zLjA5LTIuMDctMi4wMi0zLjA5LTQuNDUtMy4wOS03LjMyczEuMDMtNS4yNCwzLjA5LTcuMzJjMi4wMS0yLjAyLDQuNDctMy4wMyw3LjM2LTMuMDMsMS42NCwwLDMuMjQuNDMsNC44MywxLjI3Ljg2LjQ3LDEuNjYsMS4wMywyLjM5LDEuNy4wNC4wNC4wOS4wNy4xNS4xMWwuMy4yNGMuODQuNzEsMS45OC44MiwyLjkzLjM3aC4wNmwuNDMtLjNzLjA0LS4wMi4wNi0uMDRsMi4zOS0xLjY3Yy0xLjczLTIuMy0zLjc3LTQuMDgtNi4xNS01LjM1LTIuMzktMS4yNy00Ljg1LTEuOTMtNy4zNi0xLjkzLTQuNDIsMC04LjIsMS41Ny0xMS4zNyw0LjcyLTMuMDksMy4wNy00LjY2LDYuODEtNC42NiwxMS4xOXMxLjU1LDguMTYsNC42NiwxMS4yM2MzLjEzLDMuMTEsNi45Miw0LjY4LDExLjM3LDQuNjgsMS4zNCwwLDIuNjUtLjE3LDMuOTMtLjQ5LDEuMjktLjMyLDIuNS0uOCwzLjY1LTEuNDIsMS4xNi0uNjQsMi4yMi0xLjM4LDMuMjEtMi4yOC45My0uODQsMS43NS0xLjgsMi40Ni0yLjg0LjA0LS4wNi4yOC0uNjkuMjgtLjY5bC0zLjc2LS45NVoiIGZpbGw9IiNmZWZlZmUiLz4KICA8cGF0aCBkPSJNMTA4LjU1LDguOTljMC0xLjUyLTEuMjMtMi43NS0yLjc0LTIuNzVoLTE4Ljk4djI3LjYyYzAsMS41MiwxLjIzLDIuNzcsMi43NCwyLjc3aDE4Ljk4di0yLjU1aC0uMDJzLjAyLS4xNy4wMi0uMjRjMC0xLjUyLTEuMjMtMi43Ny0yLjc0LTIuNzdoLTEzLjV2LTYuOTFoMTIuNjh2LTIuNzdjMC0xLjUyLTEuMjMtMi43Ny0yLjc0LTIuNzdoLTkuOTV2LTYuOTFoMTYuMjR2LTIuNzNoLjAyWiIgZmlsbD0iI2ZlZmVmZSIvPgogIDxwYXRoIGQ9Ik0xNTkuNjcsOC45OWMwLTEuNTItMS4yMy0yLjc1LTIuNzQtMi43NWgtMTguOTh2MjcuNjJjMCwxLjUyLDEuMjMsMi43NywyLjc0LDIuNzdoMTguOTh2LTIuNTVoLS4wMnMuMDItLjE3LjAyLS4yNGMwLTEuNTItMS4yMy0yLjc3LTIuNzQtMi43N2gtMTMuNXYtNi45MWgxMi42OHYtMi43N2MwLTEuNTItMS4yMy0yLjc3LTIuNzQtMi43N2gtOS45NXYtNi45MWgxNi4yNHYtMi43M2guMDJaIiBmaWxsPSIjZmVmZWZlIi8+CiAgPHBhdGggZD0iTTExMi4zOSw2LjI0djI3LjYyYzAsMS41MiwxLjIzLDIuNzcsMi43NCwyLjc3aDE4Ljk4di0yLjU1aC0uMDJzLjAyLS4xNy4wMi0uMjRjMC0xLjUyLTEuMjMtMi43Ny0yLjc0LTIuNzdoLTEzLjVWOS4yMWMwLTEuNjQtMS4zMy0yLjk4LTIuOTgtMi45OGgtMi41WiIgZmlsbD0iI2ZlZmVmZSIvPgogIDxwYXRoIGQ9Ik0yMTQuNzIsMzEuNjFsLTYuNDUtOC4wOWMzLjg2LS45OSw2LjcyLTQuNDksNi43Mi04LjY4LDAtNC45NS00LTguOTYtOC45My04Ljk2aC0xMi42djI3LjYyYzAsMS41MiwxLjI0LDIuNzcsMi43NiwyLjc3aDIuODR2LTEyLjQ2aDIuMjhsOC44OSwxMS4zOGMuNTQuNjksMS4zNywxLjEsMi4yNSwxLjEsMi40LDAsMy43NC0yLjc5LDIuMjQtNC42N1pNMTk5LjA0LDE4LjI2di02LjkxaDcuNDRjMS45LDAsMy40NCwxLjU1LDMuNDQsMy40NXMtMS41NCwzLjQ1LTMuNDQsMy40NWgtNy40NFoiIGZpbGw9IiNmZWZlZmUiLz4KICA8cGF0aCBkPSJNMTc5LjQ1LDExLjUyaDEwLjE3YzAtMy4xMi0yLjUzLTUuNjUtNS42NS01LjY1aC0xNC44MWMtMy4xMiwwLTUuNjUsMi41My01LjY1LDUuNjVoMTAuMzd2MjEuNjRjMCwxLjUyLDEuMjQsMi43NywyLjc2LDIuNzdoMi44NHYtNS41NmwtLjAzLS4xMlYxMS41MloiIGZpbGw9IiNmZWZlZmUiLz4KICA8cGF0aCBkPSJNMjE5LjE5LDUuODd2MjcuMjljMCwxLjUyLDEuMjQsMi43NywyLjc2LDIuNzdoMi44NHYtNS41NmwtLjAzLS4xMlY4LjU4YzAtMS41LTEuMjEtMi43MS0yLjcxLTIuNzFoLTIuODZaIiBmaWxsPSIjZmVmZWZlIi8+CiAgPHBhdGggZD0iTTEyLjMsNDUuMTdjLTEuMzYtLjU5LTIuNzEtMS4yNy0zLjktMi4wOGwtMi4wMS0xLjMzYzguMjksOC4zMSwyMS42OCw5LjE4LDMxLjAxLDEuNjUuMDktLjA3LjE5LS4xNS4yOC0uMjQuMDQtLjAzLjA4LS4wNy4xMS0uMSwxLjA3LS45NCwyLjcyLTIuNjIsNC4yNS01LjAyLjExLS4wOS4xMi0uMTguMTMtLjI4LDEuOTYtMy4xOCwzLjY3LTcuNzYsMy40OS0xNC4wMS0uMDktLjExLS4wNy0uMy0uMDYtLjRsLS4wNC0uMDVjMC0uNDQtLjAyLS43OS0uMDgtMS4wOS0uMjItMS41OS0uNTgtMy4zNS0xLjEyLTUuMjJsLS40Ny0xLjQ0Yy0uMjQtLjUyLS41MS0xLjAzLS43OS0xLjUzLS4wNS40OC0uMTYsMS4wMS0uMywxLjQ5bC4xMS0uMDljLS43MSwyLjUzLTIuMyw0LjYyLTQuNiw1Ljk0LTIuMjUsMS4yOC00LjgzLDEuNi03LjMxLjk1bC43OSwyLjI5YzIuMTgsNi4zMi4xMSwxMy40MS01LjEsMTcuNjJzLTkuNCw0LjQxLTE0LjQsMi45NVpNMzQuOSwyNS4zN2MxLjUtLjIzLDIuOTctLjcyLDQuMjgtMS41MSwxLjItLjcxLDIuMzMtMS42MiwzLjMzLTIuNjl2LjFjLjA3LjY1LjE1LDEuMjkuMTQsMS4zOS42OSw3LjQzLTIuMzMsMTQuNjctOC4xMywxOS4zNi01LjgsNC42OS03LjY0LDQuMDUtOC45NSw0LjMxLjk5LS41MywxLjg5LTEuMTcsMi44LTEuOTEsNS41OC00LjUyLDguMTUtMTIuMSw2LjUyLTE5LjA0WiIgZmlsbD0iI2ZlZmVmZSIvPgogIDxwYXRoIGQ9Ik0yNC4zMiw3LjUzbC0xMi43MSwxNi4xMmMtLjc4Ljk5LS4wOCwyLjQ1LDEuMTksMi40NWgzLjAzYy45NSwwLDEuNjcuODYsMS40OSwxLjhsLTEuNiw4LjUyYy0uMywxLjYyLDEuODMsMi40OSwyLjc1LDEuMTJsOC45Mi0xMy4zNGMuNjgtMS4wMS0uMDUtMi4zNi0xLjI3LTIuMzZoLTEuNzZjLTEuMDYuMDEtMS44LTEuMDQtMS40My0yLjAzbDQtMTAuODJjLjYtMS42Mi0xLjU0LTIuODItMi42MS0xLjQ2WiIgZmlsbD0iI2YzYzUwMSIvPgogIDxwYXRoIGQ9Ik0wLDI1LjgxYy4yOCw0LDEuNjUsNy44NSwzLjg0LDExLjA0LTEuNzItMy40Ny0yLjQ3LTcuMzMtMi4yLTExLjA1LjItMS44Ni40Ny0zLjY5LDEuMTItNS40MS4yNS0uODguNjgtMS42OSwxLjA0LTIuNTIuMTktLjQxLjQ0LS43OS42Ni0xLjE4LjIzLS4zOS40My0uNzkuNzEtMS4xNGwuNzgtMS4wOWMuMjctLjM1LjU4LS42OC44Ny0xLjAxbC40NC0uNWMuMTUtLjE2LjMyLS4zMS40OC0uNDZsLjk2LS45MSwxLjA0LS44MS41Mi0uNC41NS0uMzUsMS4xLS42OSwxLjE2LS41OGMuMTktLjA5LjM4LS4yLjU4LS4yOGwuNi0uMjNjLjQtLjE1Ljc5LS4zMiwxLjE5LS40NS4xNi0uMDQuMzEtLjA4LjQ2LS4xM0wyMS41NS41Yy0xLjc2LjIxLTMuNDkuNTQtNS4xNCwxLjE0LTEuMDUuMy0yLjAzLjgtMy4wMywxLjIzLS40OS4yNC0uOTUuNTItMS40Mi43OGwtLjcuNGMtLjIzLjE0LS40NS4zLS42Ny40NWwtMS4zMi45MmMtLjQyLjM0LS44Mi42OS0xLjIzLDEuMDNsLS42LjUyLS41Ni41N2MtLjM3LjM4LS43NC43Ni0xLjEsMS4xNWwtLjk5LDEuMjRjLS4xNi4yMS0uMzMuNC0uNDguNjJsLS40My42NmMtLjI4LjQ0LS41OC44Ny0uODQsMS4zMmwtLjcyLDEuMzljLS4yNi40NS0uNDQuOTQtLjYzLDEuNDItLjE4LjQ4LS40MS45NS0uNTUsMS40NS0uMjguOTktLjYyLDEuOTYtLjc3LDIuOTgiIGZpbGw9IiMxZTlmNGIiLz4KICA8Zz4KICAgIDxwYXRoIGQ9Ik01Ni43Niw0My44NWMtMS4wMSwwLTEuNTEuMzUtMS41MSwxLjA2LDAsLjM2LjEyLjYyLjM2Ljc4LjI0LjE1Ljc2LjM0LDEuNTguNTcuODEuMjMsMS4zOC41LDEuNzIuODEuMzMuMzEuNS44MS41LDEuNDgsMCwuODYtLjI0LDEuNS0uNzMsMS45Mi0uNDkuNDItMS4xNS42NC0xLjk5LjY0LS42NywwLTEuNDItLjA4LTIuMjMtLjI0bC0uNDMtLjA4LjEzLTEuMDZjMS4wNy4xNCwxLjg5LjIxLDIuNDUuMjEuOTgsMCwxLjQ3LS40NCwxLjQ3LTEuMzEsMC0uMzQtLjExLS41OS0uMzMtLjc1LS4yMi0uMTYtLjcyLS4zNC0xLjUtLjUzLS43OC0uMTktMS4zNS0uNDYtMS43NC0uOC0uMzgtLjM0LS41Ny0uODgtLjU3LTEuNjJzLjI0LTEuMjkuNzItMS42NywxLjE0LS41NiwxLjk5LS41NmMuNjEsMCwxLjMzLjA3LDIuMTYuMjFsLjQyLjA3LS4xMSwxLjA3Yy0xLjExLS4xMy0xLjg5LS4xOS0yLjM1LS4xOVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik02Ni4zNiw1MC4xYy0uNDkuNjctMS4zNSwxLTIuNTcsMXMtMi4wOS0uMzMtMi41OC0xYy0uNDktLjY3LS43NC0xLjcyLS43NC0zLjE2cy4yNS0yLjUuNzQtMy4yYy41LS43LDEuMzUtMS4wNSwyLjU3LTEuMDVzMi4wOC4zNSwyLjU3LDEuMDRjLjQ5LjY5Ljc0LDEuNzYuNzQsMy4ycy0uMjQsMi41LS43MywzLjE2Wk02Mi4yNCw0OS4yNGMuMjcuNDcuNzguNywxLjU1LjdzMS4yNy0uMjMsMS41NC0uNjljLjI3LS40Ni40LTEuMjMuNC0yLjMxcy0uMTQtMS44Ny0uNDEtMi4zNmMtLjI3LS40OS0uNzgtLjc0LTEuNTMtLjc0cy0xLjI2LjI1LTEuNTMuNzRjLS4yOC40OS0uNDIsMS4yNy0uNDIsMi4zNXMuMTMsMS44NC40LDIuMzFaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNNjguNjIsNTAuOTd2LTguMTRoNS4wNXYxLjE1aC0zLjczdjIuNzVoMy4xdjEuMTVoLTMuMXYzLjA5aC0xLjMyWiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTc0LjEzLDQ0di0xLjE4aDUuOTR2MS4xOGgtMi4yOXY2Ljk3aC0xLjMzdi02Ljk3aC0yLjMyWiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTgwLjUxLDQyLjgzaDEuMzlsMS4xNiw3aC4yNWwxLjU1LTYuOThoMS41NGwxLjU1LDYuOThoLjI2bDEuMTctN2gxLjM5bC0xLjYsOC4xNGgtMi4xM2wtMS40LTYuNTMtMS4zOSw2LjUzaC0yLjE0bC0xLjU5LTguMTRaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNOTEuMDUsNTAuOTdsMi4wMS04LjE0aDIuNjNsMi4wMiw4LjE0aC0xLjMzbC0uNDQtMS43NWgtMy4xM2wtLjQ0LDEuNzVoLTEuMzJaTTk0LjA4LDQzLjkzbC0xLjAxLDQuMTJoMi42bC0xLTQuMTJoLS41OVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xMDAuMTksNDguMDd2Mi45aC0xLjMydi04LjE0aDMuMDljMS44NCwwLDIuNzYuODYsMi43NiwyLjU5LDAsMS4xNi0uNDQsMS45NC0xLjMzLDIuMzVsMS4zNCwzLjJoLTEuNDVsLTEuMTgtMi45aC0xLjkxWk0xMDMuMzcsNDUuNDNjMC0uOTctLjQ3LTEuNDYtMS40LTEuNDZoLTEuNzd2Mi45NmgxLjc5Yy40OCwwLC44Mi0uMTQsMS4wNS0uNDEuMjItLjI3LjMzLS42NC4zMy0xLjA5WiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTEwNi4yMiw1MC45N3YtOC4xNGg1LjE0djEuMTVoLTMuODJ2Mi4zMWgzLjF2MS4xNGgtMy4xdjIuMzhoMy44MnYxLjE3aC01LjE0WiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTExOC43Myw0Ny44NXYtMS4xN2gyLjMydjQuMTRjLS4yMS4wNi0uNjUuMTEtMS4zLjE4cy0xLjEzLjEtMS40Mi4xYy0xLjI0LDAtMi4wOS0uMzQtMi41Ni0xLjAyLS40Ny0uNjgtLjctMS43NS0uNy0zLjJzLjI0LTIuNTEuNzItMy4xOCwxLjMxLTEsMi40OS0xYy43LDAsMS40OC4wOCwyLjM1LjI0bC40Mi4wOC0uMDUsMS4wNWMtLjk2LS4xMy0xLjgyLS4xOS0yLjU4LS4xOXMtMS4yOC4yMS0xLjU2LjY0Yy0uMjguNDMtLjQyLDEuMjItLjQyLDIuMzhzLjEzLDEuOTYuNCwyLjRjLjI3LjQ0LjguNjYsMS42MS42Ni41OCwwLDEuMDEtLjA0LDEuMy0uMTF2LTEuOThoLTEuMDFaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMTIyLjcsNTAuOTd2LTguMTRoNS4xNHYxLjE1aC0zLjgydjIuMzFoMy4xdjEuMTRoLTMuMXYyLjM4aDMuODJ2MS4xN2gtNS4xNFoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xMzEuNjYsNDMuODVjLTEuMDEsMC0xLjUxLjM1LTEuNTEsMS4wNiwwLC4zNi4xMi42Mi4zNi43OC4yNC4xNS43Ni4zNCwxLjU4LjU3LjgxLjIzLDEuMzguNSwxLjcyLjgxLjMzLjMxLjUuODEuNSwxLjQ4LDAsLjg2LS4yNCwxLjUtLjczLDEuOTItLjQ5LjQyLTEuMTUuNjQtMS45OS42NC0uNjcsMC0xLjQyLS4wOC0yLjIzLS4yNGwtLjQzLS4wOC4xMy0xLjA2YzEuMDcuMTQsMS44OS4yMSwyLjQ1LjIxLjk4LDAsMS40Ny0uNDQsMS40Ny0xLjMxLDAtLjM0LS4xMS0uNTktLjMzLS43NS0uMjItLjE2LS43Mi0uMzQtMS41LS41My0uNzgtLjE5LTEuMzUtLjQ2LTEuNzQtLjgtLjM4LS4zNC0uNTctLjg4LS41Ny0xLjYycy4yNC0xLjI5LjcyLTEuNjcsMS4xNC0uNTYsMS45OS0uNTZjLjYxLDAsMS4zMy4wNywyLjE2LjIxbC40Mi4wNy0uMTEsMS4wN2MtMS4xMS0uMTMtMS44OS0uMTktMi4zNS0uMTlaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMTM0Ljk0LDQ0di0xLjE4aDUuOTR2MS4xOGgtMi4yOXY2Ljk3aC0xLjMzdi02Ljk3aC0yLjMyWiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTE0MS45OCw1MC45N3YtOC4xNGgxLjMydjguMTRoLTEuMzJaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMTUwLjcxLDUwLjFjLS40OS42Ny0xLjM1LDEtMi41Nywxcy0yLjA5LS4zMy0yLjU4LTFjLS40OS0uNjctLjc0LTEuNzItLjc0LTMuMTZzLjI1LTIuNS43NC0zLjJjLjUtLjcsMS4zNS0xLjA1LDIuNTctMS4wNXMyLjA4LjM1LDIuNTcsMS4wNGMuNDkuNjkuNzQsMS43Ni43NCwzLjJzLS4yNCwyLjUtLjczLDMuMTZaTTE0Ni41OSw0OS4yNGMuMjcuNDcuNzguNywxLjU1LjdzMS4yNy0uMjMsMS41NC0uNjljLjI3LS40Ni40LTEuMjMuNC0yLjMxcy0uMTQtMS44Ny0uNDEtMi4zNmMtLjI3LS40OS0uNzgtLjc0LTEuNTMtLjc0cy0xLjI2LjI1LTEuNTMuNzRjLS4yOC40OS0uNDIsMS4yNy0uNDIsMi4zNXMuMTMsMS44NC40LDIuMzFaTTE0Ni4zOSw0MS4wM2wyLjgxLTEuMjIuNDIsMS4xNS0yLjg5Ljk3LS4zMy0uOVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xNTIuOTcsNTAuOTd2LTguMTRoMi4zMWwyLjQ3LDYuOThoLjE4di02Ljk4aDEuMzJ2OC4xNGgtMi4yNmwtMi41My02Ljk5aC0uMTd2Ni45OWgtMS4zMloiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xNjYuNDgsNTEuMWMtMS4xOSwwLTItLjMzLTIuNDItLjk5LS40Mi0uNjYtLjY0LTEuNzQtLjY0LTMuMjVzLjIxLTIuNTguNjQtMy4yMmMuNDMtLjY0LDEuMjMtLjk2LDIuNDEtLjk2LjcxLDAsMS40OC4xLDIuMzMuM2wtLjA1LDEuMDdjLS43MS0uMTMtMS40My0uMTktMi4xNC0uMTlzLTEuMi4yMS0xLjQ1LjY0Yy0uMjUuNDItLjM4LDEuMjItLjM4LDIuMzlzLjEyLDEuOTcuMzcsMi4zOWMuMjUuNDIuNzMuNjQsMS40NC42NHMxLjQzLS4wNiwyLjE2LS4xOGwuMDQsMS4wOWMtLjgyLjE3LTEuNTkuMjYtMi4zMi4yNloiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xNzUuNjUsNTAuMWMtLjQ5LjY3LTEuMzUsMS0yLjU3LDFzLTIuMDktLjMzLTIuNTgtMWMtLjQ5LS42Ny0uNzQtMS43Mi0uNzQtMy4xNnMuMjUtMi41Ljc0LTMuMmMuNS0uNywxLjM1LTEuMDUsMi41Ny0xLjA1czIuMDguMzUsMi41NywxLjA0Yy40OS42OS43NCwxLjc2Ljc0LDMuMnMtLjI0LDIuNS0uNzMsMy4xNlpNMTcxLjUzLDQ5LjI0Yy4yNy40Ny43OC43LDEuNTUuN3MxLjI3LS4yMywxLjU0LS42OWMuMjctLjQ2LjQtMS4yMy40LTIuMzFzLS4xNC0xLjg3LS40MS0yLjM2Yy0uMjctLjQ5LS43OC0uNzQtMS41My0uNzRzLTEuMjYuMjUtMS41My43NGMtLjI4LjQ5LS40MiwxLjI3LS40MiwyLjM1cy4xMywxLjg0LjQsMi4zMVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xODMuNDUsNTAuMWMtLjQ5LjY3LTEuMzUsMS0yLjU3LDFzLTIuMDktLjMzLTIuNTgtMWMtLjQ5LS42Ny0uNzQtMS43Mi0uNzQtMy4xNnMuMjUtMi41Ljc0LTMuMmMuNS0uNywxLjM1LTEuMDUsMi41Ny0xLjA1czIuMDguMzUsMi41NywxLjA0Yy40OS42OS43NCwxLjc2Ljc0LDMuMnMtLjI0LDIuNS0uNzMsMy4xNlpNMTc5LjMzLDQ5LjI0Yy4yNy40Ny43OC43LDEuNTUuN3MxLjI3LS4yMywxLjU0LS42OWMuMjctLjQ2LjQtMS4yMy40LTIuMzFzLS4xNC0xLjg3LS40MS0yLjM2Yy0uMjctLjQ5LS43OC0uNzQtMS41My0uNzRzLTEuMjYuMjUtMS41My43NGMtLjI4LjQ5LS40MiwxLjI3LS40MiwyLjM1cy4xMywxLjg0LjQsMi4zMVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0xODguNjksNDguNDRoLTEuNjZ2Mi41M2gtMS4zMnYtOC4xNGgyLjk4YzEuODUsMCwyLjc3LjkxLDIuNzcsMi43MywwLC45NC0uMjMsMS42NS0uNywyLjE0LS40Ni40OS0xLjE2Ljc0LTIuMDcuNzRaTTE4Ny4wMyw0Ny4yOWgxLjY1Yy45NSwwLDEuNDMtLjU4LDEuNDMtMS43NCwwLS41NS0uMTItLjk2LS4zNC0xLjIxLS4yMy0uMjUtLjU5LS4zOC0xLjA4LS4zOGgtMS42NXYzLjMzWiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTE5MS42OSw1MC45N3YtMS43MWgxLjM5djEuNzFoLTEuMzlaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMTk3LjM2LDUwLjk3di04LjE0aDUuMTR2MS4xNWgtMy44MnYyLjMxaDMuMXYxLjE0aC0zLjF2Mi4zOGgzLjgydjEuMTdoLTUuMTRaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMjA4LjUsNTAuOTdoLTQuNTZ2LTguMTRoMS4zMnY2Ljk3aDMuMjV2MS4xOFoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0yMDkuNTgsNTAuOTd2LTguMTRoNS4xNHYxLjE1aC0zLjgydjIuMzFoMy4xdjEuMTRoLTMuMXYyLjM4aDMuODJ2MS4xN2gtNS4xNFoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0yMTguODIsNTEuMWMtMS4xOSwwLTItLjMzLTIuNDItLjk5LS40Mi0uNjYtLjY0LTEuNzQtLjY0LTMuMjVzLjIxLTIuNTguNjQtMy4yMmMuNDMtLjY0LDEuMjMtLjk2LDIuNDEtLjk2LjcxLDAsMS40OC4xLDIuMzMuM2wtLjA1LDEuMDdjLS43MS0uMTMtMS40My0uMTktMi4xNC0uMTlzLTEuMi4yMS0xLjQ1LjY0Yy0uMjUuNDItLjM4LDEuMjItLjM4LDIuMzlzLjEyLDEuOTcuMzcsMi4zOWMuMjUuNDIuNzMuNjQsMS40NC42NHMxLjQzLS4wNiwyLjE2LS4xOGwuMDQsMS4wOWMtLjgyLjE3LTEuNTkuMjYtMi4zMi4yNloiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0yMjEuNzYsNDR2LTEuMThoNS45NHYxLjE4aC0yLjI5djYuOTdoLTEuMzN2LTYuOTdoLTIuMzJaIiBmaWxsPSIjZmVmZWZlIi8+CiAgICA8cGF0aCBkPSJNMjMwLjEyLDQ4LjA3djIuOWgtMS4zMnYtOC4xNGgzLjA5YzEuODQsMCwyLjc2Ljg2LDIuNzYsMi41OSwwLDEuMTYtLjQ0LDEuOTQtMS4zMywyLjM1bDEuMzQsMy4yaC0xLjQ1bC0xLjE4LTIuOWgtMS45MVpNMjMzLjI5LDQ1LjQzYzAtLjk3LS40Ny0xLjQ2LTEuNC0xLjQ2aC0xLjc3djIuOTZoMS43OWMuNDgsMCwuODItLjE0LDEuMDUtLjQxLjIyLS4yNy4zMy0uNjQuMzMtMS4wOVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0yMzYuMTUsNTAuOTd2LTguMTRoMS4zMnY4LjE0aC0xLjMyWiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTI0Mi4wOCw1MS4xYy0xLjE5LDAtMi0uMzMtMi40Mi0uOTktLjQyLS42Ni0uNjQtMS43NC0uNjQtMy4yNXMuMjEtMi41OC42NC0zLjIyYy40My0uNjQsMS4yMy0uOTYsMi40MS0uOTYuNzEsMCwxLjQ4LjEsMi4zMy4zbC0uMDUsMS4wN2MtLjcxLS4xMy0xLjQzLS4xOS0yLjE0LS4xOXMtMS4yLjIxLTEuNDUuNjRjLS4yNS40Mi0uMzgsMS4yMi0uMzgsMi4zOXMuMTIsMS45Ny4zNywyLjM5Yy4yNS40Mi43My42NCwxLjQ0LjY0czEuNDMtLjA2LDIuMTYtLjE4bC4wNCwxLjA5Yy0uODIuMTctMS41OS4yNi0yLjMyLjI2WiIgZmlsbD0iI2ZlZmVmZSIvPgogICAgPHBhdGggZD0iTTI0NS4xMSw1MC45N2wyLjAxLTguMTRoMi42M2wyLjAyLDguMTRoLTEuMzNsLS40NC0xLjc1aC0zLjEzbC0uNDQsMS43NWgtMS4zMlpNMjQ4LjE0LDQzLjkzbC0xLjAxLDQuMTJoMi42bC0xLTQuMTJoLS41OVoiIGZpbGw9IiNmZWZlZmUiLz4KICAgIDxwYXRoIGQ9Ik0yNTUuMjQsNDMuODVjLTEuMDEsMC0xLjUxLjM1LTEuNTEsMS4wNiwwLC4zNi4xMi42Mi4zNi43OC4yNC4xNS43Ni4zNCwxLjU3LjU3LjgxLjIzLDEuMzkuNSwxLjcyLjgxLjMzLjMxLjUuODEuNSwxLjQ4LDAsLjg2LS4yNCwxLjUtLjczLDEuOTItLjQ5LjQyLTEuMTUuNjQtMS45OS42NC0uNjcsMC0xLjQyLS4wOC0yLjIzLS4yNGwtLjQzLS4wOC4xMy0xLjA2YzEuMDcuMTQsMS44OS4yMSwyLjQ1LjIxLjk4LDAsMS40Ny0uNDQsMS40Ny0xLjMxLDAtLjM0LS4xMS0uNTktLjMzLS43NS0uMjItLjE2LS43Mi0uMzQtMS41LS41My0uNzgtLjE5LTEuMzYtLjQ2LTEuNzQtLjgtLjM4LS4zNC0uNTctLjg4LS41Ny0xLjYycy4yNC0xLjI5LjcyLTEuNjcsMS4xNC0uNTYsMS45OS0uNTZjLjYxLDAsMS4zMy4wNywyLjE2LjIxbC40Mi4wNy0uMTEsMS4wN2MtMS4xMS0uMTMtMS44OS0uMTktMi4zNS0uMTlaIiBmaWxsPSIjZmVmZWZlIi8+CiAgPC9nPgo8L3N2Zz4=" alt="GELECTRIC">
@@ -2526,14 +2535,14 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     </header>
     <main class="gn-content" id="gn-main-content" tabindex="-1">
       
-<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.2.1</span></li></ol></nav>
+<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.3.0</span></li></ol></nav>
 
       
 <div class="gn-page-head" id="inicio">
   <div class="gn-page-head__text">
     <span class="gn-eyebrow">Sistema de diseño compartido · en revisión visual</span>
     <h1>GENEOS UI Kit</h1>
-    <p>Componentes, variantes y estados de la biblioteca <code>geneos-ui</code> con la estructura de GELECTRIC y la identidad de cada producto. Elegí un producto para ver su tema aplicado a toda la página.</p>
+    <p>Componentes, variantes y estados de la biblioteca <code>geneos-ui</code> con la estructura de GELECTRIC y la identidad de cada producto. Elegí un producto para ver su tema aplicado a toda la página.</p><span class="kit-kind kit-kind--legend"><b>Componente</b>: se usa con un tag o template de la biblioteca y recibe sus mejoras al actualizar la versión. <b>HTML de referencia</b>: el estilo y el comportamiento son compartidos, pero el HTML se copia en cada pantalla. <b>Ejemplo</b>: contenido de demostración.</span>
   </div>
   <div class="gn-page-head__actions">
     <div class="kit-switcher" role="radiogroup" aria-label="Producto">
@@ -2566,7 +2575,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="identidad" aria-labelledby="h-identidad">
   <header class="kit-section__head">
-    <h2 id="h-identidad">Identidad del producto</h2>
+    <h2 id="h-identidad">Identidad del producto<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>THEME_CSS</code> <code>gn_css</code></span></h2>
     <p>Cada producto declara solo sus colores reales; el resto de la paleta (tintes, hover, foco, estados) se deriva de ellos. Los logotipos son los originales de cada repositorio.</p>
   </header>
   
@@ -2740,7 +2749,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="fundamentos" aria-labelledby="h-fund">
   <header class="kit-section__head">
-    <h2 id="h-fund">Tipografía y espaciado</h2>
+    <h2 id="h-fund">Tipografía y espaciado<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>--gn-*</code></span></h2>
     <p>Titillium Web en los cuatro productos (ya es la fuente de GELECTRIC, GEMA y GEAGRO). Escala de 4 px para espacios y los radios de GELECTRIC.</p>
   </header>
   <div class="kit-grid-2">
@@ -2813,7 +2822,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="iconografia" aria-labelledby="h-icon">
   <header class="kit-section__head">
-    <h2 id="h-icon">Iconografía por producto</h2>
+    <h2 id="h-icon">Iconografía por producto<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_product_icon</code> <code>NavItem(icon=…)</code></span></h2>
     <p>Los íconos propios de cada producto, copiados sin cambios desde sus ramas de trabajo y con su nombre original. <b>Activos</b>: los usa hoy el producto o la navegación de GENEOS UI. <b>Disponibles</b>: originales sin uso actual. <b>Pendientes</b>: el producto necesita un ícono que todavía no existe; no se reemplaza por uno genérico.</p>
   </header>
   
@@ -4946,7 +4955,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="acciones-comunes" aria-labelledby="h-acc">
   <header class="kit-section__head">
-    <h2 id="h-acc">Íconos de acciones comunes</h2>
+    <h2 id="h-acc">Íconos de acciones comunes<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_icon</code></span></h2>
     <p>Sprite SVG de trazo para acciones de interfaz: buscar, editar, eliminar, descargar, ordenar, filtrar, cerrar, expandir, información, ayuda y navegación secundaria. No representan módulos: para eso están los íconos originales de cada producto.</p>
   </header>
   <div class="kit-grid-2">
@@ -4966,7 +4975,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="navegacion" aria-labelledby="h-nav">
   <header class="kit-section__head">
-    <h2 id="h-nav">Sidebar, encabezado y navegación</h2>
+    <h2 id="h-nav">Sidebar, encabezado y navegación<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>layouts/app.html</code> <code>gn_sidebar</code> <code>gn_prefs</code></span></h2>
     <p>El sidebar de esta página es el componente real, con el menú y los íconos de cada producto. Probá buscar <kbd>facturacion</kbd> en GELECTRIC, <kbd>vencimientos</kbd> en GEMA o <kbd>fenologia</kbd> en GEAGRO Vid (sin tilde), contraerlo con el botón de menú o recorrerlo con <kbd>Tab</kbd> y las flechas.</p>
   </header>
   <div class="kit-grid-2">
@@ -4988,11 +4997,11 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     
     <div class="kit-stack" data-kit-product="gelectric">
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Breadcrumbs</h3>
+        <h3 class="kit-h3">Breadcrumbs<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_breadcrumbs</code></span></h3>
         <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol><li><a href="#navegacion">Inicio</a></li><li><a href="#navegacion">Asociados</a></li><li><span aria-current="page">Taller Rossi SRL</span></li></ol></nav>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Pestañas</h3>
+        <h3 class="kit-h3">Pestañas<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-tabs</code></span></h3>
         <div class="gn-tabs" role="tablist" aria-label="Ficha del asociado">
           <button class="gn-tabs__tab" role="tab" id="gelectric-t0" aria-controls="gelectric-tp0" aria-selected="true">Datos</button>
           <button class="gn-tabs__tab" role="tab" id="gelectric-t1" aria-controls="gelectric-tp1" aria-selected="false">Suministros<span class="gn-tabs__count">3</span></button><button class="gn-tabs__tab" role="tab" id="gelectric-t2" aria-controls="gelectric-tp2" aria-selected="false">Cuota capital</button><button class="gn-tabs__tab" role="tab" id="gelectric-t3" aria-controls="gelectric-tp3" aria-selected="false">Reclamos<span class="gn-tabs__count">1</span></button>
@@ -5003,7 +5012,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <div class="gn-tab-panel" role="tabpanel" id="gelectric-tp1" aria-labelledby="gelectric-t1" tabindex="0" hidden><p class="kit-muted">3 suministros activos: Av. San Martín 812, Ruta 5 km 3 y depósito Calle 9.</p></div><div class="gn-tab-panel" role="tabpanel" id="gelectric-tp2" aria-labelledby="gelectric-t2" tabindex="0" hidden><p class="kit-muted">Aporte integrado: $ 48.000,00. Quedan 2 cuotas de $ 4.000,00.</p></div><div class="gn-tab-panel" role="tabpanel" id="gelectric-tp3" aria-labelledby="gelectric-t3" tabindex="0" hidden><p class="kit-muted">RC-2026-01452 · Baja tensión · en curso desde el 21/10/2026.</p></div>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Menú desplegable</h3>
+        <h3 class="kit-h3">Menú desplegable<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>data-gn-dropdown</code></span></h3>
         <div class="gn-btn-group">
           <div class="gn-dropdown">
             <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="gelectric-export"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar<svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button>
@@ -5019,11 +5028,11 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     
     <div class="kit-stack" data-kit-product="gema" hidden>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Breadcrumbs</h3>
+        <h3 class="kit-h3">Breadcrumbs<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_breadcrumbs</code></span></h3>
         <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol><li><a href="#navegacion">Inicio</a></li><li><a href="#navegacion">Matafuegos</a></li><li><span aria-current="page">AB-22018</span></li></ol></nav>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Pestañas</h3>
+        <h3 class="kit-h3">Pestañas<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-tabs</code></span></h3>
         <div class="gn-tabs" role="tablist" aria-label="Ficha del matafuego">
           <button class="gn-tabs__tab" role="tab" id="gema-t0" aria-controls="gema-tp0" aria-selected="true">Datos</button>
           <button class="gn-tabs__tab" role="tab" id="gema-t1" aria-controls="gema-tp1" aria-selected="false">Recargas<span class="gn-tabs__count">4</span></button><button class="gn-tabs__tab" role="tab" id="gema-t2" aria-controls="gema-tp2" aria-selected="false">Pruebas hidráulicas</button><button class="gn-tabs__tab" role="tab" id="gema-t3" aria-controls="gema-tp3" aria-selected="false">Órdenes<span class="gn-tabs__count">1</span></button>
@@ -5034,7 +5043,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <div class="gn-tab-panel" role="tabpanel" id="gema-tp1" aria-labelledby="gema-t1" tabindex="0" hidden><p class="kit-muted">Última recarga: 12/11/2025. Próximo vencimiento: 12/11/2026.</p></div><div class="gn-tab-panel" role="tabpanel" id="gema-tp2" aria-labelledby="gema-t2" tabindex="0" hidden><p class="kit-muted">Última prueba hidráulica: 15/06/2022. Vence el 15/06/2027.</p></div><div class="gn-tab-panel" role="tabpanel" id="gema-tp3" aria-labelledby="gema-t3" tabindex="0" hidden><p class="kit-muted">OT-1184 en taller desde el 22/10/2026.</p></div>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Menú desplegable</h3>
+        <h3 class="kit-h3">Menú desplegable<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>data-gn-dropdown</code></span></h3>
         <div class="gn-btn-group">
           <div class="gn-dropdown">
             <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="gema-export"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar<svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button>
@@ -5050,11 +5059,11 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     
     <div class="kit-stack" data-kit-product="geagro-cereales" hidden>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Breadcrumbs</h3>
+        <h3 class="kit-h3">Breadcrumbs<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_breadcrumbs</code></span></h3>
         <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol><li><a href="#navegacion">Inicio</a></li><li><a href="#navegacion">Mis campos</a></li><li><span aria-current="page">Lote 7 · El Bajo</span></li></ol></nav>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Pestañas</h3>
+        <h3 class="kit-h3">Pestañas<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-tabs</code></span></h3>
         <div class="gn-tabs" role="tablist" aria-label="Ficha del lote">
           <button class="gn-tabs__tab" role="tab" id="geagro-cereales-t0" aria-controls="geagro-cereales-tp0" aria-selected="true">Datos</button>
           <button class="gn-tabs__tab" role="tab" id="geagro-cereales-t1" aria-controls="geagro-cereales-tp1" aria-selected="false">Labores<span class="gn-tabs__count">6</span></button><button class="gn-tabs__tab" role="tab" id="geagro-cereales-t2" aria-controls="geagro-cereales-tp2" aria-selected="false">Alertas<span class="gn-tabs__count">1</span></button><button class="gn-tabs__tab" role="tab" id="geagro-cereales-t3" aria-controls="geagro-cereales-tp3" aria-selected="false">Clima</button>
@@ -5065,7 +5074,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <div class="gn-tab-panel" role="tabpanel" id="geagro-cereales-tp1" aria-labelledby="geagro-cereales-t1" tabindex="0" hidden><p class="kit-muted">6 labores planificadas: 2 terminadas, 1 en curso y 3 pendientes.</p></div><div class="gn-tab-panel" role="tabpanel" id="geagro-cereales-tp2" aria-labelledby="geagro-cereales-t2" tabindex="0" hidden><p class="kit-muted">Riesgo de granizo para el 28/10/2026. Sin daños registrados.</p></div><div class="gn-tab-panel" role="tabpanel" id="geagro-cereales-tp3" aria-labelledby="geagro-cereales-t3" tabindex="0" hidden><p class="kit-muted">Lluvia acumulada de la campaña: 312 mm.</p></div>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Menú desplegable</h3>
+        <h3 class="kit-h3">Menú desplegable<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>data-gn-dropdown</code></span></h3>
         <div class="gn-btn-group">
           <div class="gn-dropdown">
             <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="geagro-cereales-export"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar<svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button>
@@ -5081,11 +5090,11 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     
     <div class="kit-stack" data-kit-product="geagro-vid" hidden>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Breadcrumbs</h3>
+        <h3 class="kit-h3">Breadcrumbs<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_breadcrumbs</code></span></h3>
         <nav class="gn-breadcrumbs" aria-label="Ejemplo de ruta"><ol><li><a href="#navegacion">Inicio</a></li><li><a href="#navegacion">Mis viñedos</a></li><li><span aria-current="page">Lote 7 · Río</span></li></ol></nav>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Pestañas</h3>
+        <h3 class="kit-h3">Pestañas<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-tabs</code></span></h3>
         <div class="gn-tabs" role="tablist" aria-label="Ficha del lote">
           <button class="gn-tabs__tab" role="tab" id="geagro-vid-t0" aria-controls="geagro-vid-tp0" aria-selected="true">Datos</button>
           <button class="gn-tabs__tab" role="tab" id="geagro-vid-t1" aria-controls="geagro-vid-tp1" aria-selected="false">Fenología<span class="gn-tabs__count">3</span></button><button class="gn-tabs__tab" role="tab" id="geagro-vid-t2" aria-controls="geagro-vid-tp2" aria-selected="false">Sanidad<span class="gn-tabs__count">1</span></button><button class="gn-tabs__tab" role="tab" id="geagro-vid-t3" aria-controls="geagro-vid-tp3" aria-selected="false">Labores</button>
@@ -5096,7 +5105,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <div class="gn-tab-panel" role="tabpanel" id="geagro-vid-tp1" aria-labelledby="geagro-vid-t1" tabindex="0" hidden><p class="kit-muted">Hojas extendidas desde el 20/10/2026.</p></div><div class="gn-tab-panel" role="tabpanel" id="geagro-vid-tp2" aria-labelledby="geagro-vid-t2" tabindex="0" hidden><p class="kit-muted">Riesgo medio de peronospora. Última aplicación: 14/10/2026.</p></div><div class="gn-tab-panel" role="tabpanel" id="geagro-vid-tp3" aria-labelledby="geagro-vid-t3" tabindex="0" hidden><p class="kit-muted">Desbrote planificado para el 30/10/2026.</p></div>
       </div></div>
       <div class="gn-card"><div class="gn-card__body">
-        <h3 class="kit-h3">Menú desplegable</h3>
+        <h3 class="kit-h3">Menú desplegable<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>data-gn-dropdown</code></span></h3>
         <div class="gn-btn-group">
           <div class="gn-dropdown">
             <button type="button" class="gn-btn gn-btn--secondary" data-gn-dropdown="geagro-vid-export"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar<svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button>
@@ -5114,7 +5123,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
   
   <div class="gn-card kit-interfaces" data-kit-product="geagro-cereales" hidden><div class="gn-card__body">
-    <h3 class="kit-h3">GEAGRO Cereales: portal del productor y backoffice</h3>
+    <h3 class="kit-h3">GEAGRO Cereales: portal del productor y backoffice<span class="kit-kind kit-kind--example" title="Contenido de demostración del catálogo, no es parte de la biblioteca">Ejemplo · menús reales de GEAGRO</span></h3>
     <p class="kit-muted">Son dos interfaces distintas, con menú e íconos propios. El sidebar de esta página es el del <b>portal del productor</b> (<code>templates/partials/sidebar.html</code>). El <b>backoffice</b> es el administrador Jazzmin: no se modifica y se muestra solo como referencia, con los íconos de <code>static/img/icons/</code> que le asigna <code>jazzmin_custom.css</code>.</p>
     <div class="kit-interfaces__cols">
       <div class="kit-interfaces__col">
@@ -5137,7 +5146,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
   </div></div>
   
   <div class="gn-card kit-interfaces" data-kit-product="geagro-vid" hidden><div class="gn-card__body">
-    <h3 class="kit-h3">GEAGRO Vid: portal del productor y backoffice</h3>
+    <h3 class="kit-h3">GEAGRO Vid: portal del productor y backoffice<span class="kit-kind kit-kind--example" title="Contenido de demostración del catálogo, no es parte de la biblioteca">Ejemplo · menús reales de GEAGRO</span></h3>
     <p class="kit-muted">Son dos interfaces distintas, con menú e íconos propios. El sidebar de esta página es el del <b>portal del productor</b> (<code>templates/partials/sidebar.html</code>). El <b>backoffice</b> es el administrador Jazzmin: no se modifica y se muestra solo como referencia, con los íconos de <code>static/img/icons/</code> que le asigna <code>jazzmin_custom.css</code>.</p>
     <div class="kit-interfaces__cols">
       <div class="kit-interfaces__col">
@@ -5164,7 +5173,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="acciones" aria-labelledby="h-btn">
   <header class="kit-section__head">
-    <h2 id="h-btn">Botones</h2>
+    <h2 id="h-btn">Botones<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-btn</code></span></h2>
     <p>Button System de GELECTRIC: una clase base <code>gn-btn</code> más una variante. Primario, secundario y terciario siguen el color de marca; peligro, éxito, advertencia e información usan los colores de estado.</p>
   </header>
   
@@ -5389,7 +5398,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="formularios" aria-labelledby="h-form">
   <header class="kit-section__head">
-    <h2 id="h-form">Formularios, buscadores y filtros</h2>
+    <h2 id="h-form">Formularios, buscadores y filtros<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-field</code> <code>gn-filters</code></span></h2>
     <p>Campos con etiqueta visible, ayuda y error vinculados con <code>aria-describedby</code>. Los filtros se arman sin enviar el formulario hasta presionar Filtrar, como en GELECTRIC.</p>
   </header>
   
@@ -5987,7 +5996,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="datos" aria-labelledby="h-datos">
   <header class="kit-section__head">
-    <h2 id="h-datos">Tablas y listados</h2>
+    <h2 id="h-datos">Tablas y listados<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_sort_th</code> <code>gn_cell</code> <code>gn_pagination</code></span><span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · tarjeta, barra y acciones</span></h2>
     <p>Encabezado ordenable con <code>aria-sort</code>, números alineados a la derecha y acciones por fila. En pantallas angostas cada fila se convierte en una tarjeta que se abre como acordeón, sin scroll horizontal.</p>
   </header>
   
@@ -6613,7 +6622,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="dashboard" aria-labelledby="h-dash">
   <header class="kit-section__head">
-    <h2 id="h-dash">Tarjetas, indicadores y gráficos</h2>
+    <h2 id="h-dash">Tarjetas, indicadores y gráficos<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-card</code> <code>gn-kpi</code> <code>data-gn-chart</code></span></h2>
     <p>Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.</p>
   </header>
   
@@ -6867,7 +6876,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="estados" aria-labelledby="h-est">
   <header class="kit-section__head">
-    <h2 id="h-est">Estados e interacción</h2>
+    <h2 id="h-est">Estados e interacción<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_badge</code> <code>gn_messages_json</code></span><span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · alertas, modales, acordeones</span></h2>
     <p>Badges, alertas, notificaciones, modales, tooltips, acordeones, menús de acciones y pasos. Los colores de estado son independientes de la marca.</p>
   </header>
   
@@ -7112,7 +7121,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 
 <section class="kit-section" id="comparacion" aria-labelledby="h-comp">
   <header class="kit-section__head">
-    <h2 id="h-comp">Mismos componentes, cuatro sistemas</h2>
+    <h2 id="h-comp">Mismos componentes, cuatro sistemas<span class="kit-kind kit-kind--example" title="Contenido de demostración del catálogo, no es parte de la biblioteca">Ejemplo · contenido de cada producto</span></h2>
     <p>Los cuatro productos comparten los componentes y el atributo <code>data-gn-product</code> aplica su identidad. El contenido y los íconos son los de cada sistema.</p>
   </header>
   <div class="kit-compare">
@@ -7186,7 +7195,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="gn-card"><div class="gn-card__body">
       <h3 class="kit-h3">Instalación</h3>
 <pre class="kit-code"><code># requirements.txt
-geneos-ui @ git+https://gitlab.coopgeneos.com/geneos/geneos-ui.git@v0.2.1
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.3.0
 
 # settings.py
 INSTALLED_APPS += ["geneos_ui"]
@@ -7487,7 +7496,6 @@ GENEOS_UI = {
 
   // ------------------------------------------------------------- sidebar
   var PIN_KEY = "gn-sidebar-expanded";
-  var LEGACY_PIN_KEY = "geletric-sidebar-pinned"; // GELECTRIC: "1" = expandido
 
   var SIDEBAR_SYNC = [];
   function initSidebars() { $$("[data-gn-sidebar]").forEach(initSidebar); }
@@ -7504,9 +7512,10 @@ GENEOS_UI = {
     // estado expandido/contraído en escritorio, recordado entre páginas y por producto
     var key = sidebar.getAttribute("data-gn-storage-key") || PIN_KEY;
     var saved = store(key);
-    if (saved === null && /gelectric$/.test(key)) {
-      // GELECTRIC ya guardaba esta preferencia con otra clave: se respeta
-      var legacy = store(LEGACY_PIN_KEY);
+    var legacyKey = sidebar.getAttribute("data-gn-legacy-key");
+    if (saved === null && legacyKey) {
+      // el producto ya guardaba esta preferencia con otra clave ("1" = expandido): se respeta una vez
+      var legacy = store(legacyKey);
       if (legacy !== null) { saved = legacy === "1" ? "1" : "0"; store(key, saved); }
     }
     var defaultExpanded = sidebar.getAttribute("data-gn-default") !== "collapsed";
@@ -8402,7 +8411,7 @@ GENEOS_UI = {
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.2.1";
+  window.GN.version = "0.3.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

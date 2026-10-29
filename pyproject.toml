@@ -4,16 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "geneos-ui"
-version = "0.2.1"
-description = "Sistema de diseño y componentes compartidos para los productos Django de GENEOS (GELECTRIC, GEMA, GEAGRO)."
+version = "0.3.0"
+description = "Sistema de diseño y componentes compartidos para los productos Django de GENEOS."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Propietario: Cooperativa GENEOS" }
 authors = [{ name = "GENEOS" }]
-dependencies = ["Django>=5.0,<6.0"]
+dependencies = ["Django>=5.2,<6.0"]
 classifiers = [
   "Framework :: Django",
-  "Framework :: Django :: 5.0",
   "Framework :: Django :: 5.2",
   "Programming Language :: Python :: 3",
 ]

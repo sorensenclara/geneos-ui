@@ -1,17 +1,18 @@
 # geneos-ui
 
-Sistema de diseño y biblioteca de componentes compartida para los productos Django de GENEOS: **GELECTRIC**, **GEMA**, **GEAGRO Cereales** y **GEAGRO Vid**.
+Sistema de diseño y biblioteca de componentes compartida para los productos Django de GENEOS: hoy **GELECTRIC**, **GEMA**, **GEAGRO Cereales** y **GEAGRO Vid**, y cualquier producto nuevo, que se incorpora desde su propio `settings.py` sin cambiar la biblioteca ([`docs/nuevo-producto.md`](docs/nuevo-producto.md)).
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.2.1.** Catálogo aprobado visualmente (tema, navegación, iconografía y contenido por producto). Todavía no está integrado en ningún producto.
+> Estado: **v0.3.0.** Catálogo aprobado visualmente y productos declarados desde sus settings. Todavía no está integrado en ningún producto; el siguiente paso es un piloto en una rama de desarrollo.
 
 ## Qué incluye
 
 | Pieza | Archivo | Descripción |
 | --- | --- | --- |
 | Tokens | `static/geneos_ui/css/tokens.css` | Neutros, tipografía, espaciado, radios, sombras y colores derivados (`--gn-*`). |
-| Temas | `static/geneos_ui/css/themes/*.css` | Un archivo por producto con sus colores reales (`--gn-c-*`). |
+| Temas | `static/geneos_ui/css/themes/*.css` | Colores reales (`--gn-c-*`) de los cuatro productos actuales. Un producto nuevo trae su tema en sus propios estáticos (`THEME_CSS`). |
+| Presets | `geneos_ui/presets.py` | Configuración de los cuatro productos actuales. Es el único lugar del código que los nombra. |
 | Componentes | `static/geneos_ui/css/geneos-ui.css` | Clases `gn-*` dentro de `@layer geneos-ui`. |
 | Puentes | `static/geneos_ui/css/bridges/` | Opcionales: retintan Bootstrap 5 (Lexa) y Jazzmin con los tokens. |
 | JavaScript | `static/geneos_ui/js/geneos-ui.js` | Sin dependencias. Sidebar, buscador, dropdowns, pestañas, filtros, tablas, modales, notificaciones y gráficos. |
@@ -23,7 +24,7 @@ La estructura (sidebar, botones, tablas, filtros, formularios) toma como referen
 
 ## Compatibilidad
 
-- Python ≥ 3.10, Django ≥ 5.0 y < 6.0 (GELECTRIC 5.x, GEMA 5.2.17, GEAGRO 5.2.5).
+- Python ≥ 3.10 y Django 5.2 LTS (`>=5.2,<6.0`). GEMA fija 5.2.17 y GEAGRO 5.2.5; GELECTRIC declara `>=5.0,<6.0` y en Render se instala la 5.2 más nueva. Django 6.1 se prueba en CI de forma informativa.
 - No depende de Bootstrap, jQuery ni de otras librerías. Convive con ellas porque solo usa clases `gn-` y atributos `data-gn-`.
 - Navegadores: necesita `color-mix()`, `@layer` y `<dialog>` (Chrome/Edge 111+, Firefox 113+, Safari 16.2+).
 
@@ -33,7 +34,7 @@ El repositorio principal es **GitHub**: https://github.com/sorensenclara/geneos-
 
 ```text
 # requirements.txt — usar un tag publicado después de aprobar el diseño
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.2.1
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.3.0
 ```
 
 ```python
@@ -45,7 +46,7 @@ TEMPLATES[0]["OPTIONS"]["context_processors"] += [
 ]
 
 GENEOS_UI = {
-    "PRODUCT": "gema",                      # gelectric | gema | geagro-cereales | geagro-vid
+    "PRODUCT": "gema",                      # con preset: gelectric | gema | geagro-cereales | geagro-vid
     "NAV": "core.navigation.get_nav",       # función (request) -> list[NavItem | NavSection]
     "LOGO_FULL": "core/images/gema-logo-white.svg",
     "LOGO_ICON": "core/images/gema-logo-favicon.svg",
@@ -55,6 +56,9 @@ GENEOS_UI = {
     # "NAV_LAYOUT": "horizontal",           # opcional; por defecto GEMA horizontal y el resto vertical
     "LOGO_TOPBAR": "core/images/gema-logo.svg",  # logo para fondo claro (encabezado con menú horizontal)
 }
+
+# Un producto sin preset declara además THEME_CSS (y, si quiere, NAV_ICONS, FONT_CSS…):
+# ver docs/nuevo-producto.md y la lista completa de claves en docs/api.md.
 
 # urls.py (opcional: catálogo visible con DEBUG o para staff)
 path("ui-kit/", include("geneos_ui.urls")),
@@ -136,6 +140,9 @@ pytest
 cd sandbox && python manage.py runserver      # http://127.0.0.1:8000/ catálogo · /demo/ listado
 GN_PRODUCT=gema python manage.py runserver    # otro producto en el layout de demo
 python tools/build_catalog.py                 # dist/ui-kit.html, catálogo en un solo archivo
+DJANGO_SETTINGS_MODULE=sandbox.settings_geflota python manage.py runserver   # producto de prueba GEFLOTA en /geflota/
+python tests/visual/capture.py dist/ui-kit.html shots/actual                 # capturas del catálogo
+python tests/visual/compare.py shots/ref shots/actual                        # comparación con otra versión
 python tools/import_product_icons.py --check --gelectric … --gema … --geagro …   # copia de íconos idéntica a los originales
 ```
 
@@ -151,12 +158,6 @@ Los logotipos de `sandbox/static/demo/logos/` son copias de los originales de ca
 
 ## Versionado
 
-SemVer con `CHANGELOG.md` y tags `vX.Y.Z`.
+SemVer sobre la API pública de [`docs/api.md`](docs/api.md), con `CHANGELOG.md` y tags `vX.Y.Z` en GitHub. Qué cambio es mayor, menor o corrección, cómo se depreca algo y qué se revisa antes de publicar: [`docs/versionado.md`](docs/versionado.md). Cada producto fija una versión exacta y la actualiza en su rama de trabajo (`2026`, `2026-cereales`, `2026-vid`).
 
-- **major**: cambios de markup, nombres de clase o de tokens que obligan a tocar templates.
-- **minor**: componentes o variantes nuevas.
-- **patch**: correcciones visuales o de comportamiento sin cambios de API.
-
-Los tags se crean en GitLab. Cada producto fija una versión exacta y la actualiza con su propio merge request, en su rama de trabajo (`2026`, `2026-cereales`, `2026-vid`).
-
-Más detalle en [`docs/componentes.md`](docs/componentes.md), [`docs/integracion.md`](docs/integracion.md), [`docs/iconografia.md`](docs/iconografia.md) y [`docs/pendientes.md`](docs/pendientes.md).
+Más detalle en [`docs/api.md`](docs/api.md), [`docs/nuevo-producto.md`](docs/nuevo-producto.md), [`docs/componentes.md`](docs/componentes.md), [`docs/integracion.md`](docs/integracion.md), [`docs/iconografia.md`](docs/iconografia.md) y [`docs/pendientes.md`](docs/pendientes.md).

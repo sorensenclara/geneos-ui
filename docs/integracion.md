@@ -29,6 +29,16 @@
 
 Cada producto declara su disposición por defecto con `GENEOS_UI["NAV_LAYOUT"]` (GEMA `"horizontal"`; GELECTRIC y GEAGRO `"vertical"`) y su logo para fondo claro con `LOGO_TOPBAR`. El usuario la cambia desde la solapa de Preferencias de interfaz (`{% gn_prefs %}`, ya incluida en el layout base) y queda guardada en su navegador. Para guardarla por usuario en el servidor hace falta un campo en el modelo de usuario del producto (migración propia) y una vista que reciba el evento `gn:nav`; queda para cuando se integre cada producto.
 
+## Piloto (después de la 0.3.0)
+
+Antes de integrar un producto completo, una prueba chica en una rama de desarrollo del producto (nunca en `main`, ni en las ramas originales, ni en producción). El objetivo es comprobar fuera del catálogo que el layout, el encabezado, la navegación y las preferencias funcionan:
+
+1. Rama nueva desde la rama de trabajo, por ejemplo `2026-piloto-geneos-ui` en GELECTRIC.
+2. `geneos-ui` con versión fija, `INSTALLED_APPS`, el context processor y `GENEOS_UI` con `PRODUCT` y `NAV`.
+3. Una sola pantalla extiende `geneos_ui/layouts/app.html`; el resto sigue con su `base.html`.
+4. Se revisan: logo y encabezado, menú con los permisos reales, activo, claro y oscuro, horizontal y vertical, celular, `manage.py check` y consola del navegador.
+5. Sin cambios de modelos, migraciones, vistas ni reglas de negocio. Capturas de antes y después.
+
 ## Riesgos a vigilar
 
 - No cargar el sidebar de Lexa y el de GENEOS UI en la misma página (`app.js` de Lexa controla clases del `<body>`).

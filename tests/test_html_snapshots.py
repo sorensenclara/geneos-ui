@@ -23,6 +23,18 @@ CAMBIOS_INTENCIONALES = [
 ]
 
 
+# Texto del catálogo que cambia con cada versión (no es diseño): se normaliza en los dos lados.
+NORMALIZAR_AMBOS = [
+    (r"geneos-ui @ git\+https://\S+?\.git@v[0-9.]+", "geneos-ui @ <repositorio>@vX"),  # línea de instalación (GitHub desde la 0.3.0)
+]
+
+
+def both(html):
+    for pattern, repl in NORMALIZAR_AMBOS:
+        html = re.sub(pattern, repl, html)
+    return html
+
+
 @pytest.fixture(scope="module")
 def current():
     out = render_all()
@@ -33,8 +45,8 @@ def current():
 
 @pytest.mark.parametrize("name", sorted(p.stem for p in REF_DIR.glob("*.html")))
 def test_html_igual_a_la_referencia(current, name):
-    expected = (REF_DIR / f"{name}.html").read_text(encoding="utf-8")
-    got = current[name]
+    expected = both((REF_DIR / f"{name}.html").read_text(encoding="utf-8"))
+    got = both(current[name])
     if got != expected:
         diff = "\n".join(list(difflib.unified_diff(expected.splitlines(), got.splitlines(), REFERENCE, "actual", lineterm="", n=1))[:60])
         pytest.fail(f"{name}: el HTML cambió respecto de {REFERENCE}\n{diff}")

@@ -2,6 +2,31 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.3.0] · 2026-10-29
+
+Un producto nuevo se incorpora desde su propio `settings.py`, sin cambiar la biblioteca. Los cuatro productos actuales se ven y se comportan igual que en la 0.2.1: mismo HTML (salvo lo indicado abajo) y capturas idénticas en claro y oscuro, menú horizontal y vertical, desplegables, preferencias y celular.
+
+### Agregado
+- `geneos_ui/presets.py`: GELECTRIC, GEMA, GEAGRO Cereales y GEAGRO Vid como presets. La configuración se arma en capas: valores por defecto < preset < `GENEOS_UI`.
+- Claves nuevas de `GENEOS_UI`: `THEME_CSS`, `FONT_CSS`, `NAV_ICONS`, `BOOTSTRAP_RGB`, `SIDEBAR_LEGACY_KEY`, `ICON_FAMILY`, `ICON_MANIFEST` y `STATIC_VERSION_QUERY`.
+- `NavItem(icon_static_h=…, icon_static_h_active=…)`: variante clara propia de un ícono para la barra horizontal; con `NAV_ICONS = "tint"` alcanza el SVG blanco.
+- Chequeos E003 (sin preset ni tema), E004 (tema inexistente), E005 (`NAV_ICONS`), W002 (logos) y W003 (template de componente sobrescrito por el producto).
+- `?v=<versión>` en el CSS y el JS de la biblioteca, y `nonce` de CSP en los `<script>` y `<style>` en línea.
+- Catálogo: cada sección dice si es «Componente», «HTML de referencia» o «Ejemplo».
+- GEFLOTA, producto ficticio de pruebas, solo en el sandbox (`sandbox/geflota`, `settings_geflota.py`).
+- Documentación: `docs/api.md` (API pública), `docs/versionado.md` y `docs/nuevo-producto.md`.
+- Pruebas: HTML de referencia de la 0.2.1 (`tests/snapshots/`), capturas comparadas (`tests/visual/`), pruebas en el navegador, producto nuevo, chequeos, presets y ningún producto escrito en el código de la biblioteca. CI con Python 3.10 a 3.13 y Django 5.2, Django 6.1 informativo, instalación limpia del wheel y capturas contra `v0.2.1`.
+
+### Cambiado
+- `PRODUCT` acepta cualquier identificador; E001 controla solo el formato.
+- Requiere Django 5.2 LTS (`>=5.2,<6.0`). Django 5.0 y 5.1 ya no reciben parches de seguridad.
+- Los tripletes `--bs-*-rgb` del puente Bootstrap ya no están en `bridges/bootstrap5.css`: los escribe `gn_css` desde `BOOTSTRAP_RGB` (mismos valores), con `:root[data-gn-product]` para ganarle a Bootstrap en cualquier orden. HTML: un `<style>` después del puente.
+- La migración de la clave vieja del sidebar de GELECTRIC pasó del JS a la configuración. HTML: atributo `data-gn-legacy-key` en el sidebar de GELECTRIC.
+- Menú: si varias rutas coinciden, queda activa la más específica. No cambia nada en los cuatro productos, cuyo inicio es `/`.
+
+### Deprecado
+- `geneos_ui.conf.PRODUCTS`, `SIDEBAR_DEFAULTS`, `NAV_LAYOUT_DEFAULTS` y `geneos_ui.product_icons.HNAV_VARIANTS`, `HNAV_TINT`. Siguen funcionando con aviso; se quitan en la 0.4.0.
+
 ## [0.2.1] · 2026-10-28
 
 ### Cambiado · menú horizontal unificado
