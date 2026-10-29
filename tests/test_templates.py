@@ -60,8 +60,11 @@ def test_catalogo_restringido_sin_debug(client):
 
 def test_check_producto_invalido(settings):
     from geneos_ui.checks import check_geneos_ui
+    settings.GENEOS_UI = {"PRODUCT": "Otro Producto"}
+    assert "geneos_ui.E001" in [e.id for e in check_geneos_ui(None)]
+    # un identificador válido sin preset ni tema: la página quedaría sin colores
     settings.GENEOS_UI = {"PRODUCT": "otro"}
-    assert [e.id for e in check_geneos_ui(None)] == ["geneos_ui.E001"]
+    assert [e.id for e in check_geneos_ui(None)] == ["geneos_ui.E003"]
 
 
 def test_sidebar_inicial_por_producto(settings):

@@ -35,7 +35,7 @@ from typing import Any, Callable, Optional
 from django.urls import NoReverseMatch, reverse
 from django.utils.text import slugify
 
-from . import product_icons
+from . import conf, product_icons
 
 
 @dataclass
@@ -53,6 +53,10 @@ class NavItem:
     badge: Optional[str] = None          # texto corto ("Nuevo", "3")
     match: tuple = ()                    # prefijos de ruta extra para marcar activo
     id: Optional[str] = None
+    # variantes de un ícono propio (icon_static) para la barra horizontal clara; sin ellas,
+    # con GENEOS_UI["NAV_ICONS"] = "tint" se pinta el mismo SVG con los colores del tema
+    icon_static_h: Optional[str] = None
+    icon_static_h_active: Optional[str] = None
 
 
 @dataclass
@@ -68,7 +72,8 @@ def _icon_fields(entry) -> dict:
 
     Si el producto no tiene ícono propio para ese módulo (estado "pendiente")
     se marca como pendiente: el sidebar muestra un marcador neutro, no un
-    ícono genérico.
+    ícono genérico. Las variantes de la barra horizontal clara salen de
+    ``GENEOS_UI["NAV_ICONS"]`` (o del preset del producto).
     """
     if product_icons.is_product_ref(entry.icon):
         rec = product_icons.resolve(entry.icon)
@@ -79,8 +84,10 @@ def _icon_fields(entry) -> dict:
                     "icon_h_tint": not h and product_icons.hnav_tint(entry.icon)}
         return {"icon": None, "icon_static": None, "icon_pending": True, "icon_ref": entry.icon,
                 "icon_h": None, "icon_h_active": None, "icon_h_tint": False}
+    h = getattr(entry, "icon_static_h", None)
+    tint = bool(entry.icon_static) and not h and conf.get_config()["NAV_ICONS"] == "tint"
     return {"icon": entry.icon, "icon_static": entry.icon_static, "icon_pending": False, "icon_ref": None,
-            "icon_h": None, "icon_h_active": None, "icon_h_tint": False}
+            "icon_h": h, "icon_h_active": getattr(entry, "icon_static_h_active", None), "icon_h_tint": tint}
 
 
 def _allowed(entry, request) -> bool:

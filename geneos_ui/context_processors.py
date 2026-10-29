@@ -28,6 +28,7 @@ def geneos_ui(request):
             "home_url": cfg["HOME_URL"],
             "bridges": cfg["BRIDGES"],
             "sidebar_default": cfg["SIDEBAR_DEFAULT"],
+            "sidebar_legacy_key": cfg["SIDEBAR_LEGACY_KEY"],
             "nav_layout": cfg["NAV_LAYOUT"],
             "load_fonts": cfg["LOAD_FONTS"],
             "nav": nav,

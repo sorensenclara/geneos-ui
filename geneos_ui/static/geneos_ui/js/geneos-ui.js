@@ -91,7 +91,6 @@
 
   // ------------------------------------------------------------- sidebar
   var PIN_KEY = "gn-sidebar-expanded";
-  var LEGACY_PIN_KEY = "geletric-sidebar-pinned"; // GELECTRIC: "1" = expandido
 
   var SIDEBAR_SYNC = [];
   function initSidebars() { $$("[data-gn-sidebar]").forEach(initSidebar); }
@@ -108,9 +107,10 @@
     // estado expandido/contraído en escritorio, recordado entre páginas y por producto
     var key = sidebar.getAttribute("data-gn-storage-key") || PIN_KEY;
     var saved = store(key);
-    if (saved === null && /gelectric$/.test(key)) {
-      // GELECTRIC ya guardaba esta preferencia con otra clave: se respeta
-      var legacy = store(LEGACY_PIN_KEY);
+    var legacyKey = sidebar.getAttribute("data-gn-legacy-key");
+    if (saved === null && legacyKey) {
+      // el producto ya guardaba esta preferencia con otra clave ("1" = expandido): se respeta una vez
+      var legacy = store(legacyKey);
       if (legacy !== null) { saved = legacy === "1" ? "1" : "0"; store(key, saved); }
     }
     var defaultExpanded = sidebar.getAttribute("data-gn-default") !== "collapsed";

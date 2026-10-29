@@ -1,5 +1,5 @@
 {% load static geneos_ui %}{# Sidebar oficial GENEOS (estructura de GELECTRIC). Variables: gn, nav, sidebar_id #}
-<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}" aria-label="Navegación principal"{% if hidden %} hidden{% endif %}>
+<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"{% if gn.sidebar_legacy_key %} data-gn-legacy-key="{{ gn.sidebar_legacy_key }}"{% endif %} aria-label="Navegación principal"{% if hidden %} hidden{% endif %}>
   <div class="gn-sidebar__brand">
     <a href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
       {% if gn.logo_full %}<img class="gn-sidebar__logo-full" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}

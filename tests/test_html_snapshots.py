@@ -2,6 +2,7 @@
 de la referencia (tests/snapshots/<versión>/), salvo lo que normaliza
 ``generate.normalize`` (parámetro de versión y marcas del catálogo)."""
 import difflib
+import re
 from pathlib import Path
 
 import pytest
@@ -12,9 +13,22 @@ REFERENCE = "0.2.1"
 REF_DIR = Path(__file__).resolve().parent / "snapshots" / REFERENCE
 
 
+# Cambios de HTML hechos a propósito en la 0.3.0, sin efecto visual ni de comportamiento.
+# Se quitan del HTML actual antes de comparar; cada uno tiene su propio test.
+CAMBIOS_INTENCIONALES = [
+    # la clave vieja del sidebar de GELECTRIC pasó del JS (/gelectric$/) a un atributo del sidebar
+    (r' data-gn-legacy-key="[^"]*"', ""),
+    # los tripletes --bs-*-rgb pasaron de bridges/bootstrap5.css a un <style> que escribe gn_css
+    (r'\n<style>:root\[data-gn-product="[a-z-]+"\] \{[^<]*\}</style>', ""),
+]
+
+
 @pytest.fixture(scope="module")
 def current():
-    return render_all()
+    out = render_all()
+    for pattern, repl in CAMBIOS_INTENCIONALES:
+        out = {k: re.sub(pattern, repl, v) for k, v in out.items()}
+    return out
 
 
 @pytest.mark.parametrize("name", sorted(p.stem for p in REF_DIR.glob("*.html")))

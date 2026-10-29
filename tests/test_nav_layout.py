@@ -3,12 +3,13 @@ from django.template import Context, Template
 from django.test import Client, override_settings
 
 from geneos_ui.catalog_data import PRODUCTS
-from geneos_ui.conf import NAV_LAYOUT_DEFAULTS, get_config
+from geneos_ui.conf import get_config
+from geneos_ui.presets import PRESETS
 from geneos_ui.navigation import build_nav
 
 
 def test_valores_por_producto():
-    assert NAV_LAYOUT_DEFAULTS == {"gema": "horizontal", "gelectric": "vertical",
+    assert {k: v["NAV_LAYOUT"] for k, v in PRESETS.items()} == {"gema": "horizontal", "gelectric": "vertical",
                                    "geagro-cereales": "vertical", "geagro-vid": "vertical"}
 
 
