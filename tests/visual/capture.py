@@ -28,7 +28,7 @@ def shots(html, out):
             pg = ctx.new_page()
             pg.on("pageerror", lambda e: errors.append(str(e)))
             pg.goto(url)
-            pg.wait_for_function("window.GN && GN.setNav")
+            pg.wait_for_function("() => !!(window.GN && window.GN.setNav)")
             pg.add_style_tag(content=FREEZE)
             return pg
 

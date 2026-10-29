@@ -33,6 +33,7 @@ settings.ALLOWED_HOSTS = ["*"]
 
 
 def read_static(path):
+    path = path.split("?", 1)[0]  # sin ?v=<versión>
     found = finders.find(path)
     if not found:
         raise FileNotFoundError(path)
