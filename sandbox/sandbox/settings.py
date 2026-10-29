@@ -3,6 +3,9 @@
     cd sandbox && python manage.py runserver
     → http://127.0.0.1:8000/            catálogo (UI Kit)
     → http://127.0.0.1:8000/demo/       layout real con menú y paginación
+
+    DJANGO_SETTINGS_MODULE=sandbox.settings_geflota python manage.py runserver
+    → http://127.0.0.1:8000/geflota/    producto ficticio GEFLOTA, sin cambios en geneos_ui
 """
 import os
 from pathlib import Path
@@ -18,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "geneos_ui",
+    "geflota",   # producto ficticio de pruebas (solo sandbox); ver settings_geflota.py
 ]
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",

@@ -1,0 +1,29 @@
+/*
+ * GEFLOTA · tema (producto ficticio de pruebas)
+ * Vive en los estáticos del producto, no en geneos-ui: se declara en
+ * GENEOS_UI["THEME_CSS"]. Solo colores de identidad; el resto (modo oscuro,
+ * estados, foco, barra horizontal) lo deriva la biblioteca.
+ */
+@layer geneos-ui {
+  [data-gn-product="geflota"] {
+    --gn-c-sidebar: #0f3d5c;        /* azul petróleo */
+    --gn-c-sidebar-deep: #0a2c43;
+    --gn-c-brand: #b35609;          /* naranja: blanco encima 4,9:1 */
+    --gn-c-brand-hover: #9a4a07;
+    --gn-c-brand-press: #833f06;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #b35609;
+    --gn-c-accent: #f29a3a;         /* indicador del activo sobre el sidebar (5,1:1) y en modo oscuro */
+    --gn-c-on-accent: #1d1d1d;
+    --gn-c-good: #2e8b57;
+    --gn-c-warning: #e0972b;
+    --gn-c-critical: #d64545;
+    --gn-c-info: #1f6f99;
+    --gn-c-neutral: #64748b;
+    --gn-flourish: linear-gradient(90deg, #f29a3a, #1f6f99);
+    --gn-chart-1: #0f3d5c;
+    --gn-chart-2: #f29a3a;
+    --gn-chart-3: #1f6f99;
+    --gn-chart-4: #d64545;
+  }
+}

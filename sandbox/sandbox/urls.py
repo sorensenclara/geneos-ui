@@ -16,4 +16,5 @@ def demo(request):
 urlpatterns = [
     path("", include("geneos_ui.urls")),
     path("demo/", demo, name="demo"),
+    path("geflota/", include("geflota.urls")),
 ]

@@ -1,0 +1,22 @@
+{% extends "geneos_ui/layouts/app.html" %}
+{% load geneos_ui %}
+{% block title %}Vehículos · {{ gn.product_name }}{% endblock %}
+{% block breadcrumbs %}{% gn_breadcrumbs crumbs %}{% endblock %}
+{% block page_head %}
+<div class="gn-page-head"><div class="gn-page-head__text"><h1>Vehículos</h1><p>{{ page_obj.paginator.count }} unidades registradas.</p></div>
+  <div class="gn-page-head__actions"><button type="button" class="gn-btn gn-btn--primary">{% gn_icon "i-plus" %}Agregar vehículo</button></div></div>
+{% endblock %}
+{% block content %}
+<div class="gn-card"><div class="gn-card__body">
+  <div class="gn-table-wrap"><table class="gn-table gn-table--responsive">
+    <thead><tr>{% gn_sort_th "Patente" "patente" %}{% gn_sort_th "Modelo" "modelo" %}<th scope="col" class="is-num">Kilómetros</th><th scope="col">Estado</th></tr></thead>
+    <tbody>{% for v in page_obj %}<tr>
+      {% gn_cell "Patente" %}<b>{{ v.patente }}</b>{% endgn_cell %}
+      {% gn_cell "Modelo" %}{{ v.modelo }}{% endgn_cell %}
+      {% gn_cell "Kilómetros" "is-num" %}{{ v.km }}{% endgn_cell %}
+      {% gn_cell "Estado" %}{% gn_badge v.estado.0 v.estado.1 True %}{% endgn_cell %}
+    </tr>{% endfor %}</tbody>
+  </table></div>
+  <div class="gn-table-foot">{% gn_pagination page_obj sizes="10,25,50" %}</div>
+</div></div>
+{% endblock %}

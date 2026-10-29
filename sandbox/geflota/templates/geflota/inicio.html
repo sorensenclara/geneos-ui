@@ -1,0 +1,16 @@
+{% extends "geneos_ui/layouts/app.html" %}
+{% load geneos_ui %}
+{% block title %}Inicio · {{ gn.product_name }}{% endblock %}
+{% block breadcrumbs %}{% gn_breadcrumbs crumbs %}{% endblock %}
+{% block page_head %}
+<div class="gn-page-head"><div class="gn-page-head__text"><span class="gn-eyebrow">Producto ficticio de pruebas</span><h1>Tu flota hoy</h1><p>Pantalla armada solo con el layout y las clases de GENEOS UI.</p></div></div>
+{% endblock %}
+{% block content %}
+<div class="gn-grid gn-grid--3">{% for label, value, meta in kpis %}
+  <article class="gn-card gn-kpi">{# HTML de referencia: la tarjeta KPI todavía no tiene tag #}
+    <div class="gn-kpi__top"><span class="gn-kpi__label">{{ label }}</span></div>
+    <div class="gn-kpi__value">{{ value }}</div>
+    <div class="gn-kpi__trend">{{ meta }}</div>
+  </article>{% endfor %}
+</div>
+{% endblock %}

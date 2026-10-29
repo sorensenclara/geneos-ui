@@ -6,6 +6,11 @@ o publicarla como página.
 
     python tools/build_catalog.py            → dist/ui-kit.html (documento completo)
     python tools/build_catalog.py --fragment → dist/ui-kit.fragment.html (sin <html>/<head>/<body>)
+
+Cualquier otra página del sandbox, con otros settings (p. ej. el producto de
+prueba GEFLOTA, que no forma parte del catálogo):
+
+    python tools/build_catalog.py --settings sandbox.settings_geflota --url /geflota/ --out dist/geflota-inicio.html
 """
 import base64
 from urllib.parse import unquote
@@ -16,7 +21,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path[:0] = [str(ROOT), str(ROOT / "sandbox")]
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sandbox.settings")
+def _arg(name, default=None):
+    return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else default
+
+
+os.environ["DJANGO_SETTINGS_MODULE"] = _arg("--settings", os.environ.get("DJANGO_SETTINGS_MODULE", "sandbox.settings"))
 
 import django  # noqa: E402
 
@@ -48,8 +57,8 @@ def data_uri(path):
     return f"data:{mime};base64,{base64.b64encode(raw).decode()}"
 
 
-def build(fragment=False):
-    html = Client().get("/?static=1").content.decode()
+def build(fragment=False, url="/?static=1", out=None):
+    html = Client().get(url).content.decode()
     static_url = settings.STATIC_URL
 
     # CSS: hojas locales embebidas, Google Fonts queda como <link>
@@ -87,7 +96,7 @@ def build(fragment=False):
         html = head.strip() + "\n" + boot + f'\n<div class="{classes}">\n' + body + "\n</div>\n"
         out = ROOT / "dist" / "ui-kit.fragment.html"
     else:
-        out = ROOT / "dist" / "ui-kit.html"
+        out = Path(out) if out else ROOT / "dist" / "ui-kit.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(html, encoding="utf-8")
     print(out, f"{len(html) / 1024:.0f} KB")
@@ -95,4 +104,4 @@ def build(fragment=False):
 
 
 if __name__ == "__main__":
-    build(fragment="--fragment" in sys.argv)
+    build(fragment="--fragment" in sys.argv, url=_arg("--url", "/?static=1"), out=_arg("--out"))
