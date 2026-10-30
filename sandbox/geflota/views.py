@@ -30,3 +30,20 @@ def vehiculos(request):
 
 def pendiente(request, seccion):
     return render(request, "geflota/inicio.html", {"kpis": [], "crumbs": [("Inicio", "/geflota/"), (seccion.capitalize(), None)]})
+
+
+MANTENIMIENTO = [
+    {"label": "Órdenes de servicio", "href": "/geflota/s/ordenes/", "icon": "i-wrench", "description": "Pedidos al taller y su estado"},
+    {"label": "Vencimientos de VTV, seguro y patente", "href": "/geflota/s/vencimientos/", "icon": "i-calendar",
+     "description": "Lo que vence en los próximos 30 días"},
+    {"label": "Plan de mantenimiento preventivo por kilometraje", "icon": "i-gauge", "status": "En definición"},
+    {"label": "Historial de reparaciones", "status": "En definición"},
+]
+
+
+def mantenimiento(request):
+    return render(request, "geflota/mantenimiento.html", {"items": MANTENIMIENTO, "crumbs": [("Inicio", "/geflota/"), ("Mantenimiento", None)]})
+
+
+def ayuda(request):
+    return render(request, "geflota/inicio.html", {"kpis": [], "crumbs": [("Inicio", "/geflota/"), ("Ayuda y soporte", None)]})

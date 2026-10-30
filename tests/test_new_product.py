@@ -74,3 +74,19 @@ def test_puente_bootstrap_con_sus_colores(geflota):
     geflota.GENEOS_UI = {**GEFLOTA, "BRIDGES": ["bootstrap5"]}
     html = Template("{% load geneos_ui %}{% gn_css %}").render(Context())
     assert ':root[data-gn-product="geflota"] { --bs-primary-rgb: 179, 86, 9; }' in html
+
+
+# --- 0.4.0: GEFLOTA usa las claves nuevas, sin tocar geneos_ui ------------
+def test_geflota_accesos_directos_pie_y_variantes(geflota, client):
+    html = client.get("/geflota/").content.decode()
+    assert '<a class="gn-nav__direct" href="/geflota/s/alta-vehiculo/" data-gn-keywords="nuevo agregar">Alta de vehículo</a>' in html
+    assert 'class="gn-nav gn-nav--foot"' in html and 'href="/geflota/ayuda/"' in html
+    assert 'data-gn-variant-value="grafito"' in html and "'gn-variant:'" in html
+    assert 'data-gn-icons="tint"' in html and "gn-nav__icon-stint" in html
+
+
+def test_geflota_vista_de_modulo(geflota, client):
+    html = client.get("/geflota/mantenimiento/").content.decode()
+    assert "gn-page-head--icon" in html and "geflota/iconos/mantenimiento-color.svg" in html
+    assert "gn-link-list--cols-2" in html and html.count("En definición") == 2
+    assert 'title="Plan de mantenimiento preventivo por kilometraje"' in html

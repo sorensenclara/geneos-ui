@@ -26,4 +26,9 @@
     --gn-chart-3: #1f6f99;
     --gn-chart-4: #d64545;
   }
+  /* variante que el usuario puede elegir desde las preferencias (GENEOS_UI["VARIANTS"]) */
+  [data-gn-product="geflota"][data-gn-variant="grafito"] {
+    --gn-c-sidebar: #2b2f36;
+    --gn-c-sidebar-deep: #1f2228;
+  }
 }

@@ -20,4 +20,8 @@ GENEOS_UI = {
     "VERSION_LABEL": "v0.1 · prueba",
     "HOME_URL": "/geflota/",
     "BOOTSTRAP_RGB": {"primary": "179, 86, 9"},
+    # 0.4.0
+    "VARIANTS": [("", "Petróleo"), ("grafito", "Grafito")],
+    "NAV_FOOTER": "geflota.navigation.get_footer",
+    "SIDEBAR_ICONS": "tint",
 }

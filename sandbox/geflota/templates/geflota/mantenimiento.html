@@ -1,0 +1,14 @@
+{% extends "geneos_ui/layouts/app.html" %}
+{% load geneos_ui %}
+{% block title %}Mantenimiento · {{ gn.product_name }}{% endblock %}
+{% block breadcrumbs %}{% gn_breadcrumbs crumbs %}{% endblock %}
+{% block page_head %}
+{% gn_page_head title="Mantenimiento" eyebrow="Módulo" subtitle="Órdenes, vencimientos y plan preventivo de la flota." icon="geflota/iconos/mantenimiento-color.svg" %}
+  <a class="gn-btn gn-btn--secondary" href="/geflota/">{% gn_icon "i-arrowleft" %}Volver a Inicio</a>
+{% endgn_page_head %}
+{% endblock %}
+{% block content %}
+<div class="gn-card"><div class="gn-card__body">
+  {% gn_link_list items=items columns=2 label="Funcionalidades de Mantenimiento" %}
+</div></div>
+{% endblock %}
