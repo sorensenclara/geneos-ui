@@ -112,6 +112,11 @@
     --gn-sidebar-border: rgba(255, 255, 255, .1);
     --gn-sidebar-indicator: var(--gn-c-accent);
 
+    /* ---- contenido existente del producto (LEGACY_CSS) sin modo oscuro todavía:
+       en oscuro se muestra sobre este panel claro (no cambia en el modo oscuro) */
+    --gn-legacy-light-bg: #f4f6fa;
+    --gn-legacy-light-text: #1c2233;
+
     /* ---- navegación horizontal (data-gn-nav="horizontal", solo escritorio) ----
        Un solo diseño para los cuatro productos, el del menú superior de GEMA:
        barra blanca (oscura en modo oscuro) flotando sobre una franja del color

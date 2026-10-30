@@ -353,6 +353,8 @@
     var status = $(".gn-sidebar__status", sidebar);
     var foot = $(".gn-sidebar__foot", sidebar);
     var entries = $$(".gn-nav__entry:not(.gn-nav__more)", nav);
+    // accesos directos (NavItem(search_links=…)): solo se muestran cuando la búsqueda coincide
+    $$(".gn-nav__direct", nav).forEach(function (el) { el.__gnText = el.textContent.trim(); });
     var sections = $$(".gn-nav__section", nav);
     var initial = null;
 
@@ -389,12 +391,24 @@
         var item = $(".gn-nav__item", entry);
         var label = item && $(".gn-nav__label", item);
         var subs = $$(".gn-nav__subitem", entry);
+        var directs = $$(".gn-nav__direct", entry);
+        var directList = $(".gn-nav__directs", entry);
         if (!q) {
           entry.hidden = false;
           if (label) paint(label, "");
           subs.forEach(function (s) { s.parentElement.hidden = false; paint(s, ""); });
+          directs.forEach(function (d) { d.parentElement.hidden = true; paint(d, ""); });
+          if (directList) directList.hidden = true;
           return;
         }
+        var directMatches = 0;
+        directs.forEach(function (d) {
+          var own = hit(haystack(d));
+          d.parentElement.hidden = !own;
+          paint(d, own ? words[0] : "");
+          if (own) directMatches++;
+        });
+        if (directList) directList.hidden = !directMatches;
         var selfMatch = !!(label && hit(haystack(label, item)));
         var subMatches = 0;
         subs.forEach(function (s) {
@@ -404,12 +418,12 @@
           paint(s, own ? words[0] : "");
           if (own) subMatches++;
         });
-        var visible = selfMatch || subMatches > 0;
+        var visible = selfMatch || subMatches > 0 || directMatches > 0;
         entry.hidden = !visible;
         if (label) paint(label, selfMatch ? words[0] : "");
         var toggle = $("[data-gn-group-toggle]", entry);
         if (toggle && visible) setGroup(toggle, document.getElementById(toggle.getAttribute("aria-controls")), true);
-        if (visible) total += Math.max(1, subMatches);
+        if (visible) total += Math.max(1, subMatches + directMatches);
       });
       // los títulos de sección se ocultan si no queda nada debajo
       sections.forEach(function (sec) {
@@ -433,12 +447,13 @@
     input.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && input.value) { e.stopPropagation(); input.value = ""; run(); }
       if (e.key === "ArrowDown" || e.key === "Enter") {
-        var first = $$(".gn-nav__item, .gn-nav__subitem", nav).filter(function (el) { return el.offsetParent !== null; })[0];
+        var first = $$(".gn-nav__item, .gn-nav__subitem, .gn-nav__direct", nav).filter(function (el) { return el.offsetParent !== null; })[0];
         if (!first) return;
         e.preventDefault();
         if (e.key === "Enter" && input.value) {
           // Enter abre el primer resultado navegable
-          var link = $$("a.gn-nav__subitem, a.gn-nav__item", nav).filter(function (el) { return el.offsetParent !== null; })[0];
+          // un acceso directo que coincide es el resultado más preciso
+          var link = $$("a.gn-nav__direct", nav).concat($$("a.gn-nav__subitem, a.gn-nav__item", nav)).filter(function (el) { return el.offsetParent !== null; })[0];
           if (link) { link.click(); return; }
         }
         first.focus();
@@ -989,10 +1004,67 @@
     });
   }
 
+  // ---------------------------------------------------- variante de color
+  // Si el producto declara GENEOS_UI["VARIANTS"], el panel de preferencias muestra
+  // «Color». La elección se guarda por producto (localStorage "gn-variant:<producto>")
+  // y {% gn_theme_boot %} la aplica antes de pintar. "" = el color principal.
+  function variantKey(p) { return "gn-variant:" + (p || document.documentElement.getAttribute("data-gn-product") || ""); }
+  function getVariant() { return document.documentElement.getAttribute("data-gn-variant") || ""; }
+  function syncVariantSwitches() {
+    var root = document.documentElement, product = root.getAttribute("data-gn-product"), v = getVariant();
+    $$("[data-gn-variant-product].gn-prefs__group--variant").forEach(function (g) { g.hidden = g.getAttribute("data-gn-variant-product") !== product; });
+    $$("[data-gn-variant-switch]").forEach(function (group) {
+      $$("[data-gn-variant-value]", group).forEach(function (b) {
+        var on = b.getAttribute("data-gn-variant-value") === v;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+  }
+  function setVariant(variant, persist) {
+    var root = document.documentElement, v = variant || "";
+    if (v) root.setAttribute("data-gn-variant", v); else root.removeAttribute("data-gn-variant");
+    if (persist !== false) store(variantKey(), v);
+    syncVariantSwitches();
+    document.dispatchEvent(new CustomEvent("gn:variant", { detail: { variant: v, product: root.getAttribute("data-gn-product") } }));
+    return v;
+  }
+  function initVariant(root) {
+    if (!initVariant.__done) {
+      initVariant.__done = true;
+      // si cambia el producto (catálogo), se aplica la variante que el usuario eligió para ese producto
+      if (window.MutationObserver) new MutationObserver(function () {
+        var product = document.documentElement.getAttribute("data-gn-product");
+        var offered = $$('.gn-prefs__group--variant[data-gn-variant-product="' + product + '"] [data-gn-variant-value]').map(function (b) { return b.getAttribute("data-gn-variant-value"); });
+        var saved = store(variantKey(product));
+        setVariant(offered.length && saved !== null && offered.indexOf(saved) !== -1 ? saved : "", false);
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-gn-product"] });
+    }
+    $$("[data-gn-variant-switch]", root).forEach(function (group) {
+      if (group.__gn) return; group.__gn = true;
+      var buttons = $$("[data-gn-variant-value]", group);
+      buttons.forEach(function (b, i) {
+        b.addEventListener("click", function () {
+          setVariant(b.getAttribute("data-gn-variant-value"));
+          announce("Color: " + b.textContent.trim());
+        });
+        b.addEventListener("keydown", function (e) {
+          var d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var nb = buttons[(i + d + buttons.length) % buttons.length];
+          nb.focus(); nb.click();
+        });
+      });
+    });
+    syncVariantSwitches();
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
     initTheme(root);
     initNav(root);
+    initVariant(root);
     initPrefs(root);
     initTooltips(root);
     initDropdowns(root);
@@ -1006,7 +1078,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.3.0";
+  window.GN.version = "0.4.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;
@@ -1021,6 +1093,8 @@
   window.GN.setNav = setNav;
   window.GN.getNav = getNav;
   window.GN.setNavDefault = setNavDefault;
+  window.GN.setVariant = setVariant;
+  window.GN.getVariant = getVariant;
 
   function boot() { initSidebars(); init(document); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

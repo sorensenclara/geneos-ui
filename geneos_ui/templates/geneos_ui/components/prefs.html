@@ -12,7 +12,13 @@
     <div class="gn-prefs__group gn-prefs__group--nav">
       <span class="gn-prefs__label" aria-hidden="true">Navegación en escritorio</span>
       {% gn_nav_switch %}
-    </div>
+    </div>{% for g in variant_groups %}
+    <div class="gn-prefs__group gn-prefs__group--variant" data-gn-variant-product="{{ g.product }}">
+      <span class="gn-prefs__label" aria-hidden="true">Color</span>
+      <div class="gn-theme-switch" role="radiogroup" aria-label="Color del sistema" data-gn-variant-switch data-gn-variant-product="{{ g.product }}">
+        {% for key, label in g.variants %}<button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="{% if forloop.first %}true{% else %}false{% endif %}"{% if not forloop.first %} tabindex="-1"{% endif %} data-gn-variant-value="{{ key }}"><i class="gn-prefs__swatch" data-gn-product="{{ g.product }}"{% if key %} data-gn-variant="{{ key }}"{% endif %} aria-hidden="true"></i><span>{{ label }}</span></button>{% endfor %}
+      </div>
+    </div>{% endfor %}
     <p class="gn-prefs__note">Se guarda en este navegador.</p>
   </section>
 </div>

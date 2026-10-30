@@ -57,6 +57,28 @@ class NavItem:
     # con GENEOS_UI["NAV_ICONS"] = "tint" se pinta el mismo SVG con los colores del tema
     icon_static_h: Optional[str] = None
     icon_static_h_active: Optional[str] = None
+    # accesos directos que no están en el menú y aparecen solo al buscar (0.4.0)
+    search_links: list = field(default_factory=list)
+
+
+@dataclass
+class NavLink:
+    """Acceso directo del buscador del menú: una funcionalidad que no es un ítem del menú.
+
+        NavItem("Asociados y servicios", url="…", search_links=[
+            NavLink("Cuota capital y excepciones", url="core:asociado_sub", url_kwargs={"subslug": "cuota-capital"}),
+        ])
+
+    Se muestra solo cuando la búsqueda coincide, debajo del ítem que la contiene,
+    y respeta ``perms`` y ``visible`` como cualquier ítem.
+    """
+    label: str
+    url: Optional[str] = None
+    url_args: tuple = ()
+    url_kwargs: dict = field(default_factory=dict)
+    perms: tuple = ()
+    visible: Optional[Callable[[Any], bool]] = None
+    keywords: str = ""
 
 
 @dataclass
@@ -105,7 +127,7 @@ def _allowed(entry, request) -> bool:
 def _resolve(item: NavItem) -> Optional[str]:
     if not item.url:
         return None
-    if item.url.startswith(("/", "http://", "https://", "#", "?")):
+    if item.url.startswith(("/", "http://", "https://", "#", "?", "mailto:", "tel:")):
         return item.url
     try:
         return reverse(item.url, args=item.url_args, kwargs=item.url_kwargs)
@@ -165,8 +187,15 @@ def build_nav(entries, request) -> list[dict]:
             continue
         # el activo más específico gana: si un hijo coincide, el padre no se marca
         child_active = any(c["active"] for c in children)
+        directs = []
+        for link in getattr(entry, "search_links", None) or []:
+            if _allowed(link, request):
+                l_href = _resolve(link)
+                if l_href:
+                    directs.append({"label": link.label, "href": l_href, "keywords": link.keywords})
         out.append({
             "type": "group" if children else "item",
+            "search_links": directs,
             "id": entry.id or uid(entry.label),
             "label": entry.label,
             "href": href,
@@ -210,6 +239,24 @@ def search_index(nav: list[dict]) -> list[dict]:
             continue
         if e["href"]:
             rows.append({"label": e["label"], "parent": "", "href": e["href"], "keywords": e["keywords"]})
-        for c in e["children"]:
+        for c in e["children"] + e.get("search_links", []):
             rows.append({"label": c["label"], "parent": e["label"], "href": c["href"], "keywords": c["keywords"]})
     return rows
+
+
+def build_links(entries, request) -> list[dict]:
+    """Ítems sueltos (pie del menú, menú del usuario): solo los que tienen un destino real.
+
+    Un ítem sin URL, o con un ancla vacía ("#"), no se muestra: no hay botones que
+    aparenten funcionar y no hagan nada.
+    """
+    out = []
+    for e in entries or []:
+        if isinstance(e, NavSection) or not _allowed(e, request):
+            continue
+        href = _resolve(e)
+        if not href or href.strip() == "#":
+            continue
+        out.append({"label": e.label, "href": href, "id": e.id or slugify(e.label), **_icon_fields(e),
+                    "keywords": e.keywords, "badge": e.badge, "active": _is_active(href, e, getattr(request, "path", "") or "")})
+    return out

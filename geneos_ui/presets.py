@@ -25,6 +25,11 @@ PRESETS = {
         "NAV_ICONS": {"rest": "tile", "active": None},
         # GELECTRIC guardaba el sidebar con esta clave ("1" = expandido); se migra una vez
         "SIDEBAR_LEGACY_KEY": "geletric-sidebar-pinned",
+        # verde por defecto (decisión del 14/10/2026); cada usuario puede elegir el azul histórico
+        # desde las preferencias (decisión del 30/10/2026). Se respeta lo que eligió con el
+        # selector anterior del encabezado ("geletric-brand-color": "green" | "blue").
+        "VARIANTS": (("", "Verde"), ("blue", "Azul")),
+        "VARIANT_LEGACY": {"key": "geletric-brand-color", "values": {"green": "", "blue": "blue"}},
     },
     "gema": {
         "PRODUCT_NAME": "GEMA",

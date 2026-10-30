@@ -56,7 +56,7 @@ jobs:
     name: Capturas comparadas con la versión de referencia
     runs-on: ubuntu-latest
     env:
-      VISUAL_REF: v0.2.1
+      VISUAL_REF: v0.3.0
     steps:
       - uses: actions/checkout@v4
         with:

@@ -113,9 +113,17 @@ def catalog(request):
                             "pending": (product_icons.resolve(f"{p['key']}:{module}", set_name="backoffice") or {}).get("status") == "pendiente"}
                            for label, module, children in BACKOFFICE.get(p["key"], [])],
         })
+    for p in products:
+        # vista de módulo de ejemplo: el primer módulo con opciones del menú real del producto
+        group = next((e for e in p["nav_built"] if e.get("type") == "group" and e.get("children")), None)
+        p["module_demo"] = group and {
+            "title": group["label"], "icon": group.get("icon_ref"),
+            "items": [{"label": c["label"], "href": c["href"]} for c in group["children"]],
+        }
     active = next(p for p in products if p["key"] == current)
     return render(request, "geneos_ui/catalog/index.html", {
         "products": products,
+        "product_keys": [p["key"] for p in products],
         "active": active,
         "gn": {**active["gn"], "load_fonts": True, "bridges": []},
         "version": __version__,

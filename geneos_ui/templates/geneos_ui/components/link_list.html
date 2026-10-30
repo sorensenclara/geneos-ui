@@ -1,0 +1,7 @@
+{% load geneos_ui %}<ul class="gn-link-list gn-link-list--cols-{{ columns }}{% if css_class %} {{ css_class }}{% endif %}"{% if label %} aria-label="{{ label }}"{% endif %}>{% for i in items %}
+  <li class="gn-link-list__cell">{% if i.href %}<a class="gn-link-list__item" href="{{ i.href }}">{% else %}<div class="gn-link-list__item is-static">{% endif %}
+    {% gn_any_icon i.icon as ico %}{% if ico %}<span class="gn-link-list__icon">{{ ico }}</span>{% endif %}
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="{{ i.label }}">{{ i.label }}</span>{% if i.description %}<span class="gn-link-list__desc">{{ i.description }}</span>{% endif %}</span>
+    {% if i.status %}{% gn_badge i.status i.status_kind|default:"neutral" %}{% endif %}{% if i.href %}{% gn_icon "i-chevright" "gn-link-list__chev" %}</a>{% else %}</div>{% endif %}
+  </li>{% endfor %}
+</ul>

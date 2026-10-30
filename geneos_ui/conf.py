@@ -58,6 +58,14 @@ DEFAULTS = {
     "ICON_FAMILY": (),                # otros conjuntos del manifiesto que el producto comparte
     "ICON_MANIFEST": None,            # ruta a un manifiesto de íconos propio (mismo formato que product_icons.json)
     "STATIC_VERSION_QUERY": True,     # ?v=<versión> en el CSS y el JS de la biblioteca
+    # 0.4.0
+    "VARIANTS": (),                   # variantes de color que el usuario puede elegir: [("", "Verde"), ("blue", "Azul")]
+    "VARIANT_LEGACY": None,           # {"key": "clave-vieja", "values": {"valor viejo": "variante", …}}: se migra una vez
+    "NAV_FOOTER": None,               # función (request) -> list[NavItem]: pie del menú ("Ayuda y soporte"…)
+    "USER_MENU": None,                # función (request) -> list[NavItem]: opciones del menú del usuario
+    "LOGOUT_URL": None,               # nombre de URL o ruta: «Cerrar sesión» (POST con CSRF) en el menú del usuario
+    "LEGACY_CSS": [],                 # CSS existente del producto, en la capa "legacy" (después de la biblioteca)
+    "SIDEBAR_ICONS": "as-is",         # "as-is" | "tint": íconos propios pintados con los colores del sidebar
     "CATALOG": None,                  # None = solo con DEBUG o para staff
 }
 
@@ -81,6 +89,9 @@ def get_config():
         cfg["THEME_CSS"] = []
     elif isinstance(cfg["THEME_CSS"], str):
         cfg["THEME_CSS"] = [cfg["THEME_CSS"]]
+    if isinstance(cfg["LEGACY_CSS"], str):
+        cfg["LEGACY_CSS"] = [cfg["LEGACY_CSS"]]
+    cfg["VARIANTS"] = normalize_variants(cfg["VARIANTS"])
     if cfg["FONT_CSS"] is None and cfg["LOAD_FONTS"]:
         cfg["FONT_CSS"] = presets.FONT_TITILLIUM
     return cfg
@@ -109,6 +120,28 @@ def icon_family(product, cfg=None):
     if product == cfg["PRODUCT"]:
         family = cfg["ICON_FAMILY"] or family
     return (product, *tuple(family))
+
+
+def normalize_variants(value):
+    """[("", "Verde"), ("blue", "Azul")] o {"": "Verde", "blue": "Azul"} → tupla de pares."""
+    if not value:
+        return ()
+    items = value.items() if isinstance(value, dict) else value
+    return tuple((str(k or ""), str(label)) for k, label in items)
+
+
+def variants_for(product, cfg=None):
+    """Variantes del producto actual o, para el catálogo, del preset de otro producto."""
+    cfg = cfg or get_config()
+    if product == cfg["PRODUCT"]:
+        return cfg["VARIANTS"]
+    return normalize_variants(presets.preset(product).get("VARIANTS"))
+
+
+def _callable(value):
+    if not value:
+        return None
+    return value if callable(value) else import_string(value)
 
 
 def get_nav_callable(cfg=None):

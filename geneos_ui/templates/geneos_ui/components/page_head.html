@@ -1,0 +1,9 @@
+{% load geneos_ui %}{% gn_any_icon icon as ico %}<div class="gn-page-head{% if ico %} gn-page-head--icon{% endif %}">
+  {% if ico %}<span class="gn-page-head__icon">{{ ico }}</span>{% endif %}
+  <div class="gn-page-head__text">
+    {% if eyebrow %}<span class="gn-eyebrow">{{ eyebrow }}</span>{% endif %}
+    <h1>{{ title }}</h1>
+    {% if subtitle %}<p>{{ subtitle }}</p>{% endif %}
+  </div>
+  {% if actions %}<div class="gn-page-head__actions">{{ actions }}</div>{% endif %}
+</div>

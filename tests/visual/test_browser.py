@@ -113,3 +113,32 @@ def test_solapa_se_maneja_con_teclado(browser):
     page.keyboard.press("Escape")
     assert page.evaluate("() => document.getElementById('gn-prefs-panel').hidden && document.activeElement.hasAttribute('data-gn-prefs-toggle')")
     page.context.close()
+
+
+def test_variante_azul_se_elige_y_persiste(browser):
+    page, errors = open_page(browser)
+    page.click('[data-kit-switch="gelectric"]')
+    page.click("[data-gn-prefs-toggle]")
+    assert page.is_visible('.gn-prefs__group--variant[data-gn-variant-product="gelectric"]')
+    page.click('#gn-prefs-panel [data-gn-variant-value="blue"]')
+    assert page.evaluate("() => [document.documentElement.dataset.gnVariant, localStorage.getItem('gn-variant:gelectric')]") == ["blue", "blue"]
+    sidebar = page.evaluate("() => getComputedStyle(document.getElementById('gn-sidebar-gelectric')).backgroundColor")
+    assert sidebar == "rgb(36, 76, 151)"  # #244c97, el azul histórico
+    page.keyboard.press("Escape")
+    # otro producto no tiene variantes: el grupo se oculta y vuelve el color propio
+    page.click('[data-kit-switch="gema"]')
+    assert page.evaluate("() => document.documentElement.hasAttribute('data-gn-variant')") is False
+    page.click("[data-gn-prefs-toggle]")
+    assert not page.is_visible('.gn-prefs__group--variant')
+    page.keyboard.press("Escape")
+    page.click('[data-kit-switch="gelectric"]')
+    assert page.evaluate("() => document.documentElement.dataset.gnVariant") == "blue"
+    assert not errors
+    page.context.close()
+
+
+@pytest.mark.parametrize("old, expected", [("blue", "blue"), ("green", None), (None, None)])
+def test_se_respeta_el_color_elegido_con_el_selector_anterior(browser, old, expected):
+    page, _ = open_page(browser, {"gn-kit-product": "gelectric", **({"geletric-brand-color": old} if old else {})})
+    assert page.evaluate("() => document.documentElement.getAttribute('data-gn-variant')") == expected
+    page.context.close()

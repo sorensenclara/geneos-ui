@@ -34,15 +34,15 @@
             {% gn_icon "i-chevdown" %}
           </button>
           <div class="gn-dropdown__menu" id="gn-user-menu" role="menu" hidden>
-            {% block user_menu_items %}{% endblock %}
-            {% block logout %}{% endblock %}
+            {% block user_menu_items %}{% for i in gn.user_menu %}<a class="gn-dropdown__item" role="menuitem" href="{{ i.href }}">{% gn_nav_icon i %}{{ i.label }}</a>{% endfor %}{% for i in gn.nav_footer %}<a class="gn-dropdown__item gn-dropdown__item--hnav" role="menuitem" href="{{ i.href }}">{% gn_nav_icon i %}{{ i.label }}</a>{% endfor %}{% endblock %}
+            {% block logout %}{% if gn.logout_url %}{% if gn.user_menu %}<div class="gn-dropdown__sep" role="separator"></div>{% endif %}<form method="post" action="{{ gn.logout_url }}" class="gn-dropdown__form">{% csrf_token %}<button class="gn-dropdown__item" type="submit" role="menuitem">{% gn_icon "i-logout" %}Cerrar sesión</button></form>{% endif %}{% endblock %}
           </div>
         </div>
         {% endif %}
         {% endblock %}
       </div>
     </header>
-    <main class="gn-content" id="gn-main-content" tabindex="-1">
+    <main class="gn-content" id="gn-main-content" tabindex="-1"{% block content_attrs %}{% endblock %}>
       {% block breadcrumbs %}{% endblock %}
       {% block page_head %}{% endblock %}
       {% block content %}{% endblock %}

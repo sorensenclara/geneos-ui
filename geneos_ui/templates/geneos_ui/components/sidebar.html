@@ -1,5 +1,5 @@
 {% load static geneos_ui %}{# Sidebar oficial GENEOS (estructura de GELECTRIC). Variables: gn, nav, sidebar_id #}
-<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"{% if gn.sidebar_legacy_key %} data-gn-legacy-key="{{ gn.sidebar_legacy_key }}"{% endif %} aria-label="Navegación principal"{% if hidden %} hidden{% endif %}>
+<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"{% if gn.sidebar_legacy_key %} data-gn-legacy-key="{{ gn.sidebar_legacy_key }}"{% endif %} aria-label="Navegación principal"{% if gn.sidebar_icons == "tint" %} data-gn-icons="tint"{% endif %}{% if hidden %} hidden{% endif %}>
   <div class="gn-sidebar__brand">
     <a href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
       {% if gn.logo_full %}<img class="gn-sidebar__logo-full" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}
@@ -35,7 +35,8 @@
             {% for c in e.children %}
             <li><a class="gn-nav__subitem" href="{{ c.href }}"{% if c.active %} aria-current="page"{% endif %}{% if c.keywords %} data-gn-keywords="{{ c.keywords }}"{% endif %}>{{ c.label }}</a></li>
             {% endfor %}
-          </ul>
+          </ul>{% if e.search_links %}
+          <ul class="gn-nav__directs" hidden aria-label="Accesos directos de {{ e.label }}">{% for d in e.search_links %}<li hidden><a class="gn-nav__direct" href="{{ d.href }}"{% if d.keywords %} data-gn-keywords="{{ d.keywords }}"{% endif %}>{{ d.label }}</a></li>{% endfor %}</ul>{% endif %}
         </li>
         {% else %}
         <li class="gn-nav__entry">
@@ -43,7 +44,8 @@
             {% gn_nav_icon e %}
             <span class="gn-nav__label">{{ e.label }}</span>
             {% if e.badge %}<span class="gn-nav__badge">{{ e.badge }}</span>{% endif %}
-          </a>
+          </a>{% if e.search_links %}
+          <ul class="gn-nav__directs" hidden aria-label="Accesos directos de {{ e.label }}">{% for d in e.search_links %}<li hidden><a class="gn-nav__direct" href="{{ d.href }}"{% if d.keywords %} data-gn-keywords="{{ d.keywords }}"{% endif %}>{{ d.label }}</a></li>{% endfor %}</ul>{% endif %}
         </li>
         {% endif %}
         {% endfor %}
@@ -59,7 +61,9 @@
     </nav>
 
     <div class="gn-sidebar__foot">
-      {% block sidebar_foot %}{% endblock %}
+      {% block sidebar_foot %}{% if gn.nav_footer %}<ul class="gn-nav gn-nav--foot" aria-label="Ayuda">{% for i in gn.nav_footer %}
+        <li class="gn-nav__entry"><a class="gn-nav__item" href="{{ i.href }}"{% if i.active %} aria-current="page"{% endif %}>{% gn_nav_icon i %}<span class="gn-nav__label">{{ i.label }}</span></a></li>{% endfor %}
+      </ul>{% endif %}{% endblock %}
       <div class="gn-sidebar__divider"></div>
       <div class="gn-sidebar__flourish" aria-hidden="true"><span></span></div>
       <div class="gn-sidebar__meta"><b>{{ gn.product_name }}{% if gn.version_label %} {{ gn.version_label }}{% endif %}</b>{% if gn.tagline %}<span>{{ gn.tagline }}</span>{% endif %}</div>

@@ -83,6 +83,14 @@ def gn_css(context, product=None, bridges=None):
         # fuera de la @layer y con :root[…] para ganarle a Bootstrap en cualquier orden
         decls = format_html_join(" ", "--bs-{}-rgb: {};", sorted(rgb.items()))
         html += format_html('\n<style{}>:root[data-gn-product="{}"] {{ {} }}</style>', _nonce_attr(context), product, decls)
+    legacy = cfg["LEGACY_CSS"] if product == cfg["PRODUCT"] else []
+    if legacy:
+        # CSS existente del producto en la capa "legacy", después de la biblioteca: sus clases se ven
+        # como siempre, pero sus reglas de <body> no pisan el layout ni el modo oscuro de GENEOS UI
+        imports = format_html_join("\n", '@import url("{}") layer(legacy);', [(static(p),) for p in legacy])
+        html += format_html('\n<style{}>@layer geneos-ui, legacy;\n{}\n'
+                            'body.gn-root {{ background: var(--gn-bg); color: var(--gn-text); font-family: var(--gn-font); }}</style>',
+                            _nonce_attr(context), imports)
     return html
 
 
@@ -94,8 +102,16 @@ THEME_BOOT = (
 
 @register.simple_tag(takes_context=True)
 def gn_theme_boot(context=None):
-    """Aplica el modo guardado antes de pintar (va en el <head>). Sin preferencia: claro."""
-    return _with_nonce(THEME_BOOT, context)
+    """Aplica el modo guardado antes de pintar (va en el <head>). Sin preferencia: claro.
+
+    Si el producto declara VARIANTS, aplica también la variante de color que eligió el
+    usuario (``localStorage["gn-variant:<producto>"]``), migrando una vez la clave vieja.
+    """
+    html = _with_nonce(THEME_BOOT, context)
+    cfg = get_config()
+    if cfg["VARIANTS"]:
+        html += _with_nonce(variant_boot(cfg), context)
+    return html
 
 
 NAV_BOOT = (
@@ -103,6 +119,19 @@ NAV_BOOT = (
     "try{var s=localStorage.getItem('gn-nav');if(s==='vertical'||s==='horizontal')n=s;}catch(e){}"
     "d.setAttribute('data-gn-nav',n);})();</script>"
 )
+
+
+def variant_boot(cfg):
+    import json
+    allowed = [k for k, _ in cfg["VARIANTS"]]
+    legacy = cfg.get("VARIANT_LEGACY") or {}
+    data = json.dumps({"p": cfg["PRODUCT"], "a": allowed, "lk": legacy.get("key"), "lv": legacy.get("values") or {}},
+                      ensure_ascii=True).replace("<", "\\u003c")
+    return ("<script>(function(c){var d=document.documentElement,k='gn-variant:'+c.p,v=null;"
+            "try{v=localStorage.getItem(k);if(v===null&&c.lk){var o=localStorage.getItem(c.lk);"
+            "if(o!==null&&o in c.lv){v=c.lv[o];localStorage.setItem(k,v);}}}catch(e){}"
+            "if(v!==null&&c.a.indexOf(v)!==-1){if(v)d.setAttribute('data-gn-variant',v);else d.removeAttribute('data-gn-variant');}"
+            "})(" + data + ");</script>")
 
 
 @register.simple_tag(takes_context=True)
@@ -120,13 +149,20 @@ def gn_nav_switch():
 
 
 @register.inclusion_tag("geneos_ui/components/prefs.html")
-def gn_prefs():
+def gn_prefs(products=None):
     """Solapa flotante con las preferencias de interfaz (modo de color y disposición del menú).
 
     Reúne {% gn_theme_switch %} y {% gn_nav_switch %}, que siguen funcionando igual
     (mismo JS, mismo localStorage). El layout base la incluye en {% block prefs %}.
+    Si el producto declara VARIANTS, agrega el grupo «Color». ``products`` (catálogo):
+    lista de identificadores para los que se dibuja un grupo cada uno; se ve el del
+    producto activo.
     """
-    return {}
+    from ..conf import variants_for
+    cfg = get_config()
+    keys = products if products is not None else [cfg["PRODUCT"]]
+    groups = [{"product": p, "variants": variants_for(p, cfg)} for p in keys]
+    return {"variant_groups": [g for g in groups if g["variants"]]}
 
 
 @register.inclusion_tag("geneos_ui/components/theme_switch.html")
@@ -146,11 +182,16 @@ def gn_icon(name, css_class="", label=""):
     return format_html('<svg class="gn-icon {}" aria-hidden="true"><use href="#{}"/></svg>', css_class, name)
 
 
-@register.simple_tag
-def gn_nav_icon(entry):
+@register.simple_tag(takes_context=True)
+def gn_nav_icon(context, entry):
     """Ícono de un ítem del sidebar: original del producto, pendiente o del sprite."""
     if entry.get("icon_static"):
         html = format_html('<img class="gn-nav__icon-img" src="{}" alt="">', static(entry["icon_static"]))
+        gn = context.get("gn") or {}
+        if gn.get("sidebar_icons") == "tint":
+            # SIDEBAR_ICONS = "tint": el mismo SVG como máscara, con los colores del sidebar (reposo y activo)
+            html += format_html('<span class="gn-nav__icon-stint" style="--gn-icon-src: url(&quot;{}&quot;)" aria-hidden="true"></span>',
+                                static(entry["icon_static"]))
         # navegación horizontal (barra clara): variantes originales normal y activa (GEMA, GELECTRIC)
         # o, si el producto solo tiene el SVG blanco (GEAGRO), ese mismo archivo como máscara
         if entry.get("icon_h_tint"):
@@ -286,3 +327,133 @@ def gn_messages_json(context):
         return ""
     from django.utils.html import json_script
     return json_script(data, "gn-messages")
+
+
+# --------------------------------------------------------------- 0.4.0
+@register.simple_tag
+def gn_any_icon(ref, css_class="", label=""):
+    """Un ícono a partir de una referencia: "i-nombre" (sprite), "producto:módulo"
+    (manifiesto de íconos originales) o una ruta de estáticos (``icon - Módulo.svg``)."""
+    if not ref:
+        return ""
+    if ref.startswith("i-"):
+        return gn_icon(ref, css_class, label)
+    if product_icons.is_product_ref(ref):
+        # sobre fondo claro: la variante de color original del producto, si existe; si no, nada
+        for variant in ("tile", "base", "color"):  # "simple" es del backoffice de GEAGRO: no se mezcla
+            rec = product_icons.resolve(ref, variant)
+            if rec and rec.get("file") and rec.get("status") != "pendiente":
+                return format_html('<img class="gn-any-icon {}" src="{}" alt="{}">', css_class, static(rec["file"]), label)
+        return ""
+    return format_html('<img class="gn-any-icon {}" src="{}" alt="{}">', css_class, static(ref), label)
+
+
+LINK_KEYS = ("label", "href", "description", "icon", "status", "status_kind")
+
+
+def _link(item):
+    return {k: (item.get(k) if isinstance(item, dict) else getattr(item, k, None)) for k in LINK_KEYS}
+
+
+class LinkListNode(template.Node):
+    def __init__(self, nodelist, kwargs):
+        self.nodelist, self.kwargs = nodelist, kwargs
+
+    def render(self, context):
+        kw = {k: v.resolve(context) for k, v in self.kwargs.items()}
+        items = [_link(i) for i in (kw.get("items") or [])]
+        if self.nodelist is not None:
+            with context.push(_gn_link_items=items):
+                self.nodelist.render(context)
+        status = kw.get("empty_status")
+        if status:
+            items = [{**i, "status": i["status"] or (None if i["href"] else status)} for i in items]
+        columns = kw.get("columns") or 2
+        return template.loader.render_to_string("geneos_ui/components/link_list.html", {
+            "items": items, "columns": columns if columns in (1, 2, 3) else 2,
+            "label": kw.get("label"), "css_class": kw.get("css_class"),
+        })
+
+
+def _kwargs(parser, bits):
+    out = {}
+    for bit in bits:
+        key, _, value = bit.partition("=")
+        if not value:
+            raise template.TemplateSyntaxError(f"Argumento sin nombre: {bit!r} (se usa clave=valor)")
+        out[key] = parser.compile_filter(value)
+    return out
+
+
+@register.tag(name="gn_link_list")
+def do_link_list(parser, token):
+    """Lista de funcionalidades: dos columnas en escritorio, una en el celular.
+
+        {% gn_link_list items=funcionalidades columns=2 empty_status="En definición" %}
+
+        {% gn_link_list columns=2 %}
+          {% url "core:asociados_list" as u %}{% gn_link_item label="Ficha del asociado" href=u icon="i-idcard" description="…" %}
+        {% endgn_link_list %}
+
+    Cada ítem: label (completo, hasta dos líneas en el celular), href (sin href no es un
+    enlace), description, icon ("i-…", "producto:módulo" o ruta de estáticos; si no hay,
+    no se dibuja ninguno), status y status_kind (un badge, p. ej. "En definición").
+    ``empty_status`` marca los ítems sin enlace.
+    """
+    bits = token.split_contents()
+    kwargs = _kwargs(parser, bits[1:])
+    nodelist = None
+    if "items" not in kwargs:
+        nodelist = parser.parse(("endgn_link_list",))
+        parser.delete_first_token()
+    return LinkListNode(nodelist, kwargs)
+
+
+class LinkItemNode(template.Node):
+    def __init__(self, kwargs):
+        self.kwargs = kwargs
+
+    def render(self, context):
+        bucket = context.get("_gn_link_items")
+        if bucket is None:
+            raise template.TemplateSyntaxError("{% gn_link_item %} va dentro de {% gn_link_list %}…{% endgn_link_list %}")
+        bucket.append(_link({k: v.resolve(context) for k, v in self.kwargs.items()}))
+        return ""
+
+
+@register.tag(name="gn_link_item")
+def do_link_item(parser, token):
+    return LinkItemNode(_kwargs(parser, token.split_contents()[1:]))
+
+
+class PageHeadNode(template.Node):
+    def __init__(self, nodelist, kwargs):
+        self.nodelist, self.kwargs = nodelist, kwargs
+
+    def render(self, context):
+        kw = {k: v.resolve(context) for k, v in self.kwargs.items()}
+        actions = mark_safe(self.nodelist.render(context).strip()) if self.nodelist is not None else ""
+        return template.loader.render_to_string("geneos_ui/components/page_head.html", {
+            "title": kw.get("title"), "subtitle": kw.get("subtitle"), "eyebrow": kw.get("eyebrow"),
+            "icon": kw.get("icon"), "actions": actions,
+        })
+
+
+@register.tag(name="gn_page_head")
+def do_page_head(parser, token):
+    """Encabezado de página con ícono opcional (el original del módulo) y acciones.
+
+        {% gn_page_head title=module.name subtitle="10 funcionalidades" icon=module.icon_tile %}
+          <a class="gn-btn gn-btn--secondary" href="/">Volver a Inicio</a>
+        {% endgn_page_head %}
+
+    Sin acciones: ``{% gn_page_head title="…" only %}`` (sin bloque de cierre).
+    """
+    bits = token.split_contents()[1:]
+    only = "only" in bits
+    kwargs = _kwargs(parser, [b for b in bits if b != "only"])
+    nodelist = None
+    if not only:
+        nodelist = parser.parse(("endgn_page_head",))
+        parser.delete_first_token()
+    return PageHeadNode(nodelist, kwargs)

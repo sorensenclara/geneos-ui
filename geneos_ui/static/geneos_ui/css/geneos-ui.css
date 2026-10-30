@@ -1111,4 +1111,89 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 .gn-auth__title { font-size: 19px; font-weight: 700; text-align: center; }
 .gn-auth__sub { margin: -10px 0 0; text-align: center; font-size: 13px; color: var(--gn-text-2); }
 
+
+/* =====================================================================
+   0.4.0 · Lista de funcionalidades ({% gn_link_list %})
+   Dos columnas en escritorio (o 1 / 3), una en el celular. El nombre se ve
+   completo: hasta dos líneas, y el texto entero en el title.
+   ===================================================================== */
+.gn-link-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--gn-link-cols, 2), minmax(0, 1fr)); gap: 8px 12px; }
+.gn-link-list--cols-1 { --gn-link-cols: 1; }
+.gn-link-list--cols-3 { --gn-link-cols: 3; }
+.gn-link-list__cell { display: flex; min-width: 0; }
+.gn-link-list__item {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 12px;
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); background: var(--gn-surface); color: var(--gn-text);
+}
+a.gn-link-list__item:hover { border-color: var(--gn-border-strong); background: var(--gn-surface-2); }
+a.gn-link-list__item:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
+.gn-link-list__icon {
+  width: 36px; height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--gn-brand-soft); color: var(--gn-brand-ink);
+}
+.gn-link-list__icon .gn-icon { width: 18px; height: 18px; }
+.gn-link-list__icon img { width: 26px; height: 26px; object-fit: contain; }
+.gn-link-list__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.gn-link-list__title {
+  font-size: 13.5px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.gn-link-list__desc { font-size: 12px; color: var(--gn-text-muted); line-height: 1.35; }
+.gn-link-list__chev { width: 15px; height: 15px; flex-shrink: 0; color: var(--gn-text-muted); }
+.gn-link-list__item .gn-badge { flex-shrink: 0; }
+@media (max-width: 860px) {
+  .gn-link-list { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Encabezado de página con el ícono original del módulo ({% gn_page_head %}) */
+.gn-page-head--icon { align-items: center; justify-content: flex-start; }
+.gn-page-head--icon .gn-page-head__text { flex: 1; }
+.gn-page-head__icon { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--gn-surface); border: 1px solid var(--gn-border); color: var(--gn-brand-ink); }
+.gn-page-head__icon img { width: 40px; height: 40px; object-fit: contain; }
+.gn-page-head__icon .gn-icon { width: 24px; height: 24px; }
+
+/* Variantes de color en el panel de preferencias: la muestra toma el color del tema */
+.gn-prefs__swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; background: var(--gn-c-sidebar); box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 0 0 2px var(--gn-border-strong); }
+.gn-prefs__group--variant[hidden] { display: none; }
+
+/* Accesos directos del buscador del menú (NavItem(search_links=…)): solo al buscar */
+.gn-nav__directs { list-style: none; display: flex; flex-direction: column; gap: 1px; margin: 2px 0 4px; padding-left: 20px; position: relative; }
+.gn-nav__directs::before { content: ""; position: absolute; left: 19px; top: 4px; bottom: 4px; width: 1px; background: var(--gn-sidebar-border); }
+.gn-nav__direct { display: block; position: relative; padding: 7px 10px 7px 16px; border-radius: var(--gn-radius-sm); font-size: 13px; color: var(--gn-sidebar-text); }
+.gn-nav__direct:hover { color: var(--gn-sidebar-text-active); background: var(--gn-sidebar-hover-bg); }
+.gn-nav__direct:focus-visible { outline: 2px solid var(--gn-sidebar-indicator); outline-offset: 1px; }
+
+/* Pie del menú (NAV_FOOTER): mismos ítems que el menú; en horizontal pasan al menú del usuario */
+.gn-nav--foot { margin: 0; padding: 0; }
+.gn-dropdown__item--hnav { display: none; }
+@media (min-width: 861px) {
+  :root[data-gn-nav="horizontal"] .gn-dropdown__item--hnav { display: flex; }
+}
+.gn-dropdown__form { margin: 0; display: contents; }
+.gn-dropdown__item .gn-nav__icon-img { width: 15px; height: 15px; filter: invert(.45); }
+
+/* SIDEBAR_ICONS = "tint": íconos propios pintados con los colores del sidebar (reposo, hover y activo) */
+.gn-nav__icon-stint { display: none; }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item:has(.gn-nav__icon-stint) .gn-nav__icon-img { display: none; }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__icon-stint {
+  display: block; flex-shrink: 0; width: var(--gn-nav-icon-size, 19px); height: var(--gn-nav-icon-size, 19px);
+  background: var(--gn-sidebar-text-muted);
+  -webkit-mask: var(--gn-icon-src) center / contain no-repeat; mask: var(--gn-icon-src) center / contain no-repeat;
+}
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item:hover .gn-nav__icon-stint { background: var(--gn-sidebar-text); }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item[aria-current="page"] .gn-nav__icon-stint,
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__entry.has-active > .gn-nav__item .gn-nav__icon-stint { background: var(--gn-sidebar-indicator); }
+@media (min-width: 861px) {
+  :root[data-gn-nav="horizontal"] .gn-sidebar[data-gn-icons="tint"] .gn-nav__icon-stint { display: none; }
+  :root[data-gn-nav="horizontal"] .gn-sidebar[data-gn-icons="tint"] .gn-nav__item:not(:has(.gn-nav__icon-h, .gn-nav__icon-tint)) .gn-nav__icon-img { display: block; }
+}
+@media (forced-colors: active) { .gn-nav__icon-stint { background: CanvasText !important; } }
+
+/* Contenido existente del producto (LEGACY_CSS) en modo oscuro: block content_attrs
+   data-gn-legacy           → la pantalla todavía no tiene oscuro: se muestra como panel claro
+   data-gn-legacy="dark"    → el producto ya llevó sus variables a los tokens (ver docs/integracion.md) */
+:root[data-gn-theme="dark"] .gn-content[data-gn-legacy]:not([data-gn-legacy="dark"]) {
+  color-scheme: light; background: var(--gn-legacy-light-bg); color: var(--gn-legacy-light-text);
+  border-radius: var(--gn-radius); margin-block: 12px;
+}
 } /* @layer geneos-ui */

@@ -63,7 +63,8 @@ def shots(html, out):
         for sec in ("identidad", "iconografia", "navegacion", "acciones", "formularios", "datos", "dashboard", "estados"):
             el = pg.query_selector(f"#{sec}")
             if el:
-                el.scroll_into_view_if_needed()
+                # el comienzo de la sección arriba de la ventana, para que lo que se agregue más abajo no la corra
+                el.evaluate("e => window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY - 80))")
                 pg.wait_for_timeout(100)
                 pg.screenshot(path=out / f"seccion-{sec}.png")
         pg.context.close()

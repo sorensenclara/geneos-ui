@@ -70,6 +70,8 @@
 
 {% block user_menu %}{% endblock %}
 
+{% block prefs %}{% gn_prefs products=product_keys %}{% endblock %}
+
 {% block breadcrumbs %}
 <nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v{{ version }}</span></li></ol></nav>
 {% endblock %}
@@ -723,6 +725,32 @@ GENEOS_UI = {
       </ol>
     </div></div>
   </div>
+</section>
+
+{# ============================================== VISTA DE MÓDULO (0.4.0) #}
+{# Al final de la página para no correr las secciones anteriores en las capturas comparadas #}
+<section class="kit-section" id="vista-de-modulo" aria-labelledby="h-modulo">
+  <header class="kit-section__head">
+    <h2 id="h-modulo">Vista de módulo</h2>
+    <p>Encabezado con el ícono original del módulo y lista de funcionalidades: dos columnas en escritorio, una en el celular.</p>
+  </header>
+  {% for p in products %}{% if p.module_demo %}
+  <div class="gn-card kit-module-demo" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}><div class="gn-card__body kit-stack">
+    <h3 class="kit-h3">Funcionalidades del módulo<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_page_head</code> <code>gn_link_list</code></span></h3>
+    {% gn_page_head title=p.module_demo.title eyebrow="Módulo" subtitle=p.module_demo.items|length|stringformat:"d"|add:" funcionalidades" icon=p.module_demo.icon only %}
+    {% gn_link_list items=p.module_demo.items columns=2 label="Funcionalidades" %}
+    {% if p.key == "gelectric" %}
+    <span class="kit-meta">Variante con ícono y descripción · Asociados y servicios</span>
+    {% gn_link_list columns=2 label="Asociados y servicios" %}
+      {% gn_link_item label="Ficha del asociado" href="#datos" icon="i-idcard" description="Consulta y edición de la ficha del asociado" %}
+      {% gn_link_item label="ABM de asociado (rol múltiple)" href="#datos" icon="i-user-plus" description="Alta, baja y modificación de asociados, usuarios y proveedores" %}
+      {% gn_link_item label="Cuota capital y excepciones" icon="i-coins" description="Gestión de aportes, cuotas y excepciones" status="En definición" %}
+      {% gn_link_item label="Reportes societarios" icon="i-book" description="Padrón, Libro societario y otros informes" status="En definición" %}
+    {% endgn_link_list %}
+    {% endif %}
+    <p class="kit-note">Dos columnas en escritorio y una en el celular. El nombre se ve completo, en hasta dos líneas. El ícono del encabezado es el original del módulo; si no hay uno para fondo claro, no se dibuja ninguno.</p>
+  </div></div>
+  {% endif %}{% endfor %}
 </section>
 
 {# ------------------------------------------------------------- modales #}
