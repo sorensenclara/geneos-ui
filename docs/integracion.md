@@ -29,7 +29,7 @@
 
 Cada producto declara su disposición por defecto con `GENEOS_UI["NAV_LAYOUT"]` (GEMA `"horizontal"`; GELECTRIC y GEAGRO `"vertical"`) y su logo para fondo claro con `LOGO_TOPBAR`. El usuario la cambia desde la solapa de Preferencias de interfaz (`{% gn_prefs %}`, ya incluida en el layout base) y queda guardada en su navegador. Para guardarla por usuario en el servidor hace falta un campo en el modelo de usuario del producto (migración propia) y una vista que reciba el evento `gn:nav`; queda para cuando se integre cada producto.
 
-## Piloto (después de la 0.3.0)
+## Piloto
 
 Antes de integrar un producto completo, una prueba chica en una rama de desarrollo del producto (nunca en `main`, ni en las ramas originales, ni en producción). El objetivo es comprobar fuera del catálogo que el layout, el encabezado, la navegación y las preferencias funcionan:
 
@@ -38,6 +38,24 @@ Antes de integrar un producto completo, una prueba chica en una rama de desarrol
 3. Una sola pantalla extiende `geneos_ui/layouts/app.html`; el resto sigue con su `base.html`.
 4. Se revisan: logo y encabezado, menú con los permisos reales, activo, claro y oscuro, horizontal y vertical, celular, `manage.py check` y consola del navegador.
 5. Sin cambios de modelos, migraciones, vistas ni reglas de negocio. Capturas de antes y después.
+
+## CSS existente y modo oscuro
+
+Desde la 0.4.0 una pantalla existente puede pasar al layout de la biblioteca sin reescribir su CSS:
+
+1. `GENEOS_UI["LEGACY_CSS"] = ["core/css/dashboard.css"]`: el CSS del producto se carga en la capa `legacy`, después de `@layer geneos-ui`, así que sus reglas siguen ganando dentro de la pantalla.
+2. Modo oscuro progresivo, pantalla por pantalla, con `{% block content_attrs %}` en el template:
+   - `data-gn-legacy`: en oscuro la pantalla se muestra en un panel claro. Es el punto de partida seguro.
+   - `data-gn-legacy="dark"`: un CSS puente del producto traduce sus variables a los tokens de la biblioteca. Ejemplo:
+     ```css
+     /* core/css/geneos-puente.css, en LEGACY_CSS después del CSS original */
+     :root[data-gn-theme="dark"] [data-gn-legacy="dark"] {
+       --bg: var(--gn-bg); --surface: var(--gn-surface); --text: var(--gn-text); --border: var(--gn-border);
+     }
+     ```
+3. La lógica, los datos y los formularios de la pantalla no cambian; solo su `extends` y, si hace falta, su encabezado.
+
+Si el producto ya tenía un selector de color guardado en el navegador, `VARIANT_LEGACY` migra esa elección una vez a `gn-variant:<producto>`.
 
 ## Riesgos a vigilar
 

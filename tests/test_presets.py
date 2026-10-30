@@ -1,5 +1,4 @@
 """Configuración por capas: valores por defecto < preset < GENEOS_UI."""
-import warnings
 
 import pytest
 
@@ -61,16 +60,11 @@ def test_modo_de_iconos_por_conjunto(settings):
     assert nav_icons_for("gema") == "as-is"
 
 
-def test_alias_de_la_0_2_x_con_aviso():
+def test_alias_de_la_0_2_x_quitados_en_la_0_4_0():
     from geneos_ui import conf, product_icons
-    with warnings.catch_warnings(record=True) as w:
-        warnings.simplefilter("always")
-        assert conf.PRODUCTS == {k: v["PRODUCT_NAME"] for k, v in V021.items()}
-        assert conf.SIDEBAR_DEFAULTS["gelectric"] == "collapsed"
-        assert conf.NAV_LAYOUT_DEFAULTS["gema"] == "horizontal"
-        assert product_icons.HNAV_VARIANTS == {"gema": ("base", "active"), "gelectric": ("tile", None)}
-        assert product_icons.HNAV_TINT == {"geagro", "geagro-cereales", "geagro-vid"}
-    assert len(w) == 5 and all(issubclass(x.category, DeprecationWarning) for x in w)
+    for mod, name in ((conf, "PRODUCTS"), (conf, "SIDEBAR_DEFAULTS"), (conf, "NAV_LAYOUT_DEFAULTS"),
+                      (product_icons, "HNAV_VARIANTS"), (product_icons, "HNAV_TINT")):
+        assert not hasattr(mod, name), name
 
 
 def test_claves_del_navegador_no_cambian():

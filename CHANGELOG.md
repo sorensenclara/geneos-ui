@@ -2,6 +2,29 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.4.0] · 2026-10-30
+
+Componentes compartidos para las vistas de módulo, el menú y las preferencias, y una forma de llevar pantallas existentes al layout sin reescribir su CSS. GEMA, GEAGRO Cereales y GEAGRO Vid se ven igual que en la 0.3.0: mismo HTML y mismas capturas. GELECTRIC solo cambia en el panel de Preferencias, que suma el grupo «Color».
+
+### Agregado
+- **Lista de funcionalidades** `{% gn_link_list %}` (con `items=` o con `{% gn_link_item %}`): ícono, descripción, enlace y estado; dos columnas en escritorio y una en el celular; nombres completos en hasta dos líneas. Un ítem sin enlace se muestra como fila estática con su estado, no como un enlace vacío.
+- **Encabezado de pantalla** `{% gn_page_head %}` con el ícono original del módulo, y `{% gn_any_icon %}` para usar `i-*`, `producto:módulo` o una ruta de estáticos. Un ícono pendiente en el manifiesto no se muestra ni se reemplaza por otro.
+- **Variantes de color elegidas por el usuario**: `VARIANTS` y `VARIANT_LEGACY`. GELECTRIC: verde por defecto y azul a elección; la elección hecha con el selector anterior (`geletric-brand-color`) se migra una vez. Se guarda en `gn-variant:<producto>`. `GN.setVariant`, `GN.getVariant` y el evento `gn:variant`.
+- **Pie del menú y menú del usuario**: `NAV_FOOTER`, `USER_MENU` y `LOGOUT_URL` (formulario POST con CSRF). Un ítem sin URL o con `"#"` no se muestra; «Ayuda y soporte» aparece solo cuando el producto le da un destino.
+- **Accesos directos en el buscador del menú**: `NavItem(search_links=[NavLink(…)])`, con permisos. `url` acepta también `mailto:` y `tel:`.
+- **CSS existente del producto**: `LEGACY_CSS` (capa `legacy`, después de la biblioteca) y el bloque `content_attrs` con `data-gn-legacy` (panel claro en modo oscuro) o `data-gn-legacy="dark"` (CSS puente del producto). Tokens `--gn-legacy-light-bg` y `--gn-legacy-light-text`.
+- `SIDEBAR_ICONS = "tint"`: los íconos propios del sidebar toman los colores del sidebar en reposo, hover y activo.
+- Chequeos E006 (`SIDEBAR_ICONS`) y W004 (`LEGACY_CSS`); W003 cubre también `link_list.html` y `page_head.html`.
+- Catálogo: sección «Vista de módulo» al final, por producto.
+- GEFLOTA (solo sandbox) usa todo lo anterior sin cambios en `geneos_ui/`.
+
+### Cambiado
+- HTML: con `VARIANTS`, `gn_theme_boot` agrega un `<script>` que aplica la variante guardada antes de pintar y `gn_prefs` agrega el grupo «Color». Solo afecta a GELECTRIC entre los cuatro productos. Referencia de HTML regenerada sobre la 0.3.0 (`tests/snapshots/0.3.0`).
+- Única captura distinta de la 0.3.0: `gelectric-preferencias.png` (grupo «Color»), registrada en `tests/visual/cambios-esperados.txt`. CI compara contra `v0.3.0`.
+
+### Quitado
+- `geneos_ui.conf.PRODUCTS`, `SIDEBAR_DEFAULTS`, `NAV_LAYOUT_DEFAULTS` y `geneos_ui.product_icons.HNAV_VARIANTS`, `HNAV_TINT`, deprecados en la 0.3.0. Reemplazo: `geneos_ui.presets.PRESETS`, `get_config()` y `GENEOS_UI["NAV_ICONS"]`. Ningún producto los usa.
+
 ## [0.3.0] · 2026-10-29
 
 Un producto nuevo se incorpora desde su propio `settings.py`, sin cambiar la biblioteca. Los cuatro productos actuales se ven y se comportan igual que en la 0.2.1: mismo HTML (salvo lo indicado abajo) y capturas idénticas en claro y oscuro, menú horizontal y vertical, desplegables, preferencias y celular.

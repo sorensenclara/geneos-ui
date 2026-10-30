@@ -12,7 +12,7 @@ DJANGO_SETTINGS_MODULE=sandbox.settings_geflota python manage.py runserver
 
 ```text
 # requirements.txt
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.3.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.4.0
 ```
 
 ```python
@@ -40,8 +40,14 @@ GENEOS_UI = {
     "TAGLINE": "Tu flota en orden",
     "HOME_URL": "/",
     "BOOTSTRAP_RGB": {"primary": "179, 86, 9"},        # solo si tiene pantallas con Bootstrap (puente bootstrap5)
+    # desde la 0.4.0
+    "VARIANTS": [("", "Petróleo"), ("grafito", "Grafito")],  # colores que el usuario elige en Preferencias
+    "NAV_FOOTER": "geflota.navigation.get_footer",     # «Ayuda y soporte» con su destino real
+    "SIDEBAR_ICONS": "tint",                           # sus íconos blancos toman los colores del sidebar
 }
 ```
+
+Si el producto tiene login, `"LOGOUT_URL": "logout"` agrega «Cerrar sesión» al menú del usuario.
 
 `python manage.py check` valida la configuración: identificador, tema y logos existentes y `NAV_ICONS` válido (ver [`api.md`](api.md#chequeos)).
 
@@ -90,6 +96,15 @@ def get_nav(request):
     ]
 ```
 
+Una funcionalidad que no está en el menú pero se busca desde el sidebar va en `search_links`:
+
+```python
+from geneos_ui.navigation import NavLink
+NavItem("Vehículos", url="geflota:vehiculos", search_links=[
+    NavLink("Alta de vehículo", url="geflota:pendiente", url_kwargs={"seccion": "alta-vehiculo"}, keywords="nuevo agregar"),
+])
+```
+
 Las reglas son del producto: `perms` usa los permisos de Django y `visible` cualquier función del `request`. La biblioteca filtra, resuelve las URLs, marca el activo (la ruta más específica) y arma el buscador del menú.
 
 ## 5. Pantallas
@@ -107,12 +122,14 @@ Las reglas son del producto: `perms` usa los permisos de Django y `visible` cual
 {% endblock %}
 ```
 
+La vista de un módulo usa `{% gn_page_head %}` y `{% gn_link_list %}` (ver [`componentes.md`](componentes.md#vista-de-módulo)); GEFLOTA la muestra en `geflota/mantenimiento.html`.
+
 El catálogo marca cada pieza como **Componente** (tag o template: recibe las mejoras al actualizar la versión) o **HTML de referencia** (solo comparten CSS y JS: el HTML se escribe en la pantalla). Ver [`api.md`](api.md).
 
 ## Qué recibe el producto sin escribir nada
 
-Layout y encabezado, sidebar con buscador, permisos y cajón en el celular, barra horizontal con su franja y su color, modo claro y oscuro, panel de preferencias, ordenamiento, paginación, badges, breadcrumbs y los mensajes de Django como notificaciones.
+Layout y encabezado, sidebar con buscador y accesos directos, permisos y cajón en el celular, barra horizontal con su franja y su color, modo claro y oscuro, panel de preferencias (con sus variantes de color), vista de módulo, ordenamiento, paginación, badges, breadcrumbs y los mensajes de Django como notificaciones.
 
 ## Qué sigue siendo propio
 
-Modelos, vistas y permisos; el contenido de cada pantalla; dashboards, reportes y PDF; los íconos de sus módulos; y, hasta la 0.4.0, el HTML de tarjetas, KPI, filtros, campos de formulario, modales y alertas.
+Modelos, vistas y permisos; el contenido de cada pantalla; dashboards, reportes y PDF; los íconos de sus módulos; y, por ahora, el HTML de tarjetas, KPI, filtros, campos de formulario, modales y alertas.

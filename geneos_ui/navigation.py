@@ -205,20 +205,23 @@ def build_nav(entries, request) -> list[dict]:
             "children": children,
             "active": (not children) and _is_active(href, entry, path),
             "has_active": child_active,
+            # un grupo con URL propia (p. ej. la vista del módulo) también compite por el activo
+            "_self_active": bool(children) and _is_active(href, entry, path),
         })
 
     # si varios ítems coinciden con la ruta (p. ej. un "Inicio" en /flota/ y "Vehículos" en
     # /flota/vehiculos/), queda activo solo el de la ruta más larga
     hits = [(e, None, e["href"]) for e in out if e.get("active") and e.get("href")]
     hits += [(e, c, c["href"]) for e in out for c in e.get("children", []) if c.get("active")]
-    if len(hits) > 1:
-        best = max(hits, key=lambda h: len(h[2]))
+    groups = [(e, "self", e["href"]) for e in out if e.pop("_self_active", False)]
+    if len(hits) > 1 or groups:
+        best = max(hits + groups, key=lambda h: len(h[2]))
         for e, c, _ in hits:
             if (e, c) != best[:2]:
                 (c if c is not None else e)["active"] = False
         for e in out:
             if e.get("children"):
-                e["has_active"] = any(c["active"] for c in e["children"])
+                e["has_active"] = any(c["active"] for c in e["children"]) or (best[1] == "self" and best[0] is e)
 
     # títulos de sección que quedaron sin contenido debajo
     cleaned = []

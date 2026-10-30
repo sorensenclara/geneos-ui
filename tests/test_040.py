@@ -131,3 +131,24 @@ def test_iconos_del_sidebar_pintados_solo_si_se_pide(settings):
     entry = build_nav([NavItem("Contabilidad", url="/c/", icon_static="core/i.svg")], None)[0]
     assert "gn-nav__icon-stint" not in render("{% gn_nav_icon e %}", e=entry, gn={"sidebar_icons": "as-is"})
     assert "gn-nav__icon-stint" in render("{% gn_nav_icon e %}", e=entry, gn={"sidebar_icons": "tint"})
+
+
+def test_chequeos_de_las_claves_nuevas(settings):
+    from geneos_ui.checks import check_geneos_ui
+    settings.GENEOS_UI = {"PRODUCT": "gelectric", "SIDEBAR_ICONS": "color", "LEGACY_CSS": "no/existe.css"}
+    ids = {p.id for p in check_geneos_ui(None)}
+    assert {"geneos_ui.E006", "geneos_ui.W004"} <= ids
+    settings.GENEOS_UI = {"PRODUCT": "gelectric", "SIDEBAR_ICONS": "tint"}
+    ids = {p.id for p in check_geneos_ui(None)}
+    assert not ids & {"geneos_ui.E006", "geneos_ui.W004"}
+
+
+def test_grupo_con_url_propia_queda_activo_y_no_el_inicio(rf):
+    from geneos_ui.navigation import NavItem, build_nav
+    nav = [NavItem("Inicio", url="/flota/"),
+           NavItem("Mantenimiento", url="/flota/mantenimiento/", children=[NavItem("Órdenes", url="/flota/ordenes/")])]
+    out = build_nav(nav, rf.get("/flota/mantenimiento/"))
+    assert out[0]["active"] is False
+    assert out[1]["has_active"] is True and not any(c["active"] for c in out[1]["children"])
+    out = build_nav(nav, rf.get("/flota/"))
+    assert out[0]["active"] is True and out[1]["has_active"] is False

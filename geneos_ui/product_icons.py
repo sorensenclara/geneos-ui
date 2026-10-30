@@ -100,15 +100,3 @@ def resolve(ref: str, variant: str = NAV_VARIANT, set_name: str | None = None) -
 def static_path(ref: str, variant: str = NAV_VARIANT, set_name: str | None = None) -> str | None:
     rec = resolve(ref, variant, set_name)
     return rec["file"] if rec else None
-
-
-def __getattr__(name):  # compatibilidad con la 0.2.x: se quita en la 0.4.0
-    if name in ("HNAV_VARIANTS", "HNAV_TINT"):
-        import warnings
-        from . import presets
-        warnings.warn(f"geneos_ui.product_icons.{name} está deprecado: usar GENEOS_UI['NAV_ICONS'].", DeprecationWarning, stacklevel=2)
-        modes = {k: v.get("NAV_ICONS") for k, v in presets.PRESETS.items()}
-        if name == "HNAV_VARIANTS":
-            return {k: (m["rest"], m["active"]) for k, m in modes.items() if isinstance(m, dict)}
-        return {k for k, m in {**modes, **{k: v["NAV_ICONS"] for k, v in presets.ICON_SETS.items()}}.items() if m == "tint"}
-    raise AttributeError(name)

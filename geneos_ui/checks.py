@@ -9,6 +9,8 @@ W001  SIDEBAR_DEFAULT inválido (se usa el del preset)
 W002  un logo declarado no está en los estáticos
 W003  el producto sobrescribe un template de componente de la biblioteca
       (deja de recibir las mejoras de ese componente al actualizar)
+E006  SIDEBAR_ICONS inválido
+W004  un archivo de LEGACY_CSS no está en los estáticos
 """
 from pathlib import Path
 
@@ -20,7 +22,8 @@ from .conf import BRIDGES, NAV_ICON_MODES, PRODUCT_RE, SIDEBAR_STATES, get_confi
 PACKAGE_TEMPLATES = Path(__file__).resolve().parent / "templates"
 COMPONENT_TEMPLATES = ("layouts/app.html", "layouts/auth.html", "components/sidebar.html", "components/prefs.html",
                        "components/theme_switch.html", "components/nav_switch.html", "components/pagination.html",
-                       "components/breadcrumbs.html", "components/topbar_brand.html", "components/icon_sprite.html")
+                       "components/breadcrumbs.html", "components/topbar_brand.html", "components/icon_sprite.html",
+                       "components/link_list.html", "components/page_head.html")
 
 
 def _valid_nav_icons(value):
@@ -59,6 +62,12 @@ def check_geneos_ui(app_configs, **kwargs):
             hint="'tint', 'as-is' o {'rest': variante, 'active': variante o None}.",
             id="geneos_ui.E005",
         ))
+    if cfg["SIDEBAR_ICONS"] not in ("as-is", "tint"):
+        problems.append(Error(f"GENEOS_UI['SIDEBAR_ICONS'] = {cfg['SIDEBAR_ICONS']!r} no es válido.",
+                              hint="'as-is' o 'tint'.", id="geneos_ui.E006"))
+    for path in cfg["LEGACY_CSS"]:
+        if not finders.find(path):
+            problems.append(Warning(f"GENEOS_UI['LEGACY_CSS']: {path!r} no está en los estáticos.", id="geneos_ui.W004"))
     if user.get("SIDEBAR_DEFAULT") not in (None, *SIDEBAR_STATES):
         problems.append(Warning("GENEOS_UI['SIDEBAR_DEFAULT'] debe ser 'expanded' o 'collapsed'.", id="geneos_ui.W001"))
     for key in ("LOGO_FULL", "LOGO_ICON", "LOGO_TOPBAR"):

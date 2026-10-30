@@ -23,6 +23,23 @@ Personalizar: redefinir cualquier `--gn-*` en el CSS del producto, después de `
 
 **Breadcrumbs**: `{% gn_breadcrumbs crumbs %}`.
 
+**Pie del menú y menú del usuario**: `GENEOS_UI["NAV_FOOTER"]`, `["USER_MENU"]` y `["LOGOUT_URL"]`. Un ítem sin destino real no se muestra.
+
+## Vista de módulo
+
+**Encabezado**: `{% gn_page_head title=modulo.nombre subtitle="10 funcionalidades" eyebrow="Módulo" icon="gelectric:contabilidad" %}<a class="gn-btn gn-btn--secondary" href="/">Volver</a>{% endgn_page_head %}`. El ícono es el original del módulo (`producto:módulo`, ruta de estáticos o `i-*`); si no hay ícono, no se reserva lugar.
+
+**Lista de funcionalidades**: el mismo componente para todos los módulos.
+```django
+{% gn_link_list items=funcionalidades columns=2 empty_status="En definición" %}
+
+{% gn_link_list %}
+  {% gn_link_item label="Ficha del asociado" href=url_ficha description="Consulta y edición" icon="i-id-card" %}
+  {% gn_link_item label="Reintegro al darse de baja" status="Próximamente" status_kind="neutral" %}
+{% endgn_link_list %}
+```
+Un ítem con `href` es un enlace; sin `href` es una fila estática con su estado (`empty_status` por defecto). Dos columnas en escritorio y una en el celular (≤ 860 px); el nombre ocupa hasta dos líneas y completo queda en `title`.
+
 **Pestañas**
 ```html
 <div class="gn-tabs" role="tablist" aria-label="Ficha">

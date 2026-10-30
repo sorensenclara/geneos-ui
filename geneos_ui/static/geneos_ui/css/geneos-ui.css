@@ -1147,7 +1147,7 @@ a.gn-link-list__item:focus-visible { outline: 2px solid var(--gn-focus); outline
 
 /* Encabezado de página con el ícono original del módulo ({% gn_page_head %}) */
 .gn-page-head--icon { align-items: center; justify-content: flex-start; }
-.gn-page-head--icon .gn-page-head__text { flex: 1; }
+.gn-page-head--icon .gn-page-head__text { flex: 1 1 15rem; }
 .gn-page-head__icon { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--gn-surface); border: 1px solid var(--gn-border); color: var(--gn-brand-ink); }
 .gn-page-head__icon img { width: 40px; height: 40px; object-fit: contain; }
 .gn-page-head__icon .gn-icon { width: 24px; height: 24px; }

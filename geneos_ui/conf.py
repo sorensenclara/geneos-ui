@@ -22,7 +22,6 @@ necesita ``PRODUCT`` y ``NAV``. Un producto nuevo declara también su tema::
 Ver ``docs/api.md`` para todas las claves.
 """
 import re
-import warnings
 
 from django.conf import settings
 from django.utils.module_loading import import_string
@@ -152,20 +151,3 @@ def get_nav_callable(cfg=None):
     if callable(nav):
         return nav
     return import_string(nav)
-
-
-# --- compatibilidad con la 0.2.x: se quitan en la 0.4.0 -------------------
-def _deprecated(name, value):
-    warnings.warn(f"geneos_ui.conf.{name} está deprecado: usar geneos_ui.presets.PRESETS o get_config().",
-                  DeprecationWarning, stacklevel=3)
-    return value
-
-
-def __getattr__(name):
-    if name == "PRODUCTS":
-        return _deprecated(name, {k: v["PRODUCT_NAME"] for k, v in presets.PRESETS.items()})
-    if name == "SIDEBAR_DEFAULTS":
-        return _deprecated(name, {k: v["SIDEBAR_DEFAULT"] for k, v in presets.PRESETS.items()})
-    if name == "NAV_LAYOUT_DEFAULTS":
-        return _deprecated(name, {k: v["NAV_LAYOUT"] for k, v in presets.PRESETS.items()})
-    raise AttributeError(name)

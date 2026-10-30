@@ -4,7 +4,7 @@ Sistema de diseño y biblioteca de componentes compartida para los productos Dja
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.3.0.** Catálogo aprobado visualmente y productos declarados desde sus settings. Todavía no está integrado en ningún producto; el siguiente paso es un piloto en una rama de desarrollo.
+> Estado: **v0.4.0.** Componentes compartidos para la vista de módulo, el menú del usuario, el pie del menú y las variantes de color. En piloto en GELECTRIC (rama `2026-piloto-geneos-ui`); GEMA y GEAGRO todavía no lo usan.
 
 ## Qué incluye
 
@@ -34,7 +34,7 @@ El repositorio principal es **GitHub**: https://github.com/sorensenclara/geneos-
 
 ```text
 # requirements.txt — usar un tag publicado después de aprobar el diseño
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.3.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.4.0
 ```
 
 ```python

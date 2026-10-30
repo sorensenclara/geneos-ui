@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>(function(){var t='light';try{if(localStorage.getItem('gn-theme')==='dark')t='dark';}catch(e){}document.documentElement.setAttribute('data-gn-theme',t);})();</script>
+<script>(function(){var t='light';try{if(localStorage.getItem('gn-theme')==='dark')t='dark';}catch(e){}document.documentElement.setAttribute('data-gn-theme',t);})();</script><script>(function(c){var d=document.documentElement,k='gn-variant:'+c.p,v=null;try{v=localStorage.getItem(k);if(v===null&&c.lk){var o=localStorage.getItem(c.lk);if(o!==null&&o in c.lv){v=c.lv[o];localStorage.setItem(k,v);}}}catch(e){}if(v!==null&&c.a.indexOf(v)!==-1){if(v)d.setAttribute('data-gn-variant',v);else d.removeAttribute('data-gn-variant');}})({"p": "gelectric", "a": ["", "blue"], "lk": "geletric-brand-color", "lv": {"green": "", "blue": "blue"}});</script>
 <script>(function(){var d=document.documentElement,n=d.getAttribute('data-gn-nav-default')||'vertical';try{var s=localStorage.getItem('gn-nav');if(s==='vertical'||s==='horizontal')n=s;}catch(e){}d.setAttribute('data-gn-nav',n);})();</script>
 <title>GENEOS UI Kit</title>
 
@@ -123,6 +123,11 @@
     --gn-sidebar-hover-bg: rgba(255, 255, 255, .07);
     --gn-sidebar-border: rgba(255, 255, 255, .1);
     --gn-sidebar-indicator: var(--gn-c-accent);
+
+    /* ---- contenido existente del producto (LEGACY_CSS) sin modo oscuro todavía:
+       en oscuro se muestra sobre este panel claro (no cambia en el modo oscuro) */
+    --gn-legacy-light-bg: #f4f6fa;
+    --gn-legacy-light-text: #1c2233;
 
     /* ---- navegación horizontal (data-gn-nav="horizontal", solo escritorio) ----
        Un solo diseño para los cuatro productos, el del menú superior de GEMA:
@@ -315,7 +320,7 @@
     /* Navegación horizontal: usa tal cual el diseño compartido de tokens.css (que sale de
        este menú): franja azul, barra blanca, línea naranja de marca y texto activo en el
        naranja legible #b0530a (decisión del 26/10/2026). Íconos: variantes originales
-       normal y "-active" (product_icons.HNAV_VARIANTS). No necesita tokens propios. */
+       normal y "-active" (GENEOS_UI["NAV_ICONS"] del preset). No necesita tokens propios. */
   }
 }
 
@@ -1510,6 +1515,91 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 .gn-auth__title { font-size: 19px; font-weight: 700; text-align: center; }
 .gn-auth__sub { margin: -10px 0 0; text-align: center; font-size: 13px; color: var(--gn-text-2); }
 
+
+/* =====================================================================
+   0.4.0 · Lista de funcionalidades ({% gn_link_list %})
+   Dos columnas en escritorio (o 1 / 3), una en el celular. El nombre se ve
+   completo: hasta dos líneas, y el texto entero en el title.
+   ===================================================================== */
+.gn-link-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--gn-link-cols, 2), minmax(0, 1fr)); gap: 8px 12px; }
+.gn-link-list--cols-1 { --gn-link-cols: 1; }
+.gn-link-list--cols-3 { --gn-link-cols: 3; }
+.gn-link-list__cell { display: flex; min-width: 0; }
+.gn-link-list__item {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 12px;
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); background: var(--gn-surface); color: var(--gn-text);
+}
+a.gn-link-list__item:hover { border-color: var(--gn-border-strong); background: var(--gn-surface-2); }
+a.gn-link-list__item:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
+.gn-link-list__icon {
+  width: 36px; height: 36px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  border-radius: 10px; background: var(--gn-brand-soft); color: var(--gn-brand-ink);
+}
+.gn-link-list__icon .gn-icon { width: 18px; height: 18px; }
+.gn-link-list__icon img { width: 26px; height: 26px; object-fit: contain; }
+.gn-link-list__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.gn-link-list__title {
+  font-size: 13.5px; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden;
+}
+.gn-link-list__desc { font-size: 12px; color: var(--gn-text-muted); line-height: 1.35; }
+.gn-link-list__chev { width: 15px; height: 15px; flex-shrink: 0; color: var(--gn-text-muted); }
+.gn-link-list__item .gn-badge { flex-shrink: 0; }
+@media (max-width: 860px) {
+  .gn-link-list { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Encabezado de página con el ícono original del módulo ({% gn_page_head %}) */
+.gn-page-head--icon { align-items: center; justify-content: flex-start; }
+.gn-page-head--icon .gn-page-head__text { flex: 1 1 15rem; }
+.gn-page-head__icon { width: 52px; height: 52px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--gn-surface); border: 1px solid var(--gn-border); color: var(--gn-brand-ink); }
+.gn-page-head__icon img { width: 40px; height: 40px; object-fit: contain; }
+.gn-page-head__icon .gn-icon { width: 24px; height: 24px; }
+
+/* Variantes de color en el panel de preferencias: la muestra toma el color del tema */
+.gn-prefs__swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; background: var(--gn-c-sidebar); box-shadow: 0 0 0 1px rgba(255, 255, 255, .5), 0 0 0 2px var(--gn-border-strong); }
+.gn-prefs__group--variant[hidden] { display: none; }
+
+/* Accesos directos del buscador del menú (NavItem(search_links=…)): solo al buscar */
+.gn-nav__directs { list-style: none; display: flex; flex-direction: column; gap: 1px; margin: 2px 0 4px; padding-left: 20px; position: relative; }
+.gn-nav__directs::before { content: ""; position: absolute; left: 19px; top: 4px; bottom: 4px; width: 1px; background: var(--gn-sidebar-border); }
+.gn-nav__direct { display: block; position: relative; padding: 7px 10px 7px 16px; border-radius: var(--gn-radius-sm); font-size: 13px; color: var(--gn-sidebar-text); }
+.gn-nav__direct:hover { color: var(--gn-sidebar-text-active); background: var(--gn-sidebar-hover-bg); }
+.gn-nav__direct:focus-visible { outline: 2px solid var(--gn-sidebar-indicator); outline-offset: 1px; }
+
+/* Pie del menú (NAV_FOOTER): mismos ítems que el menú; en horizontal pasan al menú del usuario */
+.gn-nav--foot { margin: 0; padding: 0; }
+.gn-dropdown__item--hnav { display: none; }
+@media (min-width: 861px) {
+  :root[data-gn-nav="horizontal"] .gn-dropdown__item--hnav { display: flex; }
+}
+.gn-dropdown__form { margin: 0; display: contents; }
+.gn-dropdown__item .gn-nav__icon-img { width: 15px; height: 15px; filter: invert(.45); }
+
+/* SIDEBAR_ICONS = "tint": íconos propios pintados con los colores del sidebar (reposo, hover y activo) */
+.gn-nav__icon-stint { display: none; }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item:has(.gn-nav__icon-stint) .gn-nav__icon-img { display: none; }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__icon-stint {
+  display: block; flex-shrink: 0; width: var(--gn-nav-icon-size, 19px); height: var(--gn-nav-icon-size, 19px);
+  background: var(--gn-sidebar-text-muted);
+  -webkit-mask: var(--gn-icon-src) center / contain no-repeat; mask: var(--gn-icon-src) center / contain no-repeat;
+}
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item:hover .gn-nav__icon-stint { background: var(--gn-sidebar-text); }
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__item[aria-current="page"] .gn-nav__icon-stint,
+.gn-sidebar[data-gn-icons="tint"] .gn-nav__entry.has-active > .gn-nav__item .gn-nav__icon-stint { background: var(--gn-sidebar-indicator); }
+@media (min-width: 861px) {
+  :root[data-gn-nav="horizontal"] .gn-sidebar[data-gn-icons="tint"] .gn-nav__icon-stint { display: none; }
+  :root[data-gn-nav="horizontal"] .gn-sidebar[data-gn-icons="tint"] .gn-nav__item:not(:has(.gn-nav__icon-h, .gn-nav__icon-tint)) .gn-nav__icon-img { display: block; }
+}
+@media (forced-colors: active) { .gn-nav__icon-stint { background: CanvasText !important; } }
+
+/* Contenido existente del producto (LEGACY_CSS) en modo oscuro: block content_attrs
+   data-gn-legacy           → la pantalla todavía no tiene oscuro: se muestra como panel claro
+   data-gn-legacy="dark"    → el producto ya llevó sus variables a los tokens (ver docs/integracion.md) */
+:root[data-gn-theme="dark"] .gn-content[data-gn-legacy]:not([data-gn-legacy="dark"]) {
+  color-scheme: light; background: var(--gn-legacy-light-bg); color: var(--gn-legacy-light-text);
+  border-radius: var(--gn-radius); margin-block: 12px;
+}
 } /* @layer geneos-ui */
 
 </style>
@@ -2543,7 +2633,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     </header>
     <main class="gn-content" id="gn-main-content" tabindex="-1">
       
-<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.3.0</span></li></ol></nav>
+<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.4.0</span></li></ol></nav>
 
       
 <div class="gn-page-head" id="inicio">
@@ -7203,7 +7293,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="gn-card"><div class="gn-card__body">
       <h3 class="kit-h3">Instalación</h3>
 <pre class="kit-code"><code># requirements.txt
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.3.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.4.0
 
 # settings.py
 INSTALLED_APPS += ["geneos_ui"]
@@ -7238,6 +7328,129 @@ GENEOS_UI = {
       </ol>
     </div></div>
   </div>
+</section>
+
+
+
+<section class="kit-section" id="vista-de-modulo" aria-labelledby="h-modulo">
+  <header class="kit-section__head">
+    <h2 id="h-modulo">Vista de módulo</h2>
+    <p>Encabezado con el ícono original del módulo y lista de funcionalidades: dos columnas en escritorio, una en el celular.</p>
+  </header>
+  
+  <div class="gn-card kit-module-demo" data-kit-product="gelectric"><div class="gn-card__body kit-stack">
+    <h3 class="kit-h3">Funcionalidades del módulo<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_page_head</code> <code>gn_link_list</code></span></h3>
+    <div class="gn-page-head gn-page-head--icon">
+  <span class="gn-page-head__icon"><img class="gn-any-icon " src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0idXVpZC0xODFmOGY1Yi1lNDFiLTQ5YjktOGYwNi00NWZiNjIzNDlkOWIiIGRhdGEtbmFtZT0idXVpZC01MzFjMWM4ZS05YjBjLTQyNzctOWZkYS04NjhjODk2YWNkNTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCA5OC44MiA5OC44MiI+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9InV1aWQtNjFhNTc5ZDEtYmE5MC00YzBiLWFhYTMtNThjZDMxOTAxZmI3Ij4KICAgICAgPHJlY3QgeD0iMCIgd2lkdGg9Ijk4LjgyIiBoZWlnaHQ9Ijk4LjgyIiByeD0iNiIgcnk9IjYiIGZpbGw9Im5vbmUiLz4KICAgIDwvY2xpcFBhdGg+CiAgPC9kZWZzPgogIDxyZWN0IHg9IjAiIHdpZHRoPSI5OC44MiIgaGVpZ2h0PSI5OC44MiIgcng9IjYiIHJ5PSI2IiBmaWxsPSIjZjlmOWY5Ii8+CiAgPHBhdGggZD0iTTQ5LjQxLDUzLjU1Yy04LjcyLDAtMTUuODItNy4xLTE1LjgyLTE1LjgyczcuMS0xNS44MiwxNS44Mi0xNS44MiwxNS44Miw3LjEsMTUuODIsMTUuODItNy4xLDE1LjgyLTE1LjgyLDE1LjgyWk00OS40MSwyNi45MmMtNS45NiwwLTEwLjgyLDQuODUtMTAuODIsMTAuODJzNC44NSwxMC44MiwxMC44MiwxMC44MiwxMC44Mi00Ljg1LDEwLjgyLTEwLjgyLTQuODUtMTAuODItMTAuODItMTAuODJaIiBmaWxsPSIjMTI4MDM3Ii8+CiAgPGc+CiAgICA8cGF0aCBkPSJNNzAuOTcsNTkuNTdjLTQuODQsMC04Ljc3LTMuOTMtOC43Ny04Ljc3czMuOTMtOC43Nyw4Ljc3LTguNzcsOC43NywzLjkzLDguNzcsOC43Ny0zLjkzLDguNzctOC43Nyw4Ljc3Wk03MC45Nyw0Ny4wMmMtMi4wOCwwLTMuNzcsMS42OS0zLjc3LDMuNzdzMS42OSwzLjc3LDMuNzcsMy43NywzLjc3LTEuNjksMy43Ny0zLjc3LTEuNjktMy43Ny0zLjc3LTMuNzdaIiBmaWxsPSIjZjNjNTAxIi8+CiAgICA8cGF0aCBkPSJNNzkuNDUsNzUuMTloLTcuNzRjLTEuMzgsMC0yLjUtMS4xMi0yLjUtMi41czEuMTItMi41LDIuNS0yLjVoNC43NmMtMS0yLjQ5LTMuNDMtNC4yNS02LjI3LTQuMjVoLS44OGMtMS4zOCwwLTIuNS0xLjEyLTIuNS0yLjVzMS4xMi0yLjUsMi41LTIuNWguODhjNi40OCwwLDExLjc1LDUuMjcsMTEuNzUsMTEuNzUsMCwxLjM4LTEuMTIsMi41LTIuNSwyLjVaIiBmaWxsPSIjZGJiMTAwIi8+CiAgICA8cGF0aCBkPSJNMjcuODYsNTkuNTdjLTQuODQsMC04Ljc3LTMuOTMtOC43Ny04Ljc3czMuOTMtOC43Nyw4Ljc3LTguNzcsOC43NywzLjkzLDguNzcsOC43Ny0zLjkzLDguNzctOC43Nyw4Ljc3Wk0yNy44Niw0Ny4wMmMtMi4wOCwwLTMuNzcsMS42OS0zLjc3LDMuNzdzMS42OSwzLjc3LDMuNzcsMy43NywzLjc3LTEuNjksMy43Ny0zLjc3LTEuNjktMy43Ny0zLjc3LTMuNzdaIiBmaWxsPSIjMmQ3ZmM5Ii8+CiAgICA8cGF0aCBkPSJNMjcuMTEsNzUuMTloLTcuNzRjLTEuMzgsMC0yLjUtMS4xMi0yLjUtMi41LDAtNi40OCw1LjI3LTExLjc1LDExLjc1LTExLjc1aC44OGMxLjM4LDAsMi41LDEuMTIsMi41LDIuNXMtMS4xMiwyLjUtMi41LDIuNWgtLjg4Yy0yLjg0LDAtNS4yOCwxLjc2LTYuMjcsNC4yNWg0Ljc2YzEuMzgsMCwyLjUsMS4xMiwyLjUsMi41cy0xLjEyLDIuNS0yLjUsMi41WiIgZmlsbD0iIzI0NGM5NyIvPgogIDwvZz4KICA8cGF0aCBkPSJNNjQuNjQsODIuMDRjLTEuMzgsMC0yLjUtMS4xMi0yLjUtMi41di02Ljc5YzAtNy4wMi01LjcxLTEyLjczLTEyLjczLTEyLjczcy0xMi43Myw1LjcxLTEyLjczLDEyLjczdjYuNzljMCwxLjM4LTEuMTIsMi41LTIuNSwyLjVzLTIuNS0xLjEyLTIuNS0yLjV2LTYuNzljMC05Ljc4LDcuOTUtMTcuNzMsMTcuNzMtMTcuNzNzMTcuNzMsNy45NSwxNy43MywxNy43M3Y2Ljc5YzAsMS4zOC0xLjEyLDIuNS0yLjUsMi41WiIgZmlsbD0iIzBiYjI0MyIvPgogIDxnIGNsaXAtcGF0aD0idXJsKCN1dWlkLTYxYTU3OWQxLWJhOTAtNGMwYi1hYWEzLTU4Y2QzMTkwMWZiNykiPgogICAgPHBhdGggZD0iTTc5LjcyLDQ5LjI2bC04LjY2LTYuMDItOC4zOCw0LjI0LjA5LTEyLjUyLTcuNTMtMTAuNTQtMTUuOTcsMS4zOEwwLDQ3LjM1djQ1LjQ4YzAsMy4zMSwyLjY5LDYsNiw2aDY0LjgxbDEwLjgxLTI1LjIyLTguNC0xMS45Myw2LjQ5LTEyLjQyWiIgb3BhY2l0eT0iLjA1Ii8+CiAgPC9nPgogIDxwYXRoIGQ9Ik05Mi44Miw5NC40OUg2QzIuNjksOTQuNDksMCw5MS44MSwwLDg4LjQ5djQuMzNjMCwzLjMxLDIuNjksNiw2LDZoODYuODJjMy4zMSwwLDYtMi42OSw2LTZ2LTQuMzNjMCwzLjMxLTIuNjksNi02LDZaIiBmaWxsPSIjMjgyODI4IiBvcGFjaXR5PSIuMTUiLz4KPC9zdmc+" alt=""></span>
+  <div class="gn-page-head__text">
+    <span class="gn-eyebrow">Módulo</span>
+    <h1>Asociados y servicios</h1>
+    <p>8 funcionalidades</p>
+  </div>
+  
+</div>
+
+    <ul class="gn-link-list gn-link-list--cols-2" aria-label="Funcionalidades">
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-1">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Ficha del asociado">Ficha del asociado</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-2">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="ABM de asociado">ABM de asociado</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-3">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Cuota capital y excepciones">Cuota capital y excepciones</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-4">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Retorno de excedentes">Retorno de excedentes</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-5">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Reintegro al darse de baja">Reintegro al darse de baja</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-6">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Reportes societarios">Reportes societarios</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-7">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Reclamos">Reclamos</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#asoc-8">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Órdenes de trabajo">Órdenes de trabajo</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+</ul>
+
+    
+    <span class="kit-meta">Variante con ícono y descripción · Asociados y servicios</span>
+    <ul class="gn-link-list gn-link-list--cols-2" aria-label="Asociados y servicios">
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#datos">
+    <span class="gn-link-list__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-idcard"/></svg></span>
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Ficha del asociado">Ficha del asociado</span><span class="gn-link-list__desc">Consulta y edición de la ficha del asociado</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#datos">
+    <span class="gn-link-list__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-user-plus"/></svg></span>
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="ABM de asociado (rol múltiple)">ABM de asociado (rol múltiple)</span><span class="gn-link-list__desc">Alta, baja y modificación de asociados, usuarios y proveedores</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><div class="gn-link-list__item is-static">
+    <span class="gn-link-list__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-coins"/></svg></span>
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Cuota capital y excepciones">Cuota capital y excepciones</span><span class="gn-link-list__desc">Gestión de aportes, cuotas y excepciones</span></span>
+    <span class="gn-badge gn-badge--neutral">En definición</span></div>
+  </li>
+  <li class="gn-link-list__cell"><div class="gn-link-list__item is-static">
+    <span class="gn-link-list__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-book"/></svg></span>
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Reportes societarios">Reportes societarios</span><span class="gn-link-list__desc">Padrón, Libro societario y otros informes</span></span>
+    <span class="gn-badge gn-badge--neutral">En definición</span></div>
+  </li>
+</ul>
+
+    
+    <p class="kit-note">Dos columnas en escritorio y una en el celular. El nombre se ve completo, en hasta dos líneas. El ícono del encabezado es el original del módulo; si no hay uno para fondo claro, no se dibuja ninguno.</p>
+  </div></div>
+  
+  <div class="gn-card kit-module-demo" data-kit-product="gema" hidden><div class="gn-card__body kit-stack">
+    <h3 class="kit-h3">Funcionalidades del módulo<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_page_head</code> <code>gn_link_list</code></span></h3>
+    <div class="gn-page-head gn-page-head--icon">
+  <span class="gn-page-head__icon"><img class="gn-any-icon " src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0idXVpZC1iN2ZiMjY0Yi1jY2ExLTRjMTctYTVmNC1jMDM2NmJkNmIxZjciIGRhdGEtbmFtZT0iQ2FwYSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5OC44MiA5OC44MiI+CiAgPHJlY3QgeD0iMCIgd2lkdGg9Ijk4LjgyIiBoZWlnaHQ9Ijk4LjgyIiByeD0iNiIgcnk9IjYiIGZpbGw9IiNmYWZhZmEiLz4KICA8cGF0aCBkPSJNNjYuNjcsNzMuNzJsLTEuODUtMzguODMsNy4yNS04LjgyLTcuNTQtNS40OS0xNS4xMy04Ljg5TDAsMzguODF2NTQuMDJjMCwzLjMxLDIuNjksNiw2LDZoNTAuMjFsMTAuNDYtMjUuMVoiIGZpbGw9IiMwMTAxMDEiIG9wYWNpdHk9Ii4wNSIvPgogIDxwYXRoIGQ9Ik05Mi44Miw5NC40OUg2QzIuNjksOTQuNDksMCw5MS44MSwwLDg4LjQ5djQuMzNjMCwzLjMxLDIuNjksNiw2LDZoODYuODJjMy4zMSwwLDYtMi42OSw2LTZ2LTQuMzNjMCwzLjMxLTIuNjksNi02LDZaIiBmaWxsPSIjMjgyOTI5IiBvcGFjaXR5PSIuMTUiLz4KICA8cmVjdCB4PSI0MC4yOCIgeT0iMzIuMjIiIHdpZHRoPSIyNy4yIiBoZWlnaHQ9IjQ2Ljg3IiByeD0iOS4xMSIgcnk9IjkuMTEiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NGQ5OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8cmVjdCB4PSI0Ni4wMiIgeT0iNDEuODIiIHdpZHRoPSIxNS4yNSIgaGVpZ2h0PSIxMC4zNSIgcng9IjIuNzUiIHJ5PSIyLjc1IiBmaWxsPSIjZWM2ZDA1Ii8+CiAgPGxpbmUgeDE9IjQ4LjYxIiB5MT0iNTcuMzkiIHgyPSI1OS4wNiIgeTI9IjU3LjM5IiBmaWxsPSJub25lIiBzdHJva2U9IiNlYzZkMDUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPGxpbmUgeDE9IjQ4LjYxIiB5MT0iNjQuNTkiIHgyPSI1OS4wNiIgeTI9IjY0LjU5IiBmaWxsPSJub25lIiBzdHJva2U9IiNlYzZkMDUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPHBvbHlnb24gcG9pbnRzPSIyOC4zOSA0NC4xNCAyMS4yMSA2My44MSAzNS4xMSA2NS4zNSAzMy45NSA0NC41NiAyOC4zOSA0NC4xNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWM2ZDA1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwYXRoIGQ9Ik0zMS4wNSw0My4xN2wuODgtMTAuMjZjLjYxLTcuMDYsNi4yNy0xMi42MSwxMy4zNC0xMy4wOGwyLjAyLS4xMyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZWM2ZDA1IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iNSIvPgogIDxwb2x5bGluZSBwb2ludHM9IjQ3LjI5IDMyLjIyIDQ3LjI5IDI2LjI5IDYwLjQyIDI2LjI5IDYwLjQyIDMyLjIyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyNTRkOTgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSI1Ii8+CiAgPGxpbmUgeDE9IjYxLjI3IiB5MT0iMTkuNzUiIHgyPSI3Mi4wNyIgeTI9IjE0LjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NGQ5OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8bGluZSB4MT0iNjEuMjciIHkxPSIxOS43NSIgeDI9IjcyLjA3IiB5Mj0iMjYuMDciIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI1NGQ5OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8Y2lyY2xlIGN4PSI1My44OCIgY3k9IjE5LjciIHI9IjYuNTkiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2VjNmQwNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjUiLz4KICA8Y2lyY2xlIGN4PSI1My44NiIgY3k9IjE5LjciIHI9IjIuMzUiIGZpbGw9IiNlYzZkMDUiLz4KPC9zdmc+" alt=""></span>
+  <div class="gn-page-head__text">
+    <span class="gn-eyebrow">Módulo</span>
+    <h1>Matafuegos</h1>
+    <p>2 funcionalidades</p>
+  </div>
+  
+</div>
+
+    <ul class="gn-link-list gn-link-list--cols-2" aria-label="Funcionalidades">
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#matafuegos">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Listado de matafuegos">Listado de matafuegos</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+  <li class="gn-link-list__cell"><a class="gn-link-list__item" href="#vencimientos">
+    
+    <span class="gn-link-list__body"><span class="gn-link-list__title" title="Panel de vencimientos">Panel de vencimientos</span></span>
+    <svg class="gn-icon gn-link-list__chev" aria-hidden="true"><use href="#i-chevright"/></svg></a>
+  </li>
+</ul>
+
+    
+    <p class="kit-note">Dos columnas en escritorio y una en el celular. El nombre se ve completo, en hasta dos líneas. El ícono del encabezado es el original del módulo; si no hay uno para fondo claro, no se dibuja ninguno.</p>
+  </div></div>
+  
 </section>
 
 
@@ -7404,6 +7617,12 @@ GENEOS_UI = {
   <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-nav-value="vertical"><svg class="gn-icon " aria-hidden="true"><use href="#i-layout-side"/></svg><span>Vertical</span></button>
 </div>
 
+    </div>
+    <div class="gn-prefs__group gn-prefs__group--variant" data-gn-variant-product="gelectric">
+      <span class="gn-prefs__label" aria-hidden="true">Color</span>
+      <div class="gn-theme-switch" role="radiogroup" aria-label="Color del sistema" data-gn-variant-switch data-gn-variant-product="gelectric">
+        <button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="true" data-gn-variant-value=""><i class="gn-prefs__swatch" data-gn-product="gelectric" aria-hidden="true"></i><span>Verde</span></button><button type="button" class="gn-theme-switch__btn" role="radio" aria-checked="false" tabindex="-1" data-gn-variant-value="blue"><i class="gn-prefs__swatch" data-gn-product="gelectric" data-gn-variant="blue" aria-hidden="true"></i><span>Azul</span></button>
+      </div>
     </div>
     <p class="gn-prefs__note">Se guarda en este navegador.</p>
   </section>
@@ -7766,6 +7985,8 @@ GENEOS_UI = {
     var status = $(".gn-sidebar__status", sidebar);
     var foot = $(".gn-sidebar__foot", sidebar);
     var entries = $$(".gn-nav__entry:not(.gn-nav__more)", nav);
+    // accesos directos (NavItem(search_links=…)): solo se muestran cuando la búsqueda coincide
+    $$(".gn-nav__direct", nav).forEach(function (el) { el.__gnText = el.textContent.trim(); });
     var sections = $$(".gn-nav__section", nav);
     var initial = null;
 
@@ -7802,12 +8023,24 @@ GENEOS_UI = {
         var item = $(".gn-nav__item", entry);
         var label = item && $(".gn-nav__label", item);
         var subs = $$(".gn-nav__subitem", entry);
+        var directs = $$(".gn-nav__direct", entry);
+        var directList = $(".gn-nav__directs", entry);
         if (!q) {
           entry.hidden = false;
           if (label) paint(label, "");
           subs.forEach(function (s) { s.parentElement.hidden = false; paint(s, ""); });
+          directs.forEach(function (d) { d.parentElement.hidden = true; paint(d, ""); });
+          if (directList) directList.hidden = true;
           return;
         }
+        var directMatches = 0;
+        directs.forEach(function (d) {
+          var own = hit(haystack(d));
+          d.parentElement.hidden = !own;
+          paint(d, own ? words[0] : "");
+          if (own) directMatches++;
+        });
+        if (directList) directList.hidden = !directMatches;
         var selfMatch = !!(label && hit(haystack(label, item)));
         var subMatches = 0;
         subs.forEach(function (s) {
@@ -7817,12 +8050,12 @@ GENEOS_UI = {
           paint(s, own ? words[0] : "");
           if (own) subMatches++;
         });
-        var visible = selfMatch || subMatches > 0;
+        var visible = selfMatch || subMatches > 0 || directMatches > 0;
         entry.hidden = !visible;
         if (label) paint(label, selfMatch ? words[0] : "");
         var toggle = $("[data-gn-group-toggle]", entry);
         if (toggle && visible) setGroup(toggle, document.getElementById(toggle.getAttribute("aria-controls")), true);
-        if (visible) total += Math.max(1, subMatches);
+        if (visible) total += Math.max(1, subMatches + directMatches);
       });
       // los títulos de sección se ocultan si no queda nada debajo
       sections.forEach(function (sec) {
@@ -7846,12 +8079,13 @@ GENEOS_UI = {
     input.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && input.value) { e.stopPropagation(); input.value = ""; run(); }
       if (e.key === "ArrowDown" || e.key === "Enter") {
-        var first = $$(".gn-nav__item, .gn-nav__subitem", nav).filter(function (el) { return el.offsetParent !== null; })[0];
+        var first = $$(".gn-nav__item, .gn-nav__subitem, .gn-nav__direct", nav).filter(function (el) { return el.offsetParent !== null; })[0];
         if (!first) return;
         e.preventDefault();
         if (e.key === "Enter" && input.value) {
           // Enter abre el primer resultado navegable
-          var link = $$("a.gn-nav__subitem, a.gn-nav__item", nav).filter(function (el) { return el.offsetParent !== null; })[0];
+          // un acceso directo que coincide es el resultado más preciso
+          var link = $$("a.gn-nav__direct", nav).concat($$("a.gn-nav__subitem, a.gn-nav__item", nav)).filter(function (el) { return el.offsetParent !== null; })[0];
           if (link) { link.click(); return; }
         }
         first.focus();
@@ -8402,10 +8636,67 @@ GENEOS_UI = {
     });
   }
 
+  // ---------------------------------------------------- variante de color
+  // Si el producto declara GENEOS_UI["VARIANTS"], el panel de preferencias muestra
+  // «Color». La elección se guarda por producto (localStorage "gn-variant:<producto>")
+  // y {% gn_theme_boot %} la aplica antes de pintar. "" = el color principal.
+  function variantKey(p) { return "gn-variant:" + (p || document.documentElement.getAttribute("data-gn-product") || ""); }
+  function getVariant() { return document.documentElement.getAttribute("data-gn-variant") || ""; }
+  function syncVariantSwitches() {
+    var root = document.documentElement, product = root.getAttribute("data-gn-product"), v = getVariant();
+    $$("[data-gn-variant-product].gn-prefs__group--variant").forEach(function (g) { g.hidden = g.getAttribute("data-gn-variant-product") !== product; });
+    $$("[data-gn-variant-switch]").forEach(function (group) {
+      $$("[data-gn-variant-value]", group).forEach(function (b) {
+        var on = b.getAttribute("data-gn-variant-value") === v;
+        b.setAttribute("aria-checked", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+      });
+    });
+  }
+  function setVariant(variant, persist) {
+    var root = document.documentElement, v = variant || "";
+    if (v) root.setAttribute("data-gn-variant", v); else root.removeAttribute("data-gn-variant");
+    if (persist !== false) store(variantKey(), v);
+    syncVariantSwitches();
+    document.dispatchEvent(new CustomEvent("gn:variant", { detail: { variant: v, product: root.getAttribute("data-gn-product") } }));
+    return v;
+  }
+  function initVariant(root) {
+    if (!initVariant.__done) {
+      initVariant.__done = true;
+      // si cambia el producto (catálogo), se aplica la variante que el usuario eligió para ese producto
+      if (window.MutationObserver) new MutationObserver(function () {
+        var product = document.documentElement.getAttribute("data-gn-product");
+        var offered = $$('.gn-prefs__group--variant[data-gn-variant-product="' + product + '"] [data-gn-variant-value]').map(function (b) { return b.getAttribute("data-gn-variant-value"); });
+        var saved = store(variantKey(product));
+        setVariant(offered.length && saved !== null && offered.indexOf(saved) !== -1 ? saved : "", false);
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-gn-product"] });
+    }
+    $$("[data-gn-variant-switch]", root).forEach(function (group) {
+      if (group.__gn) return; group.__gn = true;
+      var buttons = $$("[data-gn-variant-value]", group);
+      buttons.forEach(function (b, i) {
+        b.addEventListener("click", function () {
+          setVariant(b.getAttribute("data-gn-variant-value"));
+          announce("Color: " + b.textContent.trim());
+        });
+        b.addEventListener("keydown", function (e) {
+          var d = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+          if (!d) return;
+          e.preventDefault();
+          var nb = buttons[(i + d + buttons.length) % buttons.length];
+          nb.focus(); nb.click();
+        });
+      });
+    });
+    syncVariantSwitches();
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
     initTheme(root);
     initNav(root);
+    initVariant(root);
     initPrefs(root);
     initTooltips(root);
     initDropdowns(root);
@@ -8419,7 +8710,7 @@ GENEOS_UI = {
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.3.0";
+  window.GN.version = "0.4.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;
@@ -8434,6 +8725,8 @@ GENEOS_UI = {
   window.GN.setNav = setNav;
   window.GN.getNav = getNav;
   window.GN.setNavDefault = setNavDefault;
+  window.GN.setVariant = setVariant;
+  window.GN.getVariant = getVariant;
 
   function boot() { initSidebars(); init(document); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
