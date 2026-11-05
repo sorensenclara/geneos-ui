@@ -8,7 +8,8 @@ from django.shortcuts import render
 
 from . import __version__
 from .catalog_data import PRODUCTS
-from .catalog_examples import BACKOFFICE, EXAMPLES, GELECTRIC_ONLY, GELECTRIC_SPRITE, PENDING_FEATURES
+from .catalog_examples import BACKOFFICE, DATETIME, EXAMPLES, GELECTRIC_ONLY, GELECTRIC_SPRITE, PENDING_FEATURES
+from .catalog_forms import datetime_demo_form
 from .conf import get_config
 from .presets import PRESETS
 from .navigation import build_nav
@@ -109,6 +110,8 @@ def catalog(request):
             "ex": EXAMPLES[p["key"]],
             "filter_defs_json": json.dumps(EXAMPLES[p["key"]]["filters"]["defs"], ensure_ascii=False),
             "pending_features": PENDING_FEATURES.get(p["key"], []),
+            "dt": DATETIME[p["key"]],
+            "dt_form": datetime_demo_form(p["key"]),
             "backoffice": [{"label": label, "ref": f"{p['key']}:{module}", "children": children,
                             "pending": (product_icons.resolve(f"{p['key']}:{module}", set_name="backoffice") or {}).get("status") == "pendiente"}
                            for label, module, children in BACKOFFICE.get(p["key"], [])],

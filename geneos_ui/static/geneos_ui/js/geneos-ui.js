@@ -1075,10 +1075,11 @@
     initAlerts(root);
     initToastTriggers(root);
     initCharts(root);
+    if (window.GN.initDateTime && root !== document) window.GN.initDateTime(root); // js/datetime.js
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.4.0";
+  window.GN.version = "0.5.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

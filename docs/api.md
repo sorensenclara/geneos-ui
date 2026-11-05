@@ -41,6 +41,7 @@ Se arma en tres capas: valores por defecto < preset del producto (`geneos_ui/pre
 | --- | --- |
 | `{% gn_css [producto] [puentes] %}` | Fuente, tokens, tema, componentes, puentes y tripletes de Bootstrap. |
 | `{% gn_js %}` | JavaScript de la biblioteca (`defer`). |
+| `{% gn_datetime_js %}` | Cally (módulo) y `datetime.js`: lo mismo que `{{ form.media }}` de los widgets de fecha y hora (0.5.0). |
 | `{% gn_theme_boot %}`, `{% gn_nav_boot %}` | En el `<head>`: aplican el tema y la disposición guardados antes de pintar. |
 | `{% gn_prefs %}` | Solapa de preferencias (ya incluida en `layouts/app.html`). |
 | `{% gn_theme_switch %}`, `{% gn_nav_switch %}` | Selectores sueltos, si un producto los quiere en otro lugar. |
@@ -61,6 +62,16 @@ Se arma en tres capas: valores por defecto < preset del producto (`geneos_ui/pre
 | `{% gn_prefs [products] %}` | Con `VARIANTS`, agrega el grupo «Color». |
 
 Los tags que escriben `<script>` o `<style>` en línea agregan el `nonce` de CSP si está en el contexto (`csp_nonce`) o en el request (`request.csp_nonce`).
+
+## Widgets: `geneos_ui.widgets` (0.5.0)
+
+| Widget | Sin JS | Con JS (se ve y se envía) |
+| --- | --- | --- |
+| `GnDateTimeInput(attrs=None, *, minute_step=5, default_time=None, invalid_message=None, picker_label=None)` | `datetime-local` | `dd/mm/aaaa HH:mm` |
+| `GnDateInput(…)` | `date` | `dd/mm/aaaa` |
+| `GnTimeInput(…)` | `time` | `HH:mm` |
+
+`min` y `max` van en `attrs`, en ISO. Funciones de lectura: `parse_date`, `parse_time`, `parse_datetime` (aceptan el formato visible y el ISO; devuelven `None` si no es válido). `datetime_media()` devuelve el `Media` de los tres.
 
 ## Navegación: `geneos_ui.navigation`
 
@@ -90,7 +101,7 @@ Sobrescribir un template de la biblioteca copiándolo en el producto deja ese co
 
 ## JavaScript
 
-- **Objeto `GN`:** `GN.version`, `GN.init(root)`, `GN.toast(texto, {kind, title})`, `GN.announce(texto)`, `GN.openModal(id)`, `GN.closeModal(id)`, `GN.setLoading(botón, bool, texto)`, `GN.renderCharts(root)`, `GN.setTheme(t)`, `GN.getTheme()`, `GN.setNav(n)`, `GN.getNav()`, `GN.setNavDefault(n)`, `GN.setVariant(v)`, `GN.getVariant()`, `GN.prefs.open()` / `GN.prefs.close()` y `GN.sidebar.expand()` / `collapse()` / `open()` / `close()`.
+- **Objeto `GN`:** `GN.version`, `GN.init(root)`, `GN.toast(texto, {kind, title})`, `GN.announce(texto)`, `GN.openModal(id)`, `GN.closeModal(id)`, `GN.setLoading(botón, bool, texto)`, `GN.renderCharts(root)`, `GN.setTheme(t)`, `GN.getTheme()`, `GN.setNav(n)`, `GN.getNav()`, `GN.setNavDefault(n)`, `GN.setVariant(v)`, `GN.getVariant()`, `GN.prefs.open()` / `GN.prefs.close()` y `GN.sidebar.expand()` / `collapse()` / `open()` / `close()`. Con `datetime.js` (0.5.0): `GN.datetime.value(input)`, `GN.datetime.setValue(input, iso)`, `GN.datetime.validate(input)`, `GN.datetime.parseDate/parseTime/parseDateTime`, `GN.popover.open(panel, ancla, botón)` / `GN.popover.close()` y `GN.initDateTime(root)`.
 - **Eventos en `document`:** `gn:theme` (`detail.theme`), `gn:nav` (`detail.layout`), `gn:variant` (`detail.product`, `detail.variant`), `gn:filters` y `gn:pill`.
 - **Atributos `data-gn-*`** que activan comportamiento: los de [`componentes.md`](componentes.md).
 

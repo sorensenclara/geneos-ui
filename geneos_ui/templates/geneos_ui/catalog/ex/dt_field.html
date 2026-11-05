@@ -1,0 +1,6 @@
+{# Campo de fecha/hora del catálogo: f = BoundField; error = texto de error del servidor (opcional) #}
+<div class="gn-field">
+  <label class="gn-field__label" for="{{ f.id_for_label }}">{{ f.label }}{% if f.field.required %}<span class="gn-required" aria-hidden="true">*</span>{% endif %}</label>
+  {{ f }}
+  {% if error %}<span class="gn-field__error" id="{{ f.id_for_label }}-e">{% load geneos_ui %}{% gn_icon "i-alert" %}{{ error }}</span>{% elif f.help_text %}<span class="gn-field__help" id="{{ f.id_for_label }}-h">{{ f.help_text }}</span>{% endif %}
+</div>

@@ -79,6 +79,39 @@ Controles: `gn-input`, `gn-select`, `gn-textarea`, `gn-check` (checkbox y radio)
 
 Filtros combinados: `gn-filters` con `gn-pills` (filtro rápido), `gn-filters__panel` (colapsable en móvil con `data-gn-filters-toggle`), `gn-filter` por campo y el constructor "+ Agregar filtro" (`data-gn-filter-builder="id-del-json"`, mismo formato de datos que GELECTRIC). Nada se envía hasta presionar Filtrar.
 
+## Fecha y hora (0.5.0)
+
+```python
+from geneos_ui.widgets import GnDateInput, GnDateTimeInput, GnTimeInput
+
+class TurnoForm(forms.Form):
+    inicio = forms.DateTimeField(
+        widget=GnDateTimeInput(default_time="09:00", minute_step=5, attrs={"min": "2026-01-01T00:00"}),
+        error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+    )
+    dia = forms.DateField(widget=GnDateInput())
+    hora = forms.TimeField(widget=GnTimeInput(minute_step=15))
+```
+En el template: `{{ form.media }}` (o `{% gn_datetime_js %}` si el formulario no se arma con Django) y el campo dentro de `gn-field` como cualquier otro.
+
+- **Un solo input**, con el `name` del campo. Sin JavaScript es nativo y envía ISO; con JavaScript se ve y se envía `dd/mm/aaaa HH:mm` (`dd/mm/aaaa`, `HH:mm`). El widget convierte a ISO antes de que valide el campo.
+- **Botón** a la derecha del campo (`aria-haspopup="dialog"`, `aria-expanded`, `aria-controls`) que abre el panel. **Alt+↓** también lo abre desde el campo.
+- **Panel** (`gn-popover`): junto al campo, en este orden: abajo si entra; arriba (sin tapar la etiqueta); desplazando lo justo el contenedor con scroll; al costado o dentro de la ventana, siempre entero y con «Ahora»/«Listo» visibles. Scroll interno solo si la ventana es más baja que el panel, con el pie fijo. No lo recortan contenedores con `overflow` (si un ancestro con `transform` lo atraparía, se lleva al `<body>` mientras está abierto); en el celular, hoja inferior compacta con la hora y las acciones fijas abajo. Calendario (`gn-calendar`), hora y minutos (`gn-time`: dos campos `HH : mm` de 24 horas que se escriben directo o se ajustan con ↑/↓, Inicio/Fin; un valor vacío o fuera de rango se marca con un mensaje y no se corrige solo), «Ahora»/«Hoy» y «Listo». En fecha sola, elegir un día cierra el panel. Escape cierra y devuelve el foco al botón; tocar fuera o salir con Tab también cierra.
+- **Validación en el navegador**: al salir del campo y al enviar. Lo escrito se normaliza; si no es válido o queda fuera de `min`/`max`, se marca `aria-invalid` y se muestra el error debajo, vinculado con `aria-describedby`. El servidor valida igual (y es quien decide).
+- **Opciones**: `minute_step` (paso de la lista de minutos; a mano se puede escribir cualquiera), `default_time` (hora que se completa al elegir solo el día), `invalid_message`, `picker_label` (nombre del botón y del panel, p. ej. «Elegir fecha de finalización»).
+- **JavaScript**: `GN.datetime.value(input)` devuelve ISO (`""` vacío, `null` inválido) y `GN.datetime.setValue(input, iso)` lo cambia y dispara `input` y `change`. Útil para reglas entre campos (fin posterior al inicio).
+
+Sueltos:
+```html
+<calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" value="2026-11-05" aria-label="Vencimientos del mes"></calendar-date>
+
+<button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="ayuda">Ver detalle</button>
+<div class="gn-popover" id="ayuda" role="dialog" aria-label="Detalle" hidden>
+  …<button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button>
+</div>
+```
+El calendario es [Cally 0.9.2](https://github.com/WickyNilliams/cally) (MIT) en `static/geneos_ui/vendor/cally/`, sin modificar; se carga como módulo y se estiliza con `::part()` y tokens. Si no carga, los campos de fecha quedan nativos. El rango de fechas (`gn-date-range-picker`) y la migración del filtro `daterange` quedan para la 0.6.0.
+
 ## Tablas
 
 ```html
@@ -115,5 +148,6 @@ Gráficos sin librerías: `<div class="gn-chart" data-gn-chart="line" data-gn-so
 - Sidebar: `aria-current`, `aria-expanded`, `/` para buscar, flechas para recorrer, `Esc` cierra el cajón móvil, foco atrapado en el cajón.
 - Dropdowns: `aria-expanded`, flechas, `Home`/`End`, `Esc` devuelve el foco.
 - Pestañas: patrón WAI-ARIA con flechas.
+- Fecha y hora: botón con `aria-haspopup="dialog"` y `aria-expanded`; panel `role="dialog"` con nombre; grilla de Cally con días como botones (`aria-pressed`, `aria-current="date"`, nombre completo «13 de noviembre») y el mes anunciado en `aria-live`; formato del campo anunciado por `aria-describedby`; `Esc` devuelve el foco al botón. Verificado con Chromium en `tests/visual/test_datetime.py`.
 - Mensajes dinámicos anunciados con `aria-live` (`GN.announce()`).
 - Se respeta `prefers-reduced-motion`.

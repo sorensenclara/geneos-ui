@@ -60,7 +60,7 @@ def shots(html, out):
         pg.keyboard.press("Escape")
         # secciones de componentes
         setup(pg, "gema", "light", "vertical")
-        for sec in ("identidad", "iconografia", "navegacion", "acciones", "formularios", "datos", "dashboard", "estados"):
+        for sec in ("identidad", "iconografia", "navegacion", "acciones", "formularios", "fecha-hora", "datos", "dashboard", "estados"):
             el = pg.query_selector(f"#{sec}")
             if el:
                 # el comienzo de la sección arriba de la ventana, para que lo que se agregue más abajo no la corra

@@ -2,6 +2,24 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.5.0] · 2026-11-05
+
+Selectores de fecha, hora y fecha y hora para formularios de Django, con calendario accesible. Los cuatro productos no cambian: el HTML de sus pantallas es el mismo de la 0.4.0 y los scripts nuevos se cargan solo donde hay un selector.
+
+### Agregado
+- **Widgets** `geneos_ui.widgets.GnDateTimeInput`, `GnDateInput` y `GnTimeInput` (opciones `minute_step`, `default_time`, `invalid_message`, `picker_label`; `min` y `max` por `attrs`). Un único `<input>` por campo, sin campos ocultos: sin JavaScript es el control nativo (`datetime-local`, `date`, `time`) con valor ISO; con JavaScript pasa a texto con `dd/mm/aaaa HH:mm`, que es lo mismo que se envía. `value_from_datadict` acepta los dos formatos y le entrega ISO al campo, así que sirve con `DateTimeField`, `DateField` y `TimeField` sin tocar `input_formats`. Un texto inválido vuelve a mostrarse tal cual (`data-gn-raw`) con el error del campo.
+- **`gn-popover`**: panel no modal (`role="dialog"`) que se ubica abajo o arriba según el espacio, no lo recortan contenedores con `overflow` y se abre abajo del campo si entra; si no, arriba (sin tapar la etiqueta); si no entra en ninguno de los dos lados, desplaza lo justo el contenedor con scroll del campo o se ubica al costado, siempre entero y con «Ahora» y «Listo» a la vista. Solo si la ventana es más baja que el panel usa scroll interno, con el pie fijo. Si un ancestro con `transform`/`filter`/`contain` lo recortaría, mientras está abierto se lleva al `<body>` (o al `<dialog>` abierto). Se recalcula al desplazar y al cambiar el tamaño de la ventana; en pantallas de hasta 480 px se muestra como hoja inferior compacta (semanas de 36 px, hora y acciones fijas abajo, áreas seguras del dispositivo). Escape lo cierra y devuelve el foco; también se cierra al tocar fuera o salir con Tab. Uso suelto con `data-gn-popover="id"` y `data-gn-popover-close`.
+- **`gn-calendar`**: [Cally 0.9.2](https://github.com/WickyNilliams/cally) (MIT, `vendor/cally/`, sin modificar, hash verificado en los tests) estilizado con `::part()` y solo tokens; español de Argentina, semana desde el lunes, mes y año en el encabezado, `min`/`max`. Teclado: flechas, Inicio/Fin, RePág/AvPág (Mayús: año), Enter.
+- **`gn-time`**: dos campos compactos `HH : mm` (`role="spinbutton"`, teclado numérico en el celular): se escribe directo (al completar la hora pasa solo a los minutos) o se ajusta con ↑/↓ (minutos de a `minute_step`, Mayús+↑/↓ de a 1), Inicio/Fin y flechas para mouse o touch fuera del orden de tabulación. Formato de 24 horas; un valor vacío o fuera de rango no se corrige solo: queda marcado con un mensaje vinculado por `aria-describedby` («La hora tiene que estar entre 00 y 23.»), el campo principal no cambia y «Listo» no cierra hasta corregirlo. Al desplazar la página el panel acompaña al campo y conserva su lado.
+- `{% gn_datetime_js %}` para páginas sin `{{ form.media }}`. `GN.datetime` (`value`, `setValue`, `validate`, `parseDate`, `parseTime`, `parseDateTime`), `GN.popover` y `GN.initDateTime(root)`; `GN.init(root)` también inicializa los selectores agregados después.
+- Validación en el navegador al salir del campo y al enviar: normaliza lo escrito (`5/11/26 9` → `05/11/2026 09:00`), marca `aria-invalid` y muestra el error vinculado con `aria-describedby`. Alt+↓ abre el panel desde el campo.
+- Catálogo: sección «Fecha y hora» con ejemplos de cada producto, estados (rango, error del servidor, deshabilitado), calendario y panel sueltos. `tools/build_catalog.py` embebe también los módulos ES.
+- Tests: `tests/test_datetime.py` (lectura de formatos, render, envío con y sin JS, zona horaria, media, Cally sin cambios, CSS sin colores fijos) y `tests/visual/test_datetime.py` (Chromium: sin JS, teclado, foco, Escape, arriba/abajo, celular, modo oscuro, validación).
+
+### Cambiado
+- `GN.version` y `__version__`: 0.5.0.
+- Referencia de HTML: la sección «Fecha y hora», su entrada en el índice y los scripts del catálogo se registran como cambios intencionales en `tests/test_html_snapshots.py`.
+
 ## [0.4.0] · 2026-10-30
 
 Componentes compartidos para las vistas de módulo, el menú y las preferencias, y una forma de llevar pantallas existentes al layout sin reescribir su CSS. GEMA, GEAGRO Cereales y GEAGRO Vid se ven igual que en la 0.3.0: mismo HTML y mismas capturas. GELECTRIC solo cambia en el panel de Preferencias, que suma el grupo «Color».

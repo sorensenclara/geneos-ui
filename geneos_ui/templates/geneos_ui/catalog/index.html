@@ -94,7 +94,7 @@
   </div>
 </div>
 <nav class="kit-toc" aria-label="Secciones del catálogo">
-  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
+  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#fecha-hora">Fecha y hora</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
 </nav>
 {% endblock %}
 
@@ -463,6 +463,59 @@
   {% endfor %}
 </section>
 
+{# ========================================================= FECHA Y HORA (0.5.0) #}
+<section class="kit-section" id="fecha-hora" aria-labelledby="h-fecha">
+  <header class="kit-section__head">
+    <h2 id="h-fecha">Fecha y hora<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>GnDateTimeInput</code> <code>GnDateInput</code> <code>GnTimeInput</code></span></h2>
+    <p>Un solo campo por valor: se escribe o se elige en el calendario, y lo que se ve (<code>dd/mm/aaaa HH:mm</code>) es lo que se envía. Sin JavaScript queda el control nativo del navegador. El calendario es <a href="https://github.com/WickyNilliams/cally">Cally 0.9.2</a> (MIT) con los tokens del producto; se navega con flechas, Inicio/Fin y RePág/AvPág, y Escape cierra el panel.</p>
+  </header>
+  {% for p in products %}{% with f=p.dt_form k=p.key %}
+  <div class="kit-stack" data-kit-product="{{ k }}"{% if k != active.key %} hidden{% endif %}>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Selectores</h3>
+        <div class="gn-form-grid">
+          <div class="gn-field--full">{% include "geneos_ui/catalog/ex/dt_field.html" with f=f.cuando %}</div>
+          {% include "geneos_ui/catalog/ex/dt_field.html" with f=f.fecha %}
+          {% include "geneos_ui/catalog/ex/dt_field.html" with f=f.hora %}
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Estados: rango, error, deshabilitado</h3>
+        <div class="kit-stack kit-stack--tight">
+          {% include "geneos_ui/catalog/ex/dt_field.html" with f=f.acotada %}
+          {% include "geneos_ui/catalog/ex/dt_field.html" with f=f.con_error error="Ingresá una fecha y hora válidas." %}
+          {% include "geneos_ui/catalog/ex/dt_field.html" with f=f.deshabilitado %}
+        </div>
+      </div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Calendario<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-calendar</code></span></h3>
+        <calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" aria-label="{{ p.dt.calendar }}" value="{{ p.dt.values.date }}"></calendar-date>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Panel flotante<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-popover</code></span></h3>
+        <p class="kit-muted">Se abre abajo o arriba según el espacio, no lo recorta un contenedor con scroll y en el celular aparece como hoja inferior. Lo usan los tres selectores.</p>
+        <button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="{{ k }}-pop">{% gn_icon "i-info" %}Ver detalle</button>
+        <div class="gn-popover" id="{{ k }}-pop" role="dialog" aria-label="Detalle" hidden>
+          <p class="kit-muted">{{ p.dt.datetime.1 }}</p>
+          <div class="gn-popover__foot"><span></span><button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button></div>
+        </div>
+        <h3 class="kit-h3">Uso en Django</h3>
+<pre class="kit-code"><code>from geneos_ui.widgets import GnDateTimeInput
+
+inicio = forms.DateTimeField(
+    widget=GnDateTimeInput(default_time="09:00", minute_step=5),
+    error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+)
+# template: {% templatetag openvariable %} form.media {% templatetag closevariable %} (o {% templatetag openblock %} gn_datetime_js {% templatetag closeblock %})</code></pre>
+      </div></div>
+    </div>
+  </div>
+  {% endwith %}{% endfor %}
+</section>
+
 {# ================================================================== DATOS #}
 <section class="kit-section" id="datos" aria-labelledby="h-datos">
   <header class="kit-section__head">
@@ -770,6 +823,6 @@ GENEOS_UI = {
 {% endwith %}{% endfor %}
 {% endblock %}
 
-{% block extra_js %}
+{% block extra_js %}{% gn_datetime_js %}
 <script src="{% static 'geneos_ui/catalog/catalog.js' %}"></script>
 {% endblock %}

@@ -1600,6 +1600,148 @@ a.gn-link-list__item:focus-visible { outline: 2px solid var(--gn-focus); outline
   color-scheme: light; background: var(--gn-legacy-light-bg); color: var(--gn-legacy-light-text);
   border-radius: var(--gn-radius); margin-block: 12px;
 }
+/* =====================================================================
+   Fecha y hora (0.5.0): gn-popover, gn-calendar, gn-time y selectores
+   Comportamiento en js/datetime.js; calendario de vendor/cally (::part).
+   ===================================================================== */
+.gn-popover {
+  position: fixed; z-index: 1000; top: 0; left: 0;
+  display: flex; flex-direction: column; gap: 12px; padding: 14px;
+  min-width: 260px; max-width: calc(100vw - 16px);
+  background: var(--gn-elevated); color: var(--gn-text);
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius); box-shadow: var(--gn-shadow-lg);
+}
+.gn-popover[hidden] { display: none; }
+.gn-popover.is-clamped { overflow-y: auto; overscroll-behavior: contain; padding-bottom: 0; }
+/* panel más alto que la ventana: el pie («Ahora» / «Listo») queda fijo abajo, siempre visible */
+.gn-popover.is-clamped .gn-popover__foot {
+  position: sticky; bottom: 0; z-index: 1; margin: 0 -14px; padding: 10px 14px 14px; background: var(--gn-elevated);
+}
+.gn-popover:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
+.gn-popover__foot { display: flex; justify-content: space-between; gap: 8px; padding-top: 10px; border-top: 1px solid var(--gn-border); }
+.gn-popover--sheet {
+  top: auto !important; left: 0 !important; right: 0; bottom: 0; width: 100%; max-width: none; min-width: 0;
+  max-height: calc(100vh - 24px); max-height: calc(100dvh - env(safe-area-inset-top) - 12px);
+  overflow-y: auto; overscroll-behavior: contain; gap: 10px;
+  border-radius: var(--gn-radius) var(--gn-radius) 0 0; border-bottom: 0;
+  padding: 12px max(14px, env(safe-area-inset-right)) 0 max(14px, env(safe-area-inset-left));
+  box-shadow: 0 0 0 100vmax var(--gn-scrim), var(--gn-shadow-lg);
+}
+.gn-popover--sheet .gn-calendar { width: 100%; }
+.gn-popover--sheet .gn-popover__foot {
+  position: sticky; bottom: 0; margin: 0 calc(-1 * max(14px, env(safe-area-inset-left))) 0 calc(-1 * max(14px, env(safe-area-inset-right)));
+  padding: 10px max(14px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  background: var(--gn-elevated);
+}
+.gn-popover--sheet .gn-popover__foot .gn-btn { flex: 1; height: 44px; }
+@media (prefers-reduced-motion: no-preference) {
+  .gn-popover.is-open { animation: gn-popover-in .12s ease-out; }
+  .gn-popover--sheet.is-open { animation: gn-sheet-in .18s ease-out; }
+}
+@keyframes gn-popover-in { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes gn-sheet-in { from { transform: translateY(24px); opacity: .6; } }
+
+/* Calendario: Cally estilizado solo con tokens */
+.gn-calendar {
+  --color-accent: var(--gn-brand); --color-text-on-accent: var(--gn-on-brand);
+  display: block; font: inherit; color: var(--gn-text);
+}
+.gn-calendar::part(container) { gap: 8px; }
+.gn-calendar::part(header) { gap: 8px; }
+.gn-calendar::part(heading) { flex: 1; text-align: center; }
+.gn-calendar__heading { font-size: var(--gn-fs-md); font-weight: var(--gn-fw-bold); color: var(--gn-text); }
+.gn-calendar::part(button) {
+  width: var(--gn-control); height: var(--gn-control); padding: 0; cursor: pointer;
+  border: 1px solid var(--gn-border); border-radius: var(--gn-radius-sm); background: var(--gn-surface); color: var(--gn-text-2);
+}
+.gn-calendar::part(button):hover { background: var(--gn-surface-2); color: var(--gn-text); }
+.gn-calendar::part(button):focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 1px; }
+.gn-calendar::part(disabled) { opacity: .4; cursor: not-allowed; }
+.gn-calendar__nav { display: inline-flex; }
+.gn-calendar__nav .gn-icon { width: 16px; height: 16px; }
+.gn-calendar calendar-month { display: block; }
+.gn-calendar calendar-month::part(heading) { display: none; } /* el mes ya está en el encabezado */
+.gn-calendar calendar-month::part(table) { font-size: 13.5px; }
+.gn-calendar calendar-month::part(th) { height: 28px; font-size: var(--gn-fs-xs); font-weight: var(--gn-fw-semibold); color: var(--gn-text-muted); text-transform: uppercase; }
+.gn-calendar calendar-month::part(button) {
+  width: 36px; height: 36px; border-radius: var(--gn-radius-sm); cursor: pointer; color: var(--gn-text);
+  font-variant-numeric: tabular-nums;
+}
+.gn-calendar calendar-month::part(button):hover { background: var(--gn-brand-soft); }
+.gn-calendar calendar-month::part(button):focus-visible { outline: 2px solid var(--gn-focus); outline-offset: -2px; background: var(--gn-surface-2); color: var(--gn-text); }
+.gn-calendar calendar-month::part(today) { font-weight: var(--gn-fw-bold); color: var(--gn-brand-ink); box-shadow: inset 0 0 0 1px var(--gn-brand-ink); }
+.gn-calendar calendar-month::part(selected) { background: var(--gn-brand); color: var(--gn-on-brand); font-weight: var(--gn-fw-bold); box-shadow: none; }
+.gn-calendar calendar-month::part(selected):focus-visible { background: var(--gn-brand); color: var(--gn-on-brand); outline-offset: 1px; }
+.gn-calendar calendar-month::part(disallowed),
+.gn-calendar calendar-month::part(outside) { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+.gn-calendar calendar-month::part(button):disabled { opacity: .35; cursor: not-allowed; background: none; }
+/* hoja inferior: la grilla ocupa el ancho y las semanas son más bajas (36 px, objetivo táctil ≥ 36) */
+.gn-popover--sheet .gn-calendar calendar-month { width: 100%; }
+.gn-popover--sheet .gn-calendar calendar-month::part(table) { width: 100%; table-layout: fixed; }
+.gn-popover--sheet .gn-calendar calendar-month::part(th) { height: 22px; }
+.gn-popover--sheet .gn-calendar calendar-month::part(td) { padding: 1px 0; }
+.gn-popover--sheet .gn-calendar calendar-month::part(button) { width: 100%; max-width: 46px; height: 36px; margin: 0 auto; display: block; }
+.gn-popover--sheet .gn-calendar::part(container) { gap: 4px; }
+
+/* Hora: dos campos compactos HH : mm (spinbutton) con flechas para mouse y touch */
+.gn-time { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.gn-time__error { flex-basis: 100%; contain: inline-size; } /* el mensaje no ensancha el panel: se acomoda al ancho del calendario */
+.gn-time__error[hidden] { display: none; }
+.gn-time__label { font-size: var(--gn-fs-sm); font-weight: var(--gn-fw-semibold); color: var(--gn-text-2); }
+.gn-time__fields { display: inline-flex; align-items: center; gap: 4px; }
+.gn-time__field {
+  display: inline-flex; align-items: stretch; height: var(--gn-control);
+  border: 1px solid var(--gn-border-control); border-radius: var(--gn-radius-sm); background: var(--gn-field);
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.gn-time__field:hover { border-color: var(--gn-text-muted); }
+.gn-time__field:focus-within { border-color: var(--gn-focus); box-shadow: var(--gn-focus-ring); }
+.gn-time__field:has([aria-invalid="true"]) { border-color: var(--gn-critical); }
+.gn-time__field:has([aria-invalid="true"]):focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gn-critical) 22%, transparent); }
+.gn-time__input {
+  width: 2.6em; min-width: 0; padding: 0 2px 0 8px; border: 0; background: none; outline: none;
+  font: inherit; font-size: 15px; font-weight: var(--gn-fw-semibold); color: var(--gn-text);
+  text-align: center; font-variant-numeric: tabular-nums;
+}
+.gn-time__steps { display: flex; flex-direction: column; border-left: 1px solid var(--gn-border); }
+.gn-time__step {
+  flex: 1; display: grid; place-items: center; width: 22px; padding: 0; cursor: pointer;
+  border: 0; background: none; color: var(--gn-text-muted);
+}
+.gn-time__step + .gn-time__step { border-top: 1px solid var(--gn-border); }
+.gn-time__step:hover { background: var(--gn-surface-2); color: var(--gn-brand-ink); }
+.gn-time__step .gn-icon { width: 12px; height: 12px; }
+.gn-time__step:first-child { border-top-right-radius: calc(var(--gn-radius-sm) - 1px); }
+.gn-time__step:last-child { border-bottom-right-radius: calc(var(--gn-radius-sm) - 1px); }
+.gn-time__sep { font-weight: var(--gn-fw-bold); color: var(--gn-text-muted); }
+.gn-time__suffix { margin-left: 2px; font-size: var(--gn-fs-sm); color: var(--gn-text-muted); }
+.gn-popover--sheet .gn-time__field { height: 44px; }
+.gn-popover--sheet .gn-time__input { font-size: 17px; width: 2.4em; }
+.gn-popover--sheet .gn-time__step { width: 34px; }
+
+/* Selectores: input de texto + botón que abre el panel */
+.gn-datetime { position: relative; display: flex; align-items: center; width: 100%; min-width: 0; }
+.gn-datetime > .gn-input { flex: 1; font-variant-numeric: tabular-nums; }
+.gn-datetime.is-enhanced > .gn-input { padding-right: 42px; }
+.gn-datetime__btn {
+  position: absolute; right: 3px; top: 50%; transform: translateY(-50%);
+  display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; cursor: pointer;
+  border: none; border-radius: calc(var(--gn-radius-sm) - 2px); background: none; color: var(--gn-text-2);
+}
+.gn-datetime__btn .gn-icon { width: 17px; height: 17px; }
+.gn-datetime__btn:hover { background: var(--gn-surface-2); color: var(--gn-brand-ink); }
+.gn-datetime__btn:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 0; }
+.gn-datetime__btn[aria-expanded="true"] { background: var(--gn-brand-soft); color: var(--gn-brand-ink); }
+.gn-datetime__btn:disabled { cursor: not-allowed; opacity: .5; background: none; }
+.gn-datetime__error[hidden] { display: none; }
+@media (max-width: 480px) {
+  .gn-datetime > .gn-input { font-size: 16px; } /* iOS no hace zoom */
+}
+@media (forced-colors: active) {
+  .gn-calendar calendar-month::part(selected) { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .gn-calendar calendar-month::part(today) { outline: 1px solid CanvasText; }
+}
+
 } /* @layer geneos-ui */
 
 </style>
@@ -2633,7 +2775,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     </header>
     <main class="gn-content" id="gn-main-content" tabindex="-1">
       
-<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.4.0</span></li></ol></nav>
+<nav class="gn-breadcrumbs" aria-label="Ruta de navegación"><ol><li><a href="#inicio">GENEOS UI</a></li><li><span aria-current="page">UI Kit v0.5.0</span></li></ol></nav>
 
       
 <div class="gn-page-head" id="inicio">
@@ -2665,7 +2807,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
   </div>
 </div>
 <nav class="kit-toc" aria-label="Secciones del catálogo">
-  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
+  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#fecha-hora">Fecha y hora</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
 </nav>
 
       
@@ -6092,6 +6234,335 @@ body { background: var(--gn-bg); color: var(--gn-text); }
 </section>
 
 
+<section class="kit-section" id="fecha-hora" aria-labelledby="h-fecha">
+  <header class="kit-section__head">
+    <h2 id="h-fecha">Fecha y hora<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>GnDateTimeInput</code> <code>GnDateInput</code> <code>GnTimeInput</code></span></h2>
+    <p>Un solo campo por valor: se escribe o se elige en el calendario, y lo que se ve (<code>dd/mm/aaaa HH:mm</code>) es lo que se envía. Sin JavaScript queda el control nativo del navegador. El calendario es <a href="https://github.com/WickyNilliams/cally">Cally 0.9.2</a> (MIT) con los tokens del producto; se navega con flechas, Inicio/Fin y RePág/AvPág, y Escape cierra el panel.</p>
+  </header>
+  
+  <div class="kit-stack" data-kit-product="gelectric">
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Selectores</h3>
+        <div class="gn-form-grid">
+          <div class="gn-field--full">
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-cuando">Visita técnica programada<span class="gn-required" aria-hidden="true">*</span></label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-default-time="09:00"><input type="datetime-local" name="cuando" value="2026-11-12T09:30" class="gn-input" autocomplete="off" aria-describedby="gelectric-dt-cuando-h" required id="gelectric-dt-cuando"></span>
+  <span class="gn-field__help" id="gelectric-dt-cuando-h">Se avisa al asociado 24 horas antes.</span>
+</div>
+</div>
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-fecha">Fecha de lectura</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="fecha" value="2026-10-28" class="gn-input" autocomplete="off" id="gelectric-dt-fecha"></span>
+  
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-hora">Hora de corte programado</label>
+  <span class="gn-datetime" data-gn-datetime="time" data-gn-display="HH:mm" data-gn-minute-step="15"><input type="time" name="hora" value="08:00" class="gn-input" autocomplete="off" id="gelectric-dt-hora"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Estados: rango, error, deshabilitado</h3>
+        <div class="kit-stack kit-stack--tight">
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-acotada">Vencimiento del aviso de corte</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="acotada" class="gn-input" autocomplete="off" min="2026-11-05" max="2026-12-05" aria-describedby="gelectric-dt-acotada-h" id="gelectric-dt-acotada"></span>
+  <span class="gn-field__help" id="gelectric-dt-acotada-h">Entre hoy y los próximos 30 días.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-con_error">Con error del servidor</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-raw="31/02/2026 10:00"><input type="datetime-local" name="con_error" class="gn-input" autocomplete="off" aria-invalid="true" aria-describedby="gelectric-dt-con_error-e" id="gelectric-dt-con_error"></span>
+  <span class="gn-field__error" id="gelectric-dt-con_error-e"><svg class="gn-icon " aria-hidden="true"><use href="#i-alert"/></svg>Ingresá una fecha y hora válidas.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gelectric-dt-deshabilitado">Deshabilitado</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5"><input type="datetime-local" name="deshabilitado" value="2026-11-12T09:30" class="gn-input" autocomplete="off" disabled id="gelectric-dt-deshabilitado"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Calendario<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-calendar</code></span></h3>
+        <calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" aria-label="Días con cortes programados" value="2026-10-28"></calendar-date>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Panel flotante<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-popover</code></span></h3>
+        <p class="kit-muted">Se abre abajo o arriba según el espacio, no lo recorta un contenedor con scroll y en el celular aparece como hoja inferior. Lo usan los tres selectores.</p>
+        <button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="gelectric-pop"><svg class="gn-icon " aria-hidden="true"><use href="#i-info"/></svg>Ver detalle</button>
+        <div class="gn-popover" id="gelectric-pop" role="dialog" aria-label="Detalle" hidden>
+          <p class="kit-muted">Se avisa al asociado 24 horas antes.</p>
+          <div class="gn-popover__foot"><span></span><button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button></div>
+        </div>
+        <h3 class="kit-h3">Uso en Django</h3>
+<pre class="kit-code"><code>from geneos_ui.widgets import GnDateTimeInput
+
+inicio = forms.DateTimeField(
+    widget=GnDateTimeInput(default_time="09:00", minute_step=5),
+    error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+)
+# template: {{ form.media }} (o {% gn_datetime_js %})</code></pre>
+      </div></div>
+    </div>
+  </div>
+  
+  <div class="kit-stack" data-kit-product="gema" hidden>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Selectores</h3>
+        <div class="gn-form-grid">
+          <div class="gn-field--full">
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-cuando">Retiro del matafuego<span class="gn-required" aria-hidden="true">*</span></label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-default-time="09:00"><input type="datetime-local" name="cuando" value="2026-11-12T10:00" class="gn-input" autocomplete="off" aria-describedby="gema-dt-cuando-h" required id="gema-dt-cuando"></span>
+  <span class="gn-field__help" id="gema-dt-cuando-h">El cliente recibe el aviso por WhatsApp.</span>
+</div>
+</div>
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-fecha">Vencimiento de la carga</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="fecha" value="2027-03-28" class="gn-input" autocomplete="off" id="gema-dt-fecha"></span>
+  
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-hora">Hora de entrega</label>
+  <span class="gn-datetime" data-gn-datetime="time" data-gn-display="HH:mm" data-gn-minute-step="15"><input type="time" name="hora" value="16:30" class="gn-input" autocomplete="off" id="gema-dt-hora"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Estados: rango, error, deshabilitado</h3>
+        <div class="kit-stack kit-stack--tight">
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-acotada">Próxima prueba hidráulica</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="acotada" class="gn-input" autocomplete="off" min="2026-11-05" max="2026-12-05" aria-describedby="gema-dt-acotada-h" id="gema-dt-acotada"></span>
+  <span class="gn-field__help" id="gema-dt-acotada-h">Entre hoy y los próximos 30 días.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-con_error">Con error del servidor</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-raw="31/02/2026 10:00"><input type="datetime-local" name="con_error" class="gn-input" autocomplete="off" aria-invalid="true" aria-describedby="gema-dt-con_error-e" id="gema-dt-con_error"></span>
+  <span class="gn-field__error" id="gema-dt-con_error-e"><svg class="gn-icon " aria-hidden="true"><use href="#i-alert"/></svg>Ingresá una fecha y hora válidas.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="gema-dt-deshabilitado">Deshabilitado</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5"><input type="datetime-local" name="deshabilitado" value="2026-11-12T10:00" class="gn-input" autocomplete="off" disabled id="gema-dt-deshabilitado"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Calendario<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-calendar</code></span></h3>
+        <calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" aria-label="Vencimientos del mes" value="2027-03-28"></calendar-date>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Panel flotante<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-popover</code></span></h3>
+        <p class="kit-muted">Se abre abajo o arriba según el espacio, no lo recorta un contenedor con scroll y en el celular aparece como hoja inferior. Lo usan los tres selectores.</p>
+        <button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="gema-pop"><svg class="gn-icon " aria-hidden="true"><use href="#i-info"/></svg>Ver detalle</button>
+        <div class="gn-popover" id="gema-pop" role="dialog" aria-label="Detalle" hidden>
+          <p class="kit-muted">El cliente recibe el aviso por WhatsApp.</p>
+          <div class="gn-popover__foot"><span></span><button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button></div>
+        </div>
+        <h3 class="kit-h3">Uso en Django</h3>
+<pre class="kit-code"><code>from geneos_ui.widgets import GnDateTimeInput
+
+inicio = forms.DateTimeField(
+    widget=GnDateTimeInput(default_time="09:00", minute_step=5),
+    error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+)
+# template: {{ form.media }} (o {% gn_datetime_js %})</code></pre>
+      </div></div>
+    </div>
+  </div>
+  
+  <div class="kit-stack" data-kit-product="geagro-cereales" hidden>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Selectores</h3>
+        <div class="gn-form-grid">
+          <div class="gn-field--full">
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-cuando">Inicio de la pulverización<span class="gn-required" aria-hidden="true">*</span></label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-default-time="09:00"><input type="datetime-local" name="cuando" value="2026-11-12T06:30" class="gn-input" autocomplete="off" aria-describedby="geagro-cereales-dt-cuando-h" required id="geagro-cereales-dt-cuando"></span>
+  <span class="gn-field__help" id="geagro-cereales-dt-cuando-h">Se revisa el pronóstico de viento antes de confirmar.</span>
+</div>
+</div>
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-fecha">Fecha de siembra</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="fecha" value="2026-10-21" class="gn-input" autocomplete="off" id="geagro-cereales-dt-fecha"></span>
+  
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-hora">Hora de inicio del riego</label>
+  <span class="gn-datetime" data-gn-datetime="time" data-gn-display="HH:mm" data-gn-minute-step="15"><input type="time" name="hora" value="05:45" class="gn-input" autocomplete="off" id="geagro-cereales-dt-hora"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Estados: rango, error, deshabilitado</h3>
+        <div class="kit-stack kit-stack--tight">
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-acotada">Fecha de aplicación</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="acotada" class="gn-input" autocomplete="off" min="2026-11-05" max="2026-12-05" aria-describedby="geagro-cereales-dt-acotada-h" id="geagro-cereales-dt-acotada"></span>
+  <span class="gn-field__help" id="geagro-cereales-dt-acotada-h">Entre hoy y los próximos 30 días.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-con_error">Con error del servidor</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-raw="31/02/2026 10:00"><input type="datetime-local" name="con_error" class="gn-input" autocomplete="off" aria-invalid="true" aria-describedby="geagro-cereales-dt-con_error-e" id="geagro-cereales-dt-con_error"></span>
+  <span class="gn-field__error" id="geagro-cereales-dt-con_error-e"><svg class="gn-icon " aria-hidden="true"><use href="#i-alert"/></svg>Ingresá una fecha y hora válidas.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-cereales-dt-deshabilitado">Deshabilitado</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5"><input type="datetime-local" name="deshabilitado" value="2026-11-12T06:30" class="gn-input" autocomplete="off" disabled id="geagro-cereales-dt-deshabilitado"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Calendario<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-calendar</code></span></h3>
+        <calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" aria-label="Labores de la campaña" value="2026-10-21"></calendar-date>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Panel flotante<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-popover</code></span></h3>
+        <p class="kit-muted">Se abre abajo o arriba según el espacio, no lo recorta un contenedor con scroll y en el celular aparece como hoja inferior. Lo usan los tres selectores.</p>
+        <button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="geagro-cereales-pop"><svg class="gn-icon " aria-hidden="true"><use href="#i-info"/></svg>Ver detalle</button>
+        <div class="gn-popover" id="geagro-cereales-pop" role="dialog" aria-label="Detalle" hidden>
+          <p class="kit-muted">Se revisa el pronóstico de viento antes de confirmar.</p>
+          <div class="gn-popover__foot"><span></span><button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button></div>
+        </div>
+        <h3 class="kit-h3">Uso en Django</h3>
+<pre class="kit-code"><code>from geneos_ui.widgets import GnDateTimeInput
+
+inicio = forms.DateTimeField(
+    widget=GnDateTimeInput(default_time="09:00", minute_step=5),
+    error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+)
+# template: {{ form.media }} (o {% gn_datetime_js %})</code></pre>
+      </div></div>
+    </div>
+  </div>
+  
+  <div class="kit-stack" data-kit-product="geagro-vid" hidden>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Selectores</h3>
+        <div class="gn-form-grid">
+          <div class="gn-field--full">
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-cuando">Inicio de la cosecha del lote<span class="gn-required" aria-hidden="true">*</span></label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-default-time="09:00"><input type="datetime-local" name="cuando" value="2027-02-18T07:00" class="gn-input" autocomplete="off" aria-describedby="geagro-vid-dt-cuando-h" required id="geagro-vid-dt-cuando"></span>
+  <span class="gn-field__help" id="geagro-vid-dt-cuando-h">Se avisa a la cuadrilla asignada.</span>
+</div>
+</div>
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-fecha">Fecha de poda</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="fecha" value="2026-07-15" class="gn-input" autocomplete="off" id="geagro-vid-dt-fecha"></span>
+  
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-hora">Hora de inicio del riego</label>
+  <span class="gn-datetime" data-gn-datetime="time" data-gn-display="HH:mm" data-gn-minute-step="15"><input type="time" name="hora" value="21:00" class="gn-input" autocomplete="off" id="geagro-vid-dt-hora"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Estados: rango, error, deshabilitado</h3>
+        <div class="kit-stack kit-stack--tight">
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-acotada">Próximo monitoreo sanitario</label>
+  <span class="gn-datetime" data-gn-datetime="date" data-gn-display="dd/mm/aaaa" data-gn-minute-step="5"><input type="date" name="acotada" class="gn-input" autocomplete="off" min="2026-11-05" max="2026-12-05" aria-describedby="geagro-vid-dt-acotada-h" id="geagro-vid-dt-acotada"></span>
+  <span class="gn-field__help" id="geagro-vid-dt-acotada-h">Entre hoy y los próximos 30 días.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-con_error">Con error del servidor</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5" data-gn-raw="31/02/2026 10:00"><input type="datetime-local" name="con_error" class="gn-input" autocomplete="off" aria-invalid="true" aria-describedby="geagro-vid-dt-con_error-e" id="geagro-vid-dt-con_error"></span>
+  <span class="gn-field__error" id="geagro-vid-dt-con_error-e"><svg class="gn-icon " aria-hidden="true"><use href="#i-alert"/></svg>Ingresá una fecha y hora válidas.</span>
+</div>
+
+          
+<div class="gn-field">
+  <label class="gn-field__label" for="geagro-vid-dt-deshabilitado">Deshabilitado</label>
+  <span class="gn-datetime" data-gn-datetime="datetime" data-gn-display="dd/mm/aaaa HH:mm" data-gn-minute-step="5"><input type="datetime-local" name="deshabilitado" value="2027-02-18T07:00" class="gn-input" autocomplete="off" disabled id="geagro-vid-dt-deshabilitado"></span>
+  
+</div>
+
+        </div>
+      </div></div>
+    </div>
+    <div class="kit-grid-2">
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Calendario<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-calendar</code></span></h3>
+        <calendar-date data-gn-calendar locale="es-AR" first-day-of-week="1" aria-label="Monitoreos de la campaña" value="2026-07-15"></calendar-date>
+      </div></div>
+      <div class="gn-card"><div class="gn-card__body">
+        <h3 class="kit-h3">Panel flotante<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-popover</code></span></h3>
+        <p class="kit-muted">Se abre abajo o arriba según el espacio, no lo recorta un contenedor con scroll y en el celular aparece como hoja inferior. Lo usan los tres selectores.</p>
+        <button type="button" class="gn-btn gn-btn--secondary" data-gn-popover="geagro-vid-pop"><svg class="gn-icon " aria-hidden="true"><use href="#i-info"/></svg>Ver detalle</button>
+        <div class="gn-popover" id="geagro-vid-pop" role="dialog" aria-label="Detalle" hidden>
+          <p class="kit-muted">Se avisa a la cuadrilla asignada.</p>
+          <div class="gn-popover__foot"><span></span><button type="button" class="gn-btn gn-btn--primary gn-btn--sm" data-gn-popover-close>Entendido</button></div>
+        </div>
+        <h3 class="kit-h3">Uso en Django</h3>
+<pre class="kit-code"><code>from geneos_ui.widgets import GnDateTimeInput
+
+inicio = forms.DateTimeField(
+    widget=GnDateTimeInput(default_time="09:00", minute_step=5),
+    error_messages={"invalid": "Ingresá una fecha y hora válidas"},
+)
+# template: {{ form.media }} (o {% gn_datetime_js %})</code></pre>
+      </div></div>
+    </div>
+  </div>
+  
+</section>
+
+
 <section class="kit-section" id="datos" aria-labelledby="h-datos">
   <header class="kit-section__head">
     <h2 id="h-datos">Tablas y listados<span class="kit-kind kit-kind--component" title="Se usa con un tag o template del paquete: estructura, estilo y comportamiento llegan con cada versión">Componente · <code>gn_sort_th</code> <code>gn_cell</code> <code>gn_pagination</code></span><span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · tarjeta, barra y acciones</span></h2>
@@ -7293,7 +7764,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="gn-card"><div class="gn-card__body">
       <h3 class="kit-h3">Instalación</h3>
 <pre class="kit-code"><code># requirements.txt
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.4.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.5.0
 
 # settings.py
 INSTALLED_APPS += ["geneos_ui"]
@@ -8707,10 +9178,11 @@ GENEOS_UI = {
     initAlerts(root);
     initToastTriggers(root);
     initCharts(root);
+    if (window.GN.initDateTime && root !== document) window.GN.initDateTime(root); // js/datetime.js
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.4.0";
+  window.GN.version = "0.5.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;
@@ -8734,7 +9206,2072 @@ GENEOS_UI = {
 })(window, document);
 
 </script>
+<script type="module">
+class le {
+  /**
+   * @type {T}
+   */
+  #t;
+  #e = /* @__PURE__ */ new Set();
+  /**
+   * @param {T} current
+   */
+  constructor(t) {
+    this.#t = t;
+  }
+  /**
+   * @return {T}
+   */
+  get current() {
+    return this.#t;
+  }
+  /**
+   * @param {T} value
+   */
+  set current(t) {
+    this.#t != t && (this.#t = t, this.#e.forEach((n) => n(t)));
+  }
+  /**
+   * @type {import("hooks").Ref["on"]}
+   */
+  on(t) {
+    return this.#e.add(t), () => this.#e.delete(t);
+  }
+}
+const Rt = (e) => new le(e), st = Symbol.for("atomico.hooks");
+globalThis[st] = globalThis[st] || {};
+let A = globalThis[st];
+const ue = Symbol.for("Atomico.suspense"), Yt = Symbol.for("Atomico.effect"), fe = Symbol.for("Atomico.layoutEffect"), Ft = Symbol.for("Atomico.insertionEffect"), R = (e, t, n) => {
+  const { i: s, hooks: o } = A.c, r = o[s] = o[s] || {};
+  return r.value = e(r.value), r.effect = t, r.tag = n, A.c.i++, o[s].value;
+}, It = (e) => R((t = Rt(e)) => t), W = () => R((e = Rt(A.c.host)) => e), Lt = () => A.c.update, de = (e, t, n = 0) => {
+  let s = {}, o = !1;
+  const r = () => o, a = (l, c) => {
+    for (const d in s) {
+      const i = s[d];
+      i.effect && i.tag === l && (i.value = i.effect(i.value, c));
+    }
+  };
+  return { load: (l) => {
+    A.c = { host: t, hooks: s, update: e, i: 0, id: n };
+    let c;
+    try {
+      o = !1, c = l();
+    } catch (d) {
+      if (d !== ue) throw d;
+      o = !0;
+    } finally {
+      A.c = null;
+    }
+    return c;
+  }, cleanEffects: (l) => (a(Ft, l), () => (a(fe, l), () => {
+    a(Yt, l);
+  })), isSuspense: r };
+}, x = Symbol.for;
+function xt(e, t) {
+  const n = e.length;
+  if (n !== t.length) return !1;
+  for (let s = 0; s < n; s++) {
+    let o = e[s], r = t[s];
+    if (o !== r) return !1;
+  }
+  return !0;
+}
+const M = (e) => typeof e == "function", F = (e) => typeof e == "object", { isArray: he } = Array, ot = (e, t) => (t ? e instanceof HTMLStyleElement : !0) && "hydrate" in (e?.dataset || {});
+function _t(e, t) {
+  let n;
+  const s = (o) => {
+    let { length: r } = o;
+    for (let a = 0; a < r; a++) {
+      const u = o[a];
+      if (u && Array.isArray(u))
+        s(u);
+      else {
+        const f = typeof u;
+        if (u == null || f === "function" || f === "boolean")
+          continue;
+        f === "string" || f === "number" ? (n == null && (n = ""), n += u) : (n != null && (t(n), n = null), t(u));
+      }
+    }
+  };
+  s(e), n != null && t(n);
+}
+const jt = (e, t, n) => (e.addEventListener(t, n), () => e.removeEventListener(t, n));
+class Bt {
+  /**
+   *
+   * @param {HTMLElement} target
+   * @param {string} message
+   * @param {string} value
+   */
+  constructor(t, n, s) {
+    this.message = n, this.target = t, this.value = s;
+  }
+}
+class qt extends Bt {
+}
+class me extends Bt {
+}
+const z = "Custom", ye = null, pe = { true: 1, "": 1, 1: 1 };
+function ge(e, t, n, s, o) {
+  const {
+    type: r,
+    reflect: a,
+    event: u,
+    value: f,
+    attr: l = be(t)
+  } = n?.name != z && F(n) && n != ye ? n : { type: n }, c = r?.name === z && r.map, d = f != null ? r == Function || !M(f) ? () => f : f : null;
+  Object.defineProperty(e, t, {
+    configurable: !0,
+    /**
+     * @this {import("dom").AtomicoThisInternal}
+     * @param {any} newValue
+     */
+    set(i) {
+      const m = this[t];
+      d && r != Boolean && i == null && (i = d());
+      const { error: g, value: b } = (c ? Te : Ee)(
+        r,
+        i
+      );
+      if (g && b != null)
+        throw new qt(
+          this,
+          `The value defined for prop '${t}' must be of type '${r.name}'`,
+          b
+        );
+      m != b && (this._props[t] = b ?? void 0, this.update(), u && zt(this, u), this.updated.then(() => {
+        a && (this._ignoreAttr = l, De(this, r, l, this[t]), this._ignoreAttr = null);
+      }));
+    },
+    /**
+     * @this {import("dom").AtomicoThisInternal}
+     */
+    get() {
+      return this._props[t];
+    }
+  }), d && (o[t] = d()), s[l] = { prop: t, type: r };
+}
+const zt = (e, { type: t, base: n = CustomEvent, ...s }) => e.dispatchEvent(new n(t, s)), be = (e) => e.replace(/([A-Z])/g, "-$1").toLowerCase(), De = (e, t, n, s) => s == null || t == Boolean && !s ? e.removeAttribute(n) : e.setAttribute(
+  n,
+  t?.name === z && t?.serialize ? t?.serialize(s) : F(s) ? JSON.stringify(s) : t == Boolean ? "" : s
+), Ce = (e, t) => e == Boolean ? !!pe[t] : e == Number ? Number(t) : e == String ? t : e == Array || e == Object ? JSON.parse(t) : e.name == z ? t : (
+  // TODO: If when defining reflect the prop can also be of type string?
+  new e(t)
+), Te = ({ map: e }, t) => {
+  try {
+    return { value: e(t), error: !1 };
+  } catch {
+    return { value: t, error: !0 };
+  }
+}, Ee = (e, t) => e == null || t == null ? { value: t, error: !1 } : e != String && t === "" ? { value: void 0, error: !1 } : e == Object || e == Array || e == Symbol ? {
+  value: t,
+  error: {}.toString.call(t) !== `[object ${e.name}]`
+} : t instanceof e ? {
+  value: t,
+  error: e == Number && Number.isNaN(t.valueOf())
+} : e == String || e == Number || e == Boolean ? {
+  value: t,
+  error: e == Number ? typeof t != "number" ? !0 : Number.isNaN(t) : e == String ? typeof t != "string" : typeof t != "boolean"
+} : { value: t, error: !0 };
+let ve = 0;
+const we = (e) => {
+  const t = (e?.dataset || {})?.hydrate || "";
+  return t || "c" + ve++;
+}, k = (e, t = HTMLElement) => {
+  const n = {}, s = {}, o = "prototype" in t && t.prototype instanceof Element, r = o ? t : "base" in t ? t.base : HTMLElement, { props: a, styles: u } = o ? e : t;
+  class f extends r {
+    constructor() {
+      super(), this._setup(), this._render = () => e({ ...this._props });
+      for (const c in s) this[c] = s[c];
+    }
+    /**
+     * @returns {import("core").Sheets[]}
+     */
+    static get styles() {
+      return [super.styles, u];
+    }
+    async _setup() {
+      if (this._props) return;
+      this._props = {};
+      let c, d;
+      this.mounted = new Promise(
+        (y) => this.mount = () => {
+          y(), c != this.parentNode && (d != c ? this.unmounted.then(this.update) : this.update()), c = this.parentNode;
+        }
+      ), this.unmounted = new Promise(
+        (y) => this.unmount = () => {
+          y(), (c != this.parentNode || !this.isConnected) && (i.cleanEffects(!0)()(), d = this.parentNode, c = null);
+        }
+      ), this.symbolId = this.symbolId || Symbol(), this.symbolIdParent = Symbol();
+      const i = de(
+        () => this.update(),
+        this,
+        we(this)
+      );
+      let m, g = !0;
+      const b = ot(this);
+      this.update = () => (m || (m = !0, this.updated = (this.updated || this.mounted).then(() => {
+        try {
+          const y = i.load(this._render), p = i.cleanEffects();
+          return y && //@ts-ignore
+          y.render(this, this.symbolId, b), m = !1, g && !i.isSuspense() && (g = !1, !b && Se(this)), p();
+        } finally {
+          m = !1;
+        }
+      }).then(
+        /**
+         * @param {import("internal/hooks.js").CleanUseEffects} [cleanUseEffect]
+         */
+        (y) => {
+          y && y();
+        }
+      )), this.updated), this.update();
+    }
+    connectedCallback() {
+      this.mount(), super.connectedCallback && super.connectedCallback();
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback && super.disconnectedCallback(), this.unmount();
+    }
+    /**
+     * @this {import("dom").AtomicoThisInternal}
+     * @param {string} attr
+     * @param {(string|null)} oldValue
+     * @param {(string|null)} value
+     */
+    attributeChangedCallback(c, d, i) {
+      if (n[c]) {
+        if (c === this._ignoreAttr || d === i) return;
+        const { prop: m, type: g } = n[c];
+        try {
+          this[m] = Ce(g, i);
+        } catch {
+          throw new me(
+            this,
+            `The value defined as attr '${c}' cannot be parsed by type '${g.name}'`,
+            i
+          );
+        }
+      } else
+        super.attributeChangedCallback(c, d, i);
+    }
+    static get props() {
+      return { ...super.props, ...a };
+    }
+    static get observedAttributes() {
+      const c = super.observedAttributes || [];
+      for (const d in a)
+        ge(this.prototype, d, a[d], n, s);
+      return Object.keys(n).concat(c);
+    }
+  }
+  return f;
+};
+function Se(e) {
+  const { styles: t } = e.constructor, { shadowRoot: n } = e;
+  if (n && t.length) {
+    const s = [];
+    _t(t, (o) => {
+      o && (o instanceof Element ? n.appendChild(o.cloneNode(!0)) : s.push(o));
+    }), s.length && (n.adoptedStyleSheets = s);
+  }
+}
+const Ht = (e) => (t, n) => {
+  R(
+    /**
+     * Clean the effect hook
+     * @type {import("internal/hooks.js").CollectorEffect}
+     */
+    ([s, o] = []) => ((o || !o) && (o && xt(o, n) ? s = s || !0 : (M(s) && s(), s = null)), [s, n]),
+    /**
+     * @returns {any}
+     */
+    ([s, o], r) => r ? (M(s) && s(), []) : [s || t(), o],
+    e
+  );
+}, L = Ht(Yt), Me = Ht(Ft);
+class Wt extends Array {
+  /**
+   *
+   * @param {any} initialState
+   * @param {(nextState: any, state:any[], mount: boolean )=>void} mapState
+   */
+  constructor(t, n) {
+    let s = !0;
+    const o = (r) => {
+      try {
+        n(r, this, s);
+      } finally {
+        s = !1;
+      }
+    };
+    super(void 0, o, n), o(t);
+  }
+  /**
+   * The following code allows a mutable approach to useState
+   * and useProp this with the idea of allowing an alternative
+   * approach similar to Vue or Qwik of state management
+   * @todo pending review with the community
+   */
+  // get value() {
+  //     return this[0];
+  // }
+  // set value(nextState) {
+  //     this[2](nextState, this);
+  // }
+}
+const it = (e) => {
+  const t = Lt();
+  return R(
+    (n = new Wt(e, (s, o, r) => {
+      s = M(s) ? s(o[0]) : s, s !== o[0] && (o[0] = s, r || t());
+    })) => n
+  );
+}, w = (e, t) => {
+  const [n] = R(([s, o, r = 0] = []) => ((!o || o && !xt(o, t)) && (s = e()), [s, t, r]));
+  return n;
+}, lt = (e) => {
+  const { current: t } = W();
+  if (!(e in t))
+    throw new qt(
+      t,
+      `For useProp("${e}"), the prop does not exist on the host.`,
+      e
+    );
+  return R(
+    (n = new Wt(t[e], (s, o) => {
+      s = M(s) ? s(t[e]) : s, t[e] = s;
+    })) => (n[0] = t[e], n)
+  );
+}, N = (e, t = {}) => {
+  const n = W();
+  return n[e] || (n[e] = (s = t.detail) => zt(n.current, {
+    type: e,
+    ...t,
+    detail: s
+  })), n[e];
+}, rt = x("atomico/options");
+globalThis[rt] = globalThis[rt] || {
+  sheet: !!document.adoptedStyleSheets
+};
+const K = globalThis[rt], Ne = new Promise((e) => {
+  K.ssr || (document.readyState === "loading" ? jt(document, "DOMContentLoaded", e) : e());
+}), Pe = {
+  checked: 1,
+  value: 1,
+  selected: 1
+}, ke = {
+  list: 1,
+  type: 1,
+  size: 1,
+  form: 1,
+  width: 1,
+  height: 1,
+  src: 1,
+  href: 1,
+  slot: 1
+}, Oe = {
+  shadowDom: 1,
+  staticNode: 1,
+  cloneNode: 1,
+  children: 1,
+  key: 1
+}, q = {}, at = [];
+class ct extends Text {
+}
+const Ae = x("atomico/id"), I = x("atomico/type"), Q = x("atomico/ref"), Kt = x("atomico/vnode"), Jt = () => {
+};
+function Ue(e, t, n) {
+  return Xt(this, e, t, n);
+}
+const Zt = (e, t, ...n) => {
+  const s = t || q;
+  let { children: o } = s;
+  if (o = o ?? (n.length ? n : at), e === Jt)
+    return o;
+  const r = e ? e instanceof Node ? 1 : (
+    //@ts-ignore
+    e.prototype instanceof HTMLElement && 2
+  ) : 0;
+  if (r === !1 && e instanceof Function)
+    return e(
+      o != at ? { children: o, ...s } : s
+    );
+  const a = K.render || Ue;
+  return {
+    [I]: Kt,
+    type: e,
+    props: s,
+    children: o,
+    key: s.key,
+    // key for lists by keys
+    // define if the node declares its shadowDom
+    shadow: s.shadowDom,
+    // allows renderings to run only once
+    static: s.staticNode,
+    // defines whether the type is a childNode `1` or a constructor `2`
+    raw: r,
+    // defines whether to use the second parameter for document.createElement
+    is: s.is,
+    // clone the node if it comes from a reference
+    clone: s.cloneNode,
+    render: a
+  };
+};
+function Xt(e, t, n = Ae, s, o) {
+  let r;
+  if (t && t[n] && t[n].vnode == e || e[I] != Kt)
+    return t;
+  (e || !t) && (o = o || e.type == "svg", r = e.type != "host" && (e.raw == 1 ? (t && e.clone ? t[Q] : t) != e.type : e.raw == 2 ? !(t instanceof e.type) : t ? t[Q] || t.localName != e.type : !t), r && e.type != null && (e.raw == 1 && e.clone ? (s = !0, t = e.type.cloneNode(!0), t[Q] = e.type) : t = e.raw == 1 ? e.type : e.raw == 2 ? new e.type() : o ? document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    e.type
+  ) : document.createElement(
+    e.type,
+    e.is ? { is: e.is } : void 0
+  )));
+  const a = t[n] ? t[n] : q, { vnode: u = q, cycle: f = 0 } = a;
+  let { fragment: l, handlers: c } = a;
+  const { children: d = at, props: i = q } = u;
+  if (c = r ? {} : c || {}, e.static && !r) return t;
+  if (e.shadow && !t.shadowRoot && // @ts-ignore
+  t.attachShadow({ mode: "open", ...e.shadow }), e.props != i && Ye(t, i, e.props, c, o), e.children !== d) {
+    const m = e.shadow ? t.shadowRoot : t;
+    l = Re(
+      e.children,
+      /**
+       * @todo for hydration use attribute and send childNodes
+       */
+      l,
+      m,
+      n,
+      // add support to foreignObject, children will escape from svg
+      !f && s,
+      o && e.type == "foreignObject" ? !1 : o
+    );
+  }
+  return t[n] = { vnode: e, handlers: c, fragment: l, cycle: f + 1 }, t;
+}
+function $e(e, t) {
+  const n = new ct(""), s = new ct("");
+  let o;
+  if (e[t ? "prepend" : "append"](n), t) {
+    let { lastElementChild: r } = e;
+    for (; r; ) {
+      const { previousElementSibling: a } = r;
+      if (ot(r, !0) && !ot(a, !0)) {
+        o = r;
+        break;
+      }
+      r = a;
+    }
+  }
+  return o ? o.before(s) : e.append(s), {
+    markStart: n,
+    markEnd: s
+  };
+}
+function Re(e, t, n, s, o, r) {
+  e = e == null ? null : he(e) ? e : [e];
+  const a = t || $e(n, o), { markStart: u, markEnd: f, keyes: l } = a;
+  let c;
+  const d = l && /* @__PURE__ */ new Set();
+  let i = u;
+  if (e && _t(e, (m) => {
+    if (typeof m == "object" && !m[I])
+      return;
+    const g = m[I] && m.key, b = l && g != null && l.get(g);
+    i != f && i === b ? d.delete(i) : i = i == f ? f : i.nextSibling;
+    const y = l ? b : i;
+    let p = y;
+    if (m[I])
+      p = Xt(m, y, s, o, r);
+    else {
+      const v = m + "";
+      !(p instanceof Text) || p instanceof ct ? p = new Text(v) : p.data != v && (p.data = v);
+    }
+    p != i && (l && d.delete(p), !y || l ? (n.insertBefore(p, i), l && i != f && d.add(i)) : y == f ? n.insertBefore(p, f) : (n.replaceChild(p, y), i = p)), g != null && (c = c || /* @__PURE__ */ new Map(), c.set(g, p));
+  }), i = i == f ? f : i.nextSibling, t && i != f)
+    for (; i != f; ) {
+      const m = i;
+      i = i.nextSibling, m.remove();
+    }
+  return d && d.forEach((m) => m.remove()), a.keyes = c, a;
+}
+function Ye(e, t, n, s, o) {
+  for (const r in t)
+    !(r in n) && St(e, r, t[r], null, o, s);
+  for (const r in n)
+    St(e, r, t[r], n[r], o, s);
+}
+function St(e, t, n, s, o, r) {
+  if (t = t == "class" && !o ? "className" : t, n = n ?? null, s = s ?? null, t in e && Pe[t] && (n = e[t]), !(s === n || Oe[t] || t[0] == "_"))
+    if (e.localName === "slot" && t === "assignNode" && "assign" in e)
+      e.assign(s);
+    else if (t[0] == "o" && t[1] == "n" && (M(s) || M(n)))
+      Fe(e, t.slice(2), s, r);
+    else if (t == "ref")
+      s && (M(s) ? s(e) : s.current = e);
+    else if (t == "style") {
+      const { style: a } = e;
+      n = n || "", s = s || "";
+      const u = F(n), f = F(s);
+      if (u)
+        for (const l in n)
+          if (f)
+            !(l in s) && Mt(a, l, null);
+          else
+            break;
+      if (f)
+        for (const l in s) {
+          const c = s[l];
+          u && n[l] === c || Mt(a, l, c);
+        }
+      else
+        a.cssText = s;
+    } else {
+      const a = t[0] == "$" ? t.slice(1) : t;
+      a === t && (!o && !ke[t] && t in e || M(s) || M(n)) ? e[t] = s ?? "" : s == null ? e.removeAttribute(a) : e.setAttribute(
+        a,
+        F(s) ? JSON.stringify(s) : s
+      );
+    }
+}
+function Fe(e, t, n, s) {
+  if (s.handleEvent || (s.handleEvent = (o) => s[o.type].call(e, o)), n) {
+    if (!s[t]) {
+      const o = n.capture || n.once || n.passive ? Object.assign({}, n) : null;
+      e.addEventListener(t, s, o);
+    }
+    s[t] = n;
+  } else
+    s[t] && (e.removeEventListener(t, s), delete s[t]);
+}
+function Mt(e, t, n) {
+  let s = "setProperty";
+  n == null && (s = "removeProperty", n = null), ~t.indexOf("-") ? e[s](t, n) : e[t] = n;
+}
+const Ie = Zt("host", { style: "display: contents" }), Gt = "value", Le = (e, t) => {
+  const n = W(), s = It();
+  Me(
+    () => jt(
+      n.current,
+      "ConnectContext",
+      /**
+       * @param {CustomEvent<import("context").DetailConnectContext>} event
+       */
+      (o) => {
+        o.composedPath().at(0) !== o.currentTarget && e === o.detail.id && (o.stopPropagation(), o.detail.connect(s));
+      }
+    ),
+    [e]
+  ), s.current = t;
+}, ut = (e) => {
+  const t = N("ConnectContext", {
+    bubbles: !0,
+    composed: !0
+  }), [n, s] = it(() => {
+    if (K.ssr) return;
+    let r;
+    return t({
+      id: e,
+      /**
+       * @param {import("core").Ref} parentContext
+       */
+      connect(a) {
+        r = a;
+      }
+    }), r;
+  }), o = Lt();
+  return L(() => {
+    Ne.then(
+      () => t({
+        id: e,
+        connect: s
+      })
+    );
+  }, [e]), L(() => {
+    if (n)
+      return n.on(o);
+  }, [n]), n?.current || e[Gt];
+}, Qt = (e) => {
+  const t = k(
+    ({ value: n }) => (Le(t, n), Ie),
+    {
+      props: {
+        value: {
+          type: Object,
+          value: () => e
+        }
+      }
+    }
+  );
+  return t[Gt] = e, t;
+};
+Qt({
+  /**
+   *
+   * @param {string} type
+   * @param {string} id
+   */
+  dispatch(e, t) {
+  }
+});
+const Nt = {};
+function J(e, ...t) {
+  const n = (e.raw || e).reduce(
+    (s, o, r) => s + o + (t[r] || ""),
+    ""
+  );
+  return Nt[n] = Nt[n] || xe(n);
+}
+function xe(e) {
+  if (K.sheet) {
+    const t = new CSSStyleSheet();
+    return t.replaceSync(e), t;
+  } else {
+    const t = document.createElement("style");
+    return t.textContent = e, t;
+  }
+}
+const h = (e, t, n) => (t == null ? t = { key: n } : t.key = n, Zt(e, t)), S = h, ft = J`*,*:before,*:after{box-sizing:border-box}button{padding:0;touch-action:manipulation;cursor:pointer;user-select:none}`, dt = J`.vh{position:absolute;transform:scale(0)}`;
+function ht() {
+  const e = /* @__PURE__ */ new Date();
+  return new C(e.getFullYear(), e.getMonth() + 1, e.getDate());
+}
+const _e = 864e5;
+function je(e) {
+  const t = E(e);
+  t.setUTCDate(t.getUTCDate() + 3 - (t.getUTCDay() + 6) % 7);
+  const n = new Date(Date.UTC(t.getUTCFullYear(), 0, 4));
+  return 1 + Math.round(
+    ((t.getTime() - n.getTime()) / _e - 3 + (n.getUTCDay() + 6) % 7) / 7
+  );
+}
+function mt(e, t = 0) {
+  const n = E(e), s = n.getUTCDay(), o = (s < t ? 7 : 0) + s - t;
+  return n.setUTCDate(n.getUTCDate() - o), C.from(n);
+}
+function Vt(e, t = 0) {
+  return mt(e, t).add({ days: 6 });
+}
+function te(e) {
+  return C.from(new Date(Date.UTC(e.year, e.month, 0)));
+}
+function Z(e, t, n) {
+  return t && C.compare(e, t) < 0 ? t : n && C.compare(e, n) > 0 ? n : e;
+}
+const Be = { days: 1 };
+function qe(e, t = 0) {
+  let n = mt(e.toPlainDate(), t);
+  const s = Vt(te(e), t), o = [];
+  for (; C.compare(n, s) < 0; ) {
+    const r = [];
+    for (let a = 0; a < 7; a++)
+      r.push(n), n = n.add(Be);
+    o.push(r);
+  }
+  return o;
+}
+function E(e) {
+  return new Date(Date.UTC(e.year, e.month - 1, e.day ?? 1));
+}
+const ze = /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[0-1])$/, V = (e, t) => e.toString().padStart(t, "0");
+class C {
+  constructor(t, n, s) {
+    this.year = t, this.month = n, this.day = s;
+  }
+  // this is an incomplete implementation that only handles arithmetic on a single unit at a time.
+  // i didn't want to get into more complex arithmetic since it get tricky fast
+  // this is enough to serve my needs and will still be a drop-in replacement when actual Temporal API lands
+  add(t) {
+    const n = E(this);
+    if ("days" in t)
+      return n.setUTCDate(this.day + t.days), C.from(n);
+    let { year: s, month: o } = this;
+    "months" in t ? (o = this.month + t.months, n.setUTCMonth(o - 1)) : (s = this.year + t.years, n.setUTCFullYear(s));
+    const r = C.from(E({ year: s, month: o, day: 1 }));
+    return Z(C.from(n), r, te(r));
+  }
+  toString() {
+    return `${V(this.year, 4)}-${V(this.month, 2)}-${V(this.day, 2)}`;
+  }
+  toPlainYearMonth() {
+    return new U(this.year, this.month);
+  }
+  equals(t) {
+    return C.compare(this, t) === 0;
+  }
+  static compare(t, n) {
+    return t.year < n.year ? -1 : t.year > n.year ? 1 : t.month < n.month ? -1 : t.month > n.month ? 1 : t.day < n.day ? -1 : t.day > n.day ? 1 : 0;
+  }
+  static from(t) {
+    if (typeof t == "string") {
+      const n = t.match(ze);
+      if (!n)
+        throw new TypeError(t);
+      const [, s, o, r] = n;
+      return new C(
+        parseInt(s, 10),
+        parseInt(o, 10),
+        parseInt(r, 10)
+      );
+    }
+    return new C(
+      t.getUTCFullYear(),
+      t.getUTCMonth() + 1,
+      t.getUTCDate()
+    );
+  }
+}
+class U {
+  constructor(t, n) {
+    this.year = t, this.month = n;
+  }
+  add(t) {
+    const n = E(this), s = (t.months ?? 0) + (t.years ?? 0) * 12;
+    return n.setUTCMonth(n.getUTCMonth() + s), new U(n.getUTCFullYear(), n.getUTCMonth() + 1);
+  }
+  equals(t) {
+    return this.year === t.year && this.month === t.month;
+  }
+  toPlainDate() {
+    return new C(this.year, this.month, 1);
+  }
+  static compare(t, n) {
+    return t.year < n.year ? -1 : t.year > n.year ? 1 : t.month < n.month ? -1 : t.month > n.month ? 1 : 0;
+  }
+}
+function H(e, t) {
+  if (t)
+    try {
+      return e.from(t);
+    } catch {
+    }
+}
+function P(e) {
+  const [t, n] = lt(e);
+  return [w(() => H(C, t), [t]), (r) => n(r?.toString())];
+}
+function He(e) {
+  const [t = "", n] = lt(e);
+  return [w(() => {
+    const [r, a] = t.split("/"), u = H(C, r), f = H(C, a);
+    return u && f ? [u, f] : [];
+  }, [t]), (r) => n(`${r[0]}/${r[1]}`)];
+}
+function We(e) {
+  const [t = "", n] = lt(e);
+  return [w(() => {
+    const r = [];
+    for (const a of t.trim().split(/\s+/)) {
+      const u = H(C, a);
+      u && r.push(u);
+    }
+    return r;
+  }, [t]), (r) => n(r.join(" "))];
+}
+function $(e, t) {
+  return w(
+    () => new Intl.DateTimeFormat(t, { timeZone: "UTC", ...e }),
+    [t, e]
+  );
+}
+function Pt(e, t, n) {
+  const s = $(e, n);
+  return w(() => {
+    const o = [], r = /* @__PURE__ */ new Date();
+    for (var a = 0; a < 7; a++) {
+      const u = (r.getUTCDay() - t + 7) % 7;
+      o[u] = s.format(r), r.setUTCDate(r.getUTCDate() + 1);
+    }
+    return o;
+  }, [t, s]);
+}
+const kt = (e, t, n) => Z(e, t, n) === e, Ot = (e) => e.target.matches(":dir(ltr)"), Ke = { month: "long", day: "numeric" }, Je = { month: "long" }, Ze = { weekday: "long" }, tt = { bubbles: !0 };
+function Xe({ props: e, context: t }) {
+  const { offset: n } = e, {
+    firstDayOfWeek: s,
+    isDateDisallowed: o,
+    min: r,
+    max: a,
+    today: u,
+    page: f,
+    locale: l,
+    focusedDate: c,
+    formatWeekday: d
+  } = t, i = u ?? ht(), m = Pt(Ze, s, l), g = w(
+    () => ({ weekday: d }),
+    [d]
+  ), b = Pt(g, s, l), y = $(Ke, l), p = $(Je, l), v = w(
+    () => f.start.add({ months: n }),
+    [f, n]
+  ), X = w(
+    () => qe(v, s),
+    [v, s]
+  ), se = N("focusday", tt), oe = N("selectday", tt), re = N("hoverday", tt);
+  function Dt(D) {
+    se(Z(D, r, a));
+  }
+  function ae(D) {
+    let T;
+    switch (D.key) {
+      case "ArrowRight":
+        T = c.add({ days: Ot(D) ? 1 : -1 });
+        break;
+      case "ArrowLeft":
+        T = c.add({ days: Ot(D) ? -1 : 1 });
+        break;
+      case "ArrowDown":
+        T = c.add({ days: 7 });
+        break;
+      case "ArrowUp":
+        T = c.add({ days: -7 });
+        break;
+      case "PageUp":
+        T = c.add(D.shiftKey ? { years: -1 } : { months: -1 });
+        break;
+      case "PageDown":
+        T = c.add(D.shiftKey ? { years: 1 } : { months: 1 });
+        break;
+      case "Home":
+        T = mt(c, s);
+        break;
+      case "End":
+        T = Vt(c, s);
+        break;
+      default:
+        return;
+    }
+    Dt(T), D.preventDefault();
+  }
+  function ce(D) {
+    const T = v.equals(D);
+    if (!t.showOutsideDays && !T)
+      return;
+    const ie = D.equals(c), Ct = D.equals(i), j = E(D), B = o?.(j), Tt = !kt(D, r, a);
+    let Et = "", O;
+    if (t.type === "range") {
+      const [Y, G] = t.value, vt = Y?.equals(D), wt = G?.equals(D);
+      O = Y && G && kt(D, Y, G), Et = `${vt ? "range-start" : ""} ${wt ? "range-end" : ""} ${O && !vt && !wt ? "range-inner" : ""}`;
+    } else t.type === "multi" ? O = t.value.some((Y) => Y.equals(D)) : O = t.value?.equals(D);
+    return {
+      part: `${`button day day-${j.getUTCDay()} ${// we don't want outside days to ever be shown as selected
+      T ? O ? "selected" : "" : "outside"} ${B ? "disallowed" : ""} ${Ct ? "today" : ""} ${t.getDayParts?.(j) ?? ""}`} ${Et}`,
+      tabindex: T && ie ? 0 : -1,
+      disabled: Tt,
+      "aria-disabled": B ? "true" : void 0,
+      "aria-pressed": T && O,
+      "aria-current": Ct ? "date" : void 0,
+      "aria-label": y.format(j),
+      onkeydown: ae,
+      onclick() {
+        B || oe(D), Dt(D);
+      },
+      onmouseover() {
+        !B && !Tt && re(D);
+      }
+    };
+  }
+  return {
+    weeks: X,
+    yearMonth: v,
+    daysLong: m,
+    daysVisible: b,
+    formatter: p,
+    getDayProps: ce
+  };
+}
+const et = ht(), _ = Qt({
+  type: "date",
+  firstDayOfWeek: 1,
+  focusedDate: et,
+  page: { start: et.toPlainYearMonth(), end: et.toPlainYearMonth() }
+});
+customElements.define("calendar-ctx", _);
+const Ge = (e, t) => (t + e) % 7, Qe = k(
+  (e) => {
+    const t = ut(_), n = It(), s = Xe({ props: e, context: t });
+    function o() {
+      n.current.querySelector("button[tabindex='0']")?.focus();
+    }
+    return /* @__PURE__ */ S("host", { shadowDom: !0, focus: o, children: [
+      /* @__PURE__ */ h("div", { id: "h", part: "heading", children: s.formatter.format(E(s.yearMonth)) }),
+      /* @__PURE__ */ S("table", { ref: n, "aria-labelledby": "h", part: "table", children: [
+        /* @__PURE__ */ S("colgroup", { children: [
+          t.showWeekNumbers && /* @__PURE__ */ h("col", { part: "col-weeknumber" }),
+          /* @__PURE__ */ h("col", { part: "col-1" }),
+          /* @__PURE__ */ h("col", { part: "col-2" }),
+          /* @__PURE__ */ h("col", { part: "col-3" }),
+          /* @__PURE__ */ h("col", { part: "col-4" }),
+          /* @__PURE__ */ h("col", { part: "col-5" }),
+          /* @__PURE__ */ h("col", { part: "col-6" }),
+          /* @__PURE__ */ h("col", { part: "col-7" })
+        ] }),
+        /* @__PURE__ */ h("thead", { children: /* @__PURE__ */ S("tr", { part: "tr head", children: [
+          t.showWeekNumbers && /* @__PURE__ */ h("th", { part: "th weeknumber", children: /* @__PURE__ */ S("slot", { name: "weeknumber", children: [
+            /* @__PURE__ */ h("span", { class: "vh", children: "Week" }),
+            /* @__PURE__ */ h("span", { "aria-hidden": "true", children: "#" })
+          ] }) }),
+          s.daysLong.map((r, a) => /* @__PURE__ */ S(
+            "th",
+            {
+              part: `th day day-${Ge(t.firstDayOfWeek, a)}`,
+              scope: "col",
+              children: [
+                /* @__PURE__ */ h("span", { class: "vh", children: r }),
+                /* @__PURE__ */ h("span", { "aria-hidden": "true", children: s.daysVisible[a] })
+              ]
+            }
+          ))
+        ] }) }),
+        /* @__PURE__ */ h("tbody", { children: s.weeks.map((r, a) => /* @__PURE__ */ S("tr", { part: "tr week", children: [
+          t.showWeekNumbers && /* @__PURE__ */ h("th", { class: "num", part: "th weeknumber", scope: "row", children: je(r[0]) }),
+          r.map((u, f) => {
+            const l = s.getDayProps(u);
+            return /* @__PURE__ */ h("td", { part: "td", children: l && /* @__PURE__ */ h("button", { class: "num", ...l, children: u.day }) }, f);
+          })
+        ] }, a)) })
+      ] })
+    ] });
+  },
+  {
+    props: {
+      offset: {
+        type: Number,
+        value: 0
+      }
+    },
+    styles: [
+      ft,
+      dt,
+      J`:host{--color-accent: black;--color-text-on-accent: white;display:flex;flex-direction:column;gap:.25rem;text-align:center;inline-size:fit-content}table{border-collapse:collapse;font-size:.875rem}th{inline-size:2.25rem;block-size:2.25rem}td{padding-inline:0}.num{font-variant-numeric:tabular-nums}button{color:inherit;font-size:inherit;background:transparent;border:0;block-size:2.25rem;inline-size:2.25rem}button:hover:where(:not(:disabled,[aria-disabled])){background:#0000000d}button:is([aria-pressed=true],:focus-visible){background:var(--color-accent);color:var(--color-text-on-accent)}button:focus-visible{outline:1px solid var(--color-text-on-accent);outline-offset:-2px}button:disabled,:host::part(outside),:host::part(disallowed){cursor:default;opacity:.5}`
+    ]
+  }
+);
+customElements.define("calendar-month", Qe);
+function At(e) {
+  return /* @__PURE__ */ h(
+    "button",
+    {
+      part: `button ${e.name} ${e.onclick ? "" : "disabled"}`,
+      onclick: e.onclick,
+      "aria-disabled": e.onclick ? null : "true",
+      children: /* @__PURE__ */ h("slot", { name: e.name, children: e.children })
+    }
+  );
+}
+function yt(e) {
+  const t = E(e.page.start), n = E(e.page.end);
+  return /* @__PURE__ */ h(
+    _,
+    {
+      value: e,
+      onselectday: e.onSelect,
+      onfocusday: e.onFocus,
+      onhoverday: e.onHover,
+      children: /* @__PURE__ */ S("div", { role: "group", "aria-labelledby": "h", part: "container", children: [
+        /* @__PURE__ */ h("div", { id: "h", class: "vh", "aria-live": "polite", "aria-atomic": "true", children: e.formatVerbose.formatRange(t, n) }),
+        /* @__PURE__ */ S("div", { part: "header", children: [
+          /* @__PURE__ */ h(At, { name: "previous", onclick: e.previous, children: "Previous" }),
+          /* @__PURE__ */ h("slot", { part: "heading", name: "heading", children: /* @__PURE__ */ h("div", { "aria-hidden": "true", children: e.format.formatRange(t, n) }) }),
+          /* @__PURE__ */ h(At, { name: "next", onclick: e.next, children: "Next" })
+        ] }),
+        /* @__PURE__ */ h("slot", { part: "months" })
+      ] })
+    }
+  );
+}
+const pt = {
+  value: {
+    type: String,
+    value: ""
+  },
+  min: {
+    type: String,
+    value: ""
+  },
+  max: {
+    type: String,
+    value: ""
+  },
+  today: {
+    type: String,
+    value: ""
+  },
+  isDateDisallowed: {
+    type: Function,
+    value: (e) => !1
+  },
+  formatWeekday: {
+    type: String,
+    value: () => "narrow"
+  },
+  getDayParts: {
+    type: Function,
+    value: (e) => ""
+  },
+  firstDayOfWeek: {
+    type: Number,
+    value: () => 1
+  },
+  showOutsideDays: {
+    type: Boolean,
+    value: !1
+  },
+  locale: {
+    type: String,
+    value: () => {
+    }
+  },
+  months: {
+    type: Number,
+    value: 1
+  },
+  focusedDate: {
+    type: String,
+    value: () => {
+    }
+  },
+  pageBy: {
+    type: String,
+    value: () => "months"
+  },
+  showWeekNumbers: {
+    type: Boolean,
+    value: !1
+  }
+}, gt = [
+  ft,
+  dt,
+  J`:host{display:block;inline-size:fit-content}:host::part(container){display:flex;flex-direction:column;gap:1em}:host::part(header){display:flex;align-items:center;justify-content:space-between}:host::part(heading){font-weight:700;font-size:1.25em}:host::part(button){display:flex;align-items:center;justify-content:center}:host::part(button disabled){cursor:default;opacity:.5}`
+], Ve = { year: "numeric" }, tn = { year: "numeric", month: "long" };
+function nt(e, t) {
+  return (t.year - e.year) * 12 + t.month - e.month;
+}
+const Ut = (e, t) => (e = t === 12 ? new U(e.year, 1) : e, {
+  start: e,
+  end: e.add({ months: t - 1 })
+});
+function en({
+  pageBy: e,
+  focusedDate: t,
+  months: n,
+  max: s,
+  min: o,
+  goto: r
+}) {
+  const a = e === "single" ? 1 : n, [u, f] = it(
+    () => Ut(t.toPlainYearMonth(), n)
+  ), l = (d) => f(Ut(u.start.add({ months: d }), n)), c = (d) => {
+    const i = nt(u.start, d.toPlainYearMonth());
+    return i >= 0 && i < n;
+  };
+  return L(() => {
+    if (c(t))
+      return;
+    const d = nt(t.toPlainYearMonth(), u.start);
+    r(t.add({ months: d }));
+  }, [u.start]), L(() => {
+    if (c(t))
+      return;
+    const d = nt(u.start, t.toPlainYearMonth());
+    l(d === -1 ? -a : d === n ? a : Math.floor(d / n) * n);
+  }, [t, a, n]), {
+    page: u,
+    previous: !o || !c(o) ? () => l(-a) : void 0,
+    next: !s || !c(s) ? () => l(a) : void 0
+  };
+}
+function bt({
+  months: e,
+  pageBy: t,
+  locale: n,
+  focusedDate: s,
+  setFocusedDate: o
+}) {
+  const [r] = P("min"), [a] = P("max"), [u] = P("today"), f = N("focusday"), l = N("change"), c = w(
+    () => Z(s ?? u ?? ht(), r, a),
+    [s, u, r, a]
+  );
+  function d(p) {
+    o(p), f(E(p));
+  }
+  const { next: i, previous: m, page: g } = en({
+    pageBy: t,
+    focusedDate: c,
+    months: e,
+    min: r,
+    max: a,
+    goto: d
+  }), b = W();
+  function y(p) {
+    const v = p?.target ?? "day";
+    v === "day" ? b.current.querySelectorAll("calendar-month").forEach((X) => X.focus(p)) : b.current.shadowRoot.querySelector(`[part~='${v}']`).focus(p);
+  }
+  return {
+    format: $(Ve, n),
+    formatVerbose: $(tn, n),
+    page: g,
+    focusedDate: c,
+    dispatch: l,
+    onFocus(p) {
+      p.stopPropagation(), d(p.detail), setTimeout(y);
+    },
+    min: r,
+    max: a,
+    today: u,
+    next: i,
+    previous: m,
+    focus: y
+  };
+}
+const nn = k(
+  (e) => {
+    const [t, n] = P("value"), [s = t, o] = P("focusedDate"), r = bt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: o
+    });
+    function a(u) {
+      n(u.detail), r.dispatch();
+    }
+    return /* @__PURE__ */ h("host", { shadowDom: !0, focus: r.focus, children: /* @__PURE__ */ h(
+      yt,
+      {
+        ...e,
+        ...r,
+        type: "date",
+        value: t,
+        onSelect: a
+      }
+    ) });
+  },
+  { props: pt, styles: gt }
+);
+customElements.define("calendar-date", nn);
+function ee(e) {
+  return /* @__PURE__ */ S(Jt, { children: [
+    /* @__PURE__ */ h("label", { part: "label", for: "s", children: /* @__PURE__ */ h("slot", { name: "label", children: e.label }) }),
+    /* @__PURE__ */ h("select", { id: "s", part: "select", onchange: e.onChange, children: e.options.map((t) => /* @__PURE__ */ h("option", { part: "option", ...t })) })
+  ] });
+}
+const ne = [ft, dt];
+function sn(e, t) {
+  return Array.from({ length: e }, (n, s) => t(s));
+}
+function on(e) {
+  const { min: t, max: n, focusedDate: s } = ut(_), o = N("focusday", { bubbles: !0 }), r = s.toPlainYearMonth(), a = r.year, u = Math.floor(e.maxYears / 2), f = a - u, l = a + (e.maxYears - u - 1), c = Math.max(f, t?.year ?? -1 / 0), d = Math.min(l, n?.year ?? 1 / 0), i = sn(d - c + 1, (g) => {
+    const b = c + g;
+    return {
+      label: `${b}`,
+      value: `${b}`,
+      selected: b === r.year
+    };
+  });
+  function m(g) {
+    const y = parseInt(g.currentTarget.value) - r.year;
+    o(s.add({ years: y }));
+  }
+  return { options: i, onChange: m };
+}
+const rn = k(
+  (e) => {
+    const t = on(e);
+    return /* @__PURE__ */ h("host", { shadowDom: !0, children: /* @__PURE__ */ h(ee, { label: "Year", ...t }) });
+  },
+  {
+    props: {
+      maxYears: { type: Number, value: 20 }
+    },
+    styles: ne
+  }
+);
+customElements.define("calendar-select-year", rn);
+function an(e) {
+  const { min: t, max: n, focusedDate: s, locale: o } = ut(_), r = N("focusday", { bubbles: !0 }), a = w(
+    () => ({ month: e.formatMonth }),
+    [e.formatMonth]
+  ), u = $(a, o), f = w(() => {
+    const i = [], m = /* @__PURE__ */ new Date();
+    m.setUTCDate(1);
+    for (var g = 0; g < 12; g++) {
+      const b = (m.getUTCMonth() + 12) % 12;
+      i[b] = u.format(m), m.setUTCMonth(m.getUTCMonth() + 1);
+    }
+    return i;
+  }, [u]), l = s.toPlainYearMonth(), c = f.map((i, m) => {
+    const g = m + 1, b = l.add({ months: g - l.month }), y = t != null && U.compare(b, t) < 0 || n != null && U.compare(b, n) > 0;
+    return {
+      label: i,
+      value: `${g}`,
+      disabled: y,
+      selected: g === l.month
+    };
+  });
+  function d(i) {
+    const g = parseInt(i.currentTarget.value) - l.month;
+    r(s.add({ months: g }));
+  }
+  return { options: c, onChange: d };
+}
+const cn = k(
+  (e) => {
+    const t = an(e);
+    return /* @__PURE__ */ h("host", { shadowDom: !0, children: /* @__PURE__ */ h(ee, { label: "Month", ...t }) });
+  },
+  {
+    props: {
+      formatMonth: {
+        type: String,
+        value: () => "long"
+      }
+    },
+    styles: ne
+  }
+);
+customElements.define("calendar-select-month", cn);
+const $t = (e, t) => C.compare(e, t) < 0 ? [e, t] : [t, e], ln = k(
+  (e) => {
+    const [t, n] = He("value"), [s = t[0], o] = P("focusedDate"), r = bt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: o
+    }), a = N("rangestart"), u = N("rangeend"), [f, l] = P(
+      "tentative"
+    ), [c, d] = it();
+    L(() => d(void 0), [f]);
+    function i(y) {
+      r.onFocus(y), m(y);
+    }
+    function m(y) {
+      y.stopPropagation(), f && d(y.detail);
+    }
+    function g(y) {
+      const p = y.detail;
+      y.stopPropagation(), f ? (n($t(f, p)), l(void 0), u(E(p)), r.dispatch()) : (l(p), a(E(p)));
+    }
+    const b = f ? $t(f, c ?? f) : t;
+    return /* @__PURE__ */ h("host", { shadowDom: !0, focus: r.focus, children: /* @__PURE__ */ h(
+      yt,
+      {
+        ...e,
+        ...r,
+        type: "range",
+        value: b,
+        onFocus: i,
+        onHover: m,
+        onSelect: g
+      }
+    ) });
+  },
+  {
+    props: {
+      ...pt,
+      tentative: {
+        type: String,
+        value: ""
+      }
+    },
+    styles: gt
+  }
+);
+customElements.define("calendar-range", ln);
+const un = k(
+  (e) => {
+    const [t, n] = We("value"), [s = t[0], o] = P("focusedDate"), r = bt({
+      ...e,
+      focusedDate: s,
+      setFocusedDate: o
+    });
+    function a(u) {
+      const f = [...t], l = t.findIndex((c) => c.equals(u.detail));
+      l < 0 ? f.push(u.detail) : f.splice(l, 1), n(f), r.dispatch();
+    }
+    return /* @__PURE__ */ h("host", { shadowDom: !0, focus: r.focus, children: /* @__PURE__ */ h(
+      yt,
+      {
+        ...e,
+        ...r,
+        type: "multi",
+        value: t,
+        onSelect: a
+      }
+    ) });
+  },
+  { props: pt, styles: gt }
+);
+customElements.define("calendar-multi", un);
+export {
+  nn as CalendarDate,
+  Qe as CalendarMonth,
+  un as CalendarMulti,
+  ln as CalendarRange,
+  cn as CalendarSelectMonth,
+  rn as CalendarSelectYear
+};
 
+</script>
+<script>
+/*!
+ * GENEOS UI · fecha y hora (0.5.0)
+ *
+ * gn-popover   panel flotante no modal: se ubica abajo o arriba del control,
+ *              no lo recortan los contenedores con overflow y en pantallas
+ *              chicas se muestra como hoja inferior. Escape lo cierra y
+ *              devuelve el foco al botón que lo abrió.
+ * gn-calendar  grilla de días de Cally (componentes web con ARIA y teclado:
+ *              flechas, Inicio/Fin, RePág/AvPág) con los tokens de GENEOS UI.
+ * gn-time      hora y minutos con dos <select> nativos.
+ *
+ * Selectores: <span class="gn-datetime" data-gn-datetime="datetime|date|time">
+ * con un único <input> adentro (lo genera el widget de Django). Sin JS el
+ * input es nativo y envía ISO; con JS pasa a texto con dd/mm/aaaa HH:mm, que
+ * es lo mismo que se envía (el widget lo convierte a ISO en el servidor).
+ *
+ * Cally se carga aparte como módulo (vendor/cally/cally.js). Si no carga,
+ * los campos de fecha quedan nativos y siguen funcionando.
+ */
+(function (window, document) {
+  "use strict";
+
+  var GN = window.GN = window.GN || {};
+  var SHEET = window.matchMedia("(max-width: 480px)");
+  var uid = 0;
+
+  function nextId(prefix) { uid += 1; return "gn-" + prefix + "-" + uid; }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function icon(id) { return '<svg class="gn-icon" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
+  function el(tag, cls, attrs) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (attrs) Object.keys(attrs).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+  function addToken(node, attr, token) {
+    var list = (node.getAttribute(attr) || "").split(/\s+/).filter(Boolean);
+    if (list.indexOf(token) < 0) list.push(token);
+    node.setAttribute(attr, list.join(" "));
+  }
+  function removeToken(node, attr, token) {
+    var list = (node.getAttribute(attr) || "").split(/\s+/).filter(function (t) { return t && t !== token; });
+    if (list.length) node.setAttribute(attr, list.join(" ")); else node.removeAttribute(attr);
+  }
+  function fire(node, type) { node.dispatchEvent(new Event(type, { bubbles: true })); }
+
+  // ------------------------------------------------------------ lectura
+  // Mismas reglas que geneos_ui/widgets.py (parse_date, parse_time, parse_datetime).
+  function mkDate(y, m, d) {
+    var dt = new Date(Date.UTC(y, m - 1, d));
+    return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d ? { y: y, m: m, d: d } : null;
+  }
+  function parseDate(s) {
+    s = String(s == null ? "" : s).trim();
+    var m = /^(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2}|\d{4})$/.exec(s);
+    if (m) return mkDate(m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]), Number(m[2]), Number(m[1]));
+    m = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s);
+    return m ? mkDate(Number(m[1]), Number(m[2]), Number(m[3])) : null;
+  }
+  function parseTime(s) {
+    s = String(s == null ? "" : s).trim();
+    var m = /^(\d{1,2})(?:[:.h](\d{2}))?(?::(\d{2}))?\s*(?:hs?)?$/i.exec(s) || /^(\d{2})(\d{2})$/.exec(s);
+    if (!m) return null;
+    var h = Number(m[1]), mi = Number(m[2] || 0);
+    return h > 23 || mi > 59 ? null : { h: h, mi: mi };
+  }
+  function parseDateTime(s) {
+    var m = /^(\S+?)(?:\s*,\s*|\s+|T)(\S+(?:\s*hs?)?)$/i.exec(String(s == null ? "" : s).trim());
+    if (!m) return null;
+    var d = parseDate(m[1]), t = parseTime(m[2]);
+    return d && t ? { date: d, time: t } : null;
+  }
+  function fmtDate(d) { return pad(d.d) + "/" + pad(d.m) + "/" + d.y; }
+  function isoDate(d) { return d.y + "-" + pad(d.m) + "-" + pad(d.d); }
+  function fmtTime(t) { return pad(t.h) + ":" + pad(t.mi); }
+  function today() { var n = new Date(); return { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }; }
+  function now(step) {
+    var n = new Date(), mi = Math.ceil(n.getMinutes() / step) * step, h = n.getHours();
+    if (mi >= 60) { mi = 0; h = (h + 1) % 24; }
+    return { h: h, mi: mi };
+  }
+
+  var KINDS = {
+    datetime: {
+      parse: parseDateTime, calendar: true, time: true, icon: "i-calendar",
+      fmt: function (v) { return fmtDate(v.date) + " " + fmtTime(v.time); },
+      iso: function (v) { return isoDate(v.date) + "T" + fmtTime(v.time); },
+      label: "Elegir fecha y hora", invalid: "Ingresá una fecha y hora válidas", noun: "una fecha y hora",
+    },
+    date: {
+      parse: function (s) { var d = parseDate(s); return d && { date: d }; }, calendar: true, time: false, icon: "i-calendar",
+      fmt: function (v) { return fmtDate(v.date); }, iso: function (v) { return isoDate(v.date); },
+      label: "Elegir fecha", invalid: "Ingresá una fecha válida", noun: "una fecha",
+    },
+    time: {
+      parse: function (s) { var t = parseTime(s); return t && { time: t }; }, calendar: false, time: true, icon: "i-clock",
+      fmt: function (v) { return fmtTime(v.time); }, iso: function (v) { return fmtTime(v.time); },
+      label: "Elegir hora", invalid: "Ingresá una hora válida", noun: "una hora",
+    },
+  };
+  var PLACEHOLDER = { datetime: "dd/mm/aaaa HH:mm", date: "dd/mm/aaaa", time: "HH:mm" };
+
+  // ------------------------------------------------------------ gn-popover
+  var current = null; // { panel, anchor, opener, root, onClose }
+
+  // Ubicación en escritorio (position: fixed, medida contra la ventana):
+  //   1. abajo del campo, si entra entero;
+  //   2. si no, arriba (sin tapar la etiqueta del campo);
+  //   3. si no, se desplaza lo justo el contenedor con scroll del campo para
+  //      que entre abajo o arriba, sin sacar el campo de la vista;
+  //   4. si tampoco, al costado del campo (derecha o izquierda), entero y a la
+  //      vista; o, si no hay lugar al costado, entero dentro de la ventana;
+  //   5. solo si el panel es más alto que la ventana: altura limitada con
+  //      scroll interno y el pie («Ahora» / «Listo») fijo, siempre visible.
+  // Horizontalmente se alinea con el borde izquierdo del campo, o con el
+  // derecho si no entra. Al desplazar la página o cambiar el tamaño de la
+  // ventana (follow = true) acompaña al campo: no desplaza nada por su cuenta y
+  // conserva su ubicación mientras siga entrando.
+  var GAP = 6, EDGE = 8;
+
+  // franja superior tapada por una barra fija o pegajosa (la topbar del layout)
+  function topLimit() {
+    var bar = document.querySelector(".gn-topbar");
+    if (bar) {
+      var pos = window.getComputedStyle(bar).position;
+      if (pos === "fixed" || pos === "sticky") return Math.max(EDGE, bar.getBoundingClientRect().bottom + EDGE);
+    }
+    return EDGE;
+  }
+
+  // contenedor que desplaza al campo (el documento o un ancestro con overflow)
+  function scrollParent(node) {
+    for (var n = node.parentElement; n && n !== document.body && n !== document.documentElement; n = n.parentElement) {
+      var oy = window.getComputedStyle(n).overflowY;
+      if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight) return n;
+    }
+    return document.scrollingElement || document.documentElement;
+  }
+
+  function place(p, noScroll, follow) {
+    var panel = p.panel;
+    var sheet = SHEET.matches;
+    panel.classList.toggle("gn-popover--sheet", sheet);
+    panel.style.maxHeight = "";
+    panel.classList.remove("is-clamped");
+    if (sheet) { panel.style.top = panel.style.left = ""; panel.classList.remove("is-above", "is-side"); return; }
+    var r = p.anchor.getBoundingClientRect();
+    var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    var w = panel.offsetWidth, h = panel.offsetHeight;
+    var minTop = topLimit(), maxBottom = vh - EDGE;
+    // arriba se mide desde la etiqueta del campo, para no taparla
+    var field = p.root && p.root.closest(".gn-field");
+    var labelTop = field ? field.getBoundingClientRect().top : r.top;
+    var below = maxBottom - (r.bottom + GAP), above = (labelTop - GAP) - minTop;
+    var at = {
+      below: function () { return { top: r.bottom + GAP, mode: "below" }; },
+      above: function () { return { top: labelTop - GAP - h, mode: "above" }; },
+    };
+
+    if (follow) {
+      noScroll = true;
+      var prev = panel.getAttribute("data-gn-place");
+      var offscreen = r.bottom < minTop || r.top > vh;
+      if (prev === "below" && (offscreen || h <= below)) return finish(p, at.below(), r, w, vw);
+      if (prev === "above" && (offscreen || h <= above)) return finish(p, at.above(), r, w, vw);
+    }
+    if (h <= below) return finish(p, at.below(), r, w, vw);
+    if (h <= above) return finish(p, at.above(), r, w, vw);
+
+    if (!noScroll) {
+      var sc = scrollParent(p.anchor);
+      var isDoc = sc === document.scrollingElement || sc === document.documentElement;
+      var room = isDoc ? sc.scrollHeight - vh - window.scrollY : sc.scrollHeight - sc.clientHeight - sc.scrollTop;
+      var up = isDoc ? window.scrollY : sc.scrollTop;
+      var needDown = h - below, needUp = h - above;
+      // instantáneo aunque la página tenga scroll-behavior: smooth (se mide enseguida)
+      var scrollBy = function (dy) { (isDoc ? window : sc).scrollBy({ top: dy, left: 0, behavior: "instant" }); };
+      // bajar la página: el campo sube y queda lugar abajo (sin que el campo pase bajo la barra)
+      if (needDown <= room && labelTop - needDown >= minTop) { scrollBy(needDown); return place(p, true); }
+      // subir la página: el campo baja y queda lugar arriba (sin que salga por abajo)
+      if (needUp <= up && r.bottom + needUp <= maxBottom) { scrollBy(-needUp); return place(p, true); }
+    }
+
+    var avail = maxBottom - minTop;
+    if (h <= avail) {
+      // entero y a la vista: al costado del campo si hay lugar, o dentro de la ventana
+      var top = Math.min(Math.max(r.top - 40, minTop), maxBottom - h);
+      if (r.right + GAP + w <= vw - EDGE) return finish(p, { top: top, left: r.right + GAP, mode: "side" }, r, w, vw);
+      if (r.left - GAP - w >= EDGE) return finish(p, { top: top, left: r.left - GAP - w, mode: "side" }, r, w, vw);
+      return finish(p, { top: below >= above ? maxBottom - h : minTop, mode: below >= above ? "below" : "above" }, r, w, vw);
+    }
+    // más alto que la ventana: scroll interno, con el pie siempre a la vista
+    panel.style.maxHeight = avail + "px";
+    panel.classList.add("is-clamped");
+    return finish(p, { top: minTop, mode: "clamped" }, r, w, vw);
+  }
+
+  function finish(p, pos, r, w, vw) {
+    var left = pos.left;
+    if (left == null) {
+      left = r.left;
+      if (left + w > vw - EDGE) left = r.right - w;
+    }
+    var panel = p.panel;
+    panel.style.top = Math.round(pos.top) + "px";
+    panel.style.left = Math.round(Math.max(EDGE, Math.min(left, vw - EDGE - w))) + "px";
+    panel.setAttribute("data-gn-place", pos.mode);
+    panel.classList.toggle("is-above", pos.mode === "above");
+    panel.classList.toggle("is-side", pos.mode === "side");
+  }
+
+  // Un ancestro con transform, filter, contain… se vuelve la referencia de
+  // position: fixed (el panel quedaría corrido) y, si además tiene overflow,
+  // lo recortaría. En ese caso el panel se
+  // lleva, mientras está abierto, al final del <body> (o del <dialog> abierto
+  // que lo contiene, para seguir en la capa superior) y vuelve al cerrarse.
+  function trapsFixed(node) {
+    for (var n = node.parentElement; n && n !== document.body; n = n.parentElement) {
+      var s = window.getComputedStyle(n);
+      if (s.transform !== "none" || s.filter !== "none" || s.perspective !== "none" ||
+          (s.backdropFilter && s.backdropFilter !== "none") || /paint|layout|strict|content/.test(s.contain || "") ||
+          /transform|filter|perspective/.test(s.willChange || "")) return true;
+    }
+    return false;
+  }
+
+  function openPopover(panel, anchor, opener, opts) {
+    opts = opts || {};
+    if (current && current.panel !== panel) closePopover(false);
+    var home = null;
+    if (panel.parentNode && trapsFixed(panel)) {
+      home = { parent: panel.parentNode, next: panel.nextSibling };
+      var dlg = panel.parentNode.closest && panel.parentNode.closest("dialog[open]");
+      (dlg || document.body).appendChild(panel);
+      panel.classList.add("is-portaled");
+    }
+    panel.hidden = false;
+    if (opener) opener.setAttribute("aria-expanded", "true");
+    current = { panel: panel, anchor: anchor || opener, opener: opener, root: opts.root || null, onClose: opts.onClose, home: home };
+    place(current);
+    panel.classList.add("is-open");
+    // el contenido (p. ej. el calendario) puede terminar de dibujarse después: se reubica
+    if (window.ResizeObserver) {
+      if (!panel.__gnResize) panel.__gnResize = new ResizeObserver(function () { if (current && current.panel === panel) place(current); });
+      panel.__gnResize.observe(panel);
+    }
+  }
+
+  function closePopover(restoreFocus) {
+    var p = current;
+    if (!p) return;
+    current = null;
+    p.panel.hidden = true;
+    p.panel.classList.remove("is-open");
+    if (p.panel.__gnResize) p.panel.__gnResize.disconnect();
+    if (p.home) {
+      p.home.parent.insertBefore(p.panel, p.home.next && p.home.next.parentNode === p.home.parent ? p.home.next : null);
+      p.panel.classList.remove("is-portaled");
+    }
+    if (p.opener) p.opener.setAttribute("aria-expanded", "false");
+    if (p.onClose) p.onClose();
+    if (restoreFocus && p.opener) p.opener.focus();
+  }
+
+  // Panel llevado al <body>: Tab al salir por el final vuelve al botón que lo
+  // abrió, como si siguiera en su lugar del formulario.
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Tab" || !current || !current.home) return;
+    var panel = current.panel;
+    var light = Array.prototype.filter.call(panel.querySelectorAll("button, input, select, textarea, [tabindex]:not([tabindex='-1'])"),
+      function (n) { return !n.disabled && n.tabIndex >= 0 && n.getClientRects().length; });
+    if (!e.shiftKey && document.activeElement === light[light.length - 1]) { e.preventDefault(); closePopover(true); }
+  });
+
+  function inside(p, node) {
+    return !!node && (p.panel.contains(node) || (p.opener && p.opener.contains(node)) || (p.root && p.root.contains(node)));
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && current) {
+      e.preventDefault(); // dentro de un <dialog> no cierra el modal
+      e.stopPropagation();
+      closePopover(true);
+    }
+  }, true);
+  document.addEventListener("pointerdown", function (e) {
+    if (current && !inside(current, e.target)) closePopover(false);
+  }, true);
+  document.addEventListener("focusin", function (e) {
+    if (current && !inside(current, e.target)) closePopover(false);
+  });
+  // Al cambiar el tamaño de la ventana se vuelve a ubicar desde cero; si el
+  // campo quedó fuera de la vista, primero se lo trae (el panel va con él).
+  window.addEventListener("resize", function () {
+    if (!current || SHEET.matches) { if (current) place(current, true); return; }
+    var r = current.anchor.getBoundingClientRect();
+    if (r.bottom < topLimit() || r.top > window.innerHeight) current.anchor.scrollIntoView({ block: "center", behavior: "instant" });
+    place(current);
+  });
+  window.addEventListener("scroll", function (e) {
+    // el scroll interno del propio panel no lo mueve
+    if (current && !(e.target instanceof Node && current.panel.contains(e.target))) place(current, true, true);
+  }, true);
+  if (SHEET.addEventListener) SHEET.addEventListener("change", function () { if (current) place(current, true); });
+
+  function firstFocusable(root) {
+    return root.querySelector('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  }
+
+  // <button data-gn-popover="id">  <div class="gn-popover" id="id" role="dialog" aria-label="…" hidden>
+  function initPopoverTriggers(root) {
+    Array.prototype.forEach.call(root.querySelectorAll("[data-gn-popover]"), function (btn) {
+      if (btn.__gnPopover) return;
+      var panel = document.getElementById(btn.getAttribute("data-gn-popover"));
+      if (!panel) return;
+      btn.__gnPopover = true;
+      btn.setAttribute("aria-haspopup", "dialog");
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-controls", panel.id);
+      btn.addEventListener("click", function () {
+        if (current && current.panel === panel) { closePopover(true); return; }
+        openPopover(panel, btn, btn);
+        var f = firstFocusable(panel);
+        (f || panel).focus();
+      });
+      panel.addEventListener("click", function (e) {
+        if (e.target.closest("[data-gn-popover-close]")) closePopover(true);
+      });
+    });
+  }
+
+  // ------------------------------------------------------------ gn-calendar
+  function fillCalendar(cal) {
+    // locale y primer día conviene escribirlos en el HTML: si Cally ya dibujó, se
+    // fijan también como propiedades para que actualice los nombres de los días
+    if (!cal.getAttribute("locale")) { cal.setAttribute("locale", "es-AR"); cal.locale = "es-AR"; }
+    if (!cal.hasAttribute("first-day-of-week")) cal.setAttribute("first-day-of-week", "1");
+    cal.classList.add("gn-calendar");
+    if (!cal.querySelector('[slot="previous"]')) {
+      cal.insertAdjacentHTML("afterbegin",
+        '<span slot="previous" class="gn-calendar__nav">' + icon("i-chevleft") + '<span class="gn-visually-hidden">Mes anterior</span></span>' +
+        '<span slot="next" class="gn-calendar__nav">' + icon("i-chevright") + '<span class="gn-visually-hidden">Mes siguiente</span></span>');
+    }
+    if (!cal.querySelector('[slot="heading"]')) {
+      // Cally muestra solo el año en el encabezado; acá va mes y año. Para el lector de
+      // pantalla Cally ya anuncia el mes en su región aria-live, por eso aria-hidden.
+      var heading = el("span", "gn-calendar__heading", { slot: "heading", "aria-hidden": "true" });
+      cal.appendChild(heading);
+      cal.addEventListener("focusday", function (e) { updateHeading(cal, e.detail); });
+    }
+    if (!cal.querySelector("calendar-month")) cal.appendChild(document.createElement("calendar-month"));
+    updateHeading(cal);
+    return cal;
+  }
+  var MONTH_FMT = window.Intl ? new Intl.DateTimeFormat("es-AR", { month: "long", year: "numeric", timeZone: "UTC" }) : null;
+  function updateHeading(cal, date) {
+    var heading = cal.querySelector(".gn-calendar__heading");
+    if (!heading || !MONTH_FMT) return;
+    if (!(date instanceof Date)) {
+      var d = parseDate(cal.focusedDate || cal.getAttribute("focused-date") || cal.value || "") || today();
+      date = new Date(Date.UTC(d.y, d.m - 1, d.d));
+    }
+    var text = MONTH_FMT.format(date);
+    heading.textContent = text.charAt(0).toUpperCase() + text.slice(1);
+  }
+  function buildCalendar() { return fillCalendar(document.createElement("calendar-date")); }
+  // Cally vuelve a dibujar el mes de forma asíncrona: se espera a que el día
+  // enfocable sea el pedido (por su nombre accesible, "13 de noviembre") para no
+  // enfocar un botón que todavía muestra el mes anterior.
+  function focusCalendar(cal, d) {
+    var month = cal.querySelector("calendar-month");
+    var want = null;
+    try {
+      want = d && new Intl.DateTimeFormat(cal.getAttribute("locale") || "es-AR", { day: "numeric", month: "long", timeZone: "UTC" })
+        .format(new Date(Date.UTC(d.y, d.m - 1, d.d)));
+    } catch (e) { want = null; }
+    var tries = 0;
+    (function attempt() {
+      var btn = month && month.shadowRoot && month.shadowRoot.querySelector("button[tabindex='0']");
+      if (btn && (!want || btn.getAttribute("aria-label") === want)) { btn.focus(); return; }
+      if (tries++ < 30) window.requestAnimationFrame(attempt);
+      else if (btn) btn.focus();
+    })();
+  }
+
+  // ------------------------------------------------------------ gn-time
+  // Dos campos compactos HH : mm (role="spinbutton"): se escribe directo o se
+  // ajusta con ↑/↓ (minutos de a `step`; Mayús+↑/↓ de a 1), Inicio/Fin. Formato
+  // de 24 horas. Al completar la hora pasa solo a los minutos. Un valor vacío o
+  // fuera de rango no se corrige solo: queda marcado con un mensaje (vinculado
+  // con aria-describedby), no cambia el campo principal y «Listo» no cierra
+  // hasta corregirlo.
+  function buildTime(step, label) {
+    var group = el("div", "gn-time", { role: "group", "aria-label": label || "Hora" });
+    var state = { h: 0, mi: 0 };
+    var parts = {};
+    group.innerHTML = '<span class="gn-time__label" aria-hidden="true">Hora</span><span class="gn-time__fields"></span>';
+    var fields = group.lastChild;
+    var errorEl = el("span", "gn-field__error gn-time__error", { id: nextId("hora-error"), "aria-live": "polite" });
+    errorEl.hidden = true;
+    var invalid = {};
+    var MSG = {
+      h: { range: "La hora tiene que estar entre 00 y 23.", empty: "Completá la hora (00 a 23)." },
+      mi: { range: "Los minutos tienen que estar entre 00 y 59.", empty: "Completá los minutos (00 a 59)." },
+    };
+    function showErrors() {
+      var msg = invalid.h || invalid.mi || "";
+      errorEl.hidden = !msg;
+      errorEl.innerHTML = msg ? icon("i-alert") + "<span></span>" : "";
+      if (msg) errorEl.lastChild.textContent = msg;
+    }
+    function setInvalid(part, kind) {
+      invalid[part.key] = kind ? MSG[part.key][kind] : "";
+      if (kind) {
+        part.input.setAttribute("aria-invalid", "true");
+        addToken(part.input, "aria-describedby", errorEl.id);
+      } else {
+        part.input.removeAttribute("aria-invalid");
+        removeToken(part.input, "aria-describedby", errorEl.id);
+      }
+      showErrors();
+    }
+
+    function emit() { group.dispatchEvent(new Event("change", { bubbles: true })); }
+
+    function makePart(key, max, name, unit) {
+      var wrap = el("span", "gn-time__field");
+      var input = el("input", "gn-time__input", {
+        type: "text", inputmode: "numeric", autocomplete: "off", maxlength: "2", spellcheck: "false",
+        role: "spinbutton", "aria-label": name, "aria-valuemin": "0", "aria-valuemax": String(max),
+      });
+      var steps = el("span", "gn-time__steps");
+      steps.innerHTML =
+        '<button type="button" tabindex="-1" class="gn-time__step" data-dir="1" aria-label="Subir ' + unit + '">' + icon("i-chevup") + "</button>" +
+        '<button type="button" tabindex="-1" class="gn-time__step" data-dir="-1" aria-label="Bajar ' + unit + '">' + icon("i-chevdown") + "</button>";
+      wrap.appendChild(input);
+      wrap.appendChild(steps);
+      var part = { key: key, max: max, input: input, unit: unit };
+      parts[key] = part;
+
+      // al entrar se selecciona todo, así lo que se escribe reemplaza el valor
+      var justFocused = false;
+      input.addEventListener("focus", function () { input.select(); justFocused = true; });
+      input.addEventListener("mouseup", function (e) { if (justFocused) { e.preventDefault(); justFocused = false; } });
+      input.addEventListener("keydown", function () { justFocused = false; });
+      input.addEventListener("change", function (e) { e.stopPropagation(); }); // el grupo avisa al confirmar
+      input.addEventListener("keydown", function (e) {
+        var delta = 0;
+        var unitStep = key === "mi" && !e.shiftKey ? step : 1;
+        if (e.key === "ArrowUp") delta = unitStep;
+        else if (e.key === "ArrowDown") delta = -unitStep;
+        else if (e.key === "Home") { e.preventDefault(); commit(part, 0); return; }
+        else if (e.key === "End") { e.preventDefault(); commit(part, max); return; }
+        else if (e.key === ":" && key === "h") { e.preventDefault(); parts.mi.input.focus(); return; }
+        else return;
+        e.preventDefault();
+        bump(part, delta);
+      });
+      input.addEventListener("input", function () {
+        var digits = input.value.replace(/\D/g, "").slice(0, 2);
+        if (digits !== input.value) input.value = digits;
+        var n = digits === "" ? NaN : Number(digits);
+        var bad = digits !== "" && n > max;
+        setInvalid(part, bad ? "range" : "");
+        if (bad || digits === "") return;
+        // dos cifras, o una que ya no admite segunda (hora 3–9): se confirma
+        if (digits.length === 2 || (key === "h" && n > 2)) {
+          commit(part, n, true);
+          if (key === "h") { parts.mi.input.focus(); parts.mi.input.select(); }
+        }
+      });
+      input.addEventListener("blur", function () {
+        var digits = input.value.replace(/\D/g, "");
+        if (digits !== "" && Number(digits) <= max) commit(part, Number(digits));
+        else setInvalid(part, digits === "" ? "empty" : "range"); // no se corrige solo
+      });
+      steps.addEventListener("pointerdown", function (e) { e.preventDefault(); }); // el foco queda en el campo
+      steps.addEventListener("click", function (e) {
+        var b = e.target.closest("button");
+        if (!b) return;
+        bump(part, Number(b.getAttribute("data-dir")) * (key === "mi" ? step : 1));
+        input.focus();
+      });
+      return wrap;
+    }
+
+    function render(part, keepText) {
+      var v = state[part.key];
+      if (!keepText) part.input.value = pad(v);
+      setInvalid(part, "");
+      part.input.setAttribute("aria-valuenow", String(v));
+      part.input.setAttribute("aria-valuetext", pad(v) + " " + (part.key === "h" ? (v === 1 ? "hora" : "horas") : (v === 1 ? "minuto" : "minutos")));
+    }
+    function commit(part, n, typing) {
+      var changed = state[part.key] !== n;
+      state[part.key] = n;
+      render(part, typing && part.input.value.length < 2 && part.key !== "h");
+      if (typing) part.input.value = pad(n);
+      if (changed) emit();
+    }
+    function bump(part, delta) {
+      var size = part.max + 1, v = state[part.key];
+      if (part.key === "mi" && Math.abs(delta) > 1) v = delta > 0 ? Math.floor(v / delta) * delta : Math.ceil(v / -delta) * -delta;
+      commit(part, ((v + delta) % size + size) % size);
+      part.input.select();
+    }
+
+    fields.appendChild(makePart("h", 23, "Hora", "la hora"));
+    fields.appendChild(el("span", "gn-time__sep", { "aria-hidden": "true" })).textContent = ":";
+    fields.appendChild(makePart("mi", 59, "Minutos", "los minutos"));
+    fields.appendChild(el("span", "gn-time__suffix", { "aria-hidden": "true" })).textContent = "hs";
+    group.appendChild(errorEl);
+    render(parts.h); render(parts.mi);
+
+    return {
+      el: group,
+      valid: function () { return !invalid.h && !invalid.mi; },
+      focusInvalid: function () { (invalid.h ? parts.h : parts.mi).input.focus(); },
+      get: function () { return { h: state.h, mi: state.mi }; },
+      set: function (t) { state.h = t.h; state.mi = t.mi; render(parts.h); render(parts.mi); },
+      focus: function () { parts.h.input.focus(); },
+    };
+  }
+
+  // ------------------------------------------------------------ selectores
+  function readBound(kind, s) { var v = s ? kind.parse(s) : null; return v ? kind.iso(v) : ""; }
+
+  function enhance(wrap) {
+    if (wrap.__gnDatetime) return;
+    var kindName = wrap.getAttribute("data-gn-datetime");
+    var kind = KINDS[kindName];
+    var input = wrap.querySelector("input");
+    if (!kind || !input) return;
+    if (kind.calendar && !(window.customElements && window.customElements.get("calendar-date"))) {
+      // Cally todavía no cargó: se espera; si nunca carga, el input nativo sigue andando.
+      if (window.customElements && !wrap.__gnWaiting) {
+        wrap.__gnWaiting = true;
+        window.customElements.whenDefined("calendar-date").then(function () { enhance(wrap); });
+      }
+      return;
+    }
+    wrap.__gnDatetime = true;
+
+    var step = Math.max(1, Math.min(30, Number(wrap.getAttribute("data-gn-minute-step")) || 5));
+    var label = wrap.getAttribute("data-gn-label") || kind.label;
+    var invalidMsg = wrap.getAttribute("data-gn-invalid-message") || kind.invalid;
+    var defaultTime = parseTime(wrap.getAttribute("data-gn-default-time") || "") || { h: 0, mi: 0 };
+    var min = readBound(kind, input.getAttribute("min"));
+    var max = readBound(kind, input.getAttribute("max"));
+    var raw = wrap.getAttribute("data-gn-raw");
+    var initial = kind.parse(input.value);
+
+    input.type = "text";
+    input.value = raw || (initial ? kind.fmt(initial) : "");
+    ["min", "max", "step"].forEach(function (a) { input.removeAttribute(a); });
+    if (!input.placeholder) input.placeholder = wrap.getAttribute("data-gn-display") || PLACEHOLDER[kindName];
+    input.setAttribute("autocomplete", "off");
+    input.setAttribute("spellcheck", "false");
+    if (min) input.setAttribute("data-gn-min", min);
+    if (max) input.setAttribute("data-gn-max", max);
+
+    var hint = el("span", "gn-visually-hidden", { id: nextId("formato") });
+    hint.textContent = "Formato: " + PLACEHOLDER[kindName].replace("HH:mm", "hora y minutos") + ".";
+    wrap.appendChild(hint);
+    addToken(input, "aria-describedby", hint.id);
+
+    var panelId = nextId("picker");
+    var btn = el("button", "gn-datetime__btn", {
+      type: "button", "aria-label": label, "aria-haspopup": "dialog", "aria-expanded": "false", "aria-controls": panelId,
+    });
+    btn.innerHTML = icon(kind.icon);
+    btn.disabled = input.disabled || input.readOnly;
+    wrap.appendChild(btn);
+    wrap.classList.add("is-enhanced");
+
+    var error = el("span", "gn-field__error gn-datetime__error", { id: nextId("error"), "aria-live": "polite" });
+    error.hidden = true;
+    wrap.parentNode.insertBefore(error, wrap.nextSibling);
+    var weMarkedInvalid = false;
+
+    function setError(msg) {
+      input.setCustomValidity(msg || "");
+      if (msg) {
+        error.innerHTML = icon("i-alert") + "<span></span>";
+        error.lastChild.textContent = msg;
+        error.hidden = false;
+        addToken(input, "aria-describedby", error.id);
+        if (input.getAttribute("aria-invalid") !== "true") { input.setAttribute("aria-invalid", "true"); weMarkedInvalid = true; }
+      } else {
+        error.hidden = true;
+        error.textContent = "";
+        removeToken(input, "aria-describedby", error.id);
+        if (weMarkedInvalid) { input.removeAttribute("aria-invalid"); weMarkedInvalid = false; }
+      }
+    }
+
+    // Valida y normaliza lo escrito: "5/11/26 9" → "05/11/2026 09:00".
+    function validate() {
+      var text = input.value.trim();
+      if (!text) { setError(""); return true; }
+      var v = kind.parse(text);
+      if (!v) { setError(invalidMsg); return false; }
+      var formatted = kind.fmt(v);
+      if (formatted !== input.value) input.value = formatted;
+      var iso = kind.iso(v);
+      if (min && iso < min) { setError("Elegí " + kind.noun + " desde " + kind.fmt(kind.parse(min)) + "."); return false; }
+      if (max && iso > max) { setError("Elegí " + kind.noun + " hasta " + kind.fmt(kind.parse(max)) + "."); return false; }
+      setError("");
+      return true;
+    }
+    input.addEventListener("change", validate);
+    input.addEventListener("input", function () { if (!error.hidden && kind.parse(input.value)) setError(""); });
+    var form = input.form;
+    if (form) form.addEventListener("submit", function (e) {
+      // un campo oculto (p. ej. una opción no elegida) no bloquea el envío, como en el navegador
+      if (!input.getClientRects().length) return;
+      if (!validate()) { e.preventDefault(); e.stopImmediatePropagation(); input.focus(); }
+    }, true);
+
+    function setValue(v, silent) {
+      input.value = v ? kind.fmt(v) : "";
+      validate();
+      if (!silent) { fire(input, "input"); fire(input, "change"); }
+    }
+
+    var panel, cal, time, focusDay;
+    function ensurePanel() {
+      if (panel) return;
+      panel = el("div", "gn-popover gn-datetime__panel", { id: panelId, role: "dialog", "aria-label": label });
+      panel.hidden = true;
+      if (kind.calendar) {
+        cal = buildCalendar();
+        panel.appendChild(cal);
+        cal.addEventListener("change", function () {
+          var d = parseDate(cal.value);
+          if (!d) return;
+          if (kind.time) {
+            var prev = kind.parse(input.value);
+            setValue({ date: d, time: prev ? prev.time : time.get() });
+          } else {
+            setValue({ date: d });
+            closePopover(true);
+          }
+        });
+      }
+      if (kind.time) {
+        time = buildTime(step, kindName === "time" ? label : "Hora y minutos");
+        panel.appendChild(time.el);
+        time.el.addEventListener("change", function () {
+          if (kind.calendar) {
+            var prev = kind.parse(input.value), d = prev ? prev.date : parseDate(cal.value) || today();
+            setValue({ date: d, time: time.get() });
+            cal.value = isoDate(d);
+          } else {
+            setValue({ time: time.get() });
+          }
+        });
+      }
+      var foot = el("div", "gn-popover__foot");
+      var nowBtn = el("button", "gn-btn gn-btn--ghost gn-btn--sm", { type: "button" });
+      nowBtn.textContent = kind.time ? "Ahora" : "Hoy";
+      nowBtn.addEventListener("click", function () {
+        var v = { date: today(), time: now(step) };
+        if (cal) { cal.value = isoDate(v.date); cal.focusedDate = isoDate(v.date); updateHeading(cal); }
+        if (time) time.set(v.time);
+        setValue(v);
+        if (!kind.time) closePopover(true);
+      });
+      var done = el("button", "gn-btn gn-btn--primary gn-btn--sm", { type: "button" });
+      done.textContent = kind.time ? "Listo" : "Cerrar";
+      done.addEventListener("click", function () {
+        if (time && !time.valid()) { time.focusInvalid(); return; } // primero hay que corregir la hora
+        closePopover(true);
+      });
+      foot.appendChild(nowBtn);
+      foot.appendChild(done);
+      panel.appendChild(foot);
+      wrap.appendChild(panel);
+    }
+
+    function clampDate(d) {
+      var iso = isoDate(d);
+      if (min && iso < min.slice(0, 10)) return parseDate(min.slice(0, 10));
+      if (max && iso > max.slice(0, 10)) return parseDate(max.slice(0, 10));
+      return d;
+    }
+
+    function open() {
+      if (btn.disabled) return;
+      ensurePanel();
+      var v = kind.parse(input.value);
+      if (cal) {
+        cal.value = v ? isoDate(v.date) : "";
+        if (kindName !== "time") {
+          if (min) cal.setAttribute("min", min.slice(0, 10)); else cal.removeAttribute("min");
+          if (max) cal.setAttribute("max", max.slice(0, 10)); else cal.removeAttribute("max");
+        }
+        focusDay = v ? v.date : clampDate(today());
+        cal.focusedDate = isoDate(focusDay); // propiedad: el atributo no cambia si se navegó
+        updateHeading(cal);
+      }
+      if (time) time.set(v ? v.time : defaultTime);
+      openPopover(panel, wrap, btn, { root: wrap });
+      if (cal) focusCalendar(cal, focusDay); else time.focus();
+    }
+
+    btn.addEventListener("click", function () {
+      if (current && current.panel === panel) closePopover(true); else open();
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.altKey && e.key === "ArrowDown") { e.preventDefault(); open(); }
+    });
+
+    wrap.__gnApi = {
+      value: function () { var t = input.value.trim(); if (!t) return ""; var v = kind.parse(t); return v ? kind.iso(v) : null; },
+      setValue: function (iso, silent) { setValue(iso ? kind.parse(iso) : null, silent); },
+      validate: validate,
+      open: open,
+      close: function () { if (current && current.panel === panel) closePopover(false); },
+    };
+  }
+
+  function api(input) {
+    var wrap = input && input.closest ? input.closest("[data-gn-datetime]") : null;
+    return wrap && wrap.__gnApi;
+  }
+
+  function init(root) {
+    root = root || document;
+    initPopoverTriggers(root);
+    Array.prototype.forEach.call(root.querySelectorAll("calendar-date[data-gn-calendar]"), fillCalendar);
+    Array.prototype.forEach.call(root.querySelectorAll("[data-gn-datetime]"), enhance);
+  }
+
+  GN.initDateTime = init;
+  GN.popover = { open: openPopover, close: closePopover, place: function () { if (current) place(current); } };
+  GN.datetime = {
+    init: init,
+    parseDate: parseDate,
+    parseTime: parseTime,
+    parseDateTime: parseDateTime,
+    // ISO del valor del campo ("" vacío, null si lo escrito no es válido)
+    value: function (input) {
+      var a = api(input);
+      if (a) return a.value();
+      return input.value; // sin mejorar (nativo): ya es ISO
+    },
+    setValue: function (input, iso, silent) {
+      var a = api(input);
+      if (a) a.setValue(iso, silent); else { input.value = iso || ""; if (!silent) { fire(input, "input"); fire(input, "change"); } }
+    },
+    validate: function (input) { var a = api(input); return a ? a.validate() : input.checkValidity(); },
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { init(document); });
+  else init(document);
+})(window, document);
+
+</script>
 <script>
 /* GENEOS UI · interacción propia del catálogo (selector de producto, modo oscuro, demos) */
 (function () {

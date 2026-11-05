@@ -22,6 +22,10 @@ CAMBIOS_INTENCIONALES = [
     (r'(?s)\n    <div class="gn-prefs__group gn-prefs__group--variant".*?\n    </div>(?=\n    <p class="gn-prefs__note">|\n    <div class="gn-prefs__group gn-prefs__group--variant")', ""),
     # 0.4.0 · catálogo: sección «Vista de módulo» al final (gn_page_head y gn_link_list)
     (r'(?s)\n\n<section class="kit-section" id="vista-de-modulo".*?</section>', ""),
+    # 0.5.0 · catálogo: sección «Fecha y hora», su entrada en el índice y los scripts de los selectores
+    (r'(?s)\{# =+ FECHA Y HORA.*?</section>\n\n|<section class="kit-section" id="fecha-hora".*?</section>\n\n', ""),
+    (r'<a href="#fecha-hora">Fecha y hora</a>', ""),
+    (r'<script src="[^"]*geneos_ui/vendor/cally/cally\.js[^"]*" type="module"></script>\n?<script src="[^"]*geneos_ui/js/datetime\.js[^"]*" defer></script>', ""),
 ]
 
 

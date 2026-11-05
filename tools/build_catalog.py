@@ -69,11 +69,12 @@ def build(fragment=False, url="/?static=1", out=None):
         return m.group(0)
     html = re.sub(r'<link rel="stylesheet" href="([^"]+)">', inline_css, html)
 
-    # JS embebido
+    # JS embebido (los módulos, como Cally, siguen siendo módulos)
     def inline_js(m):
-        src = m.group(1)
-        return "<script>\n" + read_static(src[len(static_url):]) + "\n</script>"
-    html = re.sub(r'<script src="([^"]+)"(?: defer)?></script>', inline_js, html)
+        src, module = m.group(1), m.group(2)
+        code = read_static(src[len(static_url):]).replace("</script", "<\\/script")
+        return ('<script type="module">' if module else "<script>") + "\n" + code + "\n</script>"
+    html = re.sub(r'<script src="([^"]+)"(?: (type="module")| defer)?></script>', inline_js, html)
 
     # imágenes como data URI
     html = re.sub(r'src="' + re.escape(static_url) + r'([^"]+)"', lambda m: f'src="{data_uri(m.group(1))}"', html)

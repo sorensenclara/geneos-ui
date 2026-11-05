@@ -466,3 +466,37 @@ GELECTRIC_SPRITE = (
 ).split()
 # íconos del sprite de GELECTRIC que representan sus módulos o su negocio: solo se usan en GELECTRIC
 GELECTRIC_ONLY = "i-bolt i-users i-cart i-calc i-receipt i-piechart i-percent i-cash i-plug i-gauge i-wrench i-coins i-bars i-idcard i-map i-phone".split()
+
+# ------------------------------------------------------------- fecha y hora (0.5.0)
+# Campos de ejemplo de los selectores, con el vocabulario de cada producto:
+# (fecha y hora, fecha, hora, rango que se muestra con mínimo y máximo, valores iniciales).
+DATETIME = {
+    "gelectric": {
+        "datetime": ("Visita técnica programada", "Se avisa al asociado 24 horas antes."),
+        "date": ("Fecha de lectura", ""), "time": ("Hora de corte programado", ""),
+        "bounded": ("Vencimiento del aviso de corte", "Entre hoy y los próximos 30 días."),
+        "values": {"datetime": "2026-11-12T09:30", "date": "2026-10-28", "time": "08:00"},
+        "calendar": "Días con cortes programados",
+    },
+    "gema": {
+        "datetime": ("Retiro del matafuego", "El cliente recibe el aviso por WhatsApp."),
+        "date": ("Vencimiento de la carga", ""), "time": ("Hora de entrega", ""),
+        "bounded": ("Próxima prueba hidráulica", "Entre hoy y los próximos 30 días."),
+        "values": {"datetime": "2026-11-12T10:00", "date": "2027-03-28", "time": "16:30"},
+        "calendar": "Vencimientos del mes",
+    },
+    "geagro-cereales": {
+        "datetime": ("Inicio de la pulverización", "Se revisa el pronóstico de viento antes de confirmar."),
+        "date": ("Fecha de siembra", ""), "time": ("Hora de inicio del riego", ""),
+        "bounded": ("Fecha de aplicación", "Entre hoy y los próximos 30 días."),
+        "values": {"datetime": "2026-11-12T06:30", "date": "2026-10-21", "time": "05:45"},
+        "calendar": "Labores de la campaña",
+    },
+    "geagro-vid": {
+        "datetime": ("Inicio de la cosecha del lote", "Se avisa a la cuadrilla asignada."),
+        "date": ("Fecha de poda", ""), "time": ("Hora de inicio del riego", ""),
+        "bounded": ("Próximo monitoreo sanitario", "Entre hoy y los próximos 30 días."),
+        "values": {"datetime": "2027-02-18T07:00", "date": "2026-07-15", "time": "21:00"},
+        "calendar": "Monitoreos de la campaña",
+    },
+}

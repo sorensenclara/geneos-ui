@@ -176,6 +176,14 @@ def gn_js():
 
 
 @register.simple_tag
+def gn_datetime_js():
+    """Scripts de los selectores de fecha y hora (Cally + datetime.js) para páginas sin {{ form.media }}."""
+    from ..widgets import datetime_media
+
+    return mark_safe(str(datetime_media()))
+
+
+@register.simple_tag
 def gn_icon(name, css_class="", label=""):
     if label:
         return format_html('<svg class="gn-icon {}" role="img" aria-label="{}"><use href="#{}"/></svg>', css_class, label, name)
