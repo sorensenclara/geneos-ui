@@ -82,6 +82,7 @@
     --gn-control-sm: 28px;
     --gn-control: 32px;
     --gn-control-lg: 40px;
+    --gn-field-h: 36px;                 /* campos, buscador y botón del menú en el celular */
 
     /* ---- layout ---- */
     --gn-sidebar-w: 252px;
@@ -259,6 +260,7 @@
     --gn-control-sm: 30px;
     --gn-control: 36px;
     --gn-control-lg: 42px;
+    --gn-field-h: 36px;
     --gn-hnav-font-size: 15px;
   }
   @media (max-width: 860px) {
@@ -273,6 +275,7 @@
       --gn-control-sm: 36px;
       --gn-control: 40px;
       --gn-control-lg: 44px;
+      --gn-field-h: 40px;
     }
   }
 

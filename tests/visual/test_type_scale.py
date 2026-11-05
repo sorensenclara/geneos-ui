@@ -68,6 +68,7 @@ def test_controles_36_en_escritorio_y_40_en_el_celular(browser):
     movil = open_page(browser, 390)
     assert set(movil.evaluate(HEIGHTS, sel)) == {40}
     assert set(movil.evaluate(SIZES, ".gn-input, .gn-select, .gn-textarea")) == {16}
+    assert set(movil.evaluate(HEIGHTS, ".gn-input:not(.gn-input--sm):not(.gn-time__input), .gn-select:not(.gn-select--sm):not(.gn-pagination__size *)")) == {40}
 
 
 @pytest.mark.parametrize("width", [1440, 390, 320])

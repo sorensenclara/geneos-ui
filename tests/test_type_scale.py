@@ -93,7 +93,7 @@ def test_legible_cumple_los_minimos():
     assert px["--gn-fs-control"] == px["--gn-fs-sm"] == 14   # tablas y secundarios
     assert px["--gn-fs-meta"] == px["--gn-fs-xs"] == 13      # ayudas
     assert escritorio["--gn-control"] == "36px"
-    assert movil["--gn-control"] == "40px"
+    assert movil["--gn-control"] == movil["--gn-field-h"] == "40px"
     assert movil["--gn-fs-input"] == movil["--gn-fs-input-sm"] == movil["--gn-fs-input-xs"] == "16px"
 
 
@@ -101,3 +101,10 @@ def test_todos_los_tokens_usados_estan_definidos():
     definidos = set(tokens((CSS / "tokens.css").read_text()))
     usados = set(re.findall(r"var\((--gn-(?:fs|lh|size)-[\w-]+)\)", (CSS / "geneos-ui.css").read_text()))
     assert usados <= definidos, usados - definidos
+
+
+def test_tokens_sin_nombres_repetidos():
+    # un token de tamaño con el nombre de un color pisaría el color (pasó con --gn-field)
+    texto = bloque((CSS / "tokens.css").read_text(), ":root,\n  [data-gn-product] {")
+    nombres = re.findall(r"(--gn-[\w-]+):", re.sub(r"/\*.*?\*/", "", texto, flags=re.S))
+    assert len(nombres) == len(set(nombres)), [n for n in set(nombres) if nombres.count(n) > 1]
