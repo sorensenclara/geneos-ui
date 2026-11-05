@@ -42,5 +42,6 @@ def geneos_ui(request):
             "logout_url": logout,
             "variants": cfg["VARIANTS"],
             "sidebar_icons": cfg["SIDEBAR_ICONS"],
+            "type_scale": cfg["TYPE_SCALE"],
         }
     }

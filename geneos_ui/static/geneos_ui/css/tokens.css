@@ -31,6 +31,33 @@
     --gn-fs-lg: 18px;
     --gn-fs-xl: 20px;
     --gn-fs-2xl: 26px;
+    --gn-fs-3xl: 28px;                /* valor de los KPI */
+    /* tamaños por función: los componentes usan estos tokens y no valores fijos.
+       En la escala compacta (predeterminada) conservan los valores de siempre;
+       la escala legible (data-gn-type="legible", más abajo) los redefine. */
+    --gn-fs-counter: 9.5px;           /* número dentro de .gn-btn__dot */
+    --gn-fs-label: 11px;              /* rótulos en mayúsculas, contadores de solapa */
+    --gn-fs-meta: 12px;               /* encabezados de tabla, tooltips, metadatos */
+    --gn-fs-control: 13px;            /* botones, solapas, celdas de tabla, subítems */
+    --gn-fs-body: 13px;               /* menús desplegables, alertas, avisos, listas */
+    --gn-fs-input: 13.5px;
+    --gn-fs-input-sm: 13px;
+    --gn-fs-input-xs: 12.5px;         /* selector de filas por página */
+    --gn-fs-input-lg: 17px;           /* hora en la hoja inferior del móvil */
+    --gn-fs-nav: 13.5px;              /* ítems del menú vertical */
+    --gn-fs-control-lg: 14px;
+    --gn-fs-emph: 14px;               /* títulos chicos: preferencias, notificaciones */
+    --gn-fs-kpi-label: var(--gn-fs-md);
+    --gn-fs-card-title: 16px;
+    --gn-fs-modal-title: 18px;
+    --gn-fs-auth-title: 19px;
+    --gn-fs-chart-axis: 11px;         /* ejes de .gn-chart, en unidades del SVG */
+    --gn-fs-donut-value: 22px;        /* centro de .gn-donut (viewBox 120, se ve ×1,25) */
+    --gn-fs-donut-label: 8.5px;
+    --gn-lh-tight: 1.2;
+    --gn-lh-snug: 1.35;
+    --gn-lh-base: 1.45;
+    --gn-size-counter: 15px;          /* caja de .gn-btn__dot */
     --gn-fw-regular: 400;
     --gn-fw-semibold: 600;
     --gn-fw-bold: 700;
@@ -189,6 +216,64 @@
     --gn-chart-5: var(--gn-c-neutral);
     --gn-chart-grid: var(--gn-border);
     --gn-chart-axis: var(--gn-text-muted);
+  }
+
+  /* ---- escala tipográfica legible ----
+     Opcional: GENEOS_UI["TYPE_SCALE"] = "legible" agrega data-gn-type="legible" en <html>.
+     Base 15 px, secundarios y tablas 14, ayudas 13 y ningún texto por debajo de 12.
+     Controles de 36 px en escritorio y 40 en pantallas chicas, donde los campos
+     pasan a 16 px para que iOS no haga zoom al enfocarlos. */
+  :root[data-gn-type="legible"],
+  [data-gn-type="legible"] [data-gn-product],
+  [data-gn-product][data-gn-type="legible"] {
+    --gn-fs-2xs: 12px;
+    --gn-fs-xs: 13px;
+    --gn-fs-sm: 14px;
+    --gn-fs-base: 15px;
+    --gn-fs-md: 16px;
+    --gn-fs-lg: 18px;
+    --gn-fs-xl: 20px;
+    --gn-fs-2xl: 26px;
+    --gn-fs-3xl: 30px;
+    --gn-fs-counter: 12px;
+    --gn-fs-label: 12px;
+    --gn-fs-meta: 13px;
+    --gn-fs-control: 14px;
+    --gn-fs-body: 15px;
+    --gn-fs-input: 15px;
+    --gn-fs-input-sm: 14px;
+    --gn-fs-input-xs: 14px;
+    --gn-fs-input-lg: 18px;
+    --gn-fs-nav: 15px;
+    --gn-fs-control-lg: 15px;
+    --gn-fs-emph: 16px;
+    --gn-fs-kpi-label: 14px;
+    --gn-fs-card-title: 18px;
+    --gn-fs-modal-title: 20px;
+    --gn-fs-auth-title: 20px;
+    --gn-fs-chart-axis: 12px;
+    --gn-fs-donut-value: 22px;
+    --gn-fs-donut-label: 10px;        /* 12,5 px en pantalla */
+    --gn-lh-base: 1.5;
+    --gn-size-counter: 18px;
+    --gn-control-sm: 30px;
+    --gn-control: 36px;
+    --gn-control-lg: 42px;
+    --gn-hnav-font-size: 15px;
+  }
+  @media (max-width: 860px) {
+    :root[data-gn-type="legible"],
+    [data-gn-type="legible"] [data-gn-product],
+    [data-gn-product][data-gn-type="legible"] {
+      --gn-fs-2xl: 22px;
+      --gn-fs-3xl: 26px;
+      --gn-fs-input: 16px;
+      --gn-fs-input-sm: 16px;
+      --gn-fs-input-xs: 16px;
+      --gn-control-sm: 36px;
+      --gn-control: 40px;
+      --gn-control-lg: 44px;
+    }
   }
 
   /* ---- modo oscuro: negro y grises neutros ----

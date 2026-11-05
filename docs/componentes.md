@@ -17,6 +17,24 @@ Referencia rápida de markup. El catálogo (`/ui-kit/` o `dist/ui-kit.html`) mue
 
 Personalizar: redefinir cualquier `--gn-*` en el CSS del producto, después de `{% gn_css %}`.
 
+### Escala tipográfica
+
+Los componentes no usan tamaños fijos: toman `--gn-fs-*` por función, y la escala se elige con `GENEOS_UI["TYPE_SCALE"]`. La compacta es la predeterminada y conserva los valores de la 0.5.0; la legible se activa con `data-gn-type="legible"` en `<html>`.
+
+| Token | Uso | Compacta | Legible |
+|---|---|---|---|
+| `--gn-fs-2xs`, `--gn-fs-label`, `--gn-fs-counter` | Rótulos en mayúsculas, contadores | 10,5 · 11 · 9,5 | 12 |
+| `--gn-fs-xs`, `--gn-fs-meta` | Ayudas, badges, encabezados de tabla, tooltips, metadatos | 11,5 · 12 | 13 |
+| `--gn-fs-sm`, `--gn-fs-control` | Secundarios, celdas de tabla, botones, solapas, etiquetas de campo | 12,5 · 13 | 14 |
+| `--gn-fs-base`, `--gn-fs-body`, `--gn-fs-nav`, `--gn-fs-input` | Texto base, menús, alertas, campos | 13,5 · 13 · 13,5 · 13,5 | 15 (campos 16 hasta 860 px) |
+| `--gn-fs-md`, `--gn-fs-emph` | Énfasis, títulos chicos | 15 · 14 | 16 |
+| `--gn-fs-card-title` · `--gn-fs-modal-title` · `--gn-fs-auth-title` | Títulos | 16 · 18 · 19 | 18 · 20 · 20 |
+| `--gn-fs-2xl` · `--gn-fs-3xl` | Título de página · valor de KPI | 26 · 28 | 26 · 30 (22 · 26 hasta 860 px) |
+| `--gn-control-sm` · `--gn-control` · `--gn-control-lg` | Alto de controles | 28 · 32 · 40 | 30 · 36 · 42 (36 · 40 · 44 hasta 860 px) |
+| `--gn-lh-base` | Interlineado | 1,45 | 1,5 |
+
+Un producto que ajusta tamaños en su CSS usa estos tokens en lugar de valores en px, así sigue la escala elegida.
+
 ## Navegación
 
 **Sidebar**: `{% gn_sidebar %}` (lo incluye `layouts/app.html`). Atributos que usa el JS: `data-gn-sidebar`, `data-gn-group-toggle`, `data-gn-sidebar-toggle` (botón de menú), `data-gn-scrim`, `data-gn-keywords` (sinónimos para el buscador).

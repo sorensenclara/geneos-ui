@@ -32,6 +32,7 @@ BRIDGES = ("bootstrap5", "jazzmin")
 NAV_LAYOUTS = ("vertical", "horizontal")
 SIDEBAR_STATES = ("expanded", "collapsed")
 NAV_ICON_MODES = ("tint", "as-is")
+TYPE_SCALES = ("compacta", "legible")
 PRODUCT_RE = re.compile(r"[a-z][a-z0-9]*(-[a-z0-9]+)*")
 
 DEFAULTS = {
@@ -66,6 +67,8 @@ DEFAULTS = {
     "LEGACY_CSS": [],                 # CSS existente del producto, en la capa "legacy" (después de la biblioteca)
     "SIDEBAR_ICONS": "as-is",         # "as-is" | "tint": íconos propios pintados con los colores del sidebar
     "CATALOG": None,                  # None = solo con DEBUG o para staff
+    # 0.6.0
+    "TYPE_SCALE": "compacta",         # "compacta" | "legible": base 15 px, controles de 36 px, nada por debajo de 12 px
 }
 
 
@@ -84,6 +87,8 @@ def get_config():
         cfg["SIDEBAR_DEFAULT"] = presets.preset(product).get("SIDEBAR_DEFAULT", DEFAULTS["SIDEBAR_DEFAULT"])
     if cfg["NAV_LAYOUT"] not in NAV_LAYOUTS:
         cfg["NAV_LAYOUT"] = presets.preset(product).get("NAV_LAYOUT", DEFAULTS["NAV_LAYOUT"])
+    if cfg["TYPE_SCALE"] not in TYPE_SCALES:
+        cfg["TYPE_SCALE"] = DEFAULTS["TYPE_SCALE"]
     if cfg["THEME_CSS"] is None:
         cfg["THEME_CSS"] = []
     elif isinstance(cfg["THEME_CSS"], str):

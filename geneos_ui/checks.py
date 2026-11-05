@@ -11,13 +11,14 @@ W003  el producto sobrescribe un template de componente de la biblioteca
       (deja de recibir las mejoras de ese componente al actualizar)
 E006  SIDEBAR_ICONS inválido
 W004  un archivo de LEGACY_CSS no está en los estáticos
+E007  TYPE_SCALE inválido
 """
 from pathlib import Path
 
 from django.contrib.staticfiles import finders
 from django.core.checks import Error, Warning, register
 
-from .conf import BRIDGES, NAV_ICON_MODES, PRODUCT_RE, SIDEBAR_STATES, get_config, user_settings
+from .conf import BRIDGES, NAV_ICON_MODES, PRODUCT_RE, SIDEBAR_STATES, TYPE_SCALES, get_config, user_settings
 
 PACKAGE_TEMPLATES = Path(__file__).resolve().parent / "templates"
 COMPONENT_TEMPLATES = ("layouts/app.html", "layouts/auth.html", "components/sidebar.html", "components/prefs.html",
@@ -65,6 +66,9 @@ def check_geneos_ui(app_configs, **kwargs):
     if cfg["SIDEBAR_ICONS"] not in ("as-is", "tint"):
         problems.append(Error(f"GENEOS_UI['SIDEBAR_ICONS'] = {cfg['SIDEBAR_ICONS']!r} no es válido.",
                               hint="'as-is' o 'tint'.", id="geneos_ui.E006"))
+    if user.get("TYPE_SCALE") not in (None, *TYPE_SCALES):
+        problems.append(Error(f"GENEOS_UI['TYPE_SCALE'] = {user['TYPE_SCALE']!r} no es válido.",
+                              hint="'compacta' (predeterminada) o 'legible'.", id="geneos_ui.E007"))
     for path in cfg["LEGACY_CSS"]:
         if not finders.find(path):
             problems.append(Warning(f"GENEOS_UI['LEGACY_CSS']: {path!r} no está en los estáticos.", id="geneos_ui.W004"))

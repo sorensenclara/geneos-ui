@@ -1,5 +1,5 @@
 {% load static geneos_ui %}<!doctype html>
-<html lang="es" data-gn-theme="light" data-gn-nav="{{ gn.nav_layout|default:'vertical' }}" data-gn-nav-default="{{ gn.nav_layout|default:'vertical' }}" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}>
+<html lang="es" data-gn-theme="light" data-gn-nav="{{ gn.nav_layout|default:'vertical' }}" data-gn-nav-default="{{ gn.nav_layout|default:'vertical' }}" data-gn-product="{{ gn.product }}"{% if gn.variant %} data-gn-variant="{{ gn.variant }}"{% endif %}{% if gn.type_scale == "legible" %} data-gn-type="legible"{% endif %}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
