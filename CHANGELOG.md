@@ -2,17 +2,18 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
-## [Sin publicar] · 0.6.0
+## [0.6.0] · 2026-11-05
 
-Escala tipográfica legible, opcional. Los productos que no la activan no cambian: el HTML y las capturas del catálogo son idénticos a la 0.5.0.
+Escala tipográfica legible, opcional. Los productos que no la activan no cambian: el HTML de sus pantallas y las capturas del catálogo son idénticos a la 0.5.0. Las únicas diferencias posibles con la compacta son las dos correcciones de «Corregido» (botones de ícono en filas angostas y tabla oculta de los gráficos a 320 px), que no aparecen en el catálogo.
 
 ### Agregado
 - `GENEOS_UI["TYPE_SCALE"]`: `"compacta"` (predeterminada) o `"legible"`. La legible agrega `data-gn-type="legible"` en `<html>` (layouts de la aplicación y de acceso): base de 15 px, tablas y secundarios de 14, ayudas de 13, ningún texto por debajo de 12, interlineado 1,5, controles de 36 px en escritorio y 40 hasta 860 px (también los chicos: acciones de tarjetas y tablas), casillas e interruptores con área táctil de 40 px sin cambiar el alto de la fila, campos de 16 px en el celular (iOS no hace zoom) y valores de KPI de 30 px. Chequeo `geneos_ui.E007` para un valor inválido; `gn.type_scale` en el contexto.
 - Tokens por función: `--gn-fs-label`, `-meta`, `-control`, `-body`, `-input`, `-input-sm`, `-input-xs`, `-input-lg`, `-nav`, `-control-lg`, `-emph`, `-kpi-label`, `-card-title`, `-modal-title`, `-auth-title`, `-counter`, `-chart-axis`, `-donut-value`, `-donut-label`, `--gn-fs-3xl`, `--gn-lh-tight/-snug/-base`, `--gn-size-counter`, `--gn-fs-kpi-trend`, `--gn-choice-pad` y `--gn-field-h` (alto de campos, buscador y botón del menú: 36 px, 40 en el celular con la escala legible).
-- Tests: `tests/test_type_scale.py` y `tests/visual/test_type_scale.py` (Chromium: tamaños por función, mínimo de 12 px, alto de controles, campos de 16 px en el celular, sin scroll horizontal a 1440, 390 y 320 px).
+- Tests: `tests/test_type_scale.py` (también: los cuatro productos con preset siguen en la compacta) y `tests/visual/test_type_scale.py` (Chromium: tamaños por función, mínimo de 12 px, alto de controles, campos de 16 px en el celular, sin scroll horizontal a 1440, 390 y 320 px).
 
 ### Cambiado
-- `geneos-ui.css` ya no tiene tamaños de letra fijos: los 84 valores en px pasaron a tokens con el mismo valor en la escala compacta. Quedan fijos las iniciales del avatar grande (decorativas) y el campo de fecha a 16 px en el celular. Los textos de los gráficos SVG (ejes, centro del donut) también toman tokens.
+- `GN.version` y `__version__`: 0.6.0.
+- `geneos-ui.css` ya no tiene tamaños de letra fijos: 82 de los 84 valores en px pasaron a tokens con el mismo valor en la escala compacta. Quedan fijos las iniciales del avatar grande (decorativas) y el campo de fecha a 16 px en el celular. Los textos de los gráficos SVG (ejes, centro del donut) también toman tokens.
 
 ### Corregido
 - Prueba intermitente `test_abajo_si_entra` (falló en 2 de 6 corridas de la suite completa): ubicaba el campo con un solo desplazamiento y hacía clic antes de que la página terminara de acomodarse. Ahora espera a que el campo quede quieto y, si falla, informa posición y altos. Ver `docs/pruebas.md`.

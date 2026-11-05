@@ -110,3 +110,10 @@ def test_tokens_sin_nombres_repetidos():
     texto = bloque((CSS / "tokens.css").read_text(), ":root,\n  [data-gn-product] {")
     nombres = re.findall(r"(--gn-[\w-]+):", re.sub(r"/\*.*?\*/", "", texto, flags=re.S))
     assert len(nombres) == len(set(nombres)), [n for n in set(nombres) if nombres.count(n) > 1]
+
+
+@pytest.mark.parametrize("product", ["gelectric", "gema", "geagro-cereales", "geagro-vid"])
+def test_los_productos_con_preset_siguen_en_la_compacta(product):
+    with override_settings(GENEOS_UI={"PRODUCT": product}):
+        assert get_config()["TYPE_SCALE"] == "compacta"
+        assert "data-gn-type" not in layout("app") and "data-gn-type" not in layout("auth")

@@ -4,7 +4,7 @@ Sistema de diseño y biblioteca de componentes compartida para los productos Dja
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.5.0.** Selectores de fecha, hora y fecha y hora para formularios de Django (`geneos_ui.widgets`) con calendario accesible. La 0.4.0 sumó componentes para la vista de módulo, el menú del usuario, el pie del menú y las variantes de color. En piloto en GELECTRIC (rama `2026-piloto-geneos-ui`); GEMA y GEAGRO todavía no lo usan.
+> Estado: **v0.6.0.** Escala tipográfica legible opcional (`GENEOS_UI["TYPE_SCALE"] = "legible"`): base de 15 px, nada por debajo de 12 px y controles de 40 px en el celular; la compacta sigue siendo la predeterminada. La 0.5.0 sumó selectores de fecha, hora y fecha y hora (`geneos_ui.widgets`); la 0.4.0 sumó componentes para la vista de módulo, el menú del usuario, el pie del menú y las variantes de color. En piloto en GELECTRIC (rama `2026-piloto-geneos-ui`) y en GEPIX con la escala legible (rama `diseno-ui`); GEMA y GEAGRO todavía no lo usan.
 
 ## Qué incluye
 
@@ -34,7 +34,7 @@ El repositorio principal es **GitHub**: https://github.com/sorensenclara/geneos-
 
 ```text
 # requirements.txt — usar un tag publicado después de aprobar el diseño
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.5.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.6.0
 ```
 
 ```python

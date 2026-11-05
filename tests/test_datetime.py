@@ -155,7 +155,7 @@ def test_css_de_fecha_y_hora_solo_con_tokens():
 
 def test_version_del_js_coincide():
     assert f'window.GN.version = "{__version__}"' in (STATIC / "js" / "geneos-ui.js").read_text(encoding="utf-8")
-    assert __version__ == "0.5.0"
+    assert __version__ == "0.6.0"
 
 
 def test_catalogo_muestra_la_seccion(client, settings):
