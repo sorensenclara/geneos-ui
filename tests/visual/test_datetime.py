@@ -375,24 +375,47 @@ def test_escritorio_entero_y_con_botones_visibles(browser, size, block):
     page.context.close()
 
 
+# Ubica el campo a `top` px del borde superior y espera a que no se mueva (dos cuadros seguidos en
+# el mismo lugar). Con un solo scrollBy, test_abajo_si_entra falló de forma intermitente en la
+# suite completa (nunca aislado): ver docs/pruebas.md.
+SETTLE = """async ([sel, top]) => {
+  const frame = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await document.fonts.ready;
+  let last = null;
+  for (let i = 0; i < 10; i++) {
+    const r = document.querySelector(sel).getBoundingClientRect();
+    if (Math.abs(r.top - top) > 0.5) window.scrollBy(0, r.top - top);
+    await frame();
+    const now = Math.round(document.querySelector(sel).getBoundingClientRect().top);
+    if (now === last && Math.abs(now - top) <= 1) return now;
+    last = now;
+  }
+  return last;
+}"""
+STATE = """(sel) => { const btn = document.querySelector(sel + ' ~ .gn-datetime__btn');
+  const p = document.getElementById(btn.getAttribute('aria-controls'));
+  return { campo: Math.round(document.querySelector(sel).getBoundingClientRect().top), scrollY: Math.round(scrollY),
+           panel: p.offsetHeight, alto: innerHeight }; }"""
+
+
 def test_abajo_si_entra(browser):
     page, _ = open_page(browser, width=1536, height=960)
-    page.evaluate(f"() => {{ const r = document.querySelector('{DT}').getBoundingClientRect(); window.scrollBy(0, r.top - 120); }}")
+    assert abs(page.evaluate(SETTLE, [DT, 120]) - 120) <= 1
     page.click(BTN)
     page.wait_for_timeout(250)
     got = page.evaluate(FIT, DT)
-    assert got["mode"] == "below" and {k: got[k] for k in OK} == OK
+    assert got["mode"] == "below" and {k: got[k] for k in OK} == OK, (got, page.evaluate(STATE, DT))
     page.context.close()
 
 
 def test_arriba_si_abajo_no_entra(browser):
     page, _ = open_page(browser, width=1536, height=960)
-    page.evaluate(f"() => {{ const r = document.querySelector('{DT}').getBoundingClientRect(); window.scrollBy(0, r.top - (innerHeight - 120)); }}")
+    assert abs(page.evaluate(SETTLE, [DT, 960 - 120]) - (960 - 120)) <= 1
     y = page.evaluate("() => scrollY")
     page.click(BTN)
     page.wait_for_timeout(250)
     got = page.evaluate(FIT, DT)
-    assert got["mode"] == "above" and {k: got[k] for k in OK} == OK
+    assert got["mode"] == "above" and {k: got[k] for k in OK} == OK, (got, page.evaluate(STATE, DT))
     assert page.evaluate("() => scrollY") == y  # entraba arriba: no hacía falta mover la página
     page.context.close()
 

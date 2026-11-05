@@ -30,7 +30,10 @@ Los componentes no usan tamaños fijos: toman `--gn-fs-*` por función, y la esc
 | `--gn-fs-md`, `--gn-fs-emph` | Énfasis, títulos chicos | 15 · 14 | 16 |
 | `--gn-fs-card-title` · `--gn-fs-modal-title` · `--gn-fs-auth-title` | Títulos | 16 · 18 · 19 | 18 · 20 · 20 |
 | `--gn-fs-2xl` · `--gn-fs-3xl` | Título de página · valor de KPI | 26 · 28 | 26 · 30 (22 · 26 hasta 860 px) |
-| `--gn-control-sm` · `--gn-control` · `--gn-control-lg` | Alto de controles | 28 · 32 · 40 | 30 · 36 · 42 (36 · 40 · 44 hasta 860 px) |
+| `--gn-control-sm` · `--gn-control` · `--gn-control-lg` | Alto de controles | 28 · 32 · 40 | 30 · 36 · 42 (40 · 40 · 44 hasta 860 px) |
+| `--gn-field-h` | Alto de campos, buscador, botón del menú y avatar del encabezado en el celular | 36 | 36 (40 hasta 860 px) |
+| `--gn-choice-pad` | Área táctil extra (arriba y abajo) de casillas e interruptores, sin mover el contenido | 0 | 0 (9 hasta 860 px) |
+| `--gn-fs-kpi-trend` | Texto bajo el valor de un KPI | 12 | 14 |
 | `--gn-lh-base` | Interlineado | 1,45 | 1,5 |
 
 Un producto que ajusta tamaños en su CSS usa estos tokens en lugar de valores en px, así sigue la escala elegida.

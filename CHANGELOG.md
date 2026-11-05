@@ -7,14 +7,16 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 Escala tipográfica legible, opcional. Los productos que no la activan no cambian: el HTML y las capturas del catálogo son idénticos a la 0.5.0.
 
 ### Agregado
-- `GENEOS_UI["TYPE_SCALE"]`: `"compacta"` (predeterminada) o `"legible"`. La legible agrega `data-gn-type="legible"` en `<html>` (layouts de la aplicación y de acceso): base de 15 px, tablas y secundarios de 14, ayudas de 13, ningún texto por debajo de 12, interlineado 1,5, controles de 36 px en escritorio y 40 hasta 860 px, campos de 16 px en el celular (iOS no hace zoom) y valores de KPI de 30 px. Chequeo `geneos_ui.E007` para un valor inválido; `gn.type_scale` en el contexto.
-- Tokens por función: `--gn-fs-label`, `-meta`, `-control`, `-body`, `-input`, `-input-sm`, `-input-xs`, `-input-lg`, `-nav`, `-control-lg`, `-emph`, `-kpi-label`, `-card-title`, `-modal-title`, `-auth-title`, `-counter`, `-chart-axis`, `-donut-value`, `-donut-label`, `--gn-fs-3xl`, `--gn-lh-tight/-snug/-base`, `--gn-size-counter` y `--gn-field-h` (alto de campos, buscador y botón del menú: 36 px, 40 en el celular con la escala legible).
+- `GENEOS_UI["TYPE_SCALE"]`: `"compacta"` (predeterminada) o `"legible"`. La legible agrega `data-gn-type="legible"` en `<html>` (layouts de la aplicación y de acceso): base de 15 px, tablas y secundarios de 14, ayudas de 13, ningún texto por debajo de 12, interlineado 1,5, controles de 36 px en escritorio y 40 hasta 860 px (también los chicos: acciones de tarjetas y tablas), casillas e interruptores con área táctil de 40 px sin cambiar el alto de la fila, campos de 16 px en el celular (iOS no hace zoom) y valores de KPI de 30 px. Chequeo `geneos_ui.E007` para un valor inválido; `gn.type_scale` en el contexto.
+- Tokens por función: `--gn-fs-label`, `-meta`, `-control`, `-body`, `-input`, `-input-sm`, `-input-xs`, `-input-lg`, `-nav`, `-control-lg`, `-emph`, `-kpi-label`, `-card-title`, `-modal-title`, `-auth-title`, `-counter`, `-chart-axis`, `-donut-value`, `-donut-label`, `--gn-fs-3xl`, `--gn-lh-tight/-snug/-base`, `--gn-size-counter`, `--gn-fs-kpi-trend`, `--gn-choice-pad` y `--gn-field-h` (alto de campos, buscador y botón del menú: 36 px, 40 en el celular con la escala legible).
 - Tests: `tests/test_type_scale.py` y `tests/visual/test_type_scale.py` (Chromium: tamaños por función, mínimo de 12 px, alto de controles, campos de 16 px en el celular, sin scroll horizontal a 1440, 390 y 320 px).
 
 ### Cambiado
 - `geneos-ui.css` ya no tiene tamaños de letra fijos: los 84 valores en px pasaron a tokens con el mismo valor en la escala compacta. Quedan fijos las iniciales del avatar grande (decorativas) y el campo de fecha a 16 px en el celular. Los textos de los gráficos SVG (ejes, centro del donut) también toman tokens.
 
 ### Corregido
+- Prueba intermitente `test_abajo_si_entra` (falló en 2 de 6 corridas de la suite completa): ubicaba el campo con un solo desplazamiento y hacía clic antes de que la página terminara de acomodarse. Ahora espera a que el campo quede quieto y, si falla, informa posición y altos. Ver `docs/pruebas.md`.
+- Un botón de ícono ya no se achica dentro de una fila angosta (en el celular quedaba de 28 px de ancho).
 - La tabla oculta que acompaña a cada gráfico (para lectores de pantalla) ensanchaba la página en pantallas de 320 px.
 
 ## [0.5.0] · 2026-11-05

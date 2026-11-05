@@ -93,7 +93,9 @@ def test_legible_cumple_los_minimos():
     assert px["--gn-fs-control"] == px["--gn-fs-sm"] == 14   # tablas y secundarios
     assert px["--gn-fs-meta"] == px["--gn-fs-xs"] == 13      # ayudas
     assert escritorio["--gn-control"] == "36px"
-    assert movil["--gn-control"] == movil["--gn-field-h"] == "40px"
+    assert movil["--gn-control"] == movil["--gn-control-sm"] == movil["--gn-field-h"] == "40px"
+    assert movil["--gn-choice-pad"] == "9px"
+    assert px["--gn-fs-kpi-trend"] == 14                    # descripción secundaria del KPI
     assert movil["--gn-fs-input"] == movil["--gn-fs-input-sm"] == movil["--gn-fs-input-xs"] == "16px"
 
 

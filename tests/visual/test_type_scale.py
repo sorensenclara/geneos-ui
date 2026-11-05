@@ -63,10 +63,13 @@ def test_ningun_texto_de_componente_menor_a_12(browser, width):
 
 
 def test_controles_36_en_escritorio_y_40_en_el_celular(browser):
-    sel = ".gn-btn:not(.gn-btn--sm):not(.gn-btn--lg):not(.gn-btn--icon-sm)"
-    assert set(open_page(browser, 1440).evaluate(HEIGHTS, sel)) == {36}
+    sel = ".gn-btn:not(.gn-btn--lg)"
+    assert set(open_page(browser, 1440).evaluate(HEIGHTS, sel + ":not(.gn-btn--sm)")) == {36}
     movil = open_page(browser, 390)
-    assert set(movil.evaluate(HEIGHTS, sel)) == {40}
+    assert set(movil.evaluate(HEIGHTS, sel)) == {40}     # también los chicos: acciones de tarjetas y tablas
+    assert set(movil.evaluate(HEIGHTS, ".gn-topbar__menu, .gn-user-chip")) <= {40}
+    # casillas e interruptores: área táctil de 40 px o más sin cambiar el alto de la fila
+    assert min(movil.evaluate(HEIGHTS, ".gn-check, .gn-switch")) >= 40
     assert set(movil.evaluate(SIZES, ".gn-input, .gn-select, .gn-textarea")) == {16}
     assert set(movil.evaluate(HEIGHTS, ".gn-input:not(.gn-input--sm):not(.gn-time__input), .gn-select:not(.gn-select--sm):not(.gn-pagination__size *)")) == {40}
 

@@ -48,6 +48,7 @@
     --gn-fs-control-lg: 14px;
     --gn-fs-emph: 14px;               /* títulos chicos: preferencias, notificaciones */
     --gn-fs-kpi-label: var(--gn-fs-md);
+    --gn-fs-kpi-trend: 12px;          /* texto bajo el valor de un KPI */
     --gn-fs-card-title: 16px;
     --gn-fs-modal-title: 18px;
     --gn-fs-auth-title: 19px;
@@ -82,7 +83,8 @@
     --gn-control-sm: 28px;
     --gn-control: 32px;
     --gn-control-lg: 40px;
-    --gn-field-h: 36px;                 /* campos, buscador y botón del menú en el celular */
+    --gn-field-h: 36px;               /* campos, buscador y botón del menú en el celular */
+    --gn-choice-pad: 0px;             /* área táctil extra de casillas e interruptores */
 
     /* ---- layout ---- */
     --gn-sidebar-w: 252px;
@@ -249,6 +251,7 @@
     --gn-fs-control-lg: 15px;
     --gn-fs-emph: 16px;
     --gn-fs-kpi-label: 14px;
+    --gn-fs-kpi-trend: 14px;          /* descripción secundaria, no ayuda */
     --gn-fs-card-title: 18px;
     --gn-fs-modal-title: 20px;
     --gn-fs-auth-title: 20px;
@@ -272,10 +275,11 @@
       --gn-fs-input: 16px;
       --gn-fs-input-sm: 16px;
       --gn-fs-input-xs: 16px;
-      --gn-control-sm: 36px;
+      --gn-control-sm: 40px;          /* acciones frecuentes de tarjetas y tablas */
       --gn-control: 40px;
       --gn-control-lg: 44px;
       --gn-field-h: 40px;
+      --gn-choice-pad: 9px;           /* 23 px de rótulo + 18 = 41 px */
     }
   }
 
