@@ -1,3 +1,2 @@
 # Cambios visuales buscados respecto de la versión de referencia (VISUAL_REF en CI).
 # <captura> <máximo % de píxeles> <motivo>. Se vacía al cambiar la referencia.
-gelectric-preferencias.png 3.0 0.4.0: grupo «Color» (verde / azul) en el panel de preferencias de GELECTRIC

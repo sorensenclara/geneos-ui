@@ -13,6 +13,7 @@ Escala tipográfica legible, opcional. Los productos que no la activan no cambia
 
 ### Cambiado
 - `GN.version` y `__version__`: 0.6.0.
+- Integración continua: las capturas se comparan contra la v0.5.0 (antes, v0.3.0). Con la referencia vieja, el job de capturas fallaba desde la v0.5.0 por los cambios buscados de la 0.4.0 y la 0.5.0; `tests/visual/cambios-esperados.txt` queda vacío, porque la 0.6.0 no cambia ninguna captura.
 - `geneos-ui.css` ya no tiene tamaños de letra fijos: 82 de los 84 valores en px pasaron a tokens con el mismo valor en la escala compacta. Quedan fijos las iniciales del avatar grande (decorativas) y el campo de fecha a 16 px en el celular. Los textos de los gráficos SVG (ejes, centro del donut) también toman tokens.
 
 ### Corregido
