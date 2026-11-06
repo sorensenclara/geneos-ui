@@ -398,10 +398,21 @@ STATE = """(sel) => { const btn = document.querySelector(sel + ' ~ .gn-datetime_
            panel: p.offsetHeight, alto: innerHeight }; }"""
 
 
+def click_real(page, sel):
+    """Clic real del mouse en el centro del elemento, sin el desplazamiento automático de Playwright.
+
+    Solo para las pruebas de ubicación, que necesitan el campo quieto donde se lo dejó: page.click()
+    puede volver a desplazar la página antes del clic y el panel se abriría, con razón, del otro lado
+    (ver docs/pruebas.md). Abrir el panel con page.click() y con el teclado se prueba en las demás pruebas.
+    """
+    box = page.locator(sel).bounding_box()
+    page.mouse.click(box["x"] + box["width"] / 2, box["y"] + box["height"] / 2)
+
+
 def test_abajo_si_entra(browser):
     page, _ = open_page(browser, width=1536, height=960)
     assert abs(page.evaluate(SETTLE, [DT, 120]) - 120) <= 1
-    page.click(BTN)
+    click_real(page, BTN)
     page.wait_for_timeout(250)
     got = page.evaluate(FIT, DT)
     assert got["mode"] == "below" and {k: got[k] for k in OK} == OK, (got, page.evaluate(STATE, DT))
@@ -412,7 +423,7 @@ def test_arriba_si_abajo_no_entra(browser):
     page, _ = open_page(browser, width=1536, height=960)
     assert abs(page.evaluate(SETTLE, [DT, 960 - 120]) - (960 - 120)) <= 1
     y = page.evaluate("() => scrollY")
-    page.click(BTN)
+    click_real(page, BTN)
     page.wait_for_timeout(250)
     got = page.evaluate(FIT, DT)
     assert got["mode"] == "above" and {k: got[k] for k in OK} == OK, (got, page.evaluate(STATE, DT))

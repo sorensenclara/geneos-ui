@@ -16,7 +16,7 @@ Escala tipográfica legible, opcional. Los productos que no la activan no cambia
 - `geneos-ui.css` ya no tiene tamaños de letra fijos: 82 de los 84 valores en px pasaron a tokens con el mismo valor en la escala compacta. Quedan fijos las iniciales del avatar grande (decorativas) y el campo de fecha a 16 px en el celular. Los textos de los gráficos SVG (ejes, centro del donut) también toman tokens.
 
 ### Corregido
-- Prueba intermitente `test_abajo_si_entra` (falló en 2 de 6 corridas de la suite completa): ubicaba el campo con un solo desplazamiento y hacía clic antes de que la página terminara de acomodarse. Ahora espera a que el campo quede quieto y, si falla, informa posición y altos. Ver `docs/pruebas.md`.
+- Pruebas intermitentes `test_abajo_si_entra` y `test_arriba_si_abajo_no_entra`: el clic de Playwright (`page.click()`) a veces volvía a desplazar la página antes de hacer clic, y el panel se abría, con razón, del otro lado. Esas dos pruebas hacen ahora un clic real del mouse sin ese desplazamiento; la apertura con `page.click()` y con el teclado sigue cubierta por otras pruebas. La primera corrección (esperar a que el campo quedara quieto) no alcanzaba porque el campo no se movía: se movía la página durante el clic. Ver `docs/pruebas.md`.
 - Un botón de ícono ya no se achica dentro de una fila angosta (en el celular quedaba de 28 px de ancho).
 - La tabla oculta que acompaña a cada gráfico (para lectores de pantalla) ensanchaba la página en pantallas de 320 px.
 
