@@ -191,15 +191,18 @@ def test_minutos_invalidos_y_hora_sola(browser):
 
 def test_panel_acompana_al_campo_al_desplazar(browser):
     page, _ = open_page(browser, width=1280, height=900)
-    page.evaluate(f"() => document.querySelector('{DT}').scrollIntoView({{block: 'center'}})")
-    page.click(BTN)
+    assert abs(page.evaluate(SETTLE, [DT, 350]) - 350) <= 1
+    click_real(page, BTN)
     page.wait_for_timeout(150)
     gap = f"""() => {{ const p = document.getElementById(document.querySelector('{BTN}').getAttribute('aria-controls')).getBoundingClientRect();
         const f = document.querySelector('{DT}').getBoundingClientRect(); return [Math.round(p.top - f.bottom), Math.round(p.left - f.left)]; }}"""
     before = page.evaluate(gap)
+    page.mouse.move(1270, 300)
     for dy in (120, -60, 200, -260):
+        target = page.evaluate("() => Math.round(scrollY)") + dy
         page.mouse.wheel(0, dy)
-        page.wait_for_timeout(120)
+        page.wait_for_function("target => Math.round(scrollY) === target", arg=target)
+        page.wait_for_function(f"expected => JSON.stringify(({gap})()) === JSON.stringify(expected)", arg=before)
         assert page.evaluate(gap) == before  # sigue pegado al campo, del mismo lado
     # la página no se desplaza sola mientras el usuario scrollea (sin saltos)
     y1 = page.evaluate("() => scrollY")
@@ -314,8 +317,8 @@ def test_celular_hoja_inferior_compacta(browser, size):
 
 def test_escritorio_junto_al_campo_y_sin_recortes(browser):
     page, _ = open_page(browser, width=1280, height=900)
-    page.evaluate(f"() => document.querySelector('{DT}').scrollIntoView({{block: 'center'}})")
-    page.click(BTN)
+    assert abs(page.evaluate(SETTLE, [DT, 120]) - 120) <= 1
+    click_real(page, BTN)
     pos = page.evaluate(f"""() => {{ const p = document.getElementById(document.querySelector('{BTN}').getAttribute('aria-controls')).getBoundingClientRect();
         const f = document.querySelector('{DT}').closest('.gn-datetime').getBoundingClientRect();
         return {{ gap: p.top - f.bottom, left: p.left - f.left, inside: p.bottom <= innerHeight && p.top >= 0 }}; }}""")

@@ -68,7 +68,7 @@ DEFAULTS = {
     "SIDEBAR_ICONS": "as-is",         # "as-is" | "tint": íconos propios pintados con los colores del sidebar
     "CATALOG": None,                  # None = solo con DEBUG o para staff
     # 0.6.0
-    "TYPE_SCALE": "compacta",         # "compacta" | "legible": base 15 px, controles de 36 px, nada por debajo de 12 px
+    "TYPE_SCALE": "legible",          # "compacta" | "legible": base 15 px, controles de 36 px, nada por debajo de 12 px
 }
 
 

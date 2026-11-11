@@ -12,7 +12,7 @@ DJANGO_SETTINGS_MODULE=sandbox.settings_geflota python manage.py runserver
 
 ```text
 # requirements.txt
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.4.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.7.0
 ```
 
 ```python
@@ -46,6 +46,8 @@ GENEOS_UI = {
     "SIDEBAR_ICONS": "tint",                           # sus íconos blancos toman los colores del sidebar
 }
 ```
+
+Todos los productos usan **Legible 15** por defecto. Al integrar, comprobá que el HTML de la aplicación y del acceso incluya `data-gn-type="legible"` y que el navegador cargue los CSS de la versión instalada. Los productos que actualizan desde v0.6.0 pueden elegir Compacta con `"TYPE_SCALE": "compacta"`.
 
 Si el producto tiene login, `"LOGOUT_URL": "logout"` agrega «Cerrar sesión» al menú del usuario.
 

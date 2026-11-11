@@ -1,7 +1,7 @@
-"""Escala tipográfica (0.6.0): compacta por defecto, legible opcional.
+"""Legible 15 por defecto en productos con y sin preset.
 
 GENEOS_UI["TYPE_SCALE"] = "legible" agrega data-gn-type="legible" en <html>;
-sin esa clave el HTML es el mismo de la 0.5.0. Los componentes toman los
+los productos nuevos usan esa escala por defecto. Los componentes toman los
 tamaños de tokens, así que la escala se cambia en un solo lugar.
 """
 import re
@@ -42,13 +42,17 @@ def layout(name="app"):
     return render_to_string(f"geneos_ui/layouts/{name}.html", ctx, request=request)
 
 
-def test_predeterminada_es_compacta():
-    assert get_config()["TYPE_SCALE"] == "compacta"
+@pytest.mark.parametrize("product", ["distribuidora", "gelectric", "gema", "geagro-cereales", "geagro-vid"])
+@pytest.mark.parametrize("name", ["app", "auth"])
+def test_productos_usan_legible_por_defecto(name, product):
+    with override_settings(GENEOS_UI={"PRODUCT": product}):
+        assert get_config()["TYPE_SCALE"] == "legible"
+        assert 'data-gn-type="legible"' in layout(name)
 
 
 @pytest.mark.parametrize("name", ["app", "auth"])
 def test_compacta_no_agrega_atributo(name):
-    with override_settings(GENEOS_UI={"PRODUCT": "gema"}):
+    with override_settings(GENEOS_UI={"PRODUCT": "distribuidora", "TYPE_SCALE": "compacta"}):
         assert "data-gn-type" not in layout(name)
 
 
@@ -59,9 +63,10 @@ def test_legible_marca_el_html(name):
     assert re.search(r'<html [^>]*data-gn-type="legible"', html)
 
 
-def test_valor_invalido_avisa_y_usa_la_compacta(settings):
-    settings.GENEOS_UI = {"PRODUCT": "gema", "TYPE_SCALE": "grande"}
-    assert get_config()["TYPE_SCALE"] == "compacta"
+@pytest.mark.parametrize("product", ["distribuidora", "gema"])
+def test_valor_invalido_avisa_y_usa_legible(settings, product):
+    settings.GENEOS_UI = {"PRODUCT": product, "TYPE_SCALE": "grande", "THEME_CSS": ["geneos_ui/css/tokens.css"]}
+    assert get_config()["TYPE_SCALE"] == "legible"
     assert [e.id for e in check_geneos_ui(None)] == ["geneos_ui.E007"]
     settings.GENEOS_UI = {"PRODUCT": "gema", "TYPE_SCALE": "legible"}
     assert [e.id for e in check_geneos_ui(None)] == []
@@ -110,10 +115,3 @@ def test_tokens_sin_nombres_repetidos():
     texto = bloque((CSS / "tokens.css").read_text(), ":root,\n  [data-gn-product] {")
     nombres = re.findall(r"(--gn-[\w-]+):", re.sub(r"/\*.*?\*/", "", texto, flags=re.S))
     assert len(nombres) == len(set(nombres)), [n for n in set(nombres) if nombres.count(n) > 1]
-
-
-@pytest.mark.parametrize("product", ["gelectric", "gema", "geagro-cereales", "geagro-vid"])
-def test_los_productos_con_preset_siguen_en_la_compacta(product):
-    with override_settings(GENEOS_UI={"PRODUCT": product}):
-        assert get_config()["TYPE_SCALE"] == "compacta"
-        assert "data-gn-type" not in layout("app") and "data-gn-type" not in layout("auth")

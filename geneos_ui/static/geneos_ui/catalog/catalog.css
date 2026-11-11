@@ -13,9 +13,13 @@
 .kit-stack--tight { gap: 10px; }
 .kit-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
 @media (max-width: 1080px) { .kit-grid-2 { grid-template-columns: minmax(0, 1fr); } }
-:where(.gn-root) :where(code, kbd) { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86em; }
+:where(.gn-root) :where(code, kbd:not(.gn-search kbd)) { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86em; }
 :where(.gn-root) code { background: var(--gn-surface-2); border: 1px solid var(--gn-border); border-radius: 5px; padding: 1px 5px; color: var(--gn-text); }
-:where(.gn-root) kbd { border: 1px solid var(--gn-border-strong); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--gn-surface); color: var(--gn-text); }
+:where(.gn-root) kbd:not(.gn-search kbd) { border: 1px solid var(--gn-border-strong); border-bottom-width: 2px; border-radius: 5px; padding: 0 5px; background: var(--gn-surface); color: var(--gn-text); }
+
+/* selector de escala */
+.kit-type-scale { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; }
+.kit-type-scale .gn-select { width: auto; }
 
 /* índice */
 .kit-toc { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -174,3 +178,10 @@
 .kit-kind--reference { color: var(--gn-warning-ink); border-color: var(--gn-warning); background: var(--gn-warning-soft); }
 .kit-kind--example { color: var(--gn-text-2); border-color: var(--gn-border-strong); background: var(--gn-surface-2); }
 .kit-kind--legend { display: block; margin: 10px 0 0; padding: 0; border: 0; background: none; font-weight: 400; font-size: 12.5px; color: var(--gn-text-2); }
+
+/* Las muestras de navegación también reflejan Legible 15. */
+:root[data-gn-type="legible"] .kit-mini__item { font-size: var(--gn-fs-nav); }
+:root[data-gn-type="legible"] .kit-mini__body .gn-tabs__tab { font-size: var(--gn-fs-control); }
+:root[data-gn-type="legible"] .kit-ref-nav li { font-size: var(--gn-fs-nav); }
+:root[data-gn-type="legible"] .kit-ref-nav li small,
+:root[data-gn-type="legible"] .kit-ref-nav li.kit-ref-nav__section { font-size: var(--gn-fs-xs); }

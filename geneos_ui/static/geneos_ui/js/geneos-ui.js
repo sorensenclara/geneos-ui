@@ -16,10 +16,11 @@
   // ---------------------------------------------------------------- utils
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
-  function store(key, value) {
+  function store(key, value, storageName) {
     try {
-      if (value === undefined) return window.localStorage.getItem(key);
-      window.localStorage.setItem(key, value);
+      var storage = window[storageName || "localStorage"];
+      if (value === undefined) return storage.getItem(key);
+      storage.setItem(key, value);
     } catch (e) { return null; }
   }
   function escapeHtml(s) {
@@ -558,7 +559,75 @@
   }
 
   // ------------------------------------------------------------ filtros
+  function progressiveFilterIsActive(control) {
+    if (!control.name || control.matches(':disabled, input[type="hidden"], input[type="button"], input[type="submit"], input[type="reset"], input[type="image"]')) return false;
+    var neutral = control.getAttribute("data-gn-filter-default");
+    if (control.type === "checkbox") return control.checked !== (neutral === "true");
+    if (control.type === "radio" && !control.checked) return false;
+    if (control.tagName === "SELECT") {
+      if (control.multiple) {
+        return Array.prototype.some.call(control.selectedOptions, function (option) {
+          return !option.matches(":disabled") && option.value !== (neutral === null ? "" : neutral);
+        });
+      }
+      var selected = control.selectedOptions[0];
+      if (!selected || selected.matches(":disabled")) return false;
+      if (neutral === null) neutral = control.options[0].value;
+    }
+    return control.value.trim() !== (neutral === null ? "" : neutral);
+  }
+
+  function initProgressiveFilters(root) {
+    var selector = "form[data-gn-filters-progressive]";
+    var forms = $$(selector, root);
+    if (root && root.matches && root.matches(selector)) forms.unshift(root);
+    forms.forEach(function (form) {
+      if (form.hasAttribute("data-gn-filters-enhanced")) return;
+      var secondary = $(":scope > [data-gn-filters-secondary]", form);
+      var button = $(":scope > [data-gn-filters-more]", form);
+      if (!secondary || !secondary.id || !secondary.children.length || !button) return;
+      var label = $("[data-gn-filters-more-label]", button);
+      var count = $("[data-gn-filters-more-count]", button);
+      if (!label || !count) return;
+      var key = "gn-filters:" + window.location.pathname + ":" + secondary.id;
+      button.setAttribute("aria-controls", secondary.id);
+
+      function countActive() {
+        var total = Array.prototype.filter.call(secondary.children, function (field) {
+          return $$("input, select, textarea", field).some(progressiveFilterIsActive);
+        }).length;
+        count.hidden = total === 0;
+        count.textContent = total;
+        button.setAttribute("aria-label", label.textContent + (total ? ", " + total + " en uso" : ""));
+        return total;
+      }
+
+      function show(open) {
+        if (!open && secondary.contains(document.activeElement)) button.focus();
+        form.setAttribute("data-gn-filters-enhanced", open ? "open" : "closed");
+        button.setAttribute("aria-expanded", String(open));
+        label.textContent = open ? "Menos filtros" : "Más filtros";
+        countActive();
+      }
+
+      show(countActive() > 0 || store(key, undefined, "sessionStorage") === "1");
+      button.hidden = false;
+      button.addEventListener("click", function () {
+        var open = button.getAttribute("aria-expanded") !== "true";
+        show(open);
+        store(key, open ? "1" : "0", "sessionStorage");
+      });
+      form.addEventListener("input", countActive);
+      form.addEventListener("change", countActive);
+      form.addEventListener("reset", function () { window.setTimeout(countActive, 0); });
+      form.addEventListener("invalid", function (event) {
+        if (secondary.contains(event.target)) show(true);
+      }, true);
+    });
+  }
+
   function initFilters(root) {
+    initProgressiveFilters(root);
     // botón que muestra/oculta los filtros en móvil
     $$("[data-gn-filters-toggle]", root).forEach(function (btn) {
       if (btn.__gn) return; btn.__gn = true;
@@ -1079,7 +1148,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.6.0";
+  window.GN.version = "0.7.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

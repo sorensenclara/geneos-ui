@@ -3,8 +3,8 @@
     python tests/visual/capture.py <ui-kit.html> <carpeta de salida>
 
 Se corre igual sobre el catálogo de la versión de referencia y sobre el
-actual; ``compare.py`` mide la diferencia. Las marcas «Componente» / «HTML de
-referencia» del catálogo se ocultan para que no cuenten como diferencia.
+actual; ``compare.py`` mide la diferencia. Se omiten controles y marcas
+propios del catálogo para comparar los componentes de la biblioteca.
 """
 import sys
 from pathlib import Path
@@ -12,7 +12,10 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 PRODUCTS = ("gelectric", "gema", "geagro-cereales", "geagro-vid")
-FREEZE = "*{transition:none!important;animation:none!important;caret-color:transparent!important}.kit-kind{display:none!important}"
+FREEZE = """
+* { transition: none !important; animation: none !important; caret-color: transparent !important; }
+.kit-kind, .kit-type-scale, .kit-toc a[href="#filtros-progresivos"] { display: none !important; }
+"""
 
 
 def shots(html, out):
@@ -60,7 +63,7 @@ def shots(html, out):
         pg.keyboard.press("Escape")
         # secciones de componentes
         setup(pg, "gema", "light", "vertical")
-        for sec in ("identidad", "iconografia", "navegacion", "acciones", "formularios", "fecha-hora", "datos", "dashboard", "estados"):
+        for sec in ("identidad", "iconografia", "navegacion", "acciones", "formularios", "fecha-hora", "datos", "dashboard", "estados", "filtros-progresivos"):
             el = pg.query_selector(f"#{sec}")
             if el:
                 # el comienzo de la sección arriba de la ventana, para que lo que se agregue más abajo no la corra

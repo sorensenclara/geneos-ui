@@ -34,7 +34,7 @@ Se arma en tres capas: valores por defecto < preset del producto (`geneos_ui/pre
 | `LEGACY_CSS` | CSS existente del producto (estáticos), cargado en la capa `legacy` después de la biblioteca. | `[]` |
 | `SIDEBAR_ICONS` | `"as-is"` o `"tint"`: los íconos propios del sidebar se pintan con los colores del sidebar (reposo, hover y activo). | `"as-is"` |
 | `CATALOG` | Catálogo visible: `True`, `False` o `None` (con `DEBUG` o para staff). | `None` |
-| `TYPE_SCALE` | `"compacta"` o `"legible"`. La legible agrega `data-gn-type="legible"` en `<html>`: texto base de 15 px, tablas y secundarios de 14, ayudas de 13, nada por debajo de 12, controles de 36 px (40 en pantallas de hasta 860 px) y campos de 16 px en el celular para que iOS no haga zoom. Ver [componentes](componentes.md#escala-tipográfica). | `"compacta"` |
+| `TYPE_SCALE` | `"compacta"` o `"legible"`. La legible agrega `data-gn-type="legible"` en `<html>`: texto base de 15 px, tablas y secundarios de 14, ayudas de 13, nada por debajo de 12, controles de 36 px (40 en pantallas de hasta 860 px) y campos de 16 px en el celular para que iOS no haga zoom. Ver [componentes](componentes.md#escala-tipográfica). | `"legible"` |
 
 ## Template tags (`{% load geneos_ui %}`)
 
@@ -124,7 +124,7 @@ Sobrescribir un template de la biblioteca copiándolo en el producto deja ese co
 | `geneos_ui.E006` | `SIDEBAR_ICONS` inválido. |
 | `geneos_ui.W003` | Un template de componente está sobrescrito en el producto. |
 | `geneos_ui.W004` | Un archivo de `LEGACY_CSS` no está en los estáticos. |
-| `geneos_ui.E007` | `TYPE_SCALE` inválido (se usa la compacta). |
+| `geneos_ui.E007` | `TYPE_SCALE` inválido (se usa la escala predeterminada del producto). |
 
 ## Deprecado
 

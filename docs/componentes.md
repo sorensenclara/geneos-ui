@@ -19,7 +19,7 @@ Personalizar: redefinir cualquier `--gn-*` en el CSS del producto, después de `
 
 ### Escala tipográfica
 
-Los componentes no usan tamaños fijos: toman `--gn-fs-*` por función, y la escala se elige con `GENEOS_UI["TYPE_SCALE"]`. La compacta es la predeterminada y conserva los valores de la 0.5.0; la legible se activa con `data-gn-type="legible"` en `<html>`.
+Los componentes no usan tamaños fijos: toman `--gn-fs-*` por función, y la escala se elige con `GENEOS_UI["TYPE_SCALE"]`. Todos los productos usan Legible 15 por defecto. Compacta se puede elegir con `TYPE_SCALE = "compacta"`. La escala legible se activa con `data-gn-type="legible"` en `<html>`.
 
 | Token | Uso | Compacta | Legible |
 |---|---|---|---|
@@ -100,6 +100,49 @@ Controles: `gn-input`, `gn-select`, `gn-textarea`, `gn-check` (checkbox y radio)
 
 Filtros combinados: `gn-filters` con `gn-pills` (filtro rápido), `gn-filters__panel` (colapsable en móvil con `data-gn-filters-toggle`), `gn-filter` por campo y el constructor "+ Agregar filtro" (`data-gn-filter-builder="id-del-json"`, mismo formato de datos que GELECTRIC). Nada se envía hasta presionar Filtrar.
 
+### Filtros progresivos
+
+Usá el formulario GET del producto y agrupá los filtros principales y secundarios según lo que la persona necesite ver primero. Cada hijo directo de `data-gn-filters-secondary` representa un filtro, incluso si contiene varios controles, como un rango de fechas.
+
+```django
+<form method="get" action="{% url 'pedidos' %}" aria-label="Filtrar pedidos"
+      class="gn-card gn-card--padded gn-filters gn-filters--progressive" data-gn-filters-progressive>
+  <div class="gn-filters__group">
+    <div class="gn-filter">
+      <label class="gn-filter__label" for="pedido">Pedido</label>
+      <input class="gn-input" id="pedido" type="search" name="q" value="{{ request.GET.q }}">
+    </div>
+  </div>
+  <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm gn-filters__more"
+          data-gn-filters-more aria-controls="pedidos-secundarios" aria-expanded="false" hidden>
+    <span data-gn-filters-more-label>Más filtros</span>
+    <span class="gn-badge gn-badge--brand" data-gn-filters-more-count aria-hidden="true" hidden></span>
+  </button>
+  <div class="gn-filters__group" id="pedidos-secundarios" data-gn-filters-secondary
+       role="group" aria-label="Filtros secundarios">
+    <div class="gn-filter">
+      <label class="gn-filter__label" for="canal">Canal</label>
+      <select class="gn-select" id="canal" name="canal">
+        <option value="">Todos</option>
+        <option value="tienda"{% if request.GET.canal == "tienda" %} selected{% endif %}>Tienda</option>
+      </select>
+    </div>
+  </div>
+  <div class="gn-filters__actions">
+    <button type="submit" class="gn-btn gn-btn--primary gn-btn--sm">Filtrar</button>
+    <a class="gn-btn gn-btn--tertiary gn-btn--sm" href="{% url 'pedidos' %}">Limpiar</a>
+    <button type="submit" class="gn-btn gn-btn--secondary gn-btn--sm"
+            formaction="{% url 'pedidos-exportar' %}">Exportar</button>
+  </div>
+</form>
+```
+
+- A partir de 992 px se ven todos los filtros. Por debajo, el botón alterna «Más filtros» y «Menos filtros» y expone el estado con `aria-expanded`. La grilla tiene dos columnas y las fechas ocupan todo el ancho por debajo de 360 px. Sin JavaScript, todos los campos quedan visibles.
+- Cada grupo secundario necesita un ID único y estable para `aria-controls` y la preferencia guardada en la sesión de la pestaña. Los secundarios activos al cargar abren el panel aunque la última elección haya sido contraerlo.
+- El contador omite controles deshabilitados, ocultos por tipo y sin nombre. El valor neutro es la primera opción de un select simple o el valor vacío de un campo. Usá `data-gn-filter-default="todos"` en un control con otro valor neutro, o `data-gn-filter-default="true"` en un checkbox marcado por defecto. Para radios, poné el valor neutro en cada opción del grupo. Un select múltiple cuenta como activo si tiene alguna selección habilitada distinta del valor neutro.
+- Contraer solo oculta visualmente los campos. Filtrar y Exportar pueden enviar el mismo formulario, incluso con destinos distintos mediante `formaction`. La vista del producto debe volver a renderizar los valores aplicados y usar el mismo criterio de filtrado al exportar.
+- El comportamiento se inicializa con el JavaScript habitual de GENEOS UI. Si insertás un formulario después de cargar la página, usá `GN.init(formulario)`.
+
 ## Fecha y hora (0.5.0)
 
 ```python
@@ -149,6 +192,16 @@ El calendario es [Cally 0.9.2](https://github.com/WickyNilliams/cally) (MIT) en 
 ## Tarjetas, indicadores y gráficos
 
 `gn-card` (`__head`, `__body`, `__foot`, `--link`), `gn-kpi`, `gn-grid--2/3/4/main-aside`, `gn-list`, `gn-dl`, `gn-bars`.
+
+Para fichas con espaciado uniforme, agregá uno de estos modificadores a `gn-card`. Funcionan con contenido directo o con `gn-card__head`, `__body` y `__foot`.
+
+| Variante | Padding exterior del contenido |
+| --- | --- |
+| `gn-card--padded` | 20 px en cada lado mediante `--gn-space-5`. |
+| `gn-card--compact` | 12 px mediante `--gn-space-3`. |
+| `gn-card--flush` | 0 px. Para tablas, combiná `gn-card gn-card--flush gn-table-wrap` en el mismo contenedor. |
+
+El modificador centraliza el padding en la ficha. Usá `gn-grid` o `gn-filters__group` para separar columnas con `gap` y mantener los 20 px hasta el primer campo. Al migrar desde Bootstrap, quitá `p-3`/`p-4`, `row`, `g-*` y `col-*` de esa grilla para eliminar el margen negativo y el padding de las columnas. Una `gn-card` sin modificador conserva su espaciado previo.
 
 Gráficos sin librerías: `<div class="gn-chart" data-gn-chart="line" data-gn-source="id-json" data-gn-unit="MWh" data-gn-title="…">` y `data-gn-chart="donut"`. Los datos van en `{{ datos|json_script:"id-json" }}` como `[{"label": "May", "value": 2580}]`. Cada gráfico incluye una tabla oculta para lectores de pantalla.
 

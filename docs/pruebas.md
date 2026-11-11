@@ -28,3 +28,12 @@ El salto viene de `page.click()`: antes de hacer clic, Playwright comprueba que 
 **Corrección (0.6.0).** Solo en esas dos pruebas, el clic se hace con el mouse en el centro del botón (`page.mouse.click`), sin el desplazamiento automático de Playwright. Siguen siendo eventos reales de puntero (presionar, foco, soltar, clic). Las demás pruebas siguen abriendo el panel con `page.click()`, y `test_teclado_completo_y_escape_devuelve_el_foco` lo abre con Alt+↓.
 
 **Verificación.** Con la página instrumentada, las dos pruebas solas fallaron en 13 de 40 corridas con `page.click()` y en 0 de 40 con el clic del mouse. La suite completa, con la corrección, pasó en 6 de 6 corridas seguidas, y esas dos pruebas junto con las de clic y teclado, en 40 de 40 corridas aisladas.
+
+
+## Filtros progresivos y padding
+
+Después de generar el catálogo, ejecutá `python -m pytest tests/visual/test_progressive_filters.py`.
+Las pruebas cubren 1440, 992, 991, 390 y 320 px, padding de las tres variantes,
+columnas y fechas, foco y teclado, estado anunciado por el botón, funcionamiento
+sin JavaScript, recuperación del estado de sesión y envío de los filtros ocultos
+tanto en búsquedas como en exportaciones.

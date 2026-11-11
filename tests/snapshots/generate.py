@@ -40,7 +40,7 @@ def normalize(html):
     html = re.sub(r'<span class="kit-kind[^"]*"[^>]*>.*?</span>', "", html, flags=re.S)  # marcas del catálogo
     html = re.sub(r'GN\.version = "[^"]+"', 'GN.version = "x"', html)
     html = re.sub(r"UI Kit v[0-9.]+", "UI Kit vX", html)
-    return html
+    return re.sub(r"[ \t]+$", "", html, flags=re.M)
 
 
 def render_all():

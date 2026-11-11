@@ -93,8 +93,15 @@
     </div>
   </div>
 </div>
+<div class="kit-type-scale">
+  <label class="gn-field__label" for="kit-type-scale">Escala tipográfica</label>
+  <select class="gn-select" id="kit-type-scale">
+    <option value="compacta">Compacta</option>
+    <option value="legible"{% if gn.type_scale == "legible" %} selected{% endif %}>Legible 15</option>
+  </select>
+</div>
 <nav class="kit-toc" aria-label="Secciones del catálogo">
-  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#fecha-hora">Fecha y hora</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
+  <a href="#identidad">Identidad</a><a href="#fundamentos">Fundamentos</a><a href="#iconografia">Iconografía</a><a href="#acciones-comunes">Acciones comunes</a><a href="#navegacion">Navegación</a><a href="#acciones">Botones</a><a href="#formularios">Formularios y filtros</a><a href="#filtros-progresivos">Filtros progresivos</a><a href="#fecha-hora">Fecha y hora</a><a href="#datos">Tablas y datos</a><a href="#dashboard">Dashboard</a><a href="#estados">Estados e interacción</a><a href="#comparacion">Comparación</a><a href="#uso">Uso y decisiones</a>
 </nav>
 {% endblock %}
 
@@ -805,6 +812,8 @@ GENEOS_UI = {
   </div></div>
   {% endif %}{% endfor %}
 </section>
+
+{% include "geneos_ui/catalog/ex/progressive_filters.html" %}
 
 {# ------------------------------------------------------------- modales #}
 {% for p in products %}{% with ex=p.ex k=p.key %}

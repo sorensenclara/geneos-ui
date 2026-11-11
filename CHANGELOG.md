@@ -2,6 +2,14 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.7.0] · 2026-11-11
+
+- Variantes de ficha `gn-card--padded`, `gn-card--compact` y `gn-card--flush` con padding de 20, 12 y 0 px.
+- Filtros progresivos con principales y secundarios, contador de valores activos, preferencia por sesión y ejemplo en el catálogo. Las variantes de filtros existentes siguen disponibles.
+
+- El catálogo permite alternar entre Compacta y Legible 15. En Legible 15, los rótulos del menú y el rol del usuario usan 13 px y los filtros tipo pastilla alcanzan 36 px de alto en escritorio y 40 px en móvil.
+- Legible 15 es la escala predeterminada para todos los productos, incluidos los cuatro presets existentes. Se puede elegir Compacta con `TYPE_SCALE`.
+
 ## [0.6.0] · 2026-11-05
 
 Escala tipográfica legible, opcional. Los productos que no la activan no cambian: el HTML de sus pantallas y las capturas del catálogo son idénticos a la 0.5.0. Las únicas diferencias posibles con la compacta son las dos correcciones de «Corregido» (botones de ícono en filas angostas y tabla oculta de los gráficos a 320 px), que no aparecen en el catálogo.

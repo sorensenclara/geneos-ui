@@ -37,11 +37,19 @@ def browser():
         b.close()
 
 
+@pytest.fixture(autouse=True)
+def close_pages(browser):
+    yield
+    for context in browser.contexts:
+        context.close()
+
+
 def open_page(browser, width, section="", legible=True):
     page = browser.new_page(viewport={"width": width, "height": 900})
+    page.route("https://**/*", lambda route: route.abort())
     page.goto(DIST.as_uri() + section)
-    if legible:   # lo que pone el layout con GENEOS_UI["TYPE_SCALE"] = "legible"
-        page.evaluate("document.documentElement.setAttribute('data-gn-type', 'legible')")
+    if legible:
+        page.get_by_label("Escala tipográfica").select_option("legible")
     return page
 
 
@@ -84,3 +92,20 @@ def test_compacta_sin_atributo_mantiene_los_valores(browser):
     page = open_page(browser, 1440, legible=False)
     assert set(page.evaluate(SIZES, ".gn-table td")) == {13}
     assert set(page.evaluate(SIZES, ".gn-content")) == {13.5}
+
+
+@pytest.mark.parametrize("width", [1440, 390])
+def test_selector_alterna_y_recuerda_la_escala(browser, width):
+    page = open_page(browser, width, legible=False)
+    selector = page.get_by_label("Escala tipográfica")
+    assert selector.input_value() == "compacta"
+    selector.select_option("legible")
+    assert page.locator("html").get_attribute("data-gn-type") == "legible"
+    page.reload()
+    assert selector.input_value() == "legible"
+    assert page.locator("html").get_attribute("data-gn-type") == "legible"
+    selector.select_option("compacta")
+    assert page.locator("html").get_attribute("data-gn-type") is None
+    page.reload()
+    assert selector.input_value() == "compacta"
+    assert page.locator("html").get_attribute("data-gn-type") is None

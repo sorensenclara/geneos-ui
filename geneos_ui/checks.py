@@ -68,7 +68,7 @@ def check_geneos_ui(app_configs, **kwargs):
                               hint="'as-is' o 'tint'.", id="geneos_ui.E006"))
     if user.get("TYPE_SCALE") not in (None, *TYPE_SCALES):
         problems.append(Error(f"GENEOS_UI['TYPE_SCALE'] = {user['TYPE_SCALE']!r} no es válido.",
-                              hint="'compacta' (predeterminada) o 'legible'.", id="geneos_ui.E007"))
+                              hint="Elegí 'legible' (15 px) o 'compacta'.", id="geneos_ui.E007"))
     for path in cfg["LEGACY_CSS"]:
         if not finders.find(path):
             problems.append(Warning(f"GENEOS_UI['LEGACY_CSS']: {path!r} no está en los estáticos.", id="geneos_ui.W004"))

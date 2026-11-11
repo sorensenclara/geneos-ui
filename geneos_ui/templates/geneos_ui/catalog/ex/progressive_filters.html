@@ -1,0 +1,75 @@
+{% load geneos_ui %}
+<section class="kit-section" id="filtros-progresivos" aria-labelledby="h-filtros-progresivos">
+  <header class="kit-section__head">
+    <h2 id="h-filtros-progresivos">Filtros progresivos y fichas</h2>
+    <p>En ventanas de menos de 992 px, «Más filtros» muestra el canal y el período. Filtrar y Exportar envían los mismos campos en esta demostración.</p>
+  </header>
+
+  <form class="gn-card gn-card--padded gn-filters gn-filters--progressive" data-gn-filters-progressive
+        method="get" action="#filtros-progresivos" aria-label="Filtrar pedidos"{% if static_build %} data-kit-progressive-example{% endif %}>
+    <div class="gn-filters__group">
+      <div class="gn-filter">
+        <label class="gn-filter__label" for="kit-prog-search">Pedido</label>
+        <input type="search" class="gn-input" id="kit-prog-search" name="pedido" value="{{ request.GET.pedido }}" placeholder="Ej. 1042">
+      </div>
+      <div class="gn-filter">
+        <label class="gn-filter__label" for="kit-prog-status">Estado</label>
+        <select class="gn-select" id="kit-prog-status" name="estado">
+          <option value="">Todos</option>
+          <option value="pendiente"{% if request.GET.estado == "pendiente" %} selected{% endif %}>Pendiente</option>
+        </select>
+      </div>
+    </div>
+    <button type="button" class="gn-btn gn-btn--secondary gn-btn--sm gn-filters__more"
+            data-gn-filters-more aria-expanded="false" aria-controls="kit-prog-secondary" hidden>
+      <span data-gn-filters-more-label>Más filtros</span>
+      <span class="gn-badge gn-badge--brand" data-gn-filters-more-count aria-hidden="true" hidden></span>
+      {% gn_icon "i-chevdown" %}
+    </button>
+    <div class="gn-filters__group" id="kit-prog-secondary" data-gn-filters-secondary role="group" aria-label="Filtros secundarios">
+      <div class="gn-filter">
+        <label class="gn-filter__label" for="kit-prog-channel">Canal</label>
+        <select class="gn-select" id="kit-prog-channel" name="canal" data-gn-filter-default="todos">
+          <option value="tienda"{% if request.GET.canal == "tienda" %} selected{% endif %}>Tienda</option>
+          <option value="todos"{% if request.GET.canal != "tienda" %} selected{% endif %}>Todos</option>
+        </select>
+      </div>
+      <div class="gn-filter">
+        <label class="gn-filter__label" for="kit-prog-from">Desde</label>
+        <input type="date" class="gn-input" id="kit-prog-from" name="desde" value="{{ request.GET.desde }}">
+      </div>
+      <div class="gn-filter">
+        <label class="gn-filter__label" for="kit-prog-to">Hasta</label>
+        <input type="date" class="gn-input" id="kit-prog-to" name="hasta" value="{{ request.GET.hasta }}">
+      </div>
+    </div>
+    <div class="gn-filters__actions">
+      <button type="submit" class="gn-btn gn-btn--primary gn-btn--sm">Filtrar</button>
+      <a href="?#filtros-progresivos" class="gn-btn gn-btn--tertiary gn-btn--sm">Limpiar</a>
+      <button type="submit" class="gn-btn gn-btn--secondary gn-btn--sm" name="formato" value="csv">Exportar</button>
+    </div>
+  </form>
+
+  <div class="gn-grid gn-grid--3" aria-label="Variantes de padding">
+    <article class="gn-card gn-card--padded" id="kit-card-padded">
+      <header class="gn-card__head"><h3 class="gn-card__title">Ficha de pedido</h3></header>
+      <div class="gn-card__body">
+        <dl class="gn-dl">
+          <div><dt>Número</dt><dd>1042</dd></div>
+          <div><dt>Estado</dt><dd>Pendiente</dd></div>
+        </dl>
+      </div>
+    </article>
+    <article class="gn-card gn-card--compact" id="kit-card-compact">
+      <h3 class="gn-card__title">Ficha compacta</h3>
+      <p>Entrega programada para mañana.</p>
+    </article>
+    <div class="gn-card gn-card--flush gn-table-wrap" id="kit-card-flush">
+      <table class="gn-table">
+        <caption class="gn-visually-hidden">Pedido sin padding exterior</caption>
+        <thead><tr><th scope="col">Pedido</th><th scope="col">Estado</th></tr></thead>
+        <tbody><tr><td>1042</td><td>Pendiente</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -6,6 +6,22 @@
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
+  // ---- escala tipográfica del catálogo
+  var scale = document.getElementById("kit-type-scale");
+  var KEY_SCALE = "gn-kit-type-scale";
+  function applyScale(value) {
+    scale.value = value;
+    if (value === "legible") root.setAttribute("data-gn-type", value);
+    else root.removeAttribute("data-gn-type");
+  }
+  var savedScale = get(KEY_SCALE);
+  applyScale(savedScale === "compacta" || savedScale === "legible" ? savedScale : scale.value);
+  scale.addEventListener("change", function () {
+    applyScale(scale.value);
+    set(KEY_SCALE, scale.value);
+    if (window.GN && GN.renderCharts) GN.renderCharts(document);
+  });
+
   // ---- producto
   var switches = Array.prototype.slice.call(document.querySelectorAll("[data-kit-switch]"));
   function applyProduct(key, persist) {
@@ -48,6 +64,20 @@
 
   // El modo claro/oscuro lo maneja geneos-ui.js (GN.setTheme, data-gn-theme-switch):
   // arranca en claro y recuerda la elección en localStorage ("gn-theme").
+
+  // El catálogo estático recupera los valores del GET de la demostración.
+  var filterExample = document.querySelector("[data-kit-progressive-example]");
+  if (filterExample) {
+    var query = new URLSearchParams(location.search);
+    filterExample.querySelectorAll("input[name], select[name]").forEach(function (control) {
+      var value = query.get(control.name);
+      if (value === null) return;
+      if (control.tagName === "SELECT" && !Array.prototype.some.call(control.options, function (option) {
+        return option.value === value;
+      })) return;
+      control.value = value;
+    });
+  }
 
   // ---- demo de botón con carga
   document.querySelectorAll("[data-kit-save]").forEach(function (save) {

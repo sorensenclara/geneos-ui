@@ -9,24 +9,8 @@ import pytest
 
 from tests.snapshots.generate import render_all
 
-REFERENCE = "0.3.0"
+REFERENCE = "0.7.0"
 REF_DIR = Path(__file__).resolve().parent / "snapshots" / REFERENCE
-
-
-# Cambios de HTML hechos a propósito en la 0.3.0, sin efecto visual ni de comportamiento.
-# Se quitan del HTML actual antes de comparar; cada uno tiene su propio test.
-CAMBIOS_INTENCIONALES = [
-    # 0.4.0 · GELECTRIC ofrece su variante azul: el boot aplica la elección guardada antes de pintar
-    (r"(?s)<script>\(function\(c\)\{var d=document\.documentElement,k='gn-variant:'.*?</script>", ""),
-    # 0.4.0 · grupo «Color» del panel de preferencias (solo productos con VARIANTS)
-    (r'(?s)\n    <div class="gn-prefs__group gn-prefs__group--variant".*?\n    </div>(?=\n    <p class="gn-prefs__note">|\n    <div class="gn-prefs__group gn-prefs__group--variant")', ""),
-    # 0.4.0 · catálogo: sección «Vista de módulo» al final (gn_page_head y gn_link_list)
-    (r'(?s)\n\n<section class="kit-section" id="vista-de-modulo".*?</section>', ""),
-    # 0.5.0 · catálogo: sección «Fecha y hora», su entrada en el índice y los scripts de los selectores
-    (r'(?s)\{# =+ FECHA Y HORA.*?</section>\n\n|<section class="kit-section" id="fecha-hora".*?</section>\n\n', ""),
-    (r'<a href="#fecha-hora">Fecha y hora</a>', ""),
-    (r'<script src="[^"]*geneos_ui/vendor/cally/cally\.js[^"]*" type="module"></script>\n?<script src="[^"]*geneos_ui/js/datetime\.js[^"]*" defer></script>', ""),
-]
 
 
 # Texto del catálogo que cambia con cada versión (no es diseño): se normaliza en los dos lados.
@@ -43,10 +27,7 @@ def both(html):
 
 @pytest.fixture(scope="module")
 def current():
-    out = render_all()
-    for pattern, repl in CAMBIOS_INTENCIONALES:
-        out = {k: re.sub(pattern, repl, v) for k, v in out.items()}
-    return out
+    return render_all()
 
 
 @pytest.mark.parametrize("name", sorted(p.stem for p in REF_DIR.glob("*.html")))
