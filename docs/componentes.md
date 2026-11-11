@@ -87,6 +87,10 @@ Un ítem con `href` es un enlace; sin `href` es una fila estática con su estado
 
 `gn-btn` + una variante: `--primary`, `--secondary`, `--tertiary`, `--ghost`, `--danger` (`--solid` para confirmaciones), `--success`, `--warning`, `--info`. Modificadores: `--sm`, `--lg`, `--icon`, `--block`. Estados: `disabled`, `aria-disabled="true"`, `.is-loading` (o `GN.setLoading(btn, true, "Guardando…")`).
 
+El radio de todos los `gn-btn` sale de `--gn-radius-btn` (32 px), incluidos los botones de icono y las acciones dentro de `gn-modal`. Usá las mismas clases en diálogos, confirmaciones y páginas. El pie del modal solo distribuye las acciones en el espacio disponible.
+
+Los colores siguen los tokens del producto. Las acciones primarias usan `--gn-brand` y `--gn-on-brand`. En las confirmaciones destructivas, `gn-btn--danger gn-btn--solid` usa `--gn-critical-strong` y `--gn-on-critical` para el fondo y el texto, respectivamente. En pantallas que conviven con Bootstrap, aplicá `gn-btn` y su variante sin agregar `.btn` al mismo elemento.
+
 ## Formularios y filtros
 
 ```html
@@ -210,7 +214,7 @@ Gráficos sin librerías: `<div class="gn-chart" data-gn-chart="line" data-gn-so
 - **Badges**: `gn-badge gn-badge--good|warning|critical|info|neutral|brand|solid`, `--dot`. Tag: `{% gn_badge "Vencido" "critical" True %}`.
 - **Alertas**: `gn-alert gn-alert--good|warning|critical|info`, cierre con `data-gn-dismiss`.
 - **Notificaciones**: `GN.toast("Mensaje", {kind: "good", title: "…"})`. Los `messages` de Django se muestran solos (`{% gn_messages_json %}` en el layout).
-- **Modales**: `<dialog class="gn-modal" id="x">` + botón `data-gn-modal-open="x"`; cierre con `data-gn-modal-close`, `Esc` o clic en el fondo.
+- **Modales**: `<dialog class="gn-modal" id="x">` + botón `data-gn-modal-open="x"`. Usá `gn-btn gn-btn--tertiary` para Cancelar, `gn-btn gn-btn--primary` para Confirmar o `gn-btn gn-btn--danger gn-btn--solid` para una acción destructiva. Para un cierre solo con ícono, usá `gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm` con `aria-label="Cerrar"`. El cierre se maneja con `data-gn-modal-close`, `Esc` o clic en el fondo.
 - **Tooltips**: `data-gn-tooltip="Texto"`.
 - **Acordeones**: `<div class="gn-accordion"><details><summary>…</summary><div class="gn-accordion__body">…</div></details></div>`.
 - **Pasos**: `<ol class="gn-steps">` con `li.is-done` / `li.is-current`.

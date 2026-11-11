@@ -76,7 +76,7 @@
     /* ---- radios ---- */
     --gn-radius: 14px;
     --gn-radius-sm: 9px;
-    --gn-radius-btn: 32px;
+    --gn-radius-btn: 32px;           /* radio compartido por todos los gn-btn */
     --gn-radius-pill: 999px;
 
     /* ---- alturas de control ---- */
@@ -209,6 +209,7 @@
     --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 75%, var(--gn-text));
     /* fondo de botón de peligro sólido: texto blanco ≥ 4,5:1 */
     --gn-critical-strong: color-mix(in srgb, var(--gn-c-critical) 82%, #000000);
+    --gn-on-critical: #fff;         /* texto de la acción de peligro sólida */
     --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 85%, var(--gn-text));
 
     /* ---- gráficos: paleta categórica ordenada desde la identidad ---- */

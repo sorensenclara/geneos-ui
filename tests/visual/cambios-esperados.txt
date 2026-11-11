@@ -1,2 +1,3 @@
 # Cambios visuales buscados respecto de la versión de referencia (VISUAL_REF en CI).
 # <captura> <máximo % de píxeles> <motivo>. Se vacía al cambiar la referencia.
+seccion-acciones.png 0.30 Texto del ejemplo sobre el radio y la confirmación

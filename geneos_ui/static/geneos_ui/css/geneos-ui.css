@@ -536,7 +536,7 @@ table.gn-visually-hidden { white-space: normal; }
 .gn-date-pill b { color: var(--gn-text); }
 
 /* =====================================================================
-   Botones (Button System de GELECTRIC)
+   Botones: gn-btn define el radio para todas las variantes y contextos
    ===================================================================== */
 .gn-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
@@ -576,7 +576,7 @@ table.gn-visually-hidden { white-space: normal; }
 
 .gn-btn--danger { background: none; border-color: var(--gn-critical); color: var(--gn-critical-ink); }
 .gn-btn--danger:hover { background: var(--gn-critical-soft); }
-.gn-btn--danger.gn-btn--solid { background: var(--gn-critical-strong); border-color: var(--gn-critical-strong); color: #fff; }
+.gn-btn--danger.gn-btn--solid { background: var(--gn-critical-strong); border-color: var(--gn-critical-strong); color: var(--gn-on-critical); }
 .gn-btn--danger.gn-btn--solid:hover { background: color-mix(in srgb, var(--gn-critical-strong) 85%, black); border-color: color-mix(in srgb, var(--gn-critical-strong) 85%, black); }
 
 .gn-btn--success { background: var(--gn-good-soft); color: var(--gn-good-ink); }

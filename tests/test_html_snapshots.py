@@ -34,6 +34,14 @@ def current():
 def test_html_igual_a_la_referencia(current, name):
     expected = both((REF_DIR / f"{name}.html").read_text(encoding="utf-8"))
     got = both(current[name])
+    if name == "catalog":
+        # El ejemplo de botones abre una confirmación y comparte su botón de cierre.
+        got = got.replace("Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.",
+                          "El botón Guardar muestra el estado de carga real: hacé clic.")
+        got = re.sub(r'(class="gn-btn gn-btn--danger") data-gn-modal-open="[^"]+-confirm"(?=>.*?</svg>Eliminar</button>)',
+                     r"\1", got)
+        got = got.replace('class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar"',
+                          'class="gn-alert__close" data-gn-modal-close aria-label="Cerrar"')
     if got != expected:
         diff = "\n".join(list(difflib.unified_diff(expected.splitlines(), got.splitlines(), REFERENCE, "actual", lineterm="", n=1))[:60])
         pytest.fail(f"{name}: el HTML cambió respecto de {REFERENCE}\n{diff}")

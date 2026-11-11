@@ -396,7 +396,7 @@
     <div class="kit-specimen">
       <span class="kit-meta">Semánticos</span>
       <div class="gn-btn-group">
-        <button type="button" class="gn-btn gn-btn--danger">{% gn_icon "i-trash" %}Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="{{ p.key }}-confirm">{% gn_icon "i-trash" %}Eliminar</button>
         <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
         <button type="button" class="gn-btn gn-btn--success">{% gn_icon "i-check" %}{{ b.ok }}</button>
         <button type="button" class="gn-btn gn-btn--warning">{% gn_icon "i-flag" %}{{ b.warn }}</button>
@@ -421,7 +421,7 @@
         <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
         <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true">{% gn_icon "i-spinner" %}{{ b.loading }}</button>
       </div>
-      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+      <p class="kit-note">Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.</p>
     </div>
     <div class="kit-specimen">
       <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
@@ -818,7 +818,7 @@ GENEOS_UI = {
 {# ------------------------------------------------------------- modales #}
 {% for p in products %}{% with ex=p.ex k=p.key %}
 <dialog class="gn-modal" id="{{ k }}-confirm" aria-labelledby="{{ k }}-confirm-t" aria-describedby="{{ k }}-confirm-d">
-  <div class="gn-modal__head"><span class="gn-modal__icon">{% gn_icon "i-trash" %}</span><h2 class="gn-modal__title" id="{{ k }}-confirm-t">{{ ex.confirm.title }}</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar">{% gn_icon "i-x" %}</button></div>
+  <div class="gn-modal__head"><span class="gn-modal__icon">{% gn_icon "i-trash" %}</span><h2 class="gn-modal__title" id="{{ k }}-confirm-t">{{ ex.confirm.title }}</h2><button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar">{% gn_icon "i-x" %}</button></div>
   <div class="gn-modal__body" id="{{ k }}-confirm-d"><p>{{ ex.confirm.text }}</p></div>
   <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="{{ ex.confirm.toast }}" data-gn-toast-kind="good">{{ ex.confirm.action }}</button></div>
 </dialog>

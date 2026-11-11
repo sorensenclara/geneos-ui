@@ -88,7 +88,7 @@
     /* ---- radios ---- */
     --gn-radius: 14px;
     --gn-radius-sm: 9px;
-    --gn-radius-btn: 32px;
+    --gn-radius-btn: 32px;           /* radio compartido por todos los gn-btn */
     --gn-radius-pill: 999px;
 
     /* ---- alturas de control ---- */
@@ -221,6 +221,7 @@
     --gn-critical-ink: color-mix(in srgb, var(--gn-c-critical) 75%, var(--gn-text));
     /* fondo de botón de peligro sólido: texto blanco ≥ 4,5:1 */
     --gn-critical-strong: color-mix(in srgb, var(--gn-c-critical) 82%, #000000);
+    --gn-on-critical: #fff;         /* texto de la acción de peligro sólida */
     --gn-info-ink: color-mix(in srgb, var(--gn-c-info) 85%, var(--gn-text));
 
     /* ---- gráficos: paleta categórica ordenada desde la identidad ---- */
@@ -1032,7 +1033,7 @@ table.gn-visually-hidden { white-space: normal; }
 .gn-date-pill b { color: var(--gn-text); }
 
 /* =====================================================================
-   Botones (Button System de GELECTRIC)
+   Botones: gn-btn define el radio para todas las variantes y contextos
    ===================================================================== */
 .gn-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
@@ -1072,7 +1073,7 @@ table.gn-visually-hidden { white-space: normal; }
 
 .gn-btn--danger { background: none; border-color: var(--gn-critical); color: var(--gn-critical-ink); }
 .gn-btn--danger:hover { background: var(--gn-critical-soft); }
-.gn-btn--danger.gn-btn--solid { background: var(--gn-critical-strong); border-color: var(--gn-critical-strong); color: #fff; }
+.gn-btn--danger.gn-btn--solid { background: var(--gn-critical-strong); border-color: var(--gn-critical-strong); color: var(--gn-on-critical); }
 .gn-btn--danger.gn-btn--solid:hover { background: color-mix(in srgb, var(--gn-critical-strong) 85%, black); border-color: color-mix(in srgb, var(--gn-critical-strong) 85%, black); }
 
 .gn-btn--success { background: var(--gn-good-soft); color: var(--gn-good-ink); }
@@ -5594,7 +5595,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="kit-specimen">
       <span class="kit-meta">Semánticos</span>
       <div class="gn-btn-group">
-        <button type="button" class="gn-btn gn-btn--danger"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="gelectric-confirm"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
         <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
         <button type="button" class="gn-btn gn-btn--success"><svg class="gn-icon " aria-hidden="true"><use href="#i-check"/></svg>Aprobar</button>
         <button type="button" class="gn-btn gn-btn--warning"><svg class="gn-icon " aria-hidden="true"><use href="#i-flag"/></svg>Revisar</button>
@@ -5619,7 +5620,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
         <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true"><svg class="gn-icon " aria-hidden="true"><use href="#i-spinner"/></svg>Exportando padrón…</button>
       </div>
-      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+      <p class="kit-note">Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.</p>
     </div>
     <div class="kit-specimen">
       <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
@@ -5648,7 +5649,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="kit-specimen">
       <span class="kit-meta">Semánticos</span>
       <div class="gn-btn-group">
-        <button type="button" class="gn-btn gn-btn--danger"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="gema-confirm"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
         <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
         <button type="button" class="gn-btn gn-btn--success"><svg class="gn-icon " aria-hidden="true"><use href="#i-check"/></svg>Aprobar</button>
         <button type="button" class="gn-btn gn-btn--warning"><svg class="gn-icon " aria-hidden="true"><use href="#i-flag"/></svg>Revisar</button>
@@ -5673,7 +5674,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
         <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true"><svg class="gn-icon " aria-hidden="true"><use href="#i-spinner"/></svg>Exportando vencimientos…</button>
       </div>
-      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+      <p class="kit-note">Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.</p>
     </div>
     <div class="kit-specimen">
       <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
@@ -5702,7 +5703,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="kit-specimen">
       <span class="kit-meta">Semánticos</span>
       <div class="gn-btn-group">
-        <button type="button" class="gn-btn gn-btn--danger"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="geagro-cereales-confirm"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
         <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
         <button type="button" class="gn-btn gn-btn--success"><svg class="gn-icon " aria-hidden="true"><use href="#i-check"/></svg>Confirmar labor</button>
         <button type="button" class="gn-btn gn-btn--warning"><svg class="gn-icon " aria-hidden="true"><use href="#i-flag"/></svg>Revisar</button>
@@ -5727,7 +5728,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
         <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true"><svg class="gn-icon " aria-hidden="true"><use href="#i-spinner"/></svg>Exportando plan…</button>
       </div>
-      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+      <p class="kit-note">Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.</p>
     </div>
     <div class="kit-specimen">
       <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
@@ -5756,7 +5757,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
     <div class="kit-specimen">
       <span class="kit-meta">Semánticos</span>
       <div class="gn-btn-group">
-        <button type="button" class="gn-btn gn-btn--danger"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
+        <button type="button" class="gn-btn gn-btn--danger" data-gn-modal-open="geagro-vid-confirm"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg>Eliminar</button>
         <button type="button" class="gn-btn gn-btn--danger gn-btn--solid">Confirmar eliminación</button>
         <button type="button" class="gn-btn gn-btn--success"><svg class="gn-icon " aria-hidden="true"><use href="#i-check"/></svg>Confirmar labor</button>
         <button type="button" class="gn-btn gn-btn--warning"><svg class="gn-icon " aria-hidden="true"><use href="#i-flag"/></svg>Revisar</button>
@@ -5781,7 +5782,7 @@ body { background: var(--gn-bg); color: var(--gn-text); }
         <button type="button" class="gn-btn gn-btn--secondary" disabled>Deshabilitado</button>
         <button type="button" class="gn-btn gn-btn--secondary is-loading" aria-busy="true"><svg class="gn-icon " aria-hidden="true"><use href="#i-spinner"/></svg>Exportando campaña…</button>
       </div>
-      <p class="kit-note">El botón Guardar muestra el estado de carga real: hacé clic.</p>
+      <p class="kit-note">Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.</p>
     </div>
     <div class="kit-specimen">
       <span class="kit-meta">Tamaños (28 · 32 · 40 px) y solo ícono</span>
@@ -8168,7 +8169,7 @@ GENEOS_UI = {
 
 
 <dialog class="gn-modal" id="gelectric-confirm" aria-labelledby="gelectric-confirm-t" aria-describedby="gelectric-confirm-d">
-  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="gelectric-confirm-t">¿Dar de baja a Taller Rossi SRL?</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="gelectric-confirm-t">¿Dar de baja a Taller Rossi SRL?</h2><button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="gn-modal__body" id="gelectric-confirm-d"><p>Se van a dar de baja también sus 3 suministros. La cuota capital queda pendiente de reintegro.</p></div>
   <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="Asociado dado de baja." data-gn-toast-kind="good">Dar de baja</button></div>
 </dialog>
@@ -8202,7 +8203,7 @@ GENEOS_UI = {
 </dialog>
 
 <dialog class="gn-modal" id="gema-confirm" aria-labelledby="gema-confirm-t" aria-describedby="gema-confirm-d">
-  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="gema-confirm-t">¿Eliminar a Club Atlético Unión?</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="gema-confirm-t">¿Eliminar a Club Atlético Unión?</h2><button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="gn-modal__body" id="gema-confirm-d"><p>Se van a dar de baja también sus 12 matafuegos y el historial de recargas. Esta acción no se puede deshacer.</p></div>
   <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="Cliente eliminado." data-gn-toast-kind="good">Eliminar cliente</button></div>
 </dialog>
@@ -8236,7 +8237,7 @@ GENEOS_UI = {
 </dialog>
 
 <dialog class="gn-modal" id="geagro-cereales-confirm" aria-labelledby="geagro-cereales-confirm-t" aria-describedby="geagro-cereales-confirm-d">
-  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="geagro-cereales-confirm-t">¿Eliminar la fertilización del Lote 12 · Ruta 5?</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="geagro-cereales-confirm-t">¿Eliminar la fertilización del Lote 12 · Ruta 5?</h2><button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="gn-modal__body" id="geagro-cereales-confirm-d"><p>Se quita del plan técnico y del calendario. Los insumos asignados vuelven a quedar disponibles.</p></div>
   <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="Labor eliminada." data-gn-toast-kind="good">Eliminar labor</button></div>
 </dialog>
@@ -8270,7 +8271,7 @@ GENEOS_UI = {
 </dialog>
 
 <dialog class="gn-modal" id="geagro-vid-confirm" aria-labelledby="geagro-vid-confirm-t" aria-describedby="geagro-vid-confirm-d">
-  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="geagro-vid-confirm-t">¿Eliminar el desbrote del Lote 11 · Alto?</h2><button type="button" class="gn-alert__close" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="gn-modal__head"><span class="gn-modal__icon"><svg class="gn-icon " aria-hidden="true"><use href="#i-trash"/></svg></span><h2 class="gn-modal__title" id="geagro-vid-confirm-t">¿Eliminar el desbrote del Lote 11 · Alto?</h2><button type="button" class="gn-btn gn-btn--ghost gn-btn--icon gn-btn--sm" data-gn-modal-close aria-label="Cerrar"><svg class="gn-icon " aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="gn-modal__body" id="geagro-vid-confirm-d"><p>Se quita del plan técnico y del calendario de la campaña.</p></div>
   <div class="gn-modal__foot"><button type="button" class="gn-btn gn-btn--tertiary" data-gn-modal-close autofocus>Cancelar</button><button type="button" class="gn-btn gn-btn--danger gn-btn--solid" data-gn-modal-close data-gn-toast="Labor eliminada." data-gn-toast-kind="good">Eliminar labor</button></div>
 </dialog>
