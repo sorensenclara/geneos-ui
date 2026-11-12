@@ -12,7 +12,7 @@ DJANGO_SETTINGS_MODULE=sandbox.settings_geflota python manage.py runserver
 
 ```text
 # requirements.txt
-geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.7.0
+geneos-ui @ git+https://github.com/sorensenclara/geneos-ui.git@v0.7.1
 ```
 
 ```python

@@ -2,6 +2,11 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.7.1] · 2026-11-11
+
+- El UI Kit muestra los mismos botones de 32 px en páginas y modales, incluido el cierre con ícono. Las confirmaciones destructivas permiten configurar el color de texto con `--gn-on-critical`.
+- Las pruebas verifican el radio y los colores en los cuatro temas a 1440, 390 y 320 px, y comprueban el diseño existente de los toasts.
+
 ## [0.7.0] · 2026-11-11
 
 - Variantes de ficha `gn-card--padded`, `gn-card--compact` y `gn-card--flush` con padding de 20, 12 y 0 px.
