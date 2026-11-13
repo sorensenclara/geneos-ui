@@ -815,6 +815,8 @@ GENEOS_UI = {
 
 {% include "geneos_ui/catalog/ex/progressive_filters.html" %}
 
+{% include "geneos_ui/catalog/ex/chartjs_demo.html" %}
+
 {# ------------------------------------------------------------- modales #}
 {% for p in products %}{% with ex=p.ex k=p.key %}
 <dialog class="gn-modal" id="{{ k }}-confirm" aria-labelledby="{{ k }}-confirm-t" aria-describedby="{{ k }}-confirm-d">
