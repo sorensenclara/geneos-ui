@@ -1,0 +1,34 @@
+name: Vista previa Chart.js (PR 1)
+on:
+  push:
+    branches: [feature/chartjs-opcional]
+    paths:
+      - 'geneos_ui/templates/geneos_ui/catalog/**'
+      - 'geneos_ui/static/geneos_ui/**'
+      - 'tools/build_catalog.py'
+      - '.github/workflows/preview-chartjs.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preview:
+    name: Generar catálogo HTML independiente
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Crear vista previa offline
+        run: |
+          python tools/build_catalog.py --out dist/preview-chartjs-pr1.html
+          test -s dist/preview-chartjs-pr1.html
+          grep -q 'chartjs-demo-title' dist/preview-chartjs-pr1.html
+          grep -q 'Chart.js v4.5.1' dist/preview-chartjs-pr1.html
+      - name: Publicar archivo descargable en esta ejecución
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-chartjs-pr1
+          path: dist/preview-chartjs-pr1.html
+          retention-days: 14
