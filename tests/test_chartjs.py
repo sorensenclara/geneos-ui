@@ -28,3 +28,20 @@ def test_assets_chartjs_separados():
     assert "def gn_chartjs_js()" in TAGS
     assert "js/chartjs-adapter.js" in TAGS
     assert 'data-gn-engine="chartjs"' in CSS
+
+
+def test_chartjs_incluido_automaticamente():
+    assert 'js/chartjs-adapter.js' in TAGS
+    assert 'vendor/chartjs/chart.umd.min.js' in TAGS
+    assert 'data-gn-chartjs-src' in TAGS
+    assert 'vendorUrl' in ADAPTER
+    assert 'document.head.appendChild(script)' in ADAPTER
+
+
+def test_chartjs_vendor_fijado_y_con_licencia():
+    vendor = BASE / "static/geneos_ui/vendor/chartjs"
+    script = vendor / "chart.umd.min.js"
+    assert script.exists(), "Falta ejecutar el workflow vendor-chartjs.yml"
+    assert script.stat().st_size > 100_000
+    assert (vendor / "LICENSE.md").exists()
+    assert (vendor / "SHA256SUMS").exists()
