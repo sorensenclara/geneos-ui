@@ -603,7 +603,7 @@ inicio = forms.DateTimeField(
 <section class="kit-section" id="dashboard" aria-labelledby="h-dash">
   <header class="kit-section__head">
     <h2 id="h-dash">Tarjetas, indicadores y gráficos<span class="kit-kind kit-kind--reference" title="Solo el CSS y el JS son compartidos: el HTML se copia en cada pantalla">HTML de referencia · <code>gn-card</code> <code>gn-kpi</code> <code>data-gn-chart</code></span></h2>
-    <p>Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.</p>
+    <p>Indicadores con valor, unidad y tendencia; SVG para gráficos simples y Chart.js para análisis interactivos. Ambos respetan la paleta del producto y la accesibilidad.</p>
   </header>
   {% for p in products %}
   <div class="kit-stack" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>
@@ -645,6 +645,7 @@ inicio = forms.DateTimeField(
     <a class="gn-card gn-card--link" href="#dashboard"><span class="gn-tile-icon gn-tile-icon--product">{% gn_product_icon ex.link_card.0 ex.link_card.1 %}</span><span><b class="kit-link-title">{{ ex.link_card.2 }}</b><span class="kit-muted">{{ ex.link_card.3 }}</span></span>{% gn_icon "i-chevright" "gn-card__chev" %}</a>
   </div>
   {% endwith %}{% endfor %}
+{% include "geneos_ui/catalog/ex/chartjs_demo.html" %}
 </section>
 
 {# ================================================================ ESTADOS #}
@@ -814,8 +815,6 @@ GENEOS_UI = {
 </section>
 
 {% include "geneos_ui/catalog/ex/progressive_filters.html" %}
-
-{% include "geneos_ui/catalog/ex/chartjs_demo.html" %}
 
 {# ------------------------------------------------------------- modales #}
 {% for p in products %}{% with ex=p.ex k=p.key %}
