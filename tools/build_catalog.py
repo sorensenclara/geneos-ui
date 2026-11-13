@@ -78,9 +78,9 @@ def build(fragment=False, url="/?static=1", out=None):
         code = read_static(src[len(static_url):]).replace("</script", "<\\/script")
         if "chartjs-adapter.js" in src:
             vendor = read_static("geneos_ui/vendor/chartjs/chart.umd.min.js").replace("</script", "<\\/script")
-            return "<script>\\n" + vendor + "\\n</script>\\n<script>\\n" + code + "\\n</script>"
+            return "<script>\n" + vendor + "\n</script>\n<script>\n" + code + "\n</script>"
         module = 'type="module"' in attrs
-        return ('<script type="module">' if module else "<script>") + "\\n" + code + "\\n</script>"
+        return ('<script type="module">' if module else "<script>") + "\n" + code + "\n</script>"
     html = re.sub(r'<script src="([^"]+)"([^>]*)></script>', inline_js, html)
 
     # imágenes como data URI
