@@ -8,6 +8,9 @@
 (function (window, document) {
   "use strict";
   var instances = new WeakMap();
+  var scriptTag = document.currentScript;
+  var vendorUrl = scriptTag && scriptTag.getAttribute("data-gn-chartjs-src");
+  var pending = false;
   var palette = ["--gn-chart-1", "--gn-chart-2", "--gn-chart-3", "--gn-chart-4", "--gn-chart-5"];
 
   function color(styles, name, fallback) {
@@ -113,7 +116,19 @@
     }
   }
   function render(root) {
-    elements(root).forEach(renderOne);
+    var charts = elements(root);
+    if (!charts.length) return;
+    if (window.Chart) { charts.forEach(renderOne); return; }
+    if (pending || !vendorUrl) return;
+    pending = true;
+    var script = document.createElement("script");
+    script.src = vendorUrl;
+    script.onload = function () { pending = false; render(document); };
+    script.onerror = function () {
+      pending = false;
+      charts.forEach(function (el) { el.setAttribute("data-gn-chart-error", "load"); });
+    };
+    document.head.appendChild(script);
   }
   function destroy(root) {
     elements(root).forEach(function (el) {
