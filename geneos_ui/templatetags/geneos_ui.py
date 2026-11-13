@@ -172,13 +172,18 @@ def gn_theme_switch():
 
 @register.simple_tag
 def gn_js():
-    return format_html('<script src="{}" defer></script>', _asset("geneos_ui/js/geneos-ui.js", get_config()))
+    return format_html('<script src="{}" defer></script><script src="{}" data-gn-chartjs-src="{}" defer></script>',
+                       _asset("geneos_ui/js/geneos-ui.js", get_config()),
+                       _asset("geneos_ui/js/chartjs-adapter.js", get_config()),
+                       _asset("geneos_ui/vendor/chartjs/chart.umd.min.js", get_config()))
 
 
 @register.simple_tag
 def gn_chartjs_js():
     """Adaptador opcional de Chart.js; cargar Chart.js 4 antes de este script."""
-    return format_html('<script src="{}" defer></script>', _asset("geneos_ui/js/chartjs-adapter.js", get_config()))
+    return format_html('<script src="{}" data-gn-chartjs-src="{}" defer></script>',
+                       _asset("geneos_ui/js/chartjs-adapter.js", get_config()),
+                       _asset("geneos_ui/vendor/chartjs/chart.umd.min.js", get_config()))
 
 
 @register.simple_tag
