@@ -23,7 +23,7 @@ def both(html):
     # Normalizar únicamente límites dinámicos de fechas del catálogo (hoy y +30 días).
     html = re.sub(r'\b(min|max)="\d{4}-\d{2}-\d{2}"', lambda m: m.group(1) + '="<fecha-dinamica>"', html)
     # El adaptador nuevo se comprueba en tests/test_chartjs.py, no en snapshots 0.7.0.
-    html = re.sub(r'<script src="[^"]*/geneos_ui/js/chartjs-adapter\\.js" data-gn-chartjs-src="[^"]*" defer></script>', "", html)
+    html = re.sub(r'<script src="[^"]*/geneos_ui/js/chartjs-adapter[.]js" data-gn-chartjs-src="[^"]*" defer></script>', "", html)
     for pattern, repl in NORMALIZAR_AMBOS:
         html = re.sub(pattern, repl, html)
     return re.sub(r"\n[ \t]*(?=\n)", "", html)  # líneas en blanco que dejan los {% if %}
