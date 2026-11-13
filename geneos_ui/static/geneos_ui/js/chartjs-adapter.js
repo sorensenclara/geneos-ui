@@ -125,7 +125,7 @@
   window.GN.renderChartJS = render;
   window.GN.destroyChartJS = destroy;
   // GN.init / GN.renderCharts pueden ejecutarse con este script cargado antes o después.
-  if (window.GN.renderCharts && !window.GN.__chartJSPatched) {
+  if (window.GN.renderCharts && !window.GN.__chartJSPatched && !window.GN.init) {
     var original = window.GN.renderCharts;
     window.GN.renderCharts = function (root) {
       original(root); render(root);
