@@ -2,19 +2,20 @@
 
 GENEOS UI mantiene los gráficos SVG existentes (`data-gn-chart="line"` y `"donut"`) sin dependencias. Para gráficos interactivos avanzados se puede habilitar Chart.js 4 **sólo en las páginas que lo necesiten**.
 
-## Dependencia
+## Instalación y carga centralizada
 
-El proyecto consumidor debe cargar Chart.js **4.x** antes del adaptador. En entornos productivos se recomienda alojar el archivo JS en los estáticos del propio proyecto o de un proveedor confiable, con una versión fijada y una política CSP adecuada.
+GENEOS UI incluye Chart.js **4.5.1** en sus propios archivos estáticos (licencia MIT). No hay que instalar Chart.js, agregar CDN ni copiar archivos en GECLUB, GERP, GEMA u otros productos.
+
+Con el tag habitual `{% gn_js %}`, GENEOS UI carga el adaptador automáticamente. Si la pantalla contiene un elemento con `data-gn-engine="chartjs"`, el adaptador solicita **bajo demanda** el Chart.js local desde `geneos_ui/vendor/chartjs/chart.umd.min.js`. Las pantallas sin gráficos no descargan el archivo pesado.
+
+El repositorio mantiene un workflow reproducible en `.github/workflows/vendor-chartjs.yml` para incorporar el archivo UMD de la versión fijada junto con su licencia. La publicación del paquete debe incluir el archivo generado.
 
 ```django
 {% load geneos_ui %}
-{# Al final de la página o en el bloque de scripts del layout: #}
-<script src="{% static 'vendor/chartjs/chart.umd.min.js' %}" defer></script>
 {% gn_js %}
-{% gn_chartjs_js %}
 ```
 
-El ejemplo presupone que se cargó `{% load static %}` y que existe ese archivo Chart.js en el proyecto consumidor. El tag `gn_chartjs_js` **sólo** incluye el adaptador; no descarga ni incorpora Chart.js.
+No uses `{% gn_chartjs_js %}` además de `{% gn_js %}`: el tag habitual ya lo incluye. El tag específico queda disponible para integraciones personalizadas que no utilicen el tag general.
 
 ## Ejemplo Django
 
