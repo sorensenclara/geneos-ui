@@ -124,14 +124,6 @@
   window.GN = window.GN || {};
   window.GN.renderChartJS = render;
   window.GN.destroyChartJS = destroy;
-  // GN.init / GN.renderCharts pueden ejecutarse con este script cargado antes o después.
-  if (window.GN.renderCharts && !window.GN.__chartJSPatched && !window.GN.init) {
-    var original = window.GN.renderCharts;
-    window.GN.renderCharts = function (root) {
-      original(root); render(root);
-    };
-    window.GN.__chartJSPatched = true;
-  }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { render(document); });
   else render(document);
 })(window, document);
