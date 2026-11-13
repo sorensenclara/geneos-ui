@@ -69,12 +69,19 @@ def build(fragment=False, url="/?static=1", out=None):
         return m.group(0)
     html = re.sub(r'<link rel="stylesheet" href="([^"]+)">', inline_css, html)
 
-    # JS embebido (los módulos, como Cally, siguen siendo módulos)
+    # JS embebido: el catálogo estático debe funcionar offline y sin rutas /static/.
+    # Para el adaptador Chart.js, incluir primero el vendor local.
     def inline_js(m):
-        src, module = m.group(1), m.group(2)
+        src, attrs = m.group(1), m.group(2)
+        if not src.startswith(static_url):
+            return m.group(0)
         code = read_static(src[len(static_url):]).replace("</script", "<\\/script")
+        if "chartjs-adapter.js" in src:
+            vendor = read_static("geneos_ui/vendor/chartjs/chart.umd.min.js").replace("</script", "<\\/script")
+            return "<script>\n" + vendor + "\n</script>\n<script>\n" + code + "\n</script>"
+        module = 'type="module"' in attrs
         return ('<script type="module">' if module else "<script>") + "\n" + code + "\n</script>"
-    html = re.sub(r'<script src="([^"]+)"(?: (type="module")| defer)?></script>', inline_js, html)
+    html = re.sub(r'<script src="([^"]+)"([^>]*)></script>', inline_js, html)
 
     # imágenes como data URI
     html = re.sub(r'src="' + re.escape(static_url) + r'([^"]+)"', lambda m: f'src="{data_uri(m.group(1))}"', html)

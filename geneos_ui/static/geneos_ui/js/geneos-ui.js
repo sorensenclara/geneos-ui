@@ -923,9 +923,11 @@
   function initCharts(root) {
     $$("[data-gn-chart]", root).forEach(function (el) {
       var t = el.getAttribute("data-gn-chart");
+      if (el.getAttribute("data-gn-engine") === "chartjs") return;
       if (t === "line") lineChart(el);
       if (t === "donut") donutChart(el);
     });
+    if (window.GN && window.GN.renderChartJS) window.GN.renderChartJS(root);
   }
 
   // --------------------------------------------------------- modo de color

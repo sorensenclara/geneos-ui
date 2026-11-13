@@ -988,6 +988,12 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 
 /* gráficos */
 .gn-chart { position: relative; min-width: 0; }
+.gn-chart[data-gn-engine="chartjs"] { height: 260px; min-height: 180px; }
+.gn-chart[data-gn-engine="chartjs"] canvas { display: block; width: 100% !important; height: 100% !important; }
+.gn-chart[data-gn-engine="chartjs"][data-gn-chart="donut"],
+.gn-chart[data-gn-engine="chartjs"][data-gn-chart="doughnut"],
+.gn-chart[data-gn-engine="chartjs"][data-gn-chart="pie"] { height: 240px; }
+
 .gn-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .gn-chart svg text { font-size: var(--gn-fs-chart-axis); }   /* ejes; pisa el atributo font-size del SVG */
 .gn-chart__legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 10px; font-size: var(--gn-fs-meta); color: var(--gn-text-2); }

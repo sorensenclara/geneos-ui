@@ -20,6 +20,12 @@ NORMALIZAR_AMBOS = [
 
 
 def both(html):
+    # Normalizar únicamente límites dinámicos de fechas del catálogo (hoy y +30 días).
+    html = re.sub(r'\b(min|max)="\d{4}-\d{2}-\d{2}"', lambda m: m.group(1) + '="<fecha-dinamica>"', html)
+    # La demo nueva se prueba por separado y no forma parte de snapshots 0.7.0.
+    html = re.sub(r'<div id="chartjs-demo".*?</div>(?=\s*</section>)', "", html, flags=re.S)
+    # El adaptador nuevo se comprueba en tests/test_chartjs.py, no en snapshots 0.7.0.
+    html = re.sub(r'<script src="[^"]*/geneos_ui/js/chartjs-adapter[.]js" data-gn-chartjs-src="[^"]*" defer></script>', "", html)
     for pattern, repl in NORMALIZAR_AMBOS:
         html = re.sub(pattern, repl, html)
     return re.sub(r"\n[ \t]*(?=\n)", "", html)  # líneas en blanco que dejan los {% if %}
@@ -35,6 +41,7 @@ def test_html_igual_a_la_referencia(current, name):
     expected = both((REF_DIR / f"{name}.html").read_text(encoding="utf-8"))
     got = both(current[name])
     if name == "catalog":
+        got = got.replace("Indicadores con valor, unidad y tendencia; SVG para gráficos simples y Chart.js para análisis interactivos. Ambos respetan la paleta del producto y la accesibilidad.", "Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.")
         # El ejemplo de botones abre una confirmación y comparte su botón de cierre.
         got = got.replace("Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.",
                           "El botón Guardar muestra el estado de carga real: hacé clic.")

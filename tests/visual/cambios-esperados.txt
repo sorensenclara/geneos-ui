@@ -1,3 +1,6 @@
 # Cambios visuales buscados respecto de la versión de referencia (VISUAL_REF en CI).
 # <captura> <máximo % de píxeles> <motivo>. Se vacía al cambiar la referencia.
 seccion-acciones.png 0.30 Texto del ejemplo sobre el radio y la confirmación
+
+seccion-dashboard.png 0.60 Incorporación aprobada de cuatro gráficos Chart.js bajo ejemplos SVG
+seccion-estados.png 0.60 Desplazamiento vertical por ampliación de sección gráficos
