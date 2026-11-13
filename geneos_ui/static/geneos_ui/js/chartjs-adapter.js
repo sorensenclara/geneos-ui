@@ -127,7 +127,7 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { render(document); });
   else render(document);
   // Seguir los cambios de tema sin afectar los SVG existentes.
-  var themeObserver = new MutationObserver(function (changes) {
+  var themeObserver = new window.MutationObserver(function (changes) {
     if (changes.some(function (change) { return change.attributeName === "data-gn-theme" || change.attributeName === "data-gn-product"; })) render(document);
   });
   themeObserver.observe(document.documentElement, {attributes: true, attributeFilter: ["data-gn-theme", "data-gn-product"]});
