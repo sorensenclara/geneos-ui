@@ -176,6 +176,12 @@ def gn_js():
 
 
 @register.simple_tag
+def gn_chartjs_js():
+    """Adaptador opcional de Chart.js; cargar Chart.js 4 antes de este script."""
+    return format_html('<script src="{}" defer></script>', _asset("geneos_ui/js/chartjs-adapter.js", get_config()))
+
+
+@register.simple_tag
 def gn_datetime_js():
     """Scripts de los selectores de fecha y hora (Cally + datetime.js) para páginas sin {{ form.media }}."""
     from ..widgets import datetime_media
