@@ -1,0 +1,48 @@
+name: Publicar versión de GENEOS UI
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verificar versión y preparar distribución
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade build
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("pyproject.toml").read_text()
+          i = Path("geneos_ui/__init__.py").read_text()
+          j = Path("geneos_ui/static/geneos_ui/js/geneos-ui.js").read_text()
+          assert re.search(r'^version = "0.8.0"$', p, re.M)
+          assert '__version__ = "0.8.0"' in i
+          assert 'window.GN.version = "0.8.0"' in j
+          assert Path("geneos_ui/static/geneos_ui/vendor/chartjs/chart.umd.min.js").stat().st_size > 100000
+          PY
+          python -m build
+      - name: Crear tag y release v0.8.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if gh release view v0.8.0 >/dev/null 2>&1; then
+            echo "v0.8.0 ya publicada"
+            exit 0
+          fi
+          git tag v0.8.0
+          git push origin v0.8.0
+          gh release create v0.8.0 dist/* --title "GENEOS UI v0.8.0" --notes "Chart.js 4.5.1 integrado y disponible bajo demanda, sin CDN ni instalación adicional por producto. Gráficos SVG y Chart.js juntos en el catálogo, con ejemplos, temas y accesibilidad. Consultar CHANGELOG.md y docs/chartjs.md." --verify-tag
