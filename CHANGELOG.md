@@ -2,6 +2,18 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.8.0] · 2026-11-14
+
+### Agregado
+- Chart.js 4.5.1 incluido localmente en GENEOS UI (sin CDN ni instalación por aplicación), con licencia MIT y carga bajo demanda.
+- Gráficos interactivos de líneas, barras, dona y torta con colores de producto, temas claro/oscuro, tooltips y alternativa accesible.
+- Cuatro ejemplos con datos ficticios en el catálogo y documentación en `docs/chartjs.md`.
+
+### Compatibilidad
+- Se conservan los gráficos SVG anteriores; ambos motores conviven en «Tarjetas, indicadores y gráficos».
+- `{% gn_js %}` incorpora el adaptador automáticamente. Los productos que actualicen a esta versión no necesitan instalar Chart.js por separado.
+- Pruebas de compatibilidad, snapshots y capturas visuales revisadas y aprobadas.
+
 ## [0.7.1] · 2026-11-11
 
 - El UI Kit muestra los mismos botones de 32 px en páginas y modales, incluido el cierre con ícono. Las confirmaciones destructivas permiten configurar el color de texto con `--gn-on-critical`.
