@@ -2,6 +2,14 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.9.0] · sin publicar
+
+### Agregado
+- Preset y tema GECLUB: rosa del logo `#E86F99` para gráficos y acentos, rosa accesible `#C8487A` para acciones y sidebar `#1D1D1B`. En claro, fondo de página gris `#f4f4f6` y fichas y tablas blancas.
+
+### Compatibilidad
+- Cambio aditivo: los demás productos no cambian.
+
 ## [0.8.0] · 2026-11-14
 
 ### Agregado

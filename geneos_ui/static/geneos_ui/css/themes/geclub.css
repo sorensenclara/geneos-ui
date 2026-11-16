@@ -1,0 +1,36 @@
+/*
+ * GENEOS UI · tema GECLUB
+ * Paleta del logo (Imagen - Clubes/SVG/COLORES - geclub.svg): rosa #E86F99,
+ * #EB739B, #E57991, #F3B5BB y tinta #1D1D1B.
+ * #E86F99 no alcanza 4,5:1 con texto blanco: las acciones usan #C8487A y
+ * el rosa del logo queda para gráficos, íconos y acentos.
+ * Cada club puede reemplazar --gn-c-brand* desde el producto (color por club).
+ */
+@layer geneos-ui {
+  [data-gn-product="geclub"] {
+    --gn-c-sidebar: #1D1D1B;
+    --gn-c-sidebar-deep: #121211;
+    --gn-c-brand: #C8487A;
+    --gn-c-brand-hover: #B13D6B;
+    --gn-c-brand-press: #9C345E;
+    --gn-c-on-brand: #ffffff;
+    --gn-c-ink: #B13D6B;
+    --gn-c-accent: #E86F99;
+    --gn-c-on-accent: #1D1D1B;
+    --gn-c-good: #17a672;
+    --gn-c-warning: #e0972b;
+    --gn-c-critical: #c62828;
+    --gn-c-info: #2e6fe0;
+    --gn-c-neutral: #8a8a92;
+    --gn-flourish: linear-gradient(90deg, #E86F99, #F3B5BB);
+    --gn-chart-1: #E86F99;
+    --gn-chart-2: #F3B5BB;
+    --gn-chart-3: #C8487A;
+    --gn-chart-4: #1D1D1B;
+    /* Fondo de página gris claro y fichas/tablas blancas (decisión del 16/11/2026).
+       Solo en claro: el modo oscuro de tokens.css tiene más especificidad y no cambia. */
+    --gn-bg: #f4f4f6;
+    --gn-surface: #ffffff;
+    --gn-surface-2: #f0f0f3;
+  }
+}

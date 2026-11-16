@@ -33,3 +33,7 @@ def test_template_sobrescrito(settings, tmp_path):
     (tmp_path / "geneos_ui" / "components" / "sidebar.html").write_text("<aside></aside>")
     settings.TEMPLATES = [{**settings.TEMPLATES[0], "DIRS": [tmp_path]}]
     assert ids(settings, PRODUCT="gema") == ["geneos_ui.W003"]
+
+
+def test_geclub_sin_problemas(settings):
+    assert ids(settings, PRODUCT="geclub") == []
