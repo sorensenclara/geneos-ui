@@ -10,6 +10,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - `geneos_ui.brand`: `Brand`, `resolve_brand()` y `safe_url()`. Solo se aceptan rutas absolutas del sitio o `http(s)://`; una URL inválida se descarta y se pasa al siguiente nivel. Nombres y pie se escapan.
 - Verificación `geneos_ui.E008`: `BRAND` no es una función importable.
 
+### Publicación
+- Las versiones se publican como GitHub Releases al subir una etiqueta: `vX.Y.Z` es estable y solo sale de `main`; `vX.Y.ZrcN` es de prueba y queda como *pre-release*.
+- Antes de publicar, el flujo verifica la versión, corre las pruebas y prueba el wheel en un entorno vacío.
+- Cada release incluye el wheel, el sdist, `SHA256SUMS` y la línea de instalación con el hash. pip verifica ese hash al instalar.
+- No requiere credenciales y nunca modifica un release existente.
+- Ya no se crea la etiqueta automáticamente al fusionar en `main`. Ver `PUBLICAR.md`.
+
 ### Compatibilidad
 - Cambio aditivo: los demás productos no cambian.
 - Sin `BRAND` (o si la función devuelve `None`), el sidebar y el encabezado se dibujan exactamente igual que antes con `LOGO_FULL`, `LOGO_ICON` y `LOGO_TOPBAR`. Si la función falla fuera de `DEBUG`, se registra el error y se usa la identidad estática.

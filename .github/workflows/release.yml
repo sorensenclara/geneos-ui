@@ -1,48 +1,140 @@
 name: Publicar versión de GENEOS UI
+# Se ejecuta SOLO al subir una etiqueta:
+#   vX.Y.Z     versión estable   (el commit tiene que estar en main)
+#   vX.Y.ZrcN  versión de prueba (desde cualquier rama; queda marcada como pre-release)
+# Publica un GitHub Release con el wheel, el sdist y SHA256SUMS. No hace falta configurar
+# secretos: usa el token automático de GitHub Actions. Nunca modifica un release existente.
 on:
-  workflow_run:
-    workflows: ["Tests"]
-    types: [completed]
-    branches: [main]
+  push:
+    tags: ["v*"]
 permissions:
-  contents: write
+  contents: read
+concurrency:
+  group: release-${{ github.ref_name }}
+  cancel-in-progress: false
+env:
+  ETIQUETA: ${{ github.ref_name }}
+
 jobs:
-  release:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  verificar:
+    name: Etiqueta, versión y release
     runs-on: ubuntu-latest
+    outputs:
+      candidata: ${{ steps.v.outputs.candidata }}
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Verificar versión y preparar distribución
-        run: |
-          set -euo pipefail
-          python -m pip install --upgrade build
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path("pyproject.toml").read_text()
-          i = Path("geneos_ui/__init__.py").read_text()
-          j = Path("geneos_ui/static/geneos_ui/js/geneos-ui.js").read_text()
-          assert re.search(r'^version = "0.8.0"$', p, re.M)
-          assert '__version__ = "0.8.0"' in i
-          assert 'window.GN.version = "0.8.0"' in j
-          assert Path("geneos_ui/static/geneos_ui/vendor/chartjs/chart.umd.min.js").stat().st_size > 100000
-          PY
-          python -m build
-      - name: Crear tag y release v0.8.0
+          python-version: "3.12"
+      - id: v
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          if gh release view v0.8.0 >/dev/null 2>&1; then
-            echo "v0.8.0 ya publicada"
-            exit 0
+          python tools/release.py verificar "$ETIQUETA"
+          if gh release view "$ETIQUETA" >/dev/null 2>&1; then
+            echo "::error::El release $ETIQUETA ya existe. Las versiones publicadas no se modifican: usar una etiqueta nueva."
+            exit 1
           fi
-          git tag v0.8.0
-          git push origin v0.8.0
-          gh release create v0.8.0 dist/* --title "GENEOS UI v0.8.0" --notes "Chart.js 4.5.1 integrado y disponible bajo demanda, sin CDN ni instalación adicional por producto. Gráficos SVG y Chart.js juntos en el catálogo, con ejemplos, temas y accesibilidad. Consultar CHANGELOG.md y docs/chartjs.md." --verify-tag
+          if [[ "$ETIQUETA" == *rc* ]]; then
+            echo "candidata=true" >> "$GITHUB_OUTPUT"
+          else
+            git fetch --quiet origin main
+            git merge-base --is-ancestor "$GITHUB_SHA" origin/main \
+              || { echo "::error::$ETIQUETA no está en main: las versiones estables se publican desde main."; exit 1; }
+            echo "candidata=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  pruebas:
+    name: Pruebas (Python ${{ matrix.python }})
+    needs: verificar
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[test]" "Django>=5.2,<5.3"
+      - run: python -m pytest -q
+
+  construir:
+    name: Construir, verificar e instalar el paquete
+    needs: pruebas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Construir
+        run: |
+          set -euo pipefail
+          python tools/release.py preparar "$ETIQUETA"
+          python -m pip install --upgrade build twine
+          python -m build
+          python -m twine check --strict dist/*
+          (cd dist && sha256sum *.whl *.tar.gz > SHA256SUMS && cat SHA256SUMS)
+      - name: Instalar el wheel en un entorno vacío
+        run: |
+          set -euo pipefail
+          python -m venv /tmp/venv
+          /tmp/venv/bin/pip install dist/*.whl
+          cd /tmp && /tmp/venv/bin/python - "${ETIQUETA#v}" <<'PY'
+          import sys, importlib.metadata as md, importlib.resources as r
+          assert md.version("geneos-ui") == sys.argv[1], (md.version("geneos-ui"), sys.argv[1])
+          base = r.files("geneos_ui")
+          for f in ("static/geneos_ui/css/tokens.css", "static/geneos_ui/js/geneos-ui.js",
+                    "templates/geneos_ui/layouts/app.html", "product_icons.json"):
+              assert (base / f).is_file(), f
+          print("ok", sys.argv[1])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publicar:
+    name: Crear el GitHub Release
+    needs: [verificar, construir]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Comprobar SHA256 y preparar notas
+        run: |
+          set -euo pipefail
+          (cd dist && sha256sum -c SHA256SUMS)
+          wheel=$(cd dist && ls *.whl)
+          hash=$(cd dist && sha256sum "$wheel" | cut -d' ' -f1)
+          url="https://github.com/$GITHUB_REPOSITORY/releases/download/$ETIQUETA/$wheel"
+          {
+            echo "## Instalación"
+            echo
+            echo "Agregar esta línea al \`requirements.txt\` del producto (pip verifica el SHA256 al instalar):"
+            echo
+            echo '```'
+            echo "geneos-ui @ $url#sha256=$hash"
+            echo '```'
+            echo
+            echo "Cambios: ver [CHANGELOG.md](https://github.com/$GITHUB_REPOSITORY/blob/$ETIQUETA/CHANGELOG.md)."
+          } > notas.md
+          cat notas.md
+      - name: Publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATA: ${{ needs.verificar.outputs.candidata }}
+        run: |
+          set -euo pipefail
+          if [ "$CANDIDATA" = "true" ]; then tipo=(--prerelease --latest=false); else tipo=(--latest); fi
+          gh release create "$ETIQUETA" dist/*.whl dist/*.tar.gz dist/SHA256SUMS \
+            --verify-tag --title "GENEOS UI $ETIQUETA" --notes-file notas.md "${tipo[@]}"
