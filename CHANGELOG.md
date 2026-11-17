@@ -6,9 +6,13 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 
 ### Agregado
 - Preset y tema GECLUB: rosa del logo `#E86F99` para gráficos y acentos, rosa accesible `#C8487A` para acciones y sidebar `#1D1D1B`. En claro, fondo de página gris `#f4f4f6` y fichas y tablas blancas.
+- Marca dinámica del menú lateral: `GENEOS_UI["BRAND"]` acepta una función `(request) -> Brand | dict | None` con el nombre de la institución, logotipo horizontal, isotipo, iniciales, destino y 1 a 3 líneas para el pie. Prioridad: logotipo → isotipo y nombre → iniciales y nombre; con el menú contraído, isotipo o iniciales. Las imágenes van sobre una placa clara (legibles sobre el fondo oscuro) y conservan sus proporciones. También en el encabezado con navegación horizontal.
+- `geneos_ui.brand`: `Brand`, `resolve_brand()` y `safe_url()`. Solo se aceptan rutas absolutas del sitio o `http(s)://`; una URL inválida se descarta y se pasa al siguiente nivel. Nombres y pie se escapan.
+- Verificación `geneos_ui.E008`: `BRAND` no es una función importable.
 
 ### Compatibilidad
 - Cambio aditivo: los demás productos no cambian.
+- Sin `BRAND` (o si la función devuelve `None`), el sidebar y el encabezado se dibujan exactamente igual que antes con `LOGO_FULL`, `LOGO_ICON` y `LOGO_TOPBAR`. Si la función falla fuera de `DEBUG`, se registra el error y se usa la identidad estática.
 
 ## [0.8.0] · 2026-11-14
 

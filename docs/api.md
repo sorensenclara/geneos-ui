@@ -125,6 +125,7 @@ Sobrescribir un template de la biblioteca copiándolo en el producto deja ese co
 | `geneos_ui.W003` | Un template de componente está sobrescrito en el producto. |
 | `geneos_ui.W004` | Un archivo de `LEGACY_CSS` no está en los estáticos. |
 | `geneos_ui.E007` | `TYPE_SCALE` inválido (se usa la escala predeterminada del producto). |
+| `geneos_ui.E008` | `BRAND` no es una función importable. |
 
 ## Deprecado
 

@@ -1,11 +1,19 @@
 {% load static geneos_ui %}{# Sidebar oficial GENEOS (estructura de GELECTRIC). Variables: gn, nav, sidebar_id #}
-<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"{% if gn.sidebar_legacy_key %} data-gn-legacy-key="{{ gn.sidebar_legacy_key }}"{% endif %} aria-label="Navegación principal"{% if gn.sidebar_icons == "tint" %} data-gn-icons="tint"{% endif %}{% if hidden %} hidden{% endif %}>
+<aside class="gn-sidebar" id="{{ sidebar_id }}" data-gn-sidebar data-gn-default="{{ gn.sidebar_default|default:'expanded' }}" data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"{% if gn.sidebar_legacy_key %} data-gn-legacy-key="{{ gn.sidebar_legacy_key }}"{% endif %} aria-label="Navegación principal"{% if gn.sidebar_icons == "tint" %} data-gn-icons="tint"{% endif %}{% if hidden %} hidden{% endif %}>{% if gn.brand %}{% with b=gn.brand %}{# marca dinámica (GENEOS_UI["BRAND"], brand.py) #}
+  <div class="gn-sidebar__brand gn-sidebar__brand--dynamic">
+    <a class="gn-brand{% if b.logo_url %} gn-brand--logo{% endif %}" href="{{ b.home_url|default:gn.home_url|default:'/' }}" aria-label="{{ b.name }}: inicio" title="{{ b.name }}">
+      {% if b.logo_url %}<span class="gn-brand__plate gn-brand__wide"><img class="gn-brand__logo" src="{{ b.logo_url }}" alt=""></span>{% endif %}
+      <span class="gn-brand__mark{% if b.mark_url %} gn-brand__plate{% else %} gn-brand__mark--initials{% endif %}" aria-hidden="true">{% if b.mark_url %}<img src="{{ b.mark_url }}" alt="">{% else %}{{ b.initials }}{% endif %}</span>
+      {% if not b.logo_url %}<span class="gn-brand__name">{{ b.name }}</span>{% endif %}
+    </a>
+  </div>
+  {% endwith %}{% else %}
   <div class="gn-sidebar__brand">
     <a href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
       {% if gn.logo_full %}<img class="gn-sidebar__logo-full" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}
       {% if gn.logo_icon %}<img class="gn-sidebar__logo-icon" src="{% static gn.logo_icon %}" alt="">{% endif %}
     </a>
-  </div>
+  </div>{% endif %}
   <div class="gn-sidebar__body">
     <div class="gn-sidebar__search" role="search">
       <label class="gn-sidebar__search-box">
@@ -66,7 +74,7 @@
       </ul>{% endif %}{% endblock %}
       <div class="gn-sidebar__divider"></div>
       <div class="gn-sidebar__flourish" aria-hidden="true"><span></span></div>
-      <div class="gn-sidebar__meta"><b>{{ gn.product_name }}{% if gn.version_label %} {{ gn.version_label }}{% endif %}</b>{% if gn.tagline %}<span>{{ gn.tagline }}</span>{% endif %}</div>
+      {% if gn.brand.footer %}<div class="gn-sidebar__meta gn-sidebar__meta--lines">{% for l in gn.brand.footer %}<span>{{ l }}</span>{% endfor %}</div>{% else %}<div class="gn-sidebar__meta"><b>{{ gn.product_name }}{% if gn.version_label %} {{ gn.version_label }}{% endif %}</b>{% if gn.tagline %}<span>{{ gn.tagline }}</span>{% endif %}</div>{% endif %}
     </div>
   </div>
 </aside>

@@ -7,7 +7,28 @@ Agregar a TEMPLATES[...]["OPTIONS"]["context_processors"]::
 Deja disponible ``gn`` en todos los templates: producto, logos, menú ya
 filtrado por permisos y configuración del sidebar.
 """
+import logging
+
+from django.conf import settings
+
+from .brand import resolve_brand
 from .conf import _callable, get_config, get_nav_callable
+
+logger = logging.getLogger(__name__)
+
+
+def _brand(cfg, request):
+    fn = _callable(cfg.get("BRAND"))
+    if not fn:
+        return None
+    try:
+        return resolve_brand(fn(request))
+    except Exception:
+        # Un error en la marca no tiene que tirar todas las páginas: se usa la identidad estática.
+        if settings.DEBUG:
+            raise
+        logger.exception("GENEOS_UI['BRAND'] falló; se usa la identidad estática.")
+        return None
 from .navigation import build_links, build_nav
 
 
@@ -43,5 +64,6 @@ def geneos_ui(request):
             "variants": cfg["VARIANTS"],
             "sidebar_icons": cfg["SIDEBAR_ICONS"],
             "type_scale": cfg["TYPE_SCALE"],
+            "brand": _brand(cfg, request),
         }
     }
