@@ -97,6 +97,29 @@ def get_nav(request):
 
 Las reglas de permisos siguen siendo del producto: `perms=("app.view_x",)` usa los permisos de Django y `visible=` acepta cualquier función.
 
+### Marca de la institución en el menú lateral (0.9.0)
+
+Si el producto trabaja para varias instituciones, puede mostrar la de cada pedido en lugar de su logo estático:
+
+```python
+# settings.py
+GENEOS_UI = {..., "BRAND": "core.marca.brand"}
+
+# core/marca.py
+from geneos_ui.brand import Brand
+
+def brand(request):
+    org = getattr(request, "organizacion", None)
+    if org is None:
+        return None                       # identidad estática (LOGO_FULL / LOGO_ICON)
+    return Brand(name=org.nombre,
+                 logo_url=org.logotipo.url if org.logotipo else None,   # horizontal
+                 mark_url=org.isotipo.url if org.isotipo else None,     # espacios reducidos
+                 footer=["Producto · Descripción", "Desarrollado por GENEOS"])
+```
+
+Con el menú abierto se muestra el logotipo horizontal; si no hay, isotipo y nombre; si no hay imágenes, iniciales y nombre. Con el menú contraído, isotipo o iniciales. Las URL que no sean rutas del sitio o `http(s)://` se descartan.
+
 ## Preferencias de visualización
 
 Dos preferencias globales, independientes entre sí y del producto, con la misma lógica:

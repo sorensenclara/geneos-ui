@@ -1150,7 +1150,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.8.0";
+  window.GN.version = "0.9.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

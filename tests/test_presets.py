@@ -76,3 +76,12 @@ def test_claves_del_navegador_no_cambian():
     assert 'THEME_KEY = "gn-theme"' in js and 'NAV_KEY = "gn-nav"' in js and 'PIN_KEY = "gn-sidebar-expanded"' in js
     assert 'data-gn-storage-key="gn-sidebar-expanded:{{ gn.product }}"' in sidebar
     assert presets.PRESETS["gelectric"]["SIDEBAR_LEGACY_KEY"] == "geletric-sidebar-pinned"
+
+
+def test_preset_geclub(settings):
+    settings.GENEOS_UI = {"PRODUCT": "geclub"}
+    cfg = get_config()
+    assert cfg["PRODUCT_NAME"] == "GECLUB"
+    assert cfg["THEME_CSS"] == ["geneos_ui/css/themes/geclub.css"]
+    assert cfg["NAV_LAYOUT"] == "vertical" and cfg["SIDEBAR_DEFAULT"] == "expanded"
+    assert cfg["BOOTSTRAP_RGB"]["primary"] == "200, 72, 122"

@@ -1,5 +1,9 @@
 {% load static %}{# Logo del encabezado: solo se ve con navegación horizontal en escritorio (en vertical el logo está en el sidebar). #}
-<a class="gn-topbar__brand" href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
+{% if gn.brand %}{% with b=gn.brand %}{# marca dinámica sobre fondo claro (navegación horizontal) #}
+<a class="gn-topbar__brand gn-brand gn-brand--light{% if b.logo_url %} gn-brand--logo{% endif %}" href="{{ b.home_url|default:gn.home_url|default:'/' }}" aria-label="{{ b.name }}: inicio" title="{{ b.name }}">
+  {% if b.logo_url %}<img class="gn-brand__logo" src="{{ b.logo_url }}" alt="">{% else %}<span class="gn-brand__mark{% if not b.mark_url %} gn-brand__mark--initials{% endif %}" aria-hidden="true">{% if b.mark_url %}<img src="{{ b.mark_url }}" alt="">{% else %}{{ b.initials }}{% endif %}</span><span class="gn-brand__name">{{ b.name }}</span>{% endif %}
+</a>
+{% endwith %}{% else %}<a class="gn-topbar__brand" href="{{ gn.home_url|default:'/' }}" aria-label="{{ gn.product_name }}: inicio">
   {% if gn.logo_topbar %}<img class="gn-topbar__logo gn-topbar__logo--light" src="{% static gn.logo_topbar %}" alt="{{ gn.product_name }}">{% elif gn.logo_icon %}<img class="gn-topbar__logo gn-topbar__logo--light gn-topbar__logo--icon" src="{% static gn.logo_icon %}" alt="{{ gn.product_name }}">{% endif %}
   {% if gn.logo_full %}<img class="gn-topbar__logo gn-topbar__logo--dark" src="{% static gn.logo_full %}" alt="{{ gn.product_name }}">{% endif %}
-</a>
+</a>{% endif %}

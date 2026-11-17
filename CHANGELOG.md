@@ -2,6 +2,25 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.9.0] · sin publicar
+
+### Agregado
+- Preset y tema GECLUB: rosa del logo `#E86F99` para gráficos y acentos, rosa accesible `#C8487A` para acciones y sidebar `#1D1D1B`. En claro, fondo de página gris `#f4f4f6` y fichas y tablas blancas.
+- Marca dinámica del menú lateral: `GENEOS_UI["BRAND"]` acepta una función `(request) -> Brand | dict | None` con el nombre de la institución, logotipo horizontal, isotipo, iniciales, destino y 1 a 3 líneas para el pie. Prioridad: logotipo → isotipo y nombre → iniciales y nombre; con el menú contraído, isotipo o iniciales. Las imágenes van sobre una placa clara (legibles sobre el fondo oscuro) y conservan sus proporciones. También en el encabezado con navegación horizontal.
+- `geneos_ui.brand`: `Brand`, `resolve_brand()` y `safe_url()`. Solo se aceptan rutas absolutas del sitio o `http(s)://`; una URL inválida se descarta y se pasa al siguiente nivel. Nombres y pie se escapan.
+- Verificación `geneos_ui.E008`: `BRAND` no es una función importable.
+
+### Publicación
+- Las versiones se publican como GitHub Releases al subir una etiqueta: `vX.Y.Z` es estable y solo sale de `main`; `vX.Y.ZrcN` es de prueba y queda como *pre-release*.
+- Antes de publicar, el flujo verifica la versión, corre las pruebas y prueba el wheel en un entorno vacío.
+- Cada release incluye el wheel, el sdist, `SHA256SUMS` y la línea de instalación con el hash. pip verifica ese hash al instalar.
+- No requiere credenciales y nunca modifica un release existente.
+- Ya no se crea la etiqueta automáticamente al fusionar en `main`. Ver `PUBLICAR.md`.
+
+### Compatibilidad
+- Cambio aditivo: los demás productos no cambian.
+- Sin `BRAND` (o si la función devuelve `None`), el sidebar y el encabezado se dibujan exactamente igual que antes con `LOGO_FULL`, `LOGO_ICON` y `LOGO_TOPBAR`. Si la función falla fuera de `DEBUG`, se registra el error y se usa la identidad estática.
+
 ## [0.8.0] · 2026-11-14
 
 ### Agregado

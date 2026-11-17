@@ -90,6 +90,26 @@ table.gn-visually-hidden { white-space: normal; }
 .gn-sidebar__logo-full { display: block; width: 100%; max-width: 172px; max-height: 44px; height: auto; object-fit: contain; object-position: left center; }
 .gn-sidebar__logo-icon { display: none; width: 34px; height: 34px; object-fit: contain; margin: 0 auto; }
 
+/* Marca dinámica (GENEOS_UI["BRAND"], 0.9.0): la institución en lugar del logo estático.
+   Las imágenes van sobre una placa clara para leerse sobre el fondo oscuro aunque sean oscuras
+   o transparentes; nunca se fijan ancho y alto a la vez (no se deforman). */
+.gn-sidebar__brand--dynamic { padding: 14px 16px; }
+.gn-sidebar__brand a.gn-brand { display: flex; align-items: center; gap: 10px; min-width: 0; width: 100%; color: var(--gn-sidebar-text-active); text-decoration: none; border-radius: var(--gn-radius-sm); }
+.gn-brand:focus-visible { outline: 2px solid var(--gn-sidebar-indicator); outline-offset: 3px; }
+.gn-brand__plate { display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #fff; border-radius: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
+.gn-brand__wide { padding: 6px 10px; max-width: 100%; min-height: 44px; }
+.gn-brand__logo { display: block; max-width: 100%; max-height: 40px; width: auto; height: auto; object-fit: contain; }
+.gn-brand__mark { width: 42px; height: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.gn-brand__mark.gn-brand__plate { padding: 4px; }
+.gn-brand__mark img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+.gn-brand__mark--initials { border-radius: 10px; background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .22);
+  color: var(--gn-sidebar-text-active); font-size: var(--gn-fs-md); font-weight: 700; letter-spacing: .03em; }
+.gn-brand__name { min-width: 0; font-size: var(--gn-fs-md); font-weight: 700; line-height: 1.2; color: var(--gn-sidebar-text-active);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.gn-brand--logo .gn-brand__mark { display: none; }   /* con logotipo, el isotipo solo aparece con el menú contraído */
+.gn-sidebar__meta.gn-sidebar__meta--lines { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 2px; line-height: 1.35; }
+.gn-sidebar__meta.gn-sidebar__meta--lines span:first-child { color: var(--gn-sidebar-text); }
+
 .gn-sidebar__body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 16px; padding: 16px 14px; }
 
 /* buscador del sidebar */
@@ -187,6 +207,11 @@ table.gn-visually-hidden { white-space: normal; }
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-sidebar__brand { justify-content: center; padding: 18px 10px; }
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-sidebar__logo-full { display: none; }
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-sidebar__logo-icon { display: block; }
+  :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-sidebar__brand--dynamic { padding: 16px 10px; }
+  :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-brand { justify-content: center; }
+  :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-brand__wide,
+  :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-brand__name { display: none; }
+  :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-brand--logo .gn-brand__mark { display: flex; }
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-nav__item { justify-content: center; padding: 10px 0; }
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-nav__label,
   :root:not([data-gn-nav="horizontal"]) .gn-sidebar.is-collapsed .gn-nav__chev,
@@ -275,6 +300,14 @@ table.gn-visually-hidden { white-space: normal; }
   .gn-topbar__logo--dark { display: none; }
   :root[data-gn-theme="dark"] .gn-topbar__brand .gn-topbar__logo--dark { display: block; }
   :root[data-gn-theme="dark"] .gn-topbar__brand:has(.gn-topbar__logo--dark) .gn-topbar__logo--light { display: none; }
+  /* marca dinámica en el encabezado (navegación horizontal, fondo claro) */
+  .gn-brand--light { gap: 10px; width: auto; max-width: 260px; min-width: 0; color: var(--gn-text); text-decoration: none; }
+  .gn-brand--light .gn-brand__logo { max-height: 40px; max-width: 220px; }
+  .gn-brand--light .gn-brand__mark { width: 36px; height: 36px; }
+  .gn-brand--light .gn-brand__mark--initials { background: var(--gn-brand-soft); border-color: color-mix(in srgb, var(--gn-brand) 25%, transparent); color: var(--gn-brand-ink); font-size: var(--gn-fs-sm); }
+  .gn-brand--light .gn-brand__name { color: var(--gn-text); font-size: var(--gn-fs-base); }
+  :root[data-gn-theme="dark"] .gn-brand--light .gn-brand__logo,
+  :root[data-gn-theme="dark"] .gn-brand--light .gn-brand__mark:not(.gn-brand__mark--initials) { background: #fff; border-radius: 8px; padding: 3px 6px; }
 
   /* la barra */
   :root[data-gn-nav="horizontal"] .gn-sidebar {

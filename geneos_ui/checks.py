@@ -12,13 +12,14 @@ W003  el producto sobrescribe un template de componente de la biblioteca
 E006  SIDEBAR_ICONS inválido
 W004  un archivo de LEGACY_CSS no está en los estáticos
 E007  TYPE_SCALE inválido
+E008  BRAND no es una función importable
 """
 from pathlib import Path
 
 from django.contrib.staticfiles import finders
 from django.core.checks import Error, Warning, register
 
-from .conf import BRIDGES, NAV_ICON_MODES, PRODUCT_RE, SIDEBAR_STATES, TYPE_SCALES, get_config, user_settings
+from .conf import BRIDGES, NAV_ICON_MODES, PRODUCT_RE, SIDEBAR_STATES, TYPE_SCALES, _callable, get_config, user_settings
 
 PACKAGE_TEMPLATES = Path(__file__).resolve().parent / "templates"
 COMPONENT_TEMPLATES = ("layouts/app.html", "layouts/auth.html", "components/sidebar.html", "components/prefs.html",
@@ -74,6 +75,14 @@ def check_geneos_ui(app_configs, **kwargs):
             problems.append(Warning(f"GENEOS_UI['LEGACY_CSS']: {path!r} no está en los estáticos.", id="geneos_ui.W004"))
     if user.get("SIDEBAR_DEFAULT") not in (None, *SIDEBAR_STATES):
         problems.append(Warning("GENEOS_UI['SIDEBAR_DEFAULT'] debe ser 'expanded' o 'collapsed'.", id="geneos_ui.W001"))
+    if user.get("BRAND"):
+        try:
+            if not callable(_callable(user["BRAND"])):
+                raise TypeError
+        except Exception:
+            problems.append(Error(f"GENEOS_UI['BRAND'] = {user['BRAND']!r} no es una función importable.",
+                                  hint="Ruta con puntos a una función (request) -> Brand | dict | None.",
+                                  id="geneos_ui.E008"))
     for key in ("LOGO_FULL", "LOGO_ICON", "LOGO_TOPBAR"):
         if user.get(key) and not finders.find(user[key]):
             problems.append(Warning(f"GENEOS_UI['{key}'] = {user[key]!r} no está en los estáticos.", id="geneos_ui.W002"))

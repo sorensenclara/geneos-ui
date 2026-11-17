@@ -10,7 +10,8 @@ from geneos_ui.navigation import build_nav
 
 def test_valores_por_producto():
     assert {k: v["NAV_LAYOUT"] for k, v in PRESETS.items()} == {"gema": "horizontal", "gelectric": "vertical",
-                                   "geagro-cereales": "vertical", "geagro-vid": "vertical"}
+                                   "geagro-cereales": "vertical", "geagro-vid": "vertical",
+                                   "geclub": "vertical"}
 
 
 @override_settings(GENEOS_UI={"PRODUCT": "gema"})

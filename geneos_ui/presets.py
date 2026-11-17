@@ -60,6 +60,16 @@ PRESETS = {
         "NAV_ICONS": "tint",
         "ICON_FAMILY": ("geagro",),
     },
+    # GECLUB (decisión del 16/11/2026): rosa del logo #E86F99 para gráficos y detalles,
+    # rosa accesible #C8487A (4,5:1 con blanco) para acciones, sidebar #1D1D1B del logotipo.
+    "geclub": {
+        "PRODUCT_NAME": "GECLUB",
+        "THEME_CSS": ["geneos_ui/css/themes/geclub.css"],
+        "BOOTSTRAP_RGB": {"primary": "200, 72, 122", "success": "23, 166, 114", "danger": "198, 40, 40"},
+        "SIDEBAR_DEFAULT": "expanded",
+        "NAV_LAYOUT": "vertical",
+        "NAV_ICONS": "tint",
+    },
 }
 
 # Conjuntos de íconos del manifiesto que no son un producto en sí ("geagro" son

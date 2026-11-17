@@ -69,6 +69,8 @@ DEFAULTS = {
     "CATALOG": None,                  # None = solo con DEBUG o para staff
     # 0.6.0
     "TYPE_SCALE": "legible",          # "compacta" | "legible": base 15 px, controles de 36 px, nada por debajo de 12 px
+    # 0.9.0
+    "BRAND": None,                    # función (request) -> Brand | dict | None: marca dinámica del sidebar (ver brand.py)
 }
 
 
