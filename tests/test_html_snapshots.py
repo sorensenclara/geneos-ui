@@ -13,6 +13,29 @@ REFERENCE = "0.7.0"
 REF_DIR = Path(__file__).resolve().parent / "snapshots" / REFERENCE
 
 
+# Cambios de HTML hechos a propósito en la 0.3.0, sin efecto visual ni de comportamiento.
+# Se quitan del HTML actual antes de comparar; cada uno tiene su propio test.
+CAMBIOS_INTENCIONALES = [
+    # Ejemplo nuevo, cubierto por las pruebas responsive y de interacción.
+    (r'<a href="#filtros-progresivos">Filtros progresivos</a>', ""),
+    (r'(?s)<section class="kit-section" id="filtros-progresivos".*?</section>', ""),
+    # La escala predeterminada se verifica en los tests de tipografía.
+    (r'(<html [^>]*?) data-gn-type="legible"', r"\g<1>"),
+    # Catálogo · el selector de escala se verifica por separado en Chromium.
+    (r'(?s)\n<div class="kit-type-scale">.*?</div>', ""),
+    # 0.4.0 · GELECTRIC ofrece su variante azul: el boot aplica la elección guardada antes de pintar
+    (r"(?s)<script>\(function\(c\)\{var d=document\.documentElement,k='gn-variant:'.*?</script>", ""),
+    # 0.4.0 · grupo «Color» del panel de preferencias (solo productos con VARIANTS)
+    (r'(?s)\n    <div class="gn-prefs__group gn-prefs__group--variant".*?\n    </div>(?=\n    <p class="gn-prefs__note">|\n    <div class="gn-prefs__group gn-prefs__group--variant")', ""),
+    # 0.4.0 · catálogo: sección «Vista de módulo» al final (gn_page_head y gn_link_list)
+    (r'(?s)\n\n<section class="kit-section" id="vista-de-modulo".*?</section>', ""),
+    # 0.5.0 · catálogo: sección «Fecha y hora», su entrada en el índice y los scripts de los selectores
+    (r'(?s)\{# =+ FECHA Y HORA.*?</section>\n\n|<section class="kit-section" id="fecha-hora".*?</section>\n\n', ""),
+    (r'<a href="#fecha-hora">Fecha y hora</a>', ""),
+    (r'<script src="[^"]*geneos_ui/vendor/cally/cally\.js[^"]*" type="module"></script>\n?<script src="[^"]*geneos_ui/js/datetime\.js[^"]*" defer></script>', ""),
+]
+
+
 # Texto del catálogo que cambia con cada versión (no es diseño): se normaliza en los dos lados.
 NORMALIZAR_AMBOS = [
     (r"geneos-ui @ git\+https://\S+?\.git@v[0-9.]+", "geneos-ui @ <repositorio>@vX"),  # línea de instalación (GitHub desde la 0.3.0)

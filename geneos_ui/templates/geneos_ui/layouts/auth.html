@@ -9,9 +9,75 @@
 </head>
 <body class="gn-root">
 {% include "geneos_ui/components/icon_sprite.html" %}
-<main class="gn-auth">
+<main class="gn-auth"{% if gn.auth_background %} style="--gn-auth-from: {{ gn.auth_background.0 }}; --gn-auth-to: {{ gn.auth_background.1 }};"{% endif %}>
   <div class="gn-auth__card">
-    {% block auth_content %}{% endblock %}
+    {% block auth_content %}
+    {% comment %}
+      Layout gn-auth (solo presentación). Bloques: auth_logo, auth_title, auth_description,
+      auth_form_attrs, auth_hidden, auth_errors, auth_fields, auth_options, auth_submit, auth_footer.
+      Contexto opcional: form (AuthenticationForm o equivalente), auth_action, auth_forgot_url,
+      auth_remember_name, auth_submit_label.
+    {% endcomment %}
+    <header class="gn-auth__header">
+      {% block auth_logo %}{% if gn.logo_auth %}<img class="gn-auth__logo" src="{% static gn.logo_auth %}" alt="{{ gn.product_name }}">{% endif %}{% endblock %}
+      <h1 class="gn-auth__title" id="gn-auth-title">{% block auth_title %}{{ gn.product_name }}{% endblock %}</h1>
+      <p class="gn-auth__sub">{% block auth_description %}{% endblock %}</p>
+    </header>
+
+    <form class="gn-auth__form gn-form" method="post"{% if auth_action %} action="{{ auth_action }}"{% endif %} aria-labelledby="gn-auth-title" {% block auth_form_attrs %}{% endblock %}>
+      {% csrf_token %}
+      {% block auth_hidden %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}{% endblock %}
+
+      {% block auth_errors %}{% if form.non_field_errors %}
+      <div class="gn-alert gn-alert--critical gn-auth__alert" role="alert">
+        {% gn_icon "i-alert" %}
+        <div class="gn-alert__body">{% for e in form.non_field_errors %}<p>{{ e }}</p>{% endfor %}</div>
+      </div>
+      {% endif %}{% endblock %}
+
+      {% block auth_fields %}
+      {% with f=form.username %}
+      <div class="gn-field">
+        <label class="gn-field__label" for="gn-auth-username">{% if f.label %}{{ f.label }}{% else %}Usuario{% endif %}</label>
+        <div class="gn-input-group gn-auth__input">
+          {% gn_icon "i-user" %}
+          <input class="gn-input" id="gn-auth-username" type="text" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus{% if f.value %} value="{{ f.value }}"{% endif %}{% if f.errors %} aria-invalid="true" aria-describedby="gn-auth-username-err"{% endif %}>
+        </div>
+        {% if f.errors %}<p class="gn-field__error" id="gn-auth-username-err">{% gn_icon "i-alert" %}{{ f.errors.0 }}</p>{% endif %}
+      </div>
+      {% endwith %}
+      {% with f=form.password %}
+      <div class="gn-field">
+        <label class="gn-field__label" for="gn-auth-password">{% if f.label %}{{ f.label }}{% else %}Contraseña{% endif %}</label>
+        <div class="gn-input-group gn-auth__input">
+          {% gn_icon "i-lock" %}
+          <input class="gn-input" id="gn-auth-password" type="password" name="password" autocomplete="current-password" required{% if f.errors %} aria-invalid="true" aria-describedby="gn-auth-password-err"{% endif %}>
+          <span class="gn-input-group__end">
+            <button class="gn-btn gn-btn--ghost gn-btn--icon gn-auth__reveal" type="button" data-gn-password-toggle="gn-auth-password" aria-controls="gn-auth-password" aria-pressed="false" aria-label="Mostrar contraseña" hidden>
+              <svg class="gn-icon gn-auth__eye" aria-hidden="true"><use href="#i-eye"/></svg>
+              <svg class="gn-icon gn-auth__eye-off" aria-hidden="true"><use href="#i-eye-off"/></svg>
+            </button>
+          </span>
+        </div>
+        {% if f.errors %}<p class="gn-field__error" id="gn-auth-password-err">{% gn_icon "i-alert" %}{{ f.errors.0 }}</p>{% endif %}
+      </div>
+      {% endwith %}
+      {% endblock %}
+
+      {% block auth_options %}
+      <div class="gn-auth__options">
+        <label class="gn-check"><input type="checkbox" name="{{ auth_remember_name|default:'remember' }}" value="1"> <span class="gn-check__text">Recordarme</span></label>
+        {% if auth_forgot_url %}<a class="gn-auth__link" href="{{ auth_forgot_url }}">¿Olvidaste tu contraseña?</a>{% endif %}
+      </div>
+      {% endblock %}
+
+      {% block auth_submit %}
+      <button class="gn-btn gn-btn--primary gn-btn--lg gn-btn--block gn-auth__submit" type="submit">{{ auth_submit_label|default:"Ingresar" }}</button>
+      {% endblock %}
+    </form>
+
+    {% block auth_footer %}{% endblock %}
+    {% endblock %}
   </div>
 </main>
 {% gn_js %}

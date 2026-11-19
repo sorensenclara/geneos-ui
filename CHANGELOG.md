@@ -2,6 +2,18 @@
 
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). Versionado [SemVer](https://semver.org/lang/es/).
 
+## [0.10.0] · sin publicar
+
+### Integración
+- Unificación de los cambios de GENEOS UI para GECLUB y GEPIX.
+- Personalización del login mediante `AUTH_BACKGROUND` y `LOGO_AUTH`.
+- Verificación `geneos_ui.E009` para valores inválidos de `AUTH_BACKGROUND`.
+- Se conservan la marca dinámica de GECLUB, Chart.js, las tablas de gestión, los filtros progresivos y Legible 15 como escala predeterminada.
+
+### Pruebas
+- 359 pruebas Python correctas y 6 omitidas.
+- 36 pruebas visuales correctas en Chromium para tablas, filtros progresivos y Legible 15.
+
 ## [0.9.0] · sin publicar
 
 ### Agregado
@@ -39,6 +51,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - Las pruebas verifican el radio y los colores en los cuatro temas a 1440, 390 y 320 px, y comprueban el diseño existente de los toasts.
 
 ## [0.7.0] · 2026-11-11
+
 
 - Variantes de ficha `gn-card--padded`, `gn-card--compact` y `gn-card--flush` con padding de 20, 12 y 0 px.
 - Filtros progresivos con principales y secundarios, contador de valores activos, preferencia por sesión y ejemplo en el catálogo. Las variantes de filtros existentes siguen disponibles.

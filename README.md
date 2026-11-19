@@ -4,7 +4,10 @@ Sistema de diseño y biblioteca de componentes compartida para los productos Dja
 
 La estructura (sidebar, botones, tablas, filtros, formularios) toma como referencia a GELECTRIC. Cada producto conserva su identidad con un tema de color propio y sus logotipos.
 
-> Estado: **v0.7.1.** Legible 15 es la escala predeterminada para todos los productos. El catálogo permite compararla con Compacta e incluye fichas con padding uniforme y filtros progresivos.
+> Estado de desarrollo: **integración 0.10.0, sin publicar**. El paquete todavía declara la versión 0.9.0.
+
+> Legible 15 es la escala predeterminada. Compacta continúa disponible mediante `TYPE_SCALE`. Esta integración reúne la marca dinámica de GECLUB, la personalización del login de GEPIX y los componentes compartidos existentes.
+
 
 ## Qué incluye
 

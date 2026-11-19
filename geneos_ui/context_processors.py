@@ -49,6 +49,8 @@ def geneos_ui(request):
             "logo_full": cfg["LOGO_FULL"],
             "logo_icon": cfg["LOGO_ICON"],
             "logo_topbar": cfg["LOGO_TOPBAR"],
+            "logo_auth": cfg["LOGO_AUTH"],
+            "auth_background": [c.strip() for c in cfg["AUTH_BACKGROUND"]] if cfg["AUTH_BACKGROUND"] else None,
             "tagline": cfg["TAGLINE"],
             "version_label": cfg["VERSION_LABEL"],
             "home_url": cfg["HOME_URL"],

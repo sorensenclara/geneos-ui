@@ -1178,8 +1178,27 @@
     syncVariantSwitches();
   }
 
+  // ---------------------------------------------------------------- mostrar contraseña
+  // <button data-gn-password-toggle="id-del-input" aria-pressed="false" hidden>: sin JS queda oculto.
+  function initPasswordToggles(root) {
+    $$("[data-gn-password-toggle]", root).forEach(function (btn) {
+      if (btn.dataset.gnReady) return;
+      var input = document.getElementById(btn.getAttribute("data-gn-password-toggle"));
+      if (!input) return;
+      btn.dataset.gnReady = "1";
+      btn.hidden = false;
+      btn.addEventListener("click", function () {
+        var show = input.type === "password";
+        input.type = show ? "text" : "password";
+        btn.setAttribute("aria-pressed", show ? "true" : "false");
+        btn.setAttribute("aria-label", show ? "Ocultar contraseña" : "Mostrar contraseña");
+      });
+    });
+  }
+
   // ---------------------------------------------------------------- init
   function init(root) {
+    initPasswordToggles(root);
     initTheme(root);
     initNav(root);
     initVariant(root);
@@ -1197,7 +1216,7 @@
   }
 
   window.GN = window.GN || {};
-  window.GN.version = "0.9.0";
+  window.GN.version = "0.10.0";
   window.GN.init = init;
   window.GN.toast = toast;
   window.GN.announce = announce;

@@ -1236,14 +1236,39 @@ a.gn-list__row:hover { background: var(--gn-surface-2); }
 /* =====================================================================
    Login
    ===================================================================== */
+/* Fondo: dos colores configurables por producto (GENEOS_UI["AUTH_BACKGROUND"] o
+   --gn-auth-from / --gn-auth-to en el tema); por defecto los del sidebar. */
 .gn-auth {
-  min-height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 24px;
-  background: linear-gradient(135deg, var(--gn-c-sidebar) 0%, var(--gn-c-sidebar-deep) 100%);
+  min-height: 100vh; min-height: 100dvh; width: 100%; display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: linear-gradient(var(--gn-auth-angle, 135deg), var(--gn-auth-from, var(--gn-c-sidebar)) 0%, var(--gn-auth-to, var(--gn-c-sidebar-deep)) 100%);
 }
 .gn-auth__card { width: 100%; max-width: 400px; padding: 36px 32px 32px; background: var(--gn-elevated); border-radius: var(--gn-radius); box-shadow: var(--gn-shadow-lg); display: flex; flex-direction: column; gap: 18px; }
 .gn-auth__logo { display: block; max-width: 190px; max-height: 64px; margin: 0 auto; }
 .gn-auth__title { font-size: var(--gn-fs-auth-title); font-weight: 700; text-align: center; }
 .gn-auth__sub { margin: -10px 0 0; text-align: center; font-size: var(--gn-fs-body); color: var(--gn-text-2); }
+/* layout completo (bloques de layouts/auth.html) */
+.gn-auth__card:has(> .gn-auth__form) { max-width: 460px; padding: 44px 40px 40px; gap: 26px; }
+.gn-auth__header { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.gn-auth__header .gn-auth__logo { margin-bottom: 6px; }
+.gn-auth__header .gn-auth__sub { margin: -8px 0 0; text-wrap: balance; }
+.gn-auth__sub:empty { display: none; }
+.gn-auth__form { gap: 18px; }
+.gn-auth__input > .gn-input { height: var(--gn-auth-field-h, calc(var(--gn-field-h) + 8px)); padding-left: 42px; background: var(--gn-surface-2); }
+.gn-auth__input > .gn-icon { left: 14px; width: 18px; height: 18px; }
+.gn-auth__input > .gn-input:focus { background: var(--gn-field); }
+.gn-auth__input:has(.gn-auth__reveal:not([hidden])) > .gn-input { padding-right: 46px; }
+.gn-auth__input .gn-input-group__end { right: 6px; }
+.gn-auth__reveal .gn-auth__eye-off, .gn-auth__reveal[aria-pressed="true"] .gn-auth__eye { display: none; }
+.gn-auth__reveal[aria-pressed="true"] .gn-auth__eye-off { display: block; }
+.gn-auth__options { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.gn-auth__link { font-size: var(--gn-fs-body); font-weight: 600; color: var(--gn-brand-ink); text-decoration: none; border-radius: 4px; }
+.gn-auth__link:hover { text-decoration: underline; }
+.gn-auth__link:focus-visible { outline: 2px solid var(--gn-focus); outline-offset: 2px; }
+.gn-auth__submit { height: var(--gn-auth-submit-h, 48px); margin-top: 4px; border-radius: var(--gn-radius-pill); font-weight: 600; }
+@media (max-width: 480px) {
+  .gn-auth { padding: 16px; }
+  .gn-auth__card:has(> .gn-auth__form) { padding: 32px 22px 26px; gap: 22px; }
+}
 
 
 /* =====================================================================

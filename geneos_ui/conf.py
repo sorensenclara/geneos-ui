@@ -69,8 +69,11 @@ DEFAULTS = {
     "CATALOG": None,                  # None = solo con DEBUG o para staff
     # 0.6.0
     "TYPE_SCALE": "legible",          # "compacta" | "legible": base 15 px, controles de 36 px, nada por debajo de 12 px
-    # 0.9.0
-    "BRAND": None,                    # función (request) -> Brand | dict | None: marca dinámica del sidebar (ver brand.py)
+    # 0.9.0: marca dinámica
+    "BRAND": None,                    # función (request) -> Brand | dict | None
+    # Login personalizable
+    "AUTH_BACKGROUND": None,          # dos colores CSS; None = colores del sidebar
+    "LOGO_AUTH": None,                # None = LOGO_TOPBAR
 }
 
 
@@ -98,9 +101,24 @@ def get_config():
     if isinstance(cfg["LEGACY_CSS"], str):
         cfg["LEGACY_CSS"] = [cfg["LEGACY_CSS"]]
     cfg["VARIANTS"] = normalize_variants(cfg["VARIANTS"])
+    if not cfg["LOGO_AUTH"]:
+        cfg["LOGO_AUTH"] = cfg["LOGO_TOPBAR"]
+    if not valid_auth_background(cfg["AUTH_BACKGROUND"]):
+        cfg["AUTH_BACKGROUND"] = None
     if cfg["FONT_CSS"] is None and cfg["LOAD_FONTS"]:
         cfg["FONT_CSS"] = presets.FONT_TITILLIUM
     return cfg
+
+
+CSS_COLOR_RE = re.compile(r"#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|oklch|color-mix)\([\w\s.,%#()-]*\)|var\(--[\w-]+\)|[a-z]+")
+
+
+def valid_auth_background(value):
+    """AUTH_BACKGROUND: None o dos colores CSS (desde, hasta)."""
+    if value is None:
+        return True
+    return (isinstance(value, (list, tuple)) and len(value) == 2
+            and all(isinstance(c, str) and CSS_COLOR_RE.fullmatch(c.strip()) for c in value))
 
 
 def nav_icons_for(icon_set, cfg=None):

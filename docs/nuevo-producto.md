@@ -47,7 +47,7 @@ GENEOS_UI = {
 }
 ```
 
-Todos los productos usan **Legible 15** por defecto. Al integrar, comprobá que el HTML de la aplicación y del acceso incluya `data-gn-type="legible"` y que el navegador cargue los CSS de la versión instalada. Los productos que actualizan desde v0.6.0 pueden elegir Compacta con `"TYPE_SCALE": "compacta"`.
+Todos los productos usan **Legible 15** por defecto. Al integrar, comprobá que el HTML de la aplicación y del acceso incluya `data-gn-type="legible"` y que el navegador cargue los CSS de la versión instalada. En instalaciones antiguas que todavía no tienen esta escala como predeterminada, configurá `"TYPE_SCALE": "legible"` hasta actualizar GENEOS UI. La escala Compacta sigue disponible mediante `"TYPE_SCALE": "compacta"`.
 
 Si el producto tiene login, `"LOGOUT_URL": "logout"` agrega «Cerrar sesión» al menú del usuario.
 
