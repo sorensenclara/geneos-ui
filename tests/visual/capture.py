@@ -15,6 +15,8 @@ PRODUCTS = ("gelectric", "gema", "geagro-cereales", "geagro-vid")
 FREEZE = """
 * { transition: none !important; animation: none !important; caret-color: transparent !important; }
 .kit-kind, .kit-type-scale, .kit-toc a[href="#filtros-progresivos"] { display: none !important; }
+/* El ejemplo de gestión tiene su propia captura. */
+.kit-table-standard-label, #tablas-de-gestion { display: none !important; }
 """
 
 
@@ -70,6 +72,10 @@ def shots(html, out):
                 el.evaluate("e => window.scrollTo(0, Math.round(e.getBoundingClientRect().top + window.scrollY - 80))")
                 pg.wait_for_timeout(100)
                 pg.screenshot(path=out / f"seccion-{sec}.png")
+        management_tables = pg.locator("#tablas-de-gestion")
+        if management_tables.count():
+            pg.add_style_tag(content="#tablas-de-gestion { display: flex !important; }")
+            management_tables.screenshot(path=out / "seccion-tablas-de-gestion.png")
         pg.context.close()
 
         # desplegables y «Más»

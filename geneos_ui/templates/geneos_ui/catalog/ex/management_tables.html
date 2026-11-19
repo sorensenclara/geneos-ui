@@ -1,0 +1,47 @@
+{% load geneos_ui %}<div class="kit-stack" id="tablas-de-gestion">
+  <div class="gn-card">
+    <div class="gn-card__head"><h3 class="gn-card__title">Compacta</h3></div>
+    <div class="gn-card__body">
+      <div class="gn-table-wrap">
+        <table class="gn-table gn-table--compact">
+          <caption class="gn-visually-hidden">Inventario compacto</caption>
+          <thead><tr><th scope="col">Producto</th><th scope="col" class="is-num" style="width:3.75rem">Stock</th><th scope="col" style="width:7rem">Estado</th></tr></thead>
+          <tbody>
+            <tr><td><span class="gn-table__truncate" title="Tornillo hexagonal de acero inoxidable con arandela y tuerca autoblocante">Tornillo hexagonal de acero inoxidable con arandela y tuerca autoblocante</span></td><td class="is-num">240</td><td>{% gn_badge "Disponible" "good" True %}</td></tr>
+            <tr><td><span class="gn-table__truncate">Disco de corte 115 mm</span></td><td class="is-num">18</td><td>{% gn_badge "Disponible" "good" True %}</td></tr>
+            <tr><td><span class="gn-table__truncate">Llave combinada 13 mm</span></td><td class="is-num">0</td><td>{% gn_badge "Sin stock" "critical" True %}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="gn-card">
+    <div class="gn-card__head"><h3 class="gn-card__title" id="kit-editable-title">Editable compacta</h3></div>
+    <div class="gn-card__body kit-stack kit-stack--tight">
+      <p class="kit-note" id="kit-editable-help">Usá Enter y Mayús+Enter para pasar a la siguiente o anterior fila visible de la misma columna. Tab recorre los campos y las acciones.</p>
+      <div class="gn-table-wrap gn-table-wrap--scroll gn-table-wrap--sticky-totals" role="region"
+           tabindex="0" aria-labelledby="kit-editable-title" aria-describedby="kit-editable-help" style="--gn-table-max-height: 13rem">
+        <table class="gn-table gn-table--compact gn-table--editable gn-table--responsive gn-table--accordion" data-kit-editable-table>
+          <caption class="gn-visually-hidden">Líneas editables de un pedido</caption>
+          <thead><tr>
+            <th scope="col">Producto</th>
+            <th scope="col" class="is-num" style="width:24%">Cantidad</th>
+            <th scope="col" class="is-actions" style="width:28%">Acciones</th>
+          </tr></thead>
+          <tbody>
+{% for code in "ABCDEF" %}
+            <tr{% if forloop.first %} class="is-open"{% endif %}>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"><span class="gn-row-summary__title">Producto {{ code }}</span>{% gn_icon "i-chevdown" %}</button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto {{ code }}</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_{{ code }}" aria-label="Cantidad de producto {{ code }}" min="1" value="{{ forloop.counter }}" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto {{ code }}">Restablecer</button></span></td>
+            </tr>
+{% endfor %}
+          </tbody>
+          <tfoot><tr><td colspan="3" data-th="Total">Líneas del pedido: 6</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

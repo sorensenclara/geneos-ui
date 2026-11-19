@@ -79,6 +79,27 @@
     });
   }
 
+  // ---- edición de ejemplo: cambios y restauración en memoria
+  var editableExample = document.querySelector("[data-kit-editable-table]");
+  if (editableExample) {
+    function reflectEdit(input) {
+      input.setAttribute("aria-invalid", String(!input.validity.valid));
+      var row = input.closest("tr");
+      if (!input.validity.valid) row.dataset.gnRowState = "invalid";
+      else if (input.value !== input.defaultValue) row.dataset.gnRowState = "editing";
+      else delete row.dataset.gnRowState;
+    }
+    editableExample.addEventListener("input", function (event) { reflectEdit(event.target); });
+    editableExample.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-kit-reset-row]");
+      if (!button) return;
+      var input = button.closest("tr").querySelector("[data-gn-table-input]");
+      input.value = input.defaultValue;
+      reflectEdit(input);
+      GN.announce("Cantidad restablecida");
+    });
+  }
+
   // ---- demo de botón con carga
   document.querySelectorAll("[data-kit-save]").forEach(function (save) {
     save.addEventListener("click", function () {

@@ -80,6 +80,8 @@
     --gn-radius-pill: 999px;
 
     /* ---- alturas de control ---- */
+    --gn-table-row-h: 36px;
+    --gn-table-control-h: 28px;     /* campos y acciones de tablas de gestión */
     --gn-control-sm: 28px;
     --gn-control: 32px;
     --gn-control-lg: 40px;

@@ -531,7 +531,7 @@ inicio = forms.DateTimeField(
   </header>
   {% for p in products %}
   <div class="gn-card" data-kit-product="{{ p.key }}"{% if p.key != active.key %} hidden{% endif %}>
-    <div class="gn-card__head"><div><h3 class="gn-card__title">{{ p.table_title }} <span class="gn-badge gn-badge--neutral gn-badge--count">{{ p.rows|length }}</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+    <div class="gn-card__head"><div><h3 class="gn-card__title"><span class="kit-table-standard-label">Estándar · </span>{{ p.table_title }} <span class="gn-badge gn-badge--neutral gn-badge--count">{{ p.rows|length }}</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
       <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm">{% gn_icon "i-download" %}Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm">{% gn_icon "i-plus" %}Nuevo</button></div>
     </div>
     <div class="gn-card__body">
@@ -597,6 +597,7 @@ inicio = forms.DateTimeField(
     </div>
   </div></div>
   {% endfor %}
+{% include "geneos_ui/catalog/ex/management_tables.html" %}
 </section>
 
 {# =============================================================== DASHBOARD #}

@@ -11,6 +11,7 @@
 .kit-note { margin: 0; font-size: 12px; color: var(--gn-text-muted); }
 .kit-stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .kit-stack--tight { gap: 10px; }
+#tablas-de-gestion { scroll-margin-top: 84px; }
 .kit-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
 @media (max-width: 1080px) { .kit-grid-2 { grid-template-columns: minmax(0, 1fr); } }
 :where(.gn-root) :where(code, kbd:not(.gn-search kbd)) { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86em; }

@@ -42,6 +42,9 @@ def test_html_igual_a_la_referencia(current, name):
     got = both(current[name])
     if name == "catalog":
         got = got.replace("Indicadores con valor, unidad y tendencia; SVG para gráficos simples y Chart.js para análisis interactivos. Ambos respetan la paleta del producto y la accesibilidad.", "Indicadores con valor, unidad y tendencia; gráficos en SVG sin librerías externas, con tabla accesible para lectores de pantalla. Los colores salen de la paleta del producto.")
+        # Las tablas de gestión se verifican en sus propias pruebas de navegador.
+        got = re.sub(r'(?s)\n<div class="kit-stack" id="tablas-de-gestion">.*?(?=\n</section>)', "", got)
+        got = got.replace('<span class="kit-table-standard-label">Estándar · </span>', '')
         # El ejemplo de botones abre una confirmación y comparte su botón de cierre.
         got = got.replace("Radio compartido de 32 px. Probá «Eliminar» para abrir la confirmación y «Guardar» para ver el estado de carga.",
                           "El botón Guardar muestra el estado de carga real: hacé clic.")

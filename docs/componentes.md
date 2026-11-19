@@ -180,7 +180,9 @@ Sueltos:
 ```
 El calendario es [Cally 0.9.2](https://github.com/WickyNilliams/cally) (MIT) en `static/geneos_ui/vendor/cally/`, sin modificar; se carga como módulo y se estiliza con `::part()` y tokens. Si no carga, los campos de fecha quedan nativos. El rango de fechas (`gn-date-range-picker`) y la migración del filtro `daterange` quedan para la 0.6.0.
 
-## Tablas
+## Datos → Tablas
+
+### Estándar
 
 ```html
 <div class="gn-table-wrap">
@@ -192,6 +194,38 @@ El calendario es [Cally 0.9.2](https://github.com/WickyNilliams/cally) (MIT) en 
 {% gn_pagination page_obj %}
 ```
 `--responsive`: en móvil cada fila es una tarjeta con la etiqueta de cada columna. `--accordion`: además, la fila se abre y cierra; requiere una primera celda `td.gn-row-summary` con un `button.gn-row-summary__btn`. Orden en el navegador para tablas chicas: `data-gn-sort="client"`.
+
+### Compacta
+
+Agregá `gn-table--compact` para filas de 36 px, padding reducido y columnas de ancho fijo. Definí los anchos de las columnas cortas en el encabezado o con `colgroup`. Usá `is-num` tanto en el encabezado como en las celdas numéricas. Envolvé los textos largos con `gn-table__truncate` para mostrar puntos suspensivos conservando el texto completo en el HTML.
+
+```html
+<table class="gn-table gn-table--compact">
+  <thead><tr><th scope="col">Producto</th><th scope="col" class="is-num" style="width:25%">Stock</th></tr></thead>
+  <tbody><tr><td><span class="gn-table__truncate">Descripción del producto</span></td><td class="is-num">240</td></tr></tbody>
+</table>
+```
+
+### Editable compacta
+
+Combiná `gn-table--compact gn-table--editable`. Editable también se puede usar con la altura de fila estándar. Los `gn-input` y `gn-select` del cuerpo miden 28 px. Cada campo necesita un nombre accesible, por ejemplo «Cantidad de producto A».
+
+```html
+<table class="gn-table gn-table--compact gn-table--editable">
+  <thead><tr><th scope="col">Producto</th><th scope="col" class="is-num">Cantidad</th><th scope="col" class="is-actions" style="width:30%">Acciones</th></tr></thead>
+  <tbody><tr data-gn-row-state="editing">
+    <td><span class="gn-table__truncate">Producto A</span></td>
+    <td class="is-num"><input class="gn-input gn-input--sm" type="number" name="cantidad_a"
+      aria-label="Cantidad de producto A" data-gn-table-input="cantidad" min="1" value="2" required></td>
+    <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm">Restablecer</button></span></td>
+  </tr></tbody>
+</table>
+```
+
+- **Teclado.** Tab y Mayús+Tab recorren los controles nativos. Enter y Mayús+Enter avanzan o retroceden entre inputs de texto o número con el mismo valor de `data-gn-table-input` dentro del mismo `tbody`. Se omiten los campos ocultos, deshabilitados o de solo lectura. Un valor inválido conserva el foco. Enter al final de la columna conserva el foco y el envío se hace con la acción explícita del formulario.
+- **Estados y acciones.** La fila enfocada se destaca. El producto puede marcarla con `data-gn-row-state="editing"` o `"invalid"` y vincular el error con `aria-invalid` y `aria-describedby`. Usá `gn-badge` con texto para estados y `is-actions` + `gn-table__actions` con botones pequeños para acciones por fila. El formulario del producto define cómo guardar, restablecer y calcular valores.
+- **Encabezado y totales fijos.** Agregá `gn-table-wrap--scroll` al contenedor `gn-table-wrap` para fijar el encabezado durante el scroll vertical. Ajustá el máximo con `--gn-table-max-height` si hace falta. Sumá `gn-table-wrap--sticky-totals` y un `tfoot` con una fila de `td` para fijar los totales al pie. El contenedor desplazable puede llevar `tabindex="0"` y un nombre accesible.
+- **Responsive y acordeón.** Agregá `gn-table--responsive gn-table--accordion`, el resumen de fila y `data-th` como en la tabla estándar. En celular, las tarjetas recuperan su altura natural, los totales siguen en el flujo y el teclado recorre los campos de las filas abiertas. Si falla una validación nativa en una fila cerrada, el acordeón se abre para mostrar el campo.
 
 ## Tarjetas, indicadores y gráficos
 

@@ -92,6 +92,8 @@
     --gn-radius-pill: 999px;
 
     /* ---- alturas de control ---- */
+    --gn-table-row-h: 36px;
+    --gn-table-control-h: 28px;     /* campos y acciones de tablas de gestión */
     --gn-control-sm: 28px;
     --gn-control: 32px;
     --gn-control-lg: 40px;
@@ -1350,6 +1352,30 @@ th[aria-sort="ascending"], th[aria-sort="descending"] { color: var(--gn-text); }
 
 .gn-table-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 2px 0; font-size: var(--gn-fs-sm); color: var(--gn-text-muted); }
 
+/* Densidad y edición optativas. */
+.gn-table--compact { table-layout: fixed; }
+.gn-table--compact :is(th, td) { height: var(--gn-table-row-h); padding: 2px 8px; white-space: nowrap; }
+.gn-table--compact td:where(:not(.is-actions, .gn-row-summary, :has(input, select, textarea, button, .gn-dropdown))) {
+  overflow: hidden; text-overflow: ellipsis;
+}
+.gn-table--compact .gn-table__sub { display: inline; }
+.gn-table__truncate { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gn-table__actions { display: inline-flex; align-items: center; gap: var(--gn-space-1); }
+.gn-table--compact .gn-table__actions .gn-btn--sm { height: var(--gn-table-control-h); }
+.gn-table--compact .gn-table__actions .gn-btn--icon.gn-btn--sm { width: var(--gn-table-control-h); }
+.gn-table--editable tbody :is(.gn-input, .gn-select) {
+  width: 100%; min-width: 0; height: var(--gn-table-control-h); padding-block: 0;
+}
+.gn-table--editable tbody .gn-input { padding-inline: var(--gn-space-2); }
+.gn-table--editable tbody .is-num .gn-input { text-align: right; font-variant-numeric: tabular-nums; }
+
+.gn-table-wrap--scroll { max-block-size: var(--gn-table-max-height, 20rem); overflow: auto; }
+.gn-table-wrap--scroll > .gn-table { border-collapse: separate; border-spacing: 0; }
+.gn-table-wrap--scroll:has(> .gn-table--compact) { scroll-padding-block-start: var(--gn-table-row-h); }
+.gn-table-wrap--scroll:where(.gn-table-wrap--sticky-totals):has(> .gn-table--compact) { scroll-padding-block-end: var(--gn-table-row-h); }
+.gn-table:is(.gn-table--compact, .gn-table--editable) tfoot td { font-weight: 600; background: var(--gn-surface-2); }
+.gn-table-wrap--sticky-totals > .gn-table tfoot td { position: sticky; bottom: 0; z-index: 1; }
+
 /* responsive: filas como bloques (comportamiento de GELECTRIC) */
 @media (max-width: 860px) {
   .gn-table-wrap:has(.gn-table--responsive) { border: none; background: none; overflow: visible; }
@@ -1378,7 +1404,24 @@ th[aria-sort="ascending"], th[aria-sort="descending"] { color: var(--gn-text); }
   .gn-table--accordion td:not(.gn-row-summary) { display: none; padding-left: 14px; padding-right: 14px; }
   .gn-table--accordion tr.is-open td:not(.gn-row-summary):not(.gn-accordion-hide) { display: block; }
   .gn-table--accordion tr.is-open td.is-actions { display: flex; padding-bottom: 12px; }
+
+  .gn-table-wrap--scroll:has(.gn-table--responsive) { max-block-size: none; scroll-padding-block: 0; }
+  .gn-table--compact.gn-table--responsive :is(tbody, tfoot) td {
+    height: auto; white-space: normal; overflow: visible; text-overflow: clip;
+  }
+  .gn-table--compact.gn-table--responsive .gn-table__actions .gn-btn--sm { height: var(--gn-control-sm); }
+  .gn-table--compact.gn-table--responsive .gn-table__actions .gn-btn--icon.gn-btn--sm { width: var(--gn-control-sm); }
+  .gn-table--editable.gn-table--responsive tbody .gn-input { font-size: var(--gn-fs-input); }
+  .gn-table--responsive:is(.gn-table--compact, .gn-table--editable) tfoot { display: block; }
+  .gn-table--responsive:is(.gn-table--compact, .gn-table--editable) tfoot td {
+    display: block; padding-inline: 14px; border-radius: var(--gn-radius-sm);
+  }
+  .gn-table-wrap--sticky-totals > .gn-table--responsive tfoot td { position: static; }
+
 }
+
+.gn-table--editable tbody tr:is(:focus-within, [data-gn-row-state="editing"]) > td { background: var(--gn-brand-soft); }
+.gn-table--editable tbody tr[data-gn-row-state="invalid"] > td { background: var(--gn-critical-soft); }
 
 /* paginación */
 .gn-pagination { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: var(--gn-fs-sm); color: var(--gn-text-2); }
@@ -1906,6 +1949,7 @@ a.gn-link-list__item:focus-visible { outline: 2px solid var(--gn-focus); outline
 .kit-note { margin: 0; font-size: 12px; color: var(--gn-text-muted); }
 .kit-stack { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .kit-stack--tight { gap: 10px; }
+#tablas-de-gestion { scroll-margin-top: 84px; }
 .kit-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
 @media (max-width: 1080px) { .kit-grid-2 { grid-template-columns: minmax(0, 1fr); } }
 :where(.gn-root) :where(code, kbd:not(.gn-search kbd)) { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: .86em; }
@@ -6735,7 +6779,7 @@ inicio = forms.DateTimeField(
   </header>
   
   <div class="gn-card" data-kit-product="gelectric">
-    <div class="gn-card__head"><div><h3 class="gn-card__title">Asociados <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+    <div class="gn-card__head"><div><h3 class="gn-card__title"><span class="kit-table-standard-label">Estándar · </span>Asociados <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
       <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-plus"/></svg>Nuevo</button></div>
     </div>
     <div class="gn-card__body">
@@ -6880,7 +6924,7 @@ inicio = forms.DateTimeField(
   </div>
   
   <div class="gn-card" data-kit-product="gema" hidden>
-    <div class="gn-card__head"><div><h3 class="gn-card__title">Matafuegos <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+    <div class="gn-card__head"><div><h3 class="gn-card__title"><span class="kit-table-standard-label">Estándar · </span>Matafuegos <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
       <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-plus"/></svg>Nuevo</button></div>
     </div>
     <div class="gn-card__body">
@@ -7025,7 +7069,7 @@ inicio = forms.DateTimeField(
   </div>
   
   <div class="gn-card" data-kit-product="geagro-cereales" hidden>
-    <div class="gn-card__head"><div><h3 class="gn-card__title">Labores de la campaña <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+    <div class="gn-card__head"><div><h3 class="gn-card__title"><span class="kit-table-standard-label">Estándar · </span>Labores de la campaña <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
       <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-plus"/></svg>Nuevo</button></div>
     </div>
     <div class="gn-card__body">
@@ -7170,7 +7214,7 @@ inicio = forms.DateTimeField(
   </div>
   
   <div class="gn-card" data-kit-product="geagro-vid" hidden>
-    <div class="gn-card__head"><div><h3 class="gn-card__title">Lotes <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
+    <div class="gn-card__head"><div><h3 class="gn-card__title"><span class="kit-table-standard-label">Estándar · </span>Lotes <span class="gn-badge gn-badge--neutral gn-badge--count">5</span></h3><p class="gn-card__sub">Datos de ejemplo.</p></div>
       <div class="gn-btn-group"><button type="button" class="gn-btn gn-btn--ghost gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-download"/></svg>Exportar</button><button type="button" class="gn-btn gn-btn--primary gn-btn--sm"><svg class="gn-icon " aria-hidden="true"><use href="#i-plus"/></svg>Nuevo</button></div>
     </div>
     <div class="gn-card__body">
@@ -7351,6 +7395,89 @@ inicio = forms.DateTimeField(
     </div>
   </div></div>
   
+<div class="kit-stack" id="tablas-de-gestion">
+  <div class="gn-card">
+    <div class="gn-card__head"><h3 class="gn-card__title">Compacta</h3></div>
+    <div class="gn-card__body">
+      <div class="gn-table-wrap">
+        <table class="gn-table gn-table--compact">
+          <caption class="gn-visually-hidden">Inventario compacto</caption>
+          <thead><tr><th scope="col">Producto</th><th scope="col" class="is-num" style="width:3.75rem">Stock</th><th scope="col" style="width:7rem">Estado</th></tr></thead>
+          <tbody>
+            <tr><td><span class="gn-table__truncate" title="Tornillo hexagonal de acero inoxidable con arandela y tuerca autoblocante">Tornillo hexagonal de acero inoxidable con arandela y tuerca autoblocante</span></td><td class="is-num">240</td><td><span class="gn-badge gn-badge--good gn-badge--dot">Disponible</span></td></tr>
+            <tr><td><span class="gn-table__truncate">Disco de corte 115 mm</span></td><td class="is-num">18</td><td><span class="gn-badge gn-badge--good gn-badge--dot">Disponible</span></td></tr>
+            <tr><td><span class="gn-table__truncate">Llave combinada 13 mm</span></td><td class="is-num">0</td><td><span class="gn-badge gn-badge--critical gn-badge--dot">Sin stock</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="gn-card">
+    <div class="gn-card__head"><h3 class="gn-card__title" id="kit-editable-title">Editable compacta</h3></div>
+    <div class="gn-card__body kit-stack kit-stack--tight">
+      <p class="kit-note" id="kit-editable-help">Usá Enter y Mayús+Enter para pasar a la siguiente o anterior fila visible de la misma columna. Tab recorre los campos y las acciones.</p>
+      <div class="gn-table-wrap gn-table-wrap--scroll gn-table-wrap--sticky-totals" role="region"
+           tabindex="0" aria-labelledby="kit-editable-title" aria-describedby="kit-editable-help" style="--gn-table-max-height: 13rem">
+        <table class="gn-table gn-table--compact gn-table--editable gn-table--responsive gn-table--accordion" data-kit-editable-table>
+          <caption class="gn-visually-hidden">Líneas editables de un pedido</caption>
+          <thead><tr>
+            <th scope="col">Producto</th>
+            <th scope="col" class="is-num" style="width:24%">Cantidad</th>
+            <th scope="col" class="is-actions" style="width:28%">Acciones</th>
+          </tr></thead>
+          <tbody>
+
+            <tr class="is-open">
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="true"><span class="gn-row-summary__title">Producto A</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto A</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_A" aria-label="Cantidad de producto A" min="1" value="1" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto A">Restablecer</button></span></td>
+            </tr>
+
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span class="gn-row-summary__title">Producto B</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto B</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_B" aria-label="Cantidad de producto B" min="1" value="2" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto B">Restablecer</button></span></td>
+            </tr>
+
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span class="gn-row-summary__title">Producto C</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto C</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_C" aria-label="Cantidad de producto C" min="1" value="3" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto C">Restablecer</button></span></td>
+            </tr>
+
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span class="gn-row-summary__title">Producto D</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto D</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_D" aria-label="Cantidad de producto D" min="1" value="4" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto D">Restablecer</button></span></td>
+            </tr>
+
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span class="gn-row-summary__title">Producto E</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto E</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_E" aria-label="Cantidad de producto E" min="1" value="5" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto E">Restablecer</button></span></td>
+            </tr>
+
+            <tr>
+              <td class="gn-row-summary"><button type="button" class="gn-row-summary__btn" aria-expanded="false"><span class="gn-row-summary__title">Producto F</span><svg class="gn-icon " aria-hidden="true"><use href="#i-chevdown"/></svg></button></td>
+              <td data-th="Producto" class="gn-accordion-hide"><span class="gn-table__truncate">Producto F</span></td>
+              <td data-th="Cantidad" class="is-num"><input type="number" class="gn-input gn-input--sm" data-gn-table-input="cantidad" name="cantidad_F" aria-label="Cantidad de producto F" min="1" value="6" required></td>
+              <td class="is-actions"><span class="gn-table__actions"><button type="button" class="gn-btn gn-btn--tertiary gn-btn--sm" data-kit-reset-row aria-label="Restablecer producto F">Restablecer</button></span></td>
+            </tr>
+
+          </tbody>
+          <tfoot><tr><td colspan="3" data-th="Total">Líneas del pedido: 6</td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 </section>
 
 
@@ -9047,15 +9174,62 @@ GENEOS_UI = {
   }
 
   // -------------------------------------------------------------- tablas
+  function setTableRowOpen(row, button, open) {
+    row.classList.toggle("is-open", open);
+    button.setAttribute("aria-expanded", String(open));
+  }
+
+  function initEditableTables(root) {
+    var selector = "table.gn-table--editable";
+    var tables = $$(selector, root);
+    if (root && root.matches && root.matches(selector)) tables.unshift(root);
+    tables.forEach(function (table) {
+      if (table.__gnEditable) return; table.__gnEditable = true;
+      if (table.classList.contains("gn-table--accordion")) {
+        table.addEventListener("invalid", function (event) {
+          var row = event.target.closest("tbody > tr");
+          if (!row || row.closest("table") !== table) return;
+          var button = $(".gn-row-summary__btn", row);
+          if (button) setTableRowOpen(row, button, true);
+        }, true);
+      }
+      table.addEventListener("keydown", function (event) {
+        var input = event.target;
+        if (event.defaultPrevented || event.isComposing || event.key !== "Enter" ||
+            event.altKey || event.ctrlKey || event.metaKey || !input.matches("input[data-gn-table-input]") ||
+            !/^(text|number|search|email|tel|url)$/.test(input.type) || input.readOnly ||
+            input.closest("table") !== table) return;
+        var row = input.closest("tbody > tr");
+        if (!row) return;
+        event.preventDefault();
+        if (!input.reportValidity()) return;
+        var column = input.getAttribute("data-gn-table-input");
+        var step = event.shiftKey ? -1 : 1;
+        var rows = row.parentElement.rows;
+        for (var i = row.sectionRowIndex + step; i >= 0 && i < rows.length; i += step) {
+          var next = $$("input[data-gn-table-input]", rows[i]).find(function (candidate) {
+            return candidate.getAttribute("data-gn-table-input") === column &&
+              !candidate.readOnly && !candidate.matches(":disabled") && candidate.tabIndex >= 0 &&
+              candidate.getClientRects().length && getComputedStyle(candidate).visibility === "visible";
+          });
+          if (next) {
+            next.focus({ preventScroll: true });
+            next.scrollIntoView({ block: "nearest", inline: "nearest" });
+            break;
+          }
+        }
+      });
+    });
+  }
+
   function initTables(root) {
+    initEditableTables(root);
     // filas acordeón en móvil
     $$(".gn-row-summary__btn", root).forEach(function (btn) {
       if (btn.__gn) return; btn.__gn = true;
       btn.addEventListener("click", function () {
         var tr = btn.closest("tr"); if (!tr) return;
-        var open = !tr.classList.contains("is-open");
-        tr.classList.toggle("is-open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        setTableRowOpen(tr, btn, !tr.classList.contains("is-open"));
       });
     });
     // orden en el navegador para tablas chicas (data-gn-sort="client").
@@ -11662,6 +11836,27 @@ export {
         return option.value === value;
       })) return;
       control.value = value;
+    });
+  }
+
+  // ---- edición de ejemplo: cambios y restauración en memoria
+  var editableExample = document.querySelector("[data-kit-editable-table]");
+  if (editableExample) {
+    function reflectEdit(input) {
+      input.setAttribute("aria-invalid", String(!input.validity.valid));
+      var row = input.closest("tr");
+      if (!input.validity.valid) row.dataset.gnRowState = "invalid";
+      else if (input.value !== input.defaultValue) row.dataset.gnRowState = "editing";
+      else delete row.dataset.gnRowState;
+    }
+    editableExample.addEventListener("input", function (event) { reflectEdit(event.target); });
+    editableExample.addEventListener("click", function (event) {
+      var button = event.target.closest("[data-kit-reset-row]");
+      if (!button) return;
+      var input = button.closest("tr").querySelector("[data-gn-table-input]");
+      input.value = input.defaultValue;
+      reflectEdit(input);
+      GN.announce("Cantidad restablecida");
     });
   }
 

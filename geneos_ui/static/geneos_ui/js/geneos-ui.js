@@ -702,15 +702,62 @@
   }
 
   // -------------------------------------------------------------- tablas
+  function setTableRowOpen(row, button, open) {
+    row.classList.toggle("is-open", open);
+    button.setAttribute("aria-expanded", String(open));
+  }
+
+  function initEditableTables(root) {
+    var selector = "table.gn-table--editable";
+    var tables = $$(selector, root);
+    if (root && root.matches && root.matches(selector)) tables.unshift(root);
+    tables.forEach(function (table) {
+      if (table.__gnEditable) return; table.__gnEditable = true;
+      if (table.classList.contains("gn-table--accordion")) {
+        table.addEventListener("invalid", function (event) {
+          var row = event.target.closest("tbody > tr");
+          if (!row || row.closest("table") !== table) return;
+          var button = $(".gn-row-summary__btn", row);
+          if (button) setTableRowOpen(row, button, true);
+        }, true);
+      }
+      table.addEventListener("keydown", function (event) {
+        var input = event.target;
+        if (event.defaultPrevented || event.isComposing || event.key !== "Enter" ||
+            event.altKey || event.ctrlKey || event.metaKey || !input.matches("input[data-gn-table-input]") ||
+            !/^(text|number|search|email|tel|url)$/.test(input.type) || input.readOnly ||
+            input.closest("table") !== table) return;
+        var row = input.closest("tbody > tr");
+        if (!row) return;
+        event.preventDefault();
+        if (!input.reportValidity()) return;
+        var column = input.getAttribute("data-gn-table-input");
+        var step = event.shiftKey ? -1 : 1;
+        var rows = row.parentElement.rows;
+        for (var i = row.sectionRowIndex + step; i >= 0 && i < rows.length; i += step) {
+          var next = $$("input[data-gn-table-input]", rows[i]).find(function (candidate) {
+            return candidate.getAttribute("data-gn-table-input") === column &&
+              !candidate.readOnly && !candidate.matches(":disabled") && candidate.tabIndex >= 0 &&
+              candidate.getClientRects().length && getComputedStyle(candidate).visibility === "visible";
+          });
+          if (next) {
+            next.focus({ preventScroll: true });
+            next.scrollIntoView({ block: "nearest", inline: "nearest" });
+            break;
+          }
+        }
+      });
+    });
+  }
+
   function initTables(root) {
+    initEditableTables(root);
     // filas acordeón en móvil
     $$(".gn-row-summary__btn", root).forEach(function (btn) {
       if (btn.__gn) return; btn.__gn = true;
       btn.addEventListener("click", function () {
         var tr = btn.closest("tr"); if (!tr) return;
-        var open = !tr.classList.contains("is-open");
-        tr.classList.toggle("is-open", open);
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
+        setTableRowOpen(tr, btn, !tr.classList.contains("is-open"));
       });
     });
     // orden en el navegador para tablas chicas (data-gn-sort="client").
